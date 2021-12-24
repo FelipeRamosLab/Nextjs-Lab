@@ -2,6 +2,10 @@ import axios from "axios";
 import { useState } from "react";
 import $ from "jquery";
 
+const rootDEV = 'http://192.168.15.3:8080';
+const rootPROD = 'https://feliperamos.uc.r.appspot.com';
+const root = rootPROD;
+
 export default function Home({ data, success }) {
   const [accounts, setAccounts] = useState(data.accounts);
   const [formAddMaster, setFormAddMaster] = useState({
@@ -13,7 +17,7 @@ export default function Home({ data, success }) {
     ev.preventDefault();
     console.log(formAddMaster);
 
-    axios.post('http://192.168.15.3:8080/add-masteraccount', formAddMaster).then(res=>{
+    axios.post(root + '/add-masteraccount', formAddMaster).then(res=>{
       console.log(res);
       setAccounts(res.data.data.accounts);
     }).catch(err=>{
@@ -113,7 +117,7 @@ export default function Home({ data, success }) {
 
 export async function getServerSideProps() {
   try {
-    const accounts = await axios.get("http://192.168.15.3:8080/get-accounts");
+    const accounts = await axios.get(root + "/get-accounts");
 
     return {
       props: {
