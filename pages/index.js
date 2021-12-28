@@ -1,17 +1,28 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import $ from "jquery";
+import CreateBotAccount from './components/CreateBotAccount';
 
-const rootDEV = 'http://192.168.15.3:8080';
+const rootDEV = 'http://localhost:80';
 const rootPROD = 'https://feliperamos.uc.r.appspot.com';
-const root = rootPROD;
+const root = rootDEV;
 
 export default function Home({ data, success }) {
-  const [accounts, setAccounts] = useState(data.accounts);
+  const [accounts, setAccounts] = useState(data ? data.accounts : []);
   const [formAddMaster, setFormAddMaster] = useState({
-    name: "",
-    totalBalance: 0,
+    name: "Felipe (Demo)",
+    totalBalance: 10000,
   });
+
+  useEffect(()=>{
+    setInterval(()=>{
+      axios.get(root + "/get-accounts").then(acc=>{
+        setAccounts(acc.data);
+      }).catch(err=>{
+        console.error(err);
+      })
+    }, 2000);
+  }, []);
 
   async function addMasterAccount(ev) {
     ev.preventDefault();
@@ -20,6 +31,14 @@ export default function Home({ data, success }) {
     axios.post(root + '/add-masteraccount', formAddMaster).then(res=>{
       console.log(res);
       setAccounts(res.data.data.accounts);
+    }).catch(err=>{
+      console.error(err);
+    });
+  }
+
+  function runBotAccount(masterID, botAccountID){
+    axios.post(root + '/run-botaccount', {acid: masterID, botac: botAccountID}).then(res=>{
+      console.log(res);
     }).catch(err=>{
       console.error(err);
     });
@@ -39,78 +58,135 @@ export default function Home({ data, success }) {
         <h1>Bot Store</h1>
       </header>
 
-      {success ? (
-        <section>
-          <h2>Master accounts</h2>
-          <p>Check below the master accounts currently active:</p>
+      <section>
+        <h2>Master accounts</h2>
+        <p>Check below the master accounts currently active:</p>
 
-          <div className="master-accounts">
-            {accounts.map((acc, index) => {
-              return (
-                <div key={acc.name + index} className="account">
-                  <h3>{acc.name}</h3>
+        <div className="master-accounts">
+          {accounts.map((acc, index) => {
+            return (
+              <div key={acc.name + index} className="account">
+                <h3>{acc.name}</h3>
 
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <label>Type: </label>
-                        </td>
-                        <td>{acc.type}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <label>Total balance: </label>
-                        </td>
-                        <td>{acc.totalBalance}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <label>Type: </label>
+                      </td>
+                      <td>{acc.type}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Free balance: </label>
+                      </td>
+                      <td>{acc.freeBalance}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Total balance: </label>
+                      </td>
+                      <td>{acc.totalBalance}</td>
+                    </tr>
+                  </tbody>
+                </table>
 
-                  <h4>Bot accounts:</h4>
-                  {acc.botAccounts.map((bot, index) => {
-                    return (
-                      <div key={bot.name + index} className="bot-account">
-                        <h5>{bot.name}</h5>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
+                <h4>Bot accounts:</h4>
+                {acc.botAccounts.map((bot, index) => {
+                  return (
+                    <div key={bot.name + index} className="bot-account">
+                      <h5>{bot.name}</h5>
 
-            <form onSubmit={addMasterAccount}>
-              <h3>Create master account:</h3>
+                      <table>
+                        <tbody>                       
+                          <tr>
+                            <td>
+                              <label>Status: </label>
+                            </td>
+                            <td>{bot.status}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Coins: </label>
+                            </td>
+                            <td>{bot.assets}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Free balance: </label>
+                            </td>
+                            <td>{bot.freeBalance}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Total balance: </label>
+                            </td>
+                            <td>{bot.totalBalance}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <button onClick={()=>runBotAccount(acc.id, bot.id)}>RUN BOT ACCOUNT</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
 
-              <label>Account name:</label>
-              <input
-                name="name"
-                type="text"
-                autoCapitalize="true"
-                value={formAddMaster.name}
-                onChange={(ev) =>
-                  handleKeyUp(ev, formAddMaster, setFormAddMaster)
-                }
-              />
+                      {bot.trades.map(trade=>{
+                        <table>
+                          <tbody>                       
+                            <tr>
+                              <td>
+                                <label>Trade status: </label>
+                              </td>
+                              <td>{trade.status}</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>Trade balance: </label>
+                              </td>
+                              <td>{trade.totalBalance}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      })}
+                    </div>
+                  );
+                })}
+                <CreateBotAccount masterID={acc.id} handleKeyUp={handleKeyUp} accountsSetter={setAccounts}/>
 
-              <label>Inicial balance (USDT):</label>
-              <input
-                name="totalBalance"
-                type="number"
-                inputMode="numeric"
-                value={formAddMaster.totalBalance}
-                onChange={(ev) =>
-                  handleKeyUp(ev, formAddMaster, setFormAddMaster)
-                }
-              />
+              </div>
+            );
+          })}
 
-              <button type="submit">ADD MASTER ACCOUNT</button>
-            </form>
-          </div>
-        </section>
-      ) : (
-        <h2>Error on load accounts!</h2>
-      )}
+          <form onSubmit={addMasterAccount}>
+            <h3>Create master account:</h3>
+
+            <label>Account name:</label>
+            <input
+              name="name"
+              type="text"
+              autoCapitalize="true"
+              value={formAddMaster.name}
+              onChange={(ev) =>
+                handleKeyUp(ev, formAddMaster, setFormAddMaster)
+              }
+            />
+
+            <label>Inicial balance (USDT):</label>
+            <input
+              name="totalBalance"
+              type="number"
+              inputMode="numeric"
+              value={formAddMaster.totalBalance}
+              onChange={(ev) =>
+                handleKeyUp(ev, formAddMaster, setFormAddMaster)
+              }
+            />
+
+            <button type="submit">ADD MASTER ACCOUNT</button>
+          </form>
+        </div>
+      </section>
     </>
   );
 }
