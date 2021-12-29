@@ -2,10 +2,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import $ from "jquery";
 import CreateBotAccount from './components/CreateBotAccount';
+import config from '../config.json';
 
-const rootDEV = 'http://localhost:80';
-const rootPROD = 'https://feliperamos.uc.r.appspot.com';
-const root = rootDEV;
+const root = config[config.root];
 
 export default function Home({ data, success }) {
   const [accounts, setAccounts] = useState(data ? data.accounts : []);
@@ -122,6 +121,12 @@ export default function Home({ data, success }) {
                               <label>Total balance: </label>
                             </td>
                             <td>{bot.totalBalance}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Number of trades: </label>
+                            </td>
+                            <td>{bot.trades.length}</td>
                           </tr>
                           <tr>
                             <td>

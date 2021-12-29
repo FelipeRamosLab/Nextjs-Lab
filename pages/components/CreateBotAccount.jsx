@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
+import config from '../../config.json';
+
+const root = config[config.root];
 
 export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}){
     const [formData, setFormData] = useState({
@@ -14,7 +17,7 @@ export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}
         postParams.botAccountConfig.assets = [postParams.botAccountConfig.assets];
 
         try {
-            const created = await axios.post('http://localhost:80/create-botaccount', postParams);
+            const created = await axios.post(root + '/create-botaccount', postParams);
             accountsSetter(created.data.data)
         } catch(err){
             console.error(err);
