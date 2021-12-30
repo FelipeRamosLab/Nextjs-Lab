@@ -7,7 +7,7 @@ const root = config[config.root];
 export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}){
     const [formData, setFormData] = useState({
         name: 'Futurama',
-        totalBalance: 1000,
+        totalBalance: 0,
         bot: 'Bender',
         assets: 'BTCUSDT'
     });
@@ -54,17 +54,6 @@ export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}
               type="text"
               autoCapitalize="true"
               value={formData.bot}
-              onChange={(ev) =>
-                handleKeyUp(ev, formData, setFormData)
-              }
-            />
-
-            <label>Total balance (USDT):</label>
-            <input
-              name="totalBalance"
-              type="number"
-              inputMode="numeric"
-              value={formData.totalBalance}
               onChange={(ev) =>
                 handleKeyUp(ev, formData, setFormData)
               }

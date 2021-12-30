@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import $ from "jquery";
 import CreateBotAccount from './components/CreateBotAccount';
+import TransferMoney from './components/TransferMoney';
 import config from '../config.json';
 
 const root = config[config.root];
@@ -43,11 +44,11 @@ export default function Home({ data, success }) {
     });
   }
 
-  function handleKeyUp(ev, getter, setter) {
+  function handleKeyUp(ev, getter, setter, type) {
     const newGetter = { ...getter };
     const prop = $(ev.target).attr("name");
 
-    newGetter[prop] = ev.target.value;
+    newGetter[prop] = type === 'number' ? Number(ev.target.value) : ev.target.value;
     setter(newGetter);
   }
 
@@ -74,6 +75,12 @@ export default function Home({ data, success }) {
                         <label>Type: </label>
                       </td>
                       <td>{acc.type}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Commission: </label>
+                      </td>
+                      <td>{acc.commission}</td>
                     </tr>
                     <tr>
                       <td>
@@ -124,6 +131,12 @@ export default function Home({ data, success }) {
                           </tr>
                           <tr>
                             <td>
+                              <label>Commission: </label>
+                            </td>
+                            <td>{bot.commission}</td>
+                          </tr>
+                          <tr>
+                            <td>
                               <label>Number of trades: </label>
                             </td>
                             <td>{bot.trades.length}</td>
@@ -131,6 +144,18 @@ export default function Home({ data, success }) {
                           <tr>
                             <td>
                               <button onClick={()=>runBotAccount(acc.id, bot.id)}>RUN BOT ACCOUNT</button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Deposit USDT: </label>
+                            </td>
+                            <td>
+                              <TransferMoney
+                                handleKeyUp={handleKeyUp}
+                                masterID={acc.id}
+                                botAccountID={bot.id}
+                              />
                             </td>
                           </tr>
                         </tbody>
