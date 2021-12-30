@@ -75,7 +75,7 @@ export default function Home({ data, success }) {
               onChange={(ev) =>
                 handleKeyUp(ev, formAddMaster, setFormAddMaster)
               }
-            />
+            /><br/>
 
             <label>Inicial balance (USDT):</label>
             <input
@@ -86,7 +86,7 @@ export default function Home({ data, success }) {
               onChange={(ev) =>
                 handleKeyUp(ev, formAddMaster, setFormAddMaster)
               }
-            />
+            /><br/>
 
             <button type="submit">ADD MASTER ACCOUNT</button>
           </form>
@@ -107,7 +107,7 @@ export default function Home({ data, success }) {
                       <td>
                         <label>Commission: </label>
                       </td>
-                      <td>{acc.commission}</td>
+                      <td>$ {acc.commission.toFixed(2)}</td>
                     </tr>
                     <tr>
                       <td>
@@ -119,7 +119,7 @@ export default function Home({ data, success }) {
                       <td>
                         <label>Total balance: </label>
                       </td>
-                      <td>$ {acc.totalBalance.toFixed(2)}</td>
+                      <td>$ {Number(acc.totalBalance).toFixed(2)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -188,7 +188,7 @@ export default function Home({ data, success }) {
                         </tbody>
                       </table>
                       {bot.trades.length ? bot.trades.map((trade, i)=>{
-                        if(trade.status === 'opened' || true) return (
+                        if(trade.status === 'opened') return (
                             <table key={trade.currentPrice + i}>
                               <tbody>                       
                                 <tr>
