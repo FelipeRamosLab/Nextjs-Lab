@@ -32,7 +32,7 @@ export default function TransferMoney({masterID, botAccountID, handleKeyUp}){
               }
             />
 
-            <button type="submit">Transferir</button>
+            <button type="submit">SEND</button>
         </form>
     </div>);
 }

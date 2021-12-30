@@ -63,6 +63,33 @@ export default function Home({ data, success }) {
         <p>Check below the master accounts currently active:</p>
 
         <div className="master-accounts">
+          <form onSubmit={addMasterAccount}>
+            <h3>Create master account:</h3>
+
+            <label>Account name:</label>
+            <input
+              name="name"
+              type="text"
+              autoCapitalize="true"
+              value={formAddMaster.name}
+              onChange={(ev) =>
+                handleKeyUp(ev, formAddMaster, setFormAddMaster)
+              }
+            />
+
+            <label>Inicial balance (USDT):</label>
+            <input
+              name="totalBalance"
+              type="number"
+              inputMode="numeric"
+              value={formAddMaster.totalBalance}
+              onChange={(ev) =>
+                handleKeyUp(ev, formAddMaster, setFormAddMaster)
+              }
+            />
+
+            <button type="submit">ADD MASTER ACCOUNT</button>
+          </form>
           {accounts.map((acc, index) => {
             return (
               <div key={acc.name + index} className="account">
@@ -86,13 +113,13 @@ export default function Home({ data, success }) {
                       <td>
                         <label>Free balance: </label>
                       </td>
-                      <td>{acc.freeBalance}</td>
+                      <td>$ {acc.freeBalance.toFixed(2)}</td>
                     </tr>
                     <tr>
                       <td>
                         <label>Total balance: </label>
                       </td>
-                      <td>{acc.totalBalance}</td>
+                      <td>$ {acc.totalBalance.toFixed(2)}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -121,19 +148,19 @@ export default function Home({ data, success }) {
                             <td>
                               <label>Free balance: </label>
                             </td>
-                            <td>{bot.freeBalance}</td>
+                            <td>$ {bot.freeBalance.toFixed(2)}</td>
                           </tr>
                           <tr>
                             <td>
                               <label>Total balance: </label>
                             </td>
-                            <td>{bot.totalBalance}</td>
+                            <td>$ {bot.totalBalance.toFixed(2)}</td>
                           </tr>
                           <tr>
                             <td>
                               <label>Commission: </label>
                             </td>
-                            <td>{bot.commission}</td>
+                            <td>$ {bot.commission.toFixed(2)}</td>
                           </tr>
                           <tr>
                             <td>
@@ -160,25 +187,44 @@ export default function Home({ data, success }) {
                           </tr>
                         </tbody>
                       </table>
-
-                      {bot.trades.map(trade=>{
-                        <table>
-                          <tbody>                       
-                            <tr>
-                              <td>
-                                <label>Trade status: </label>
-                              </td>
-                              <td>{trade.status}</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <label>Trade balance: </label>
-                              </td>
-                              <td>{trade.totalBalance}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      })}
+                      {bot.trades.length ? bot.trades.map((trade, i)=>{
+                        if(trade.status === 'opened' || true) return (
+                            <table key={trade.currentPrice + i}>
+                              <tbody>                       
+                                <tr>
+                                  <td>
+                                    <label>Asset: </label>
+                                  </td>
+                                  <td>{trade.symbol}</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <label>Last price: </label>
+                                  </td>
+                                  <td>$ {trade.currentPrice.toFixed(2)}</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <label>Trade status: </label>
+                                  </td>
+                                  <td>{trade.status}</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <label>Trade PNL: </label>
+                                  </td>
+                                  <td>$ {trade.pnl.toFixed(2)}</td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <label>Trade balance: </label>
+                                  </td>
+                                  <td>$ {trade.tradeBalance.toFixed(2)}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        );
+                      }) : <p key={'0'}>Any opened trade!</p>}
                     </div>
                   );
                 })}
@@ -187,34 +233,6 @@ export default function Home({ data, success }) {
               </div>
             );
           })}
-
-          <form onSubmit={addMasterAccount}>
-            <h3>Create master account:</h3>
-
-            <label>Account name:</label>
-            <input
-              name="name"
-              type="text"
-              autoCapitalize="true"
-              value={formAddMaster.name}
-              onChange={(ev) =>
-                handleKeyUp(ev, formAddMaster, setFormAddMaster)
-              }
-            />
-
-            <label>Inicial balance (USDT):</label>
-            <input
-              name="totalBalance"
-              type="number"
-              inputMode="numeric"
-              value={formAddMaster.totalBalance}
-              onChange={(ev) =>
-                handleKeyUp(ev, formAddMaster, setFormAddMaster)
-              }
-            />
-
-            <button type="submit">ADD MASTER ACCOUNT</button>
-          </form>
         </div>
       </section>
     </>

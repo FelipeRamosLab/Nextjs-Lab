@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+table tr {
+    background-color: #f3f3f3;
+}
+
+form {
+    background: grey;
+    padding: 15px;
+}

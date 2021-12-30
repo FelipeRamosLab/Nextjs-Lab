@@ -6,7 +6,7 @@ const root = config[config.root];
 
 export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}){
     const [formData, setFormData] = useState({
-        name: 'Futurama',
+        name: '---------------------------------',
         totalBalance: 0,
         bot: 'Bender',
         assets: 'BTCUSDT'
