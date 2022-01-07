@@ -193,7 +193,7 @@ export default function Home({ data, success }) {
                       {bot.trades.length ? bot.trades.map((trade, i)=>{
                         if(trade.status === 'opened'){ 
                           return (
-                            <div>
+                            <div key={trade.id + i}>
                               <Trade trade={trade}/>
                             </div>
                           );
@@ -203,7 +203,7 @@ export default function Home({ data, success }) {
                         <summary>CLOSED TRADES</summary>
                         {bot.trades.length && bot.trades.map((trade, i)=>{
                           if(trade.status !== 'opened'){ 
-                            return <Trade trade={trade}/>
+                            return <Trade key={trade.id + i} trade={trade}/>
                           }
                         })}
                       </details>
