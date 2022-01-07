@@ -14,3 +14,7 @@ form {
     background: grey;
     padding: 15px;
 }
+
+details {
+    padding: 10px;
+}

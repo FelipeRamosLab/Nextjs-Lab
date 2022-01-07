@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import $ from "jquery";
 import CreateBotAccount from './components/CreateBotAccount';
 import TransferMoney from './components/TransferMoney';
 import config from '../config.json';
+import Trade from "./components/Trade";
 
 const root = config[config.root];
 
@@ -92,8 +93,8 @@ export default function Home({ data, success }) {
           </form>
           {accounts.map((acc, index) => {
             return (
-              <div key={acc.name + index} className="account">
-                <h3>{acc.name}</h3>
+              <details key={acc.name + index} className="account">
+                <summary>{acc.name}</summary>
 
                 <table>
                   <tbody>
@@ -127,7 +128,9 @@ export default function Home({ data, success }) {
                 <h4>Bot accounts:</h4>
                 {acc.botAccounts.map((bot, index) => {
                   return (
-                    <div key={bot.name + index} className="bot-account">
+                    <details key={bot.name + index} className="bot-account">
+                      <summary>{bot.assets} ($ {bot.totalBalance.toFixed(2)})</summary>
+
                       <h5>{bot.name}</h5>
 
                       <table>
@@ -188,49 +191,28 @@ export default function Home({ data, success }) {
                         </tbody>
                       </table>
                       {bot.trades.length ? bot.trades.map((trade, i)=>{
-                        if(trade.status === 'opened') return (
-                            <table key={trade.currentPrice + i}>
-                              <tbody>                       
-                                <tr>
-                                  <td>
-                                    <label>Asset: </label>
-                                  </td>
-                                  <td>{trade.symbol}</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <label>Last price: </label>
-                                  </td>
-                                  <td>$ {trade.currentPrice.toFixed(2)}</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <label>Trade status: </label>
-                                  </td>
-                                  <td>{trade.status}</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <label>Trade PNL: </label>
-                                  </td>
-                                  <td>$ {trade.pnl.toFixed(2)}</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <label>Trade balance: </label>
-                                  </td>
-                                  <td>$ {trade.tradeBalance.toFixed(2)}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                        );
+                        if(trade.status === 'opened'){ 
+                          return (
+                            <div>
+                              <Trade trade={trade}/>
+                            </div>
+                          );
+                        }
                       }) : <p key={'0'}>Any opened trade!</p>}
-                    </div>
+                      <details>
+                        <summary>CLOSED TRADES</summary>
+                        {bot.trades.length && bot.trades.map((trade, i)=>{
+                          if(trade.status !== 'opened'){ 
+                            return <Trade trade={trade}/>
+                          }
+                        })}
+                      </details>
+                    </details>
                   );
                 })}
                 <CreateBotAccount masterID={acc.id} handleKeyUp={handleKeyUp} accountsSetter={setAccounts}/>
 
-              </div>
+              </details>
             );
           })}
         </div>
