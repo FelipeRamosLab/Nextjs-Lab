@@ -7,31 +7,31 @@ export default function Trade({ trade }) {
                     <td>
                         <label>Asset: </label>
                     </td>
-                    <td>{trade.symbol}</td>
+                    <td>{trade && trade.symbol}</td>
                 </tr>
                 <tr>
                     <td>
                         <label>Last price: </label>
                     </td>
-                    <td>$ {trade.currentPrice.toFixed(2)}</td>
+                    <td>$ {trade && trade.currentPrice.toFixed(2)}</td>
                 </tr>
                 <tr>
                     <td>
                         <label>Trade status: </label>
                     </td>
-                    <td>{trade.status}</td>
+                    <td>{trade && trade.status}</td>
                 </tr>
                 <tr>
                     <td>
                         <label>Trade PNL: </label>
                     </td>
-                    <td>$ {trade.pnl.toFixed(2)}</td>
+                    <td>$ {trade && trade.pnl.toFixed(2)}</td>
                 </tr>
                 <tr>
                     <td>
                         <label>Trade balance: </label>
                     </td>
-                    <td>$ {trade.tradeBalance.toFixed(2)}</td>
+                    <td>$ {trade && trade.tradeBalance.toFixed(2)}</td>
                 </tr>
             </tbody>
         </table>
