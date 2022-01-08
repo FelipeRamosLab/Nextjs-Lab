@@ -38,7 +38,15 @@ export default function Home({ data, success }) {
   }
 
   function runBotAccount(masterID, botAccountID){
-    axios.post(root + '/run-botaccount', {acid: masterID, botac: botAccountID}).then(res=>{
+    axios.post(root + '/run-botaccount', {acid: masterID, botac: botAccountID }).then(res=>{
+      console.log(res);
+    }).catch(err=>{
+      console.error(err);
+    });
+  }
+
+  function stopBotAccount(masterID, botAccountID){
+    axios.post(root + '/stop-botaccount', { type: 'normal', masterID, botAccountID }).then(res=>{
       console.log(res);
     }).catch(err=>{
       console.error(err);
@@ -118,6 +126,12 @@ export default function Home({ data, success }) {
                     </tr>
                     <tr>
                       <td>
+                        <label>PNL: </label>
+                      </td>
+                      <td>$ {Number(acc.pnl.money).toFixed(2)} ({Number(acc.pnl.percentage).toFixed(2)}%)</td>
+                    </tr>
+                    <tr>
+                      <td>
                         <label>Total balance: </label>
                       </td>
                       <td>$ {Number(acc.totalBalance).toFixed(2)}</td>
@@ -129,7 +143,7 @@ export default function Home({ data, success }) {
                 {acc.botAccounts.map((bot, index) => {
                   return (
                     <details key={bot.name + index} className="bot-account">
-                      <summary>{bot.assets} ($ {bot.totalBalance.toFixed(2)})</summary>
+                      <summary>{bot.assets} ({bot.pnl.percentage.toFixed(2)}%)</summary>
 
                       <h5>{bot.name}</h5>
 
@@ -155,6 +169,12 @@ export default function Home({ data, success }) {
                           </tr>
                           <tr>
                             <td>
+                              <label>PNL: </label>
+                            </td>
+                            <td>$ {bot.pnl.money.toFixed(2)} ({bot.pnl.percentage.toFixed(2)}%)</td>
+                          </tr>
+                          <tr>
+                            <td>
                               <label>Total balance: </label>
                             </td>
                             <td>$ {bot.totalBalance.toFixed(2)}</td>
@@ -174,6 +194,7 @@ export default function Home({ data, success }) {
                           <tr>
                             <td>
                               <button onClick={()=>runBotAccount(acc.id, bot.id)}>RUN BOT ACCOUNT</button>
+                              <button onClick={()=>stopBotAccount(acc.id, bot.id)}>STOP BOT ACCOUNT</button>
                             </td>
                           </tr>
                           <tr>

@@ -13,7 +13,7 @@ export default function Trade({ trade }) {
                     <td>
                         <label>Last price: </label>
                     </td>
-                    <td>$ {trade && trade.currentPrice.toFixed(2)}</td>
+                    <td>$ {trade && trade.currentPrice.toFixed(5)}</td>
                 </tr>
                 <tr>
                     <td>
