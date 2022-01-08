@@ -45,8 +45,8 @@ export default function Home({ data, success }) {
     });
   }
 
-  function stopBotAccount(masterID, botAccountID){
-    axios.post(root + '/stop-botaccount', { type: 'normal', masterID, botAccountID }).then(res=>{
+  function stopBotAccount(masterID, botAccountID, forcingStop){
+    axios.post(root + '/stop-botaccount', { type: forcingStop ? 'forced' : 'normal', masterID, botAccountID }).then(res=>{
       console.log(res);
     }).catch(err=>{
       console.error(err);
@@ -195,6 +195,7 @@ export default function Home({ data, success }) {
                             <td>
                               <button onClick={()=>runBotAccount(acc.id, bot.id)}>RUN BOT ACCOUNT</button>
                               <button onClick={()=>stopBotAccount(acc.id, bot.id)}>STOP BOT ACCOUNT</button>
+                              <button onClick={()=>stopBotAccount(acc.id, bot.id, true)}>FORCESTOP BOT ACCOUNT</button>
                             </td>
                           </tr>
                           <tr>
