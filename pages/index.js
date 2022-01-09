@@ -136,6 +136,15 @@ export default function Home({ data, success }) {
                       </td>
                       <td>$ {Number(acc.totalBalance).toFixed(2)}</td>
                     </tr>
+                    <tr>
+                      <td>
+                        <label>Stop bot accounts: </label>
+                      </td>
+                      <td>
+                        <button onClick={()=>stopBotAccount(acc.id)}>STOP ALL BOT ACCOUNTS</button>
+                        <button onClick={()=>stopBotAccount(acc.id, false, true)}>FORCESTOP ALL BOT ACCOUNTS</button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
 
