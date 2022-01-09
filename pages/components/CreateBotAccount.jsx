@@ -8,7 +8,7 @@ export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}
     const [formData, setFormData] = useState({
         name: '---------------------------------',
         totalBalance: 0,
-        bot: 'Bender',
+        bot: 'Breakup High-Low',
         assets: 'BTCUSDT',
         interval: '1m'
     });
