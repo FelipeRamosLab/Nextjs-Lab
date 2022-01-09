@@ -172,6 +172,12 @@ export default function Home({ data, success }) {
                           </tr>
                           <tr>
                             <td>
+                              <label>Interval: </label>
+                            </td>
+                            <td>{bot.interval}</td>
+                          </tr>
+                          <tr>
+                            <td>
                               <label>Free balance: </label>
                             </td>
                             <td>$ {bot.freeBalance.toFixed(2)}</td>

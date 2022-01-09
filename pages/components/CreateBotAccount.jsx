@@ -9,7 +9,8 @@ export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}
         name: '---------------------------------',
         totalBalance: 0,
         bot: 'Bender',
-        assets: 'BTCUSDT'
+        assets: 'BTCUSDT',
+        interval: '1m'
     });
 
     async function createBotAccount(ev, postParams){
@@ -47,6 +48,25 @@ export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}
                 handleKeyUp(ev, formData, setFormData)
               }
             />
+
+            <label>Interval:</label>
+            <select
+              name="interval"
+              value={formData.interval}
+              onChange={(ev) =>
+                handleKeyUp(ev, formData, setFormData)
+              }
+            >
+              <option value="1m">1m</option>
+              <option value="3m">3m</option>
+              <option value="5m">5m</option>
+              <option value="15m">15m</option>
+              <option value="30m">30m</option>
+              <option value="1h">1h</option>
+              <option value="4h">4h</option>
+              <option value="1d">1d</option>
+              <option value="1w">1w</option>
+            </select>
 
             <label>Bot:</label>
             <input
