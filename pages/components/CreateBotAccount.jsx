@@ -4,13 +4,14 @@ import config from '../../config.json';
 
 const root = config[config.root];
 
-export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}){
+export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter, masterAccount}){
     const [formData, setFormData] = useState({
         name: '---------------------------------',
         totalBalance: 0,
         bot: 'Breakup High-Low',
         assets: 'BTCUSDT',
-        interval: '1m'
+        interval: '1m',
+        marketType: 'spot'
     });
 
     async function createBotAccount(ev, postParams){
@@ -67,17 +68,31 @@ export default function CreateBotAccount({masterID, handleKeyUp, accountsSetter}
               <option value="1d">1d</option>
               <option value="1w">1w</option>
             </select>
+            
+            <label>Market:</label>
+            <select
+              name="marketType"
+              value={formData.marketType}
+              onChange={(ev) =>
+                handleKeyUp(ev, formData, setFormData)
+              }
+            >
+              <option value="spot">Spot</option>
+              <option value="future">Future</option>
+            </select>
 
             <label>Bot:</label>
-            <input
+            <select
               name="bot"
-              type="text"
-              autoCapitalize="true"
               value={formData.bot}
               onChange={(ev) =>
                 handleKeyUp(ev, formData, setFormData)
               }
-            />
+            >
+              {masterAccount && masterAccount.availableBots.map((botOpt, index)=>{
+                return <option key={botOpt.name + index} value={botOpt.name}>{botOpt.name}</option>
+              })}
+            </select>
 
             <button type="submit">CREATE BOT ACCOUNT</button>
         </form>

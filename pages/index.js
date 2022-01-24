@@ -247,7 +247,7 @@ export default function Home({ data, success }) {
                     </details>
                   );
                 })}
-                <CreateBotAccount masterID={acc.id} handleKeyUp={handleKeyUp} accountsSetter={setAccounts}/>
+                <CreateBotAccount masterID={acc.id} masterAccount={acc} handleKeyUp={handleKeyUp} accountsSetter={setAccounts}/>
 
               </details>
             );

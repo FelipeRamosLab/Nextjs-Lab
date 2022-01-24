@@ -11,6 +11,12 @@ export default function Trade({ trade }) {
                 </tr>
                 <tr>
                     <td>
+                        <label>Position type: </label>
+                    </td>
+                    <td>{trade && trade.positionType}</td>
+                </tr>
+                <tr>
+                    <td>
                         <label>Last price: </label>
                     </td>
                     <td>$ {trade && trade.currentPrice.toFixed(5)}</td>

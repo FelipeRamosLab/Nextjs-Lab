@@ -1,5 +1,5 @@
 {
     "root": "DEV",
-    "PROD": "http://34.70.250.6",
-    "DEV": "http://localhost:80"
+    "PROD": "http://34.122.131.52",
+    "DEV": "http://192.168.15.3"
 }
