@@ -168,7 +168,7 @@ export default function Home({ data, success }) {
                             <td>
                               <label>Coins: </label>
                             </td>
-                            <td>{bot.assets}</td>
+                            <td>{bot.assets} <a href={`https://www.binance.com/en/trade/${Array.isArray(bot.assets) && typeof bot.assets[0] === 'string' && bot.assets[0].replace('USDT', '_USDT')}`} target="_blank" rel="noreferrer">See chart</a></td>
                           </tr>
                           <tr>
                             <td>
@@ -230,17 +230,17 @@ export default function Home({ data, success }) {
                       {bot.trades.length ? bot.trades.map((trade, i)=>{
                         if(trade.status === 'opened'){ 
                           return (
-                            <div key={trade.id + i}>
+                            <div key={trade.openTime + i}>
                               <Trade trade={trade}/>
                             </div>
                           );
                         }
-                      }) : <p key={'0'}>Any opened trade!</p>}
+                      }) : <p key={Date.now()}>Any opened trade!</p>}
                       <details>
                         <summary>CLOSED TRADES</summary>
                         {bot.trades.length && bot.trades.map((trade, i)=>{
                           if(trade.status !== 'opened'){ 
-                            return <Trade key={trade.id + i} trade={trade}/>
+                            return <Trade key={trade.openTime + i} trade={trade}/>
                           }
                         })}
                       </details>
