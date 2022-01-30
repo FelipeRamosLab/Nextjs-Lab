@@ -160,7 +160,7 @@ export default function Home({ data, success }) {
                 {acc.botAccounts.map((bot, index) => {
                   return (
                     <details key={bot.name + index} className="bot-account">
-                      <summary>{bot.assets} ({bot.pnl.percentage.toFixed(2)}%)</summary>
+                      <summary>{bot.assets} ({bot.pnl.percentage.toFixed(2)}%) - {bot.status}</summary>
 
                       <h5>{bot.name}</h5>
 
@@ -183,6 +183,18 @@ export default function Home({ data, success }) {
                               <label>Interval: </label>
                             </td>
                             <td>{bot.interval}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Market type: </label>
+                            </td>
+                            <td>{bot.marketType}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Disable short term: </label>
+                            </td>
+                            <td>{bot.disableShortPosition ? 'true' : 'false'}</td>
                           </tr>
                           <tr>
                             <td>

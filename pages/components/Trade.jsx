@@ -17,6 +17,18 @@ export default function Trade({ trade }) {
                 </tr>
                 <tr>
                     <td>
+                        <label>Open time: </label>
+                    </td>
+                    <td>{trade && new Date(trade.openTime).toDateString()} - {trade && new Date(trade.openTime).toTimeString()}</td>
+                </tr>
+                {trade.closeTime && <tr>
+                    <td>
+                        <label>Close time: </label>
+                    </td>
+                    <td>{trade && new Date(trade.closeTime).toDateString()} - {trade && new Date(trade.closeTime).toTimeString()}</td>
+                </tr>}
+                <tr>
+                    <td>
                         <label>Last price: </label>
                     </td>
                     <td>$ {trade && trade.currentPrice.toFixed(5)}</td>

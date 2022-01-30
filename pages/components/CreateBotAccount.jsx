@@ -83,12 +83,12 @@ export default function CreateBotAccount({masterID, handleKeyUp, handleCheckbox,
             <option value="spot">Spot</option>
           </select>
 
-          <input
+          {(formData.marketType === 'future') && <><input
             type="checkbox"
             name="disableShortPosition"
             onChange={(ev)=>handleCheckbox(ev, formData, setFormData)}
           />
-          <label>Disable short term</label>
+          <label>Disable short term</label></>}
 
           <label>Bot:</label>
           <select
