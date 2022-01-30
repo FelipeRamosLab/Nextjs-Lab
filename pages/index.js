@@ -61,6 +61,14 @@ export default function Home({ data, success }) {
     setter(newGetter);
   }
 
+  function handleCheckbox(ev, getter, setter) {
+    const newGetter = { ...getter };
+    const prop = $(ev.target).attr("name");
+
+    newGetter[prop] = ev.target.checked;
+    setter(newGetter);
+  }
+
   return (
     <>
       <header>
@@ -247,7 +255,7 @@ export default function Home({ data, success }) {
                     </details>
                   );
                 })}
-                <CreateBotAccount masterID={acc.id} masterAccount={acc} handleKeyUp={handleKeyUp} accountsSetter={setAccounts}/>
+                <CreateBotAccount masterID={acc.id} masterAccount={acc} handleKeyUp={handleKeyUp} handleCheckbox={handleCheckbox} accountsSetter={setAccounts}/>
 
               </details>
             );
