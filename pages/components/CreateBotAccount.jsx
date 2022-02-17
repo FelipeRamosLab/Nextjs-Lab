@@ -17,7 +17,7 @@ export default function CreateBotAccount({masterID, handleKeyUp, handleCheckbox,
 
   async function createBotAccount(ev, postParams){
       ev.preventDefault();
-      postParams.botAccountConfig.assets = [postParams.botAccountConfig.assets];
+      if(!Array.isArray(postParams.botAccountConfig.assets)) postParams.botAccountConfig.assets = [postParams.botAccountConfig.assets];
 
       try {
           const created = await axios.post(root + '/create-botaccount', postParams);
