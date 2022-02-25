@@ -160,7 +160,7 @@ export default function Home({ data, success }) {
                 {acc.botAccounts.map((bot, index) => {
                   return (
                     <details key={bot.name + index} className="bot-account">
-                      <summary>{bot.assets} ({bot.pnl.percentage.toFixed(2)}%) - {bot.status}</summary>
+                      <summary>{bot.assets} ({bot.pnl.percentage && bot.pnl.percentage.toFixed(2)}%) - {bot.status}</summary>
 
                       <h5>{bot.name}</h5>
 
@@ -206,7 +206,7 @@ export default function Home({ data, success }) {
                             <td>
                               <label>PNL: </label>
                             </td>
-                            <td>$ {bot.pnl.money.toFixed(2)} ({bot.pnl.percentage.toFixed(2)}%)</td>
+                            <td>$ {bot.pnl.money.toFixed(2)} ({bot.pnl.percentage && bot.pnl.percentage.toFixed(2)}%)</td>
                           </tr>
                           <tr>
                             <td>

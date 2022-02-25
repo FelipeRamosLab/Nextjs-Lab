@@ -18,3 +18,7 @@ form {
 details {
     padding: 10px;
 }
+
+.open-trade {
+    background-color: #ad6;
+}
