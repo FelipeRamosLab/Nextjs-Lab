@@ -11,8 +11,8 @@ const root = config[config.root];
 export default function Home({ data, success }) {
   const [accounts, setAccounts] = useState(data ? data.accounts : []);
   const [formAddMaster, setFormAddMaster] = useState({
-    name: "Felipe (Demo)",
-    totalBalance: 1000,
+    name: "---",
+    totalBalance: 500,
   });
 
   useEffect(()=>{

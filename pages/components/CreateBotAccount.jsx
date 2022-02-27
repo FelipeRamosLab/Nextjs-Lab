@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../../config.json';
 
@@ -6,14 +6,37 @@ const root = config[config.root];
 
 export default function CreateBotAccount({masterID, handleKeyUp, handleCheckbox, accountsSetter, masterAccount}){
   const [formData, setFormData] = useState({
-      name: '---------------------------------',
-      totalBalance: 0,
-      bot: 'Goals',
-      assets: 'BTCUSDT',
-      interval: '1m',
-      marketType: 'future',
-      disableShortPosition: false,
+    name: '---------------------------------',
+    totalBalance: 0,
+    bot: 'Old Strategy (5 candles)',
+    assets: 'BTCUSDT',
+    interval: '1m',
+    marketType: 'future',
+    limits: {
+      tradeLoss: {
+        percentage: 2
+      },
+      dailyLoss: {
+        percentage: 4
+      },
+      monthlyLoss: {
+        percentage: 10
+      },
+      leverage: 120
+    },
+    disableShortPosition: false,
   });
+  const [tradeLoss, setTradeLoss] = useState(formData.limits.tradeLoss.percentage);
+  const [leverage, setLeverage] = useState(formData.limits.leverage);
+  
+  useEffect(()=>{
+    let result = {...formData};
+    
+    result.limits.tradeLoss.percentage = tradeLoss;
+    result.limits.leverage = leverage;
+
+    setFormData(result);
+  }, [tradeLoss, leverage])
 
   async function createBotAccount(ev, postParams){
       ev.preventDefault();
@@ -23,9 +46,23 @@ export default function CreateBotAccount({masterID, handleKeyUp, handleCheckbox,
           const created = await axios.post(root + '/create-botaccount', postParams);
           accountsSetter(created.data.data)
           console.log(formData)
-      } catch(err){
+        } catch(err){
           console.error(err);
+        }
       }
+      
+      function handleObj(ev){
+        let name = ev.target.name;
+        switch(name){
+      case 'leverage': {
+        setLeverage(Number(ev.target.value))
+        break;
+      }
+      case 'tradeLoss': {
+        setTradeLoss(Number(ev.target.value))
+        break;
+      }
+    }
   }
 
   return (
@@ -50,6 +87,22 @@ export default function CreateBotAccount({masterID, handleKeyUp, handleCheckbox,
             onChange={(ev) =>
               handleKeyUp(ev, formData, setFormData)
             }
+          />
+
+          <label>Max leverage:</label>
+          <input
+            name="leverage"
+            type="number"
+            value={formData.limits.leverage}
+            onChange={(ev) => handleObj(ev)}
+          />
+
+          <label>Max loss per trade:</label>
+          <input
+            name="tradeLoss"
+            type="number"
+            value={formData.limits.tradeLoss.percentage}
+            onChange={(ev) =>handleObj(ev)}
           />
 
           <label>Interval:</label>
