@@ -19,6 +19,11 @@ details {
     padding: 10px;
 }
 
+summary {
+    cursor: pointer;
+    user-select: none;
+}
+
 .open-trade {
     background-color: #ad6;
 }

@@ -160,7 +160,7 @@ export default function Home({ data, success }) {
                 {acc.botAccounts.map((bot, index) => {
                   return (
                     <details key={bot.name + index} className="bot-account">
-                      <summary>{bot.assets} ({bot.pnl.percentage && bot.pnl.percentage.toFixed(2)}%) - {bot.status}</summary>
+                      <summary>{bot.assets} ($ {bot.pnl.money && bot.pnl.money.toFixed(2)}) - {bot.status}</summary>
 
                       <h5>{bot.name}</h5>
 
@@ -176,7 +176,7 @@ export default function Home({ data, success }) {
                             <td>
                               <label>Coins: </label>
                             </td>
-                            <td>{bot.assets} <a href={`https://www.binance.com/en/trade/${Array.isArray(bot.assets) && typeof bot.assets[0] === 'string' && bot.assets[0].replace('USDT', '_USDT')}`} target="_blank" rel="noreferrer">See chart</a></td>
+                            <td>{bot.assets} <a href={`https://www.binance.com/en/futures/${Array.isArray(bot.assets) && typeof bot.assets[0] === 'string' && bot.assets[0].replace('USDT', '_USDT')}`} target="_blank" rel="noreferrer">See chart</a></td>
                           </tr>
                           <tr>
                             <td>
@@ -219,6 +219,12 @@ export default function Home({ data, success }) {
                               <label>Commission: </label>
                             </td>
                             <td>$ {bot.commission.toFixed(2)}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Bot name: </label>
+                            </td>
+                            <td>{bot.bot.name}</td>
                           </tr>
                           <tr>
                             <td>

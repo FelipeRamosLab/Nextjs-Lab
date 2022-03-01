@@ -21,7 +21,7 @@ export default function Trade({ trade }) {
                     </td>
                     <td>{trade && new Date(trade.openTime).toDateString()} - {trade && new Date(trade.openTime).toTimeString()}</td>
                 </tr>
-                {trade.closeTime && <tr className="open-trade">
+                {trade && trade.closeTime && <tr className="open-trade">
                     <td>
                         <label>Close time: </label>
                     </td>
