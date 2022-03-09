@@ -6,7 +6,7 @@ export default function TransferMoney({masterID, botAccountID, handleKeyUp}){
     const [formData, setFormData] = useState({
       senderPath: `${masterID}`,
       receiverPath: `${masterID}/${botAccountID}`,
-      amount: 50
+      amount: 100
     });
 
     function transfer(ev){
