@@ -1,43 +1,28 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import config from '../config.json';
+import MasterAccount from './chart/MasterAccount';
+
+const root = config[config.root];
 
 export default function ResultRecord() {
+    const [accounts, setAccounts] = useState([]);
+
     useEffect(()=>{
-        import('apexcharts').then(res=>{
-            const ApexCharts = res.default;
-            const options = {
-                chart: {
-                  type: 'candlestick'
-                },
-                series: [{
-                  name: 'sales',
-                  data: []
-                }],
-                xaxis: {
-                  categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-                }
-            }
-              
-            var chart = new ApexCharts(document.querySelector("#my-chart"), options);
-              
-            chart.render();
-        })
+        axios.get(root + "/get-accounts").then(acc=>{
+            setAccounts(acc.data);
+          }).catch(err=>{
+            console.error(err);
+          });
     }, []);
 
     return (<>
         <h1>Result Records</h1>
 
-        <div id="my-chart"></div>
+        <h2>Master Accounts:</h2>
+        {accounts.map((acc, i)=>{
+            return <MasterAccount key={'master-' + i} acc={acc} />;
+        })}
     </>);
 }
 
-async function getRecords() {
-    try {
-        console.log('Download started!')
-        const records = await axios.post('http://35.193.248.29/database/get-collection/ResultRecord', {});
-        console.log('Download concluded!')
-        return records;
-    } catch (err) {
-        return err
-    }
-}
