@@ -14,6 +14,10 @@ form {
     padding: 15px;
 }
 
+select {
+    max-width: 300px;
+}
+
 details {
     padding: 10px;
 }
