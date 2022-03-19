@@ -12,8 +12,9 @@ export default function BotAccountChart({ acc }) {
     }}>
         {chartState ? (<>
             <div chart-id={chartID}></div>
+            <button type="button" onClick={()=>setChartState(false)}>Close chart</button>
         </>) : (<>
-            <button type="submit">See chart</button>
+            <button type="submit">Open chart</button>
         </>)}
     </form>)
 }
