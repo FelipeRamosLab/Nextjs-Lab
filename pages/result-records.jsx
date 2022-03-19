@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import config from '../config.json';
-import MasterAccount from './chart/MasterAccount';
+import MasterAccount from './chart/BotAccount';
 
 const root = config[config.root];
 

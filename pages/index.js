@@ -5,6 +5,7 @@ import CreateBotAccount from './components/CreateBotAccount';
 import TransferMoney from './components/TransferMoney';
 import config from '../config.json';
 import Trade from "./components/Trade";
+import Chart from './chart/BotAccount';
 
 const root = config[config.root];
 
@@ -253,6 +254,9 @@ export default function Home({ data, success }) {
                           </tr>
                         </tbody>
                       </table>
+
+                      <Chart acc={bot} />
+
                       {bot.trades.length ? bot.trades.map((trade, i)=>{
                         if(trade.status === 'opened'){ 
                           return (
