@@ -93,27 +93,28 @@ export function buildCandleChart(raw, interval){
 
     while(currentTime <= Date.now()){
         let endTime = currentTime + millisInterval;
-
         const filter = raw.filter(item=>{
             let itemTime = new Date(item.timestamp).getTime();
             if(itemTime >= currentTime && itemTime <= endTime) return item;
         });
 
-        const lastCandle = filter[filter.length-1];
-        const open = filter[0].pnl.money;
-        const close = lastCandle.pnl.money;
-        let low = open;
-        let high = open;
-        
-        filter.map(item=>{
-            if(item.pnl.money > high) high = item.pnl.money;
-            if(item.pnl.money < low) low = item.pnl.money;
-        });
-
-        result.push({
-            y: [open, high, low, close],
-            x: new Date(endTime)
-        });
+        if(filter.length){
+            const lastCandle = filter[filter.length-1];
+            const open = filter[0].pnl.money;
+            const close = lastCandle.pnl.money;
+            let low = open;
+            let high = open;
+            
+            filter.map(item=>{
+                if(item.pnl.money > high) high = item.pnl.money;
+                if(item.pnl.money < low) low = item.pnl.money;
+            });
+    
+            result.push({
+                y: [open, high, low, close],
+                x: new Date(endTime)
+            });
+        }
         currentTime = endTime;
     }
 
