@@ -6,32 +6,50 @@ export default function BotAccountChart({ acc }) {
     const [chartID, setChartID] = useState(genCode(15));
     const [chartState, setChartState] = useState(false);
 
-    return (<form onSubmit={(ev) => {
-        openChart(ev, chartID, acc);
-        setChartState(true);
-    }}>
+    return (<div>
         {chartState ? (<>
             <div chart-id={chartID}></div>
             <button type="button" onClick={()=>setChartState(false)}>Close chart</button>
         </>) : (<>
-            <button type="submit">Open chart</button>
+            <button type="submit" onClick={(ev) => {
+                openChart(ev, chartID, acc, '5m');
+                setChartState(true);
+            }}>5MIN</button>
+            <button type="submit" onClick={(ev) => {
+                openChart(ev, chartID, acc, '15m');
+                setChartState(true);
+            }}>15MIN</button>
+            <button type="submit" onClick={(ev) => {
+                openChart(ev, chartID, acc, '30m');
+                setChartState(true);
+            }}>30MIN</button>
+            <button type="submit" onClick={(ev) => {
+                openChart(ev, chartID, acc, '1h');
+                setChartState(true);
+            }}>1H</button>
+            <button type="submit" onClick={(ev) => {
+                openChart(ev, chartID, acc, '4h');
+                setChartState(true);
+            }}>4H</button>
+            <button type="submit" onClick={(ev) => {
+                openChart(ev, chartID, acc, '1d');
+                setChartState(true);
+            }}>1D</button>
         </>)}
-    </form>)
+    </div>)
 }
 
-export function openChart(ev, chartID, acc) {
-    ev.preventDefault();
-
+export function openChart(ev, chartID, acc, interval) {
     import('apexcharts').then(async res => {
+        const wrapper = document.querySelector(`[chart-id="${chartID}"]`);
         const ApexChart = res.default;
         const recs = await getRecords({botAccountID: acc.id});
-        const data = buildCandleChart(recs, '5m');
-
-        const chart = new ApexChart(document.querySelector(`[chart-id="${chartID}"]`), {
+        const data = buildCandleChart(recs, interval);
+        const chart = new ApexChart(wrapper, {
             series: [{ data }],
             chart: {
                 type: 'candlestick',
-                height: 500
+                height: 400
             },
             title: {
                 text: acc.name,
@@ -111,7 +129,7 @@ export function buildCandleChart(raw, interval){
             });
     
             result.push({
-                y: [open, high, low, close],
+                y: [Number(open.toFixed(2)), Number(high.toFixed(2)), Number(low.toFixed(2)), Number(close.toFixed(2))],
                 x: new Date(endTime)
             });
         }

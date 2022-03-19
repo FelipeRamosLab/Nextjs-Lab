@@ -31,6 +31,6 @@ summary {
     background-color: #ad6;
 }
 
-.apexcharts-title-text {
-    color: #f7f7f7;
+[chart-id] {
+    background-color: white;
 }
