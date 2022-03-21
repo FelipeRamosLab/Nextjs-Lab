@@ -25,6 +25,17 @@ details {
 summary {
     cursor: pointer;
     user-select: none;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+summary.master{
+    background-color: #333;
+    color: white;
+}
+
+summary.bot{
+    background-color: #a7c1bd;
 }
 
 .open-trade {
@@ -32,5 +43,5 @@ summary {
 }
 
 [chart-id] {
-    background-color: white;
+    background-color: #f9f9f9;
 }
