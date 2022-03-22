@@ -27,10 +27,11 @@ summary {
     user-select: none;
     padding: 5px;
     margin-bottom: 5px;
+    border-radius: 6px;
 }
 
 summary.master{
-    background-color: #333;
+    background-color: #424e54;
     color: white;
 }
 
