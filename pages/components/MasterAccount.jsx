@@ -51,6 +51,34 @@ export default function MasterAccount({acc, methods}){
                         <button onClick={()=>stopBotAccount(acc.id, false, true)}>FORCESTOP ALL BOT ACCOUNTS</button>
                     </td>
                     </tr>
+                    <tr>
+                        <td>Available balance:</td>
+                        <td>{acc.futuresWallet.availableBalance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                    </tr>
+                    <tr>
+                        <td>Max withdraw amount:</td>
+                        <td>{acc.futuresWallet.maxWithdrawAmount.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                    </tr>
+                    <tr>
+                        <td>Total cross unpnl:</td>
+                        <td>{acc.futuresWallet.totalCrossUnPnl.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                    </tr>
+                    <tr>
+                        <td>Total initial margin:</td>
+                        <td>{acc.futuresWallet.totalInitialMargin.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                    </tr>
+                    <tr>
+                        <td>Total margin balance:</td>
+                        <td>{acc.futuresWallet.totalMarginBalance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                    </tr>
+                    <tr>
+                        <td>Total unrealized profit:</td>
+                        <td>{acc.futuresWallet.totalUnrealizedProfit.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                    </tr>
+                    <tr>
+                        <td>Total wallet balance:</td>
+                        <td>{acc.futuresWallet.totalWalletBalance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                    </tr>
                 </tbody>
             </table>
 
