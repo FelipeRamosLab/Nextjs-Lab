@@ -51,6 +51,12 @@ export default function BotAccount({acc, bot, methods}){
                 </tr>
                 <tr>
                     <td>
+                    <label>Available balance: </label>
+                    </td>
+                    <td>{bot.availableBalance.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}</td>
+                </tr>
+                <tr>
+                    <td>
                     <label>PNL: </label>
                     </td>
                     <td>$ {bot.pnl.money.toFixed(2)} ({bot.pnl.percentage && bot.pnl.percentage.toFixed(2)}%)</td>
