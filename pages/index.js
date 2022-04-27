@@ -1,11 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import $ from "jquery";
-import CreateBotAccount from './components/CreateBotAccount';
-import TransferMoney from './components/TransferMoney';
 import config from '../config.json';
-import Trade from "./components/Trade";
-import Chart from './chart/BotAccount';
 import MasterAccount from './components/MasterAccount';
 
 const root = config[config.root];
