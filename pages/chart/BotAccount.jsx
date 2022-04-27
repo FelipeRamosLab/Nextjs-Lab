@@ -118,14 +118,14 @@ export function buildCandleChart(raw, interval){
 
         if(filter.length){
             const lastCandle = filter[filter.length-1];
-            const open = filter[0].pnl.money;
-            const close = lastCandle.pnl.money;
+            const open = filter[0].pnl;
+            const close = lastCandle.pnl;
             let low = open;
             let high = open;
             
             filter.map(item=>{
-                if(item.pnl.money > high) high = item.pnl.money;
-                if(item.pnl.money < low) low = item.pnl.money;
+                if(item.pnl > high) high = item.pnl;
+                if(item.pnl < low) low = item.pnl;
             });
     
             result.push({
