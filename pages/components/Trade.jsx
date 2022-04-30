@@ -29,6 +29,12 @@ export default function Trade({ trade }) {
                 </tr>}
                 <tr className="open-trade">
                     <td>
+                        <label>Open price: </label>
+                    </td>
+                    <td>$ {trade && trade.openPrice.toFixed(5)}</td>
+                </tr>
+                <tr className="open-trade">
+                    <td>
                         <label>Last price: </label>
                     </td>
                     <td>$ {trade && trade.currentPrice.toFixed(5)}</td>
