@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import config from '../../config.json';
-import PageLayout from "../components/pageLayout";
+import config from '../../../config.json';
+import PageLayout from "../../components/pageLayout";
 
 const root = config[config.root];
 
