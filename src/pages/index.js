@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import config from '../../config.json';
 import PageLayout from "../components/pageLayout";
-
-const root = config[config.root];
+import ServerError from "../components/contents/serverError";
+import HomePage from "../components/contents/home";
 
 export default function Home({}) {
   const [pageData, setPageData] = useState({status: 'loading'});
@@ -16,9 +15,7 @@ export default function Home({}) {
 
   if(pageData.hasError) {
     return (<PageLayout>
-      <div className="error-page">
-        <h1>500 - Ocorreu um erro no servidor</h1>
-      </div>
+      <ServerError err={pageData} />
     </PageLayout>)
   }
 
@@ -32,9 +29,7 @@ export default function Home({}) {
 
   return (
     <PageLayout pageData={pageData}>
-      <div className="container">
-        
-      </div>
+      <HomePage pageData={pageData} />
     </PageLayout>
   );
 }
