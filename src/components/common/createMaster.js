@@ -4,6 +4,7 @@ import axios from 'axios';
 export default function CreateMaster({pageData}) {
     const [spinner, setSpinner] = useState(false);
     const [form, setForm] = useState({
+        user: '627acf881e10121be3e718e0',
         type: 'demo',
         name: '',
         initialBalance: 0
@@ -14,12 +15,11 @@ export default function CreateMaster({pageData}) {
         setSpinner(true);
 
         try {
-            await axios.post('/api/master-account/create', {body: form});
+            const saved = await axios.post('/api/master-account/create', form);
             window.location.reload();
         } catch(err) {
             throw err;
         }
-        
     }
 
     if (!spinner) {
