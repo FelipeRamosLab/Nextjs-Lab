@@ -1,12 +1,11 @@
 import MiniMasterAccountTile from '../tiles/miniMasterAccount';
 import ModalButton from '../buttons/modalButton';
-import CreateMaster from '../common/createMaster';
+import CreateMaster from '../forms/createMaster';
 
 export default function HomeContent({pageData}){
     const {user} = pageData || {};
     const {masterAccounts} = user || {};
 
-    console.log(masterAccounts)
     return (<div className="container">
         <div className="section-header">
             <h2>Contas</h2>

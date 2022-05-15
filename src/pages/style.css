@@ -81,6 +81,14 @@ form fieldset {
     margin-bottom: 1rem;
 }
 
+.grid.item {
+    padding: 0;
+}
+
+.grid.columns-1 .item {
+    flex: 100% 0;
+}
+
 .grid.columns-2 .item {
     flex: 49% 0;
 }
@@ -113,6 +121,24 @@ form fieldset {
     font-size: 2rem;
 }
 
+a.card.item {
+    text-decoration: none;
+    color: #f5f5f5;
+}
+
+.close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #f5f5f5;
+    font-size: 1.2rem;
+}
+
 .add-button {
     padding: 0.3rem 1.4rem;
     text-transform: uppercase;
@@ -128,13 +154,15 @@ form fieldset {
     transform: scale(0.98);
 }
 
-.master-accounts .item {
+.master-accounts .item,
+.bot-accounts .item {
     user-select: none;
     cursor: pointer;
     transition: all 200ms;
 }
 
-.master-accounts .item:hover {
+.master-accounts .item:hover,
+.bot-accounts .item:hover {
     background-color: #3b4145;
 }
 
@@ -156,6 +184,7 @@ form fieldset {
 }
 
 .modal {
+    position: relative;
     width: 100%;
     max-width: 721px;
     padding: 2rem;
@@ -166,4 +195,47 @@ form fieldset {
 
 .buttons-wrap {
     text-align: center;
+}
+
+.content-sidebar {
+    display: flex;
+    flex-direction: column;
+    column-gap: 3rem;
+}
+
+@media screen and (min-width: 768px) {
+    .content-sidebar {
+        flex-direction: row;
+    }
+}
+
+.content-sidebar .content {
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+}
+
+.content-sidebar .sidebar {
+    flex: 2;
+}
+
+.wallet {
+    padding: 1rem;
+}
+
+.wallet .title {
+    text-align: center;
+}
+
+.wallet td {
+    width: 100%;
+}
+
+.wallet .label {
+    font-size: 0.9rem;
+}
+
+.wallet .value {
+    font-size: 1.3rem;
+    text-align: right;
 }
