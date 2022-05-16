@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import SuggestionsSelect from '../inputs/suggestionsSelect';
 
 export default function CreateBotAccount({pageData}) {
     const [spinner, setSpinner] = useState(false);
@@ -27,7 +28,7 @@ export default function CreateBotAccount({pageData}) {
 
     if (!spinner) {
         return (<form onSubmit={(ev)=>create(ev)}>
-            <h2 className="title">Criar Robô</h2>
+            <h2 className="title">Criar Bot</h2>
 
             <fieldset>
                 <label>Nome:</label>
@@ -37,6 +38,11 @@ export default function CreateBotAccount({pageData}) {
             <fieldset>
                 <label>Moeda:</label>
                 <input type="text" value={form.assets} onChange={(ev)=>setForm({...form, assets: [ev.target.value.toUpperCase()]})} />
+            </fieldset>
+
+            <fieldset>
+                <label>Alocação da carteira (%):</label>
+                <input type="number" value={form.walletAllocation} onChange={(ev)=>setForm({...form, walletAllocation: Number(ev.target.value)})} />
             </fieldset>
 
             <fieldset>
@@ -58,10 +64,14 @@ export default function CreateBotAccount({pageData}) {
                 </select>
             </fieldset>
 
-            <fieldset>
-                <label>Alocação da carteira (%):</label>
-                <input type="number" value={form.walletAllocation} onChange={(ev)=>setForm({...form, walletAllocation: Number(ev.target.value)})} />
-            </fieldset>
+            <SuggestionsSelect
+                label="Escolher bot:"
+                valueLabel="name"
+                mySuggestionsPath="/api/bot/myBots"
+                setValue={(item)=>{
+                    setForm({...form, bot: item._id})
+                }}
+            />
 
             <div className="buttons-wrap">
                 <button type="submit" className="add-button">Confirmar</button>

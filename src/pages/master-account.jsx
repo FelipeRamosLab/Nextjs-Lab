@@ -13,6 +13,8 @@ export default function MasterAccountPage({queryParams}) {
     });
   }, []);
 
+  console.log(pageData)
+
   if(pageData.hasError) {
     return (<PageLayout>
       <ServerError err={pageData} />
