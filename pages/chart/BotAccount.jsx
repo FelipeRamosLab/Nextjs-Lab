@@ -35,6 +35,10 @@ export default function BotAccountChart({ acc }) {
                 openChart(ev, chartID, acc, '1d');
                 setChartState(true);
             }}>1D</button>
+            <button type="submit" onClick={(ev) => {
+                openChart(ev, chartID, acc, '1w');
+                setChartState(true);
+            }}>1W</button>
         </>)}
     </div>)
 }
@@ -49,7 +53,7 @@ export function openChart(ev, chartID, acc, interval) {
             series: [{ data }],
             chart: {
                 type: 'candlestick',
-                height: 400
+                height: window.innerHeight * 0.8
             },
             title: {
                 text: acc.name,
@@ -78,6 +82,7 @@ export function buildCandleChart(raw, interval){
     const oneMin = 1000 * 60;
     const oneHour = oneMin * 60;
     const oneDay = oneHour * 24;
+    const oneWeek = oneDay * 7;
     let currentTime = new Date(raw[0].timestamp).getTime();
     let millisInterval;
     
@@ -102,10 +107,13 @@ export function buildCandleChart(raw, interval){
             millisInterval = oneHour * 4;
             break;
         }
-        case '1d':
-        default: {
+        case '1d': {
             millisInterval = oneDay;
             break;
+        }
+        case '1w':
+        default: {
+            millisInterval = oneWeek;
         }
     }
 

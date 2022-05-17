@@ -1,12 +1,13 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
+import configs from '../config.json';
 
 export default function ErrorLogs(){
+    const [logs, setLogs] = useState([])
     useEffect(()=>{
-        axios.post('http://35.224.171.242/database/get-collection/ErrorLogs', {
-            data: {}
-        }).then(res=>{
-            console.log(res);
+        debugger
+        axios.post(configs[configs.root] + '/database/get-collection/errorlogs').then(function(res){
+            console.log(res)
         }).catch(err=>{
             console.error(err);
         })
@@ -14,5 +15,6 @@ export default function ErrorLogs(){
     
     return (<>
         <h1>Logs list:</h1>
+        
     </>);
 }
