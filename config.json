@@ -2,5 +2,6 @@
     "root": "LOCAL",
     "PROD": "http://35.224.171.242",
     "DEV": "http://192.168.15.32",
-    "LOCAL": "http://localhost"
+    "LOCAL": "http://localhost",
+    "userTest": "627acf881e10121be3e718e0"
 }

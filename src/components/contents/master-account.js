@@ -1,6 +1,7 @@
 import ModalButton from '../buttons/modalButton';
 import CreateBotAccount from '../forms/createBotAccount';
 import TableFlex, { TableFlexData } from '../displays/tableFlex';
+import {toMoney} from '../../utils/numbers';
 
 export default function MasterAccount({ pageData }) {
     const { master } = pageData || {};
@@ -52,7 +53,7 @@ export default function MasterAccount({ pageData }) {
                         <h3 className="title">Minha Carteira</h3>
 
                         <TableFlex
-                            data={Object.keys(master.futuresWallet).map(key => new TableFlexData({ lable: key, value: master.futuresWallet[key] }))}
+                            data={Object.keys(master.futuresWallet).map(key => new TableFlexData({ lable: key, value: toMoney(master.futuresWallet[key]) }))}
                             lableClass="label"
                             valueClass="value"
                             exclude={['_id']}

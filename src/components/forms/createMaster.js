@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
+import config from '../../../config.json';
 
 export default function CreateMaster({pageData}) {
     const [spinner, setSpinner] = useState(false);
     const [form, setForm] = useState({
-        user: '627acf881e10121be3e718e0',
+        user: config.userTest,
         type: 'demo',
         name: '',
         initialBalance: 0
