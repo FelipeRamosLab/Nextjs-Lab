@@ -1,30 +1,16 @@
-export default function TableFlex({data, lableClass, valueClass, exclude}) {
+export default function TableFlex({data, lableClass, valueClass}) {
     return (
         <table>
             <tbody>
                 {data.map((item, i)=>{
-                    const isExclude = exclude.find(looking=>looking === item.lable);
-
-                    if (!isExclude) {
-                        return (
-                            <tr key={item.lable + i}>
-                                <td className={lableClass}>{item.lable}</td>
-                                <td className={valueClass}>{item.value}</td>
-                            </tr>
-                        );
-                    }
+                    return (
+                        <tr key={item[0].replaceAll(' ', '') + i}>
+                            <td className={lableClass}>{item[0]}</td>
+                            <td className={valueClass}>{item[1]}</td>
+                        </tr>
+                    );
                 })}
             </tbody>
         </table>
     );
-}
-
-export class TableFlexData {
-    constructor(setup = {
-        lable: String(),
-        value: String() || Number()
-    }) {
-        this.lable = setup.lable;
-        this.value = setup.value;
-    }
 }

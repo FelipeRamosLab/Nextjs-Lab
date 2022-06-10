@@ -4,7 +4,19 @@ $secondary: #1b282c;
 $tertiary: #A5F9AD;
 
 $primary-dark: #181a1c;
-$soft-text: #a2a7a6;
+$soft-text: #e3e4e3;
 
-$profit: #51eb92;
-$loss: #db4949;
+$success: #51eb92;
+$error: #db4949;
+
+$profit: $success;
+$loss: $error;
+
+// Breakpoints
+$xxl: 2560px;
+$xl: 1440px;
+$l: 1024px;
+$md: 768px;
+$sm: 425px;
+$xs: 375px;
+$xxs: 320px;
