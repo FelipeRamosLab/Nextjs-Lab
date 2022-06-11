@@ -2,25 +2,30 @@ import { useState } from 'react';
 import axios from 'axios';
 import SuggestionsSelect from '../inputs/suggestionsSelect';
 
-export default function CreateBotAccount({pageData}) {
+export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
     const [spinner, setSpinner] = useState(false);
     const [form, setForm] = useState({
         user: pageData && pageData.user._id,
         master: pageData && pageData.master._id,
         name: '',
+        type: 'demo',
         assets: [],
         interval: '1h',
         limits: {},
         walletAllocation: 0
     });
-    console.log(form)
+
     async function create(ev) {
         ev.preventDefault();
         setSpinner(true);
 
         try {
             const saved = await axios.post('/api/bot-account/create', form);
-            window.location.reload();
+            const updateState = {...pageData};
+            updateState.master.botAccounts.push(saved.data.botAccount);
+
+            setPageData(updateState);
+            modalCtrl(false);
         } catch(err) {
             throw err;
         }
@@ -74,7 +79,7 @@ export default function CreateBotAccount({pageData}) {
             />
 
             <div className="buttons-wrap">
-                <button type="submit" className="add-button">Confirmar</button>
+                <button type="submit" className="button">Confirmar</button>
             </div>
         </form>);
     } else {

@@ -44,7 +44,7 @@ export default function CreateMaster({pageData}) {
             </fieldset>
 
             <div className="buttons-wrap">
-                <button type="submit" className="add-button">Confirmar</button>
+                <button type="submit" className="button">Confirmar</button>
             </div>
         </form>);
     } else {

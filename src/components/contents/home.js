@@ -11,7 +11,7 @@ export default function HomeContent({pageData}){
     return (<div className="container">
         <div className="section-header">
             <h2>Contas</h2>
-            <ModalButton className="add-button" ModalContent={CreateMaster} pageData={pageData}>Criar</ModalButton>
+            <ModalButton className="button" ModalContent={CreateMaster} pageData={pageData}>Criar</ModalButton>
         </div>
         <hr/>
         <section className="standard-grid grid columns-3">
@@ -22,7 +22,7 @@ export default function HomeContent({pageData}){
 
         <div className="section-header">
             <h2>Meus Bots</h2>
-            <ModalButton className="add-button" ModalContent={CreateBot} pageData={pageData}>Criar</ModalButton>
+            <ModalButton className="button" ModalContent={CreateBot} pageData={pageData}>Criar</ModalButton>
         </div>
         <hr/>
         <section className="standard-grid grid columns-2">

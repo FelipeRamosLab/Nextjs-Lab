@@ -9,7 +9,7 @@ export default function MasterAccountPage({queryParams}) {
 
   useEffect(()=>{
     axios.post('/api/activities/master-account', queryParams).then(res=>{
-      setPageData(res.data)
+      setPageData(res.data);
     });
   }, []);
 
@@ -31,7 +31,7 @@ export default function MasterAccountPage({queryParams}) {
 
   return (
     <PageLayout pageData={pageData}>
-      <MasterAccount pageData={pageData} />
+      <MasterAccount pageData={pageData} setPageData={setPageData}/>
     </PageLayout>
   );
 }

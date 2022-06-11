@@ -1,0 +1,25 @@
+// Colors
+$primary: #293B48;
+$secondary: #1b282c;
+$tertiary: #A5F9AD;
+// Alternative colors
+$primary-dark: #181a1c;
+$soft-text: #e3e4e3;
+// State colors
+$success: #51eb92;
+$error: #db4949;
+// Profit/Loss
+$profit: $success;
+$loss: $error;
+// Gradients
+$grad-card: radial-gradient(78.32% 141.13% at 17.05% 15.91%, #3D4B4E 0%, #2F3A3D 100%);
+$grad-card-result: linear-gradient(133.47deg, #8BC6E8 7.07%, #C5F9C4 96.06%);
+$grad-card-result-alt: linear-gradient(133.47deg, #8BE8D7 7.07%, #F4F9C4 96.06%);
+// Breakpoints
+$xxl: 2560px;
+$xl: 1440px;
+$l: 1024px;
+$md: 768px;
+$sm: 425px;
+$xs: 375px;
+$xxs: 320px;

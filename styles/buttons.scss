@@ -1,0 +1,75 @@
+.button {
+    padding: 0.3rem 1.4rem;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0.3rem;
+    background-color: $tertiary;
+    cursor: pointer;
+    transition: all 200ms;
+    user-select: none;
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &.full-width {
+        width: 100%;
+    }
+
+    &.top-border {
+        border-top: 2px solid $soft-text;
+        border-radius: 0;
+    }
+
+    &.transparent {
+        background-color: transparent;
+        color: $soft-text;
+        padding: 0.5rem;
+    }
+
+    &.small {
+        font-size: 0.8rem;
+    }
+}
+
+.circle-button {
+    $btn-radius: 2rem;
+
+    border-radius: $btn-radius;
+    border: none;
+    font-weight: 700;
+    height: $btn-radius;
+    width: $btn-radius;
+    transition: all 200ms;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #3b414533;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    &[btn-color="success"],
+    &.add-button {
+        background-color: $success;
+        color: $primary;
+
+        &.floating {
+            $btn-radius: 4rem;
+
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            height: $btn-radius;
+            width: $btn-radius;
+            font-size: $btn-radius * 0.6;
+            font-weight: 500;
+        }
+    }
+
+    &[btn-color="error"] {
+        background-color: $error;
+    }
+}

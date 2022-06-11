@@ -1,4 +1,6 @@
 @import "variables.scss";
+@import "buttons.scss";
+@import "cards.scss";
 
 * {
     margin: 0;
@@ -13,7 +15,7 @@ html {
 
 body {
     background-color: $secondary;
-    color: #f5f5f5;
+    color: $soft-text;
 }
 
 header {
@@ -150,6 +152,7 @@ section {
 .section-header {
     display: flex;
     justify-content: space-between;
+    margin-top: 1rem;
 }
 
 .suggestions-select {
@@ -163,41 +166,14 @@ section {
     }
 }
 
-.card {
-    background-color: $primary;
-    border-radius: 0.8rem;
-    box-shadow: 0 0 37px $primary-dark;
-    overflow: hidden;
-
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-    }
-
-    .title {
-        font-size: 1.3rem;
-    }
-
-    .pnl {
-        font-size: 2rem;
-        color: $tertiary;
-        font-weight: bold;
-    }
-
-    p {
-        color: $soft-text;
-    }
-}
-
 .pnl {
-    &.profit {
+    &[state="profit"] {
         color: $profit;
     }
-
-    &.loss {
+    
+    &[state="loss"] {
         color: $loss;
-    }
+    }    
 }
 
 a.card.item {
@@ -218,35 +194,39 @@ a.card.item {
     font-size: 1.2rem;
 }
 
-.add-button {
-    padding: 0.3rem 1.4rem;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 0.3rem;
-    background-color: $tertiary;
-    cursor: pointer;
-    height: 2em;
-    transition: all 200ms;
-    user-select: none;
-
-    &:active {
-        transform: scale(0.98);
-    }
-}
-
 .standard-grid {
     .item {
         user-select: none;
         cursor: pointer;
-        transition: all 200ms;
         flex: 1;
+    }
+}
 
-        &:hover {
-            background-color: #3b4145;
+.result-cards {
+    display: flex;
+    overflow-x: scroll;
+    column-gap: 0.5rem;
+    padding-bottom: 0.7rem;
+    margin-top: 1rem;
+
+    .card {
+        min-height: 8rem;
+        min-width: 47%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        box-shadow: none;
+
+        &:nth-child(2),
+        &:nth-child(4) {
+            background: $grad-card-result-alt;
         }
 
-        &:active {
-            transform: scale(0.99);
+        .value {
+            font-size: 3rem;
+            font-weight: 700;
         }
     }
 }
@@ -282,6 +262,10 @@ a.card.item {
     text-align: center;
 }
 
+.content-fullwidth {
+    width: 100%;
+}
+
 .content-sidebar {
     display: flex;
     flex-direction: column-reverse;
@@ -309,10 +293,6 @@ a.card.item {
         text-align: center;
     }
 
-    tr {
-        // border-bottom: 1px dotted $soft-text;
-    }
-
     td {
         width: 100%;
     }
@@ -325,33 +305,10 @@ a.card.item {
         font-size: 1rem;
         text-align: right;
     }
-}
 
-.bot-account-display {
-    display: flex;
-
-    .tile-header {
-
+    .button {
+        margin-top: 0.5rem;
     }
-
-    .tile-content {
-        flex: 1;
-        padding: 1rem;
-    }
-
-    .tile-content .title {
-        font-weight: bold;
-    }
-}
-
-[state="profit"] {
-    background-color: $profit;
-    color: #333;
-}
-
-[state="loss"] {
-    background-color: $loss;
-    color: #f5f5f5;
 }
 
 .badge {

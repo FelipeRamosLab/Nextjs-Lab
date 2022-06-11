@@ -30,7 +30,7 @@ export default function SuggestionsSelect({label, setValue, valueLabel, mySugges
     return (
         <fieldset className="suggestions-select">
             <label>{label}</label>
-            {(mySuggestionsPath || storeSuggestionsPath) && <button type="button" className="add-button" onClick={selectOpen}>{current ? current[valueLabel] : 'Selecionar'}</button>}
+            {(mySuggestionsPath || storeSuggestionsPath) && <button type="button" className="button" onClick={selectOpen}>{current ? current[valueLabel] : 'Selecionar'}</button>}
 
             {suggestionsState && <div className="suggestions-select-list standard-grid grid columns-1">
                 {mySuggestions !== 'loading' && mySuggestions !== 'error' ? (<>

@@ -1,0 +1,76 @@
+.card {
+    background: $grad-card;
+    box-sizing: border-box;
+    border-radius: 0.8rem;
+    box-shadow: 0 0 37px $primary-dark;
+    overflow: hidden;
+
+    &.card-grad {
+        background: $grad-card-result;            
+        color: $primary;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    .title {
+        font-size: 1.3rem;
+    }
+
+    .pnl {
+        font-size: 2rem;
+        color: $tertiary;
+        font-weight: bold;
+    }
+
+    p {
+        color: $soft-text;
+    }
+}
+
+.slot-display {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    column-gap: 0.5rem;
+    min-width: 100%;
+
+    .circle-button {
+        margin-left: 0.5rem;
+    }
+
+    .circle-button:first-of-type {
+        margin-left: auto;
+    }
+
+    .title { 
+        font-size: 1.5rem;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .tile-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.7rem;
+    }
+
+    .tile-content {
+        display: flex;
+        justify-content: space-between;
+        flex: 1;
+
+        .results {
+            display: flex;
+            align-items: flex-end;
+        }
+    }
+
+    .tile-content .title {
+        font-weight: bold;
+    }
+}
+
