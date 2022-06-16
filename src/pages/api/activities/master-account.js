@@ -5,15 +5,17 @@ const root = config[config.root];
 
 export default async function MasterAccountActivity(req, res) {
     try {
-        const master = await axios.get(root + '/collection/get/doc', {
-            data: { collection: 'master_accounts', filter: {_id: req.body.master, user: req.body.user}, options: { populate: true } }
-        });
+        const master = await axios.post(root + '/master-account/get', { masterUID: req.body.master, userUID: req.body.user });
 
-        res.status(200).json({
-            user: master.data.doc.user,
-            master: master.data.doc
-        });
+        if (master.data.success) {
+            return res.status(200).send({
+                user: master.data.masterAccount.user,
+                master: master.data.masterAccount
+            });
+        } else {
+            return res.status(500).send(master.data);
+        }
     } catch (err) {
-        res.status(500).json(err);
+        return res.status(500).send(err);
     }
 }

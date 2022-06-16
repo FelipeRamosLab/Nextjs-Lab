@@ -2,9 +2,8 @@ import Link from 'next/link';
 import {toMoney} from '../../utils/numbers';
 
 export default function MiniMasterAccountTile({master}) {
-
     if (master) {
-        return (<Link href={'/master-account/?user=' + master.user._id + '&' + 'master=' + master._id}>
+        return (<Link href={'/master-account/?user=' + master.user + '&' + 'master=' + master._id}>
             <a className="item card">
                 <div className="card-header">
                     <h3 className="title">{master.name}</h3>

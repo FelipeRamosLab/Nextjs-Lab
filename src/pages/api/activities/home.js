@@ -6,10 +6,10 @@ const root = config[config.root];
 export default async function HomeActivity(req, res) {
     try {
         const user = await axios.get(root + '/collection/get/doc', {
-            data: { collection: 'users', filter: config.userTest, options: { populate: true } }
+            data: { collection: 'users', filter: config.userTest, options: { populate: {levels: 3} } }
         });
         const myBots = await axios.get(root + '/collection/get/queryCollection', {
-            data: { collection: 'bots', filter: {author: config.userTest }, options: { populate: true } }
+            data: { collection: 'bots', filter: {author: config.userTest }, options: { populate: {levels: 3} } }
         });
 
         res.status(200).json({

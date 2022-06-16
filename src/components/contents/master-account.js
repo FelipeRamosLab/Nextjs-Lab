@@ -22,16 +22,16 @@ export default function MasterAccount({ pageData, setPageData }) {
                         <label>PNL Acumulado</label>
                     </div>
                     <div className="card card-grad">
-                        <span className="value">{'XXXXX'}</span>
-                        <label>PNL em Aberto</label>
+                        <span className="value">{toMoney(master.futuresWallet.totalMarginBalance)}</span>
+                        <label>Margem Total</label>
                     </div>
                     <div className="card card-grad">
-                        <span className="value">{'XXXXX'}</span>
+                        <span className="value">{toMoney(master.futuresWallet.totalUnrealizedProfit)}</span>
+                        <label>Não Realizado</label>
+                    </div>
+                    <div className="card card-grad">
+                        <span className="value">{toMoney(master.futuresWallet.totalRealizedPnl)}</span>
                         <label>Lucro Realizado</label>
-                    </div>
-                    <div className="card card-grad">
-                        <span className="value">{'XXXXX'}</span>
-                        <label>Acertos/Erros</label>
                     </div>
                 </div>
             </section>
