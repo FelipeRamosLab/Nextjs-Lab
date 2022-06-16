@@ -61,17 +61,46 @@
 
     .tile-content {
         display: flex;
-        justify-content: space-between;
         flex: 1;
+        justify-content: space-between;
 
         .results {
             display: flex;
             align-items: flex-end;
         }
+
+        .title {
+            font-weight: bold;
+        }
     }
 
-    .tile-content .title {
-        font-weight: bold;
+    .tile-footer {
+        background-color: $primary-grey;
+        border-radius: 0.3rem;
+        color: $bright-text;
+        display: flex;
+        margin-top: 0.6rem;
+        width: 100%;
+        padding: 0.4rem;
+        column-gap: 0.7rem;
+
+        p {
+            color: $bright-text;
+            font-weight: bold;
+        }
+
+        label {
+            font-size: x-small;
+        }
+
+        .footer-col {
+            text-align: right;
+
+            &.trade-date {
+                flex: 1;
+                text-align: left;
+            }
+        }
     }
 }
 

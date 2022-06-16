@@ -22,14 +22,11 @@ export default function SlotTile({slot}) {
     }
 
     return (
-        <div className="item card slot-display">
+        <div className="slot-display item card">
             <div className="tile-header">
                 <h4 className="title">{slot.name} <span className="badge" type={slot.status}>{slot.status}</span></h4>
                 {slot.status !== 'stopped' && <button type="button" className="circle-button" btn-color="error">X</button>}
                 {slot.status !== 'running' && <button type="button" className="circle-button" btn-color="success" onClick={() => runSlot(slot._id)}>{'>'}</button>}
-            </div>
-
-            <div className="tile-subheader">
             </div>
 
             <div className="tile-content">
@@ -43,6 +40,27 @@ export default function SlotTile({slot}) {
                     <span className="pnl" state={state}>{toMoney(slot.pnl)}</span>
                 </div>
             </div>
+
+            {slot.trades.map(trade => {
+                const createdAt = new Date(trade.createdAt);
+
+                return (
+                    <div key={trade._id} className="tile-footer">
+                        <div className="trade-date footer-col">
+                            <label>Abertura</label>
+                            <p className="value">{createdAt.toLocaleDateString()} - {createdAt.toLocaleTimeString()}</p>
+                        </div>
+                        <div className="footer-col">
+                            <label>Cotação</label>
+                            <p className="value">{toMoney(trade.currentPrice)}</p>
+                        </div>
+                        <div className="footer-col">
+                            <label>PNL</label>
+                            <p className="value">{toMoney(trade.pnl)}</p>
+                        </div>
+                    </div>
+                )
+            })}
         </div>
     );
 }
