@@ -206,6 +206,14 @@ a.card.item {
     display: flex;
     column-gap: 0.5rem;
     margin-bottom: 1rem;
+
+    input {
+        flex: 1;
+    }
+
+    button.transfer-btn {
+        padding: 0.2rem;
+    }
 }
 
 .result-cards {
