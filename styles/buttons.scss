@@ -30,6 +30,16 @@
     &.small {
         font-size: 0.8rem;
     }
+
+    &.outlined {
+        border: 2px solid $soft-text;
+
+        &:hover {
+            background-color: $soft-text;
+            color: $primary;
+            transform: scale(1);
+        }
+    }
 }
 
 .circle-button {
@@ -51,7 +61,6 @@
         transform: scale(0.95);
     }
 
-    &[btn-color="success"],
     &.add-button {
         background-color: $success;
         color: $primary;
@@ -69,7 +78,13 @@
         }
     }
 
+    &[btn-color="success"] {
+        background-color: $success-dark;
+        color: $success;
+    }
+
     &[btn-color="error"] {
-        background-color: $error;
+        background-color: $error-dark;
+        color: $error;
     }
 }

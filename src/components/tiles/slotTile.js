@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import {toMoney} from '../../utils/numbers';
 import MainModal from '../modals/main';
+import { FaPlayCircle, FaStopCircle } from "react-icons/fa";
 
 export default function SlotTile({slot}) {
     const [stopSelect, setStopSelect] = useState(false);
@@ -74,8 +75,8 @@ export default function SlotTile({slot}) {
 
             <div className="tile-header">
                 <h4 className="title">{slot.name} <span className="badge" type={slot.status}>{slot.status}</span></h4>
-                {slot.status !== 'stopped' && <button type="button" className="circle-button" btn-color="error" onClick={() => setStopSelect(true)}>X</button>}
-                {slot.status !== 'running' && <button type="button" className="circle-button" btn-color="success" onClick={() => runSlot(slot._id)}>{'>'}</button>}
+                {slot.status !== 'stopped' && <FaStopCircle className="circle-button" btn-color="error" onClick={() => setStopSelect(true)} />}
+                {slot.status !== 'running' && <FaPlayCircle className="circle-button" btn-color="success" onClick={() => runSlot(slot._id)} />}
             </div>
 
             <div className="tile-content">

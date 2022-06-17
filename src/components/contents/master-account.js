@@ -38,6 +38,11 @@ export default function MasterAccount({ pageData, setPageData }) {
 
             <section className="content-sidebar">
                 <div className="content">
+                    <div className="deposit-withdraw">
+                        <button type="button" className="button full-width outlined transparent small">Depósito</button>
+                        <button type="button" className="button full-width outlined transparent small">Saque</button>
+                    </div>
+
                     <div className="wallet">
                         <TableFlex
                             data={[
