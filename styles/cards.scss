@@ -82,7 +82,7 @@ a.card.item {
     .tile-footer {
         background-color: $primary-grey;
         border-radius: 0.3rem;
-        color: $bright-text;
+        color: $soft-text;
         display: flex;
         margin-top: 0.6rem;
         width: 100%;
@@ -90,7 +90,7 @@ a.card.item {
         column-gap: 0.7rem;
 
         p {
-            color: $bright-text;
+            color:  $soft-text;
             font-weight: bold;
         }
 
@@ -100,6 +100,10 @@ a.card.item {
 
         .footer-col {
             text-align: right;
+
+            &.align-left {
+                text-align: left;
+            }
 
             &.trade-date {
                 flex: 1;

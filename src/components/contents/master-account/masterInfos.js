@@ -1,19 +1,34 @@
+import { useState } from 'react';
 import TableFlex from '../../displays/tableFlex';
 
 export default function MasterInfos({master}) {
+    const [seeMore, setSeeMore] = useState(false);
+    const shortPosition = validateProp(master, ['disableShortPosition']) ? 'Desabilitado' : 'Habilitado';
+    const createdAt = new Date(validateProp(master, ['createdAt']));
+
     return (
         <div className="master-infos">
             <TableFlex
                 data={[
+                    [ 'ID da conta:', validateProp(master, ['cod']) || '--'],
+                    [ 'Criado em:', createdAt.toLocaleDateString() + ' - ' + createdAt.toLocaleTimeString(), !seeMore ],
+                    [ 'Exchange:', validateProp(master, ['exchange']).toUpperCase(), !seeMore ],
                     [ 'Avalancagem:', concatUnit(master, ['limits', 'leverege'], null, 'x' ) || '--'],
-                    [ 'Prejuízo (Mensal):', getLoss(master, 'monthlyLoss') || '--' ],
-                    [ 'Prejuízo (Diário):', getLoss(master, 'dailyLoss') || '--' ]
+                    [ 'Total na carteira:', toMoney(master, ['futuresWallet', 'totalWalletBalance']) || '--' ],
+                    [ 'Prejuízo (Mensal):', getLoss(master, 'monthlyLoss') || '--', !seeMore ],
+                    [ 'Prejuízo (Diário):', getLoss(master, 'dailyLoss') || '--', !seeMore ],
+                    [ 'Posição de venda:', shortPosition, !seeMore ],
+                    [ 'Alocação disponível:', toPercent(master, ['availableAllocation']) ],
                 ]}
                 labelClass="label"
                 valueClass="value"
             />
 
-            <button type="button" className="button full-width top-border transparent small">Ver Mais</button>
+            <button
+                type="button"
+                className="button full-width top-border transparent small"
+                onClick={()=>setSeeMore(!seeMore)}
+            >{!seeMore ? 'Ver Mais' : 'Ver Menos'}</button>
         </div>
     )
 }

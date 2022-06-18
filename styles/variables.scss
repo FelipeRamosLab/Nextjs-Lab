@@ -4,8 +4,8 @@ $secondary: #1b282c;
 $tertiary: #A5F9AD;
 // Alternative colors
 $primary-dark: #181a1c;
-$primary-grey: #697477;
-$primary-bright: #5d6d74;
+$primary-grey: #1d2425;
+$primary-bright: #394b52;
 $soft-text: #e3e4e3;
 $bright-text: white;
 $soft-tertiary: #DDF3C6;
@@ -18,7 +18,7 @@ $error-dark: #893831;
 $profit: $success;
 $loss: $error;
 // Gradients
-$grad-card: radial-gradient(78.32% 141.13% at 17.05% 15.91%, #3D4B4E 0%, #2F3A3D 100%);
+$grad-card: radial-gradient(78.32% 141.13% at 17.05% 15.91%,#202b2e 0%, #283b3f 100%);
 $grad-card-result: linear-gradient(133.47deg, #8BC6E8 7.07%, #C5F9C4 96.06%);
 $grad-card-result-alt: linear-gradient(133.47deg, #8BE8D7 7.07%, #F4F9C4 96.06%);
 // Breakpoints

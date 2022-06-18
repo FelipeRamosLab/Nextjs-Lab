@@ -80,7 +80,8 @@ export default function SlotTile({slot}) {
 
             <div className="tile-content">
                 <div className="content-info">
-                    <p><b>Bot:</b> {slot.bot ? slot.bot.name : '---'}</p>
+                    <p><b>COD:</b> {validateProp(slot, ['cod']) || '---'}</p>
+                    <p><b>Bot:</b> {validateProp(slot, ['bot', 'name']) || '---'}</p>
                     <p><b>Moeda:</b> {slot.assets}</p>
                     <p><b>Intervalo:</b> {slot.interval}</p>
                     <p><b>Lucro Realizado:</b> {toMoney(slot, ['totalRealizedPnl'])}</p>
@@ -95,6 +96,10 @@ export default function SlotTile({slot}) {
 
                 return (
                     <div key={trade._id} className="tile-footer">
+                        <div className="footer-col align-left">
+                            <label>COD</label>
+                            <p className="value">{validateProp(trade, ['cod'])}</p>
+                        </div>
                         <div className="trade-date footer-col">
                             <label>Abertura</label>
                             <p className="value">{createdAt.toLocaleDateString()} - {createdAt.toLocaleTimeString()}</p>
