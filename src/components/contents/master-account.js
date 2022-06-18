@@ -1,22 +1,12 @@
-import { useState } from 'react';
 import ModalButton from '../buttons/modalButton';
 import CreateBotAccount from '../forms/createBotAccount';
 import TableFlex from '../displays/tableFlex';
 import SlotTile from '../tiles/slotTile';
+import TransferPainel from '../common/transferPainel';
 import {toMoney} from '../../utils/numbers';
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 export default function MasterAccount({ pageData, setPageData }) {
-    const [transferValue, setTranferValue] = useState('');
-    const [transferType, setTranferType] = useState(false);
     const { master, user } = pageData || {};
-
-    function transferInput(ev) {
-        const value = Number(ev.target.value);
-        
-        if (!isNaN(value)) setTranferValue(value);
-        else alert('Trasfer input is not a number!');
-    }
 
     return (
         <div className="container">
@@ -49,16 +39,7 @@ export default function MasterAccount({ pageData, setPageData }) {
 
             <section className="content-sidebar">
                 <div className="content">
-                    {transferType && <div className="deposit-withdraw">
-                        <input type="text" inputMode="numeric" value={transferValue} onChange={(ev) => transferInput(ev)} placeholder="Valor a depositar/sacar..." />
-                        <button className="transfer-btn button transparent"><FaCheckCircle className="circle-button" btn-color="success" /></button>
-                        <button className="transfer-btn button transparent" onClick={() => setTranferType(false)}><FaTimesCircle className="circle-button" btn-color="error" /></button>
-                    </div>}
-
-                    {!transferType && <div className="deposit-withdraw">
-                        <button type="button" className="button full-width outlined transparent small" onClick={() => setTranferType('deposit')}>Deposito</button>
-                        <button type="button" className="button full-width outlined transparent small" onClick={() => setTranferType('withdraw')}>Saque</button>
-                    </div>}
+                    <TransferPainel master={master} />
 
                     <div className="wallet">
                         <TableFlex

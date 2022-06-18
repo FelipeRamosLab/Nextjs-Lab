@@ -204,8 +204,14 @@ a.card.item {
 
 .deposit-withdraw {
     display: flex;
+    flex-direction: row;
     column-gap: 0.5rem;
     margin-bottom: 1rem;
+
+    &.callback,
+    &.callback h4 {
+        text-align: center;
+    }
 
     input {
         flex: 1;
