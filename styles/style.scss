@@ -208,9 +208,9 @@ a.card.item {
     column-gap: 0.5rem;
     margin-bottom: 1rem;
 
-    &.callback,
-    &.callback h4 {
+    .callback {
         text-align: center;
+        flex: 1;
     }
 
     input {

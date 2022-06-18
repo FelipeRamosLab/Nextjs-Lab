@@ -45,7 +45,7 @@ export default function SlotTile({slot}) {
 
             if (stopping.hasError) alert('Ocorreu um erro ao parar o slot!');
             setStopSelect(false);
-
+            window.location.reload();
         } catch(err) {
             alert('Ocorreu um erro ao parar o slot!');
         }

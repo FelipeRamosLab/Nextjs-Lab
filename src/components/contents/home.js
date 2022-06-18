@@ -7,7 +7,8 @@ import CreateBot from '../forms/createBot';
 export default function HomeContent({pageData}){
     const {user, myBots} = pageData || {};
     const {masterAccounts} = user || {};
-    console.log(pageData)
+
+    console.log(pageData);
     return (<div className="container">
         <div className="section-header">
             <h2>Contas</h2>

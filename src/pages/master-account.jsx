@@ -7,15 +7,21 @@ import MasterAccount from '../components/contents/master-account';
 export default function MasterAccountPage({queryParams}) {
   const [pageData, setPageData] = useState({status: 'loading'});
 
-  useEffect(()=>{
+  function loadData(){
     axios.post('/api/activities/master-account', queryParams).then(res=>{
       setPageData(res.data);
-    });
+    }).catch(err=>setPageData({status: 'error', errorObj: err}));
+  }
+
+  useEffect(()=>{
+    loadData();
+  
+    setInterval(()=>{
+      loadData();
+    }, 5000);
   }, []);
 
-  console.log(pageData)
-
-  if(pageData.hasError) {
+  if(pageData.hasError || pageData.status === 'error') {
     return (<PageLayout>
       <ServerError err={pageData} />
     </PageLayout>)
