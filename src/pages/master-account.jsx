@@ -16,9 +16,9 @@ export default function MasterAccountPage({queryParams}) {
   useEffect(()=>{
     loadData();
   
-    setInterval(()=>{
-      loadData();
-    }, 5000);
+    // setInterval(()=>{
+    //   loadData();
+    // }, 5000);
   }, []);
 
   if(pageData.hasError || pageData.status === 'error') {

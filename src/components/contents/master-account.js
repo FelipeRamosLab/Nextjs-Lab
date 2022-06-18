@@ -7,6 +7,7 @@ import {toMoney} from '../../utils/numbers';
 
 export default function MasterAccount({ pageData, setPageData }) {
     const { master, user } = pageData || {};
+    console.log(pageData)
 
     return (
         <div className="container">
@@ -45,8 +46,10 @@ export default function MasterAccount({ pageData, setPageData }) {
                         <TableFlex
                             data={[
                                 [ 'Avalancagem Max.', master.limits.leverege + 'x' ],
-                                [ 'Prejuízo Max. (Mensal)', '10%' ],
-                                [ 'Prejuízo Max. (Diário)', '5%' ]
+                                [ 'Prejuízo (Mensal %)', master.limits.monthlyLoss.percent || '--' ],
+                                [ 'Prejuízo (Diário %)', master.limits.dailyLoss.percent || '--'  ],
+                                [ 'Prejuízo (Mensal USDT)', master.limits.monthlyLoss.money || '--' ],
+                                [ 'Prejuízo (Diário USDT)', master.limits.dailyLoss.money || '--'  ]
                             ]}
                             lableClass="label"
                             valueClass="value"

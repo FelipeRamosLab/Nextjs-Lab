@@ -43,9 +43,28 @@ form {
 
     fieldset {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         border: none;
         margin-bottom: 1rem;
+
+        label {
+            margin-left: 0.5rem;
+            font-size: smaller;
+        }
+
+        input {
+            padding: 0.5rem;
+            background-color: transparent;
+            border: 0;
+            border-bottom: 2px solid $soft-text;
+            color: $soft-text;
+            outline: none;
+
+            &:focus {
+                border-color: $tertiary;
+            }
+        }
     }
 }
 
@@ -270,7 +289,7 @@ a.card.item {
 
 .modal {
     position: relative;
-    width: 100%;
+    width: 96%;
     max-width: 601px;
     padding: 2rem;
     background-color: #303c42;
