@@ -4,6 +4,7 @@
     border-radius: 0.8rem;
     box-shadow: 0 0 37px $primary-dark;
     overflow: hidden;
+    user-select: none;
 
     &.card-grad {
         background: $grad-card-result;            
