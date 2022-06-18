@@ -1,3 +1,7 @@
+.buttons-wrap {
+    text-align: center;
+}
+
 .button {
     padding: 0.3rem 1.4rem;
     text-transform: uppercase;
@@ -87,4 +91,17 @@
         background-color: $error-dark;
         color: $error;
     }
+}
+
+.close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #f5f5f5;
+    font-size: 1.2rem;
 }

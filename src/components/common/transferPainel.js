@@ -24,7 +24,7 @@ export default function TransferPainel({master}) {
         }
         
         try {
-            const transfered = await axios.post('/api/transfer/deposit-withdraw/', toSend);
+            await axios.post('/api/transfer/deposit-withdraw/', toSend);
             setTranferType('success');
             setTimeout(() => setTranferType(false), 3000);
         } catch(err) {

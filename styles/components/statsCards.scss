@@ -1,0 +1,28 @@
+.stats-cards {
+    display: flex;
+    overflow-x: scroll;
+    column-gap: 0.5rem;
+    padding-bottom: 0.7rem;
+    margin-top: 1rem;
+
+    .card {
+        min-height: 8rem;
+        min-width: 47%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        box-shadow: none;
+
+        &:nth-child(2),
+        &:nth-child(4) {
+            background: $grad-card-result-alt;
+        }
+
+        .value {
+            font-size: 2.3rem;
+            font-weight: 700;
+        }
+    }
+}

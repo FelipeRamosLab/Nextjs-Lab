@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import config from '../../../config.json';
 import Input from '../inputs/input';
+import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 
 export default function CreateMaster({pageData}) {
     const [spinner, setSpinner] = useState(false);
@@ -13,7 +14,7 @@ export default function CreateMaster({pageData}) {
     });
     const [form, setForm] = useState({
         user: config.userTest,
-        type: 'demo',
+        type: '',
         name: '',
         initialBalance: 0,
         limits: limits
@@ -40,14 +41,6 @@ export default function CreateMaster({pageData}) {
         return (<form onSubmit={(ev)=>create(ev)}>
             <h2 className="title">Criar conta</h2>
 
-            <fieldset>
-                <label>Tipo de conta:</label>
-                <select value={form.type} onChange={(ev)=>setForm({...form, type: ev.target.value})}>
-                    <option value="demo">Demo account</option>
-                    <option value="live">Live account</option>
-                </select>
-            </fieldset>
-
             <Input
                 label="Nome:"
                 value={form.name} 
@@ -59,36 +52,56 @@ export default function CreateMaster({pageData}) {
                 value={form.initialBalance}
                 formSetter={(ev)=>setForm({...form, initialBalance: Number(ev.target.value)})}
             />
-            <Input
-                type="number"
-                label="Alavancagem Máxima:"
-                value={limits.leverege}
-                formSetter={(ev)=>setLimits({...limits, leverege: handleLeverege(ev.target.value)})}
+
+            <ModalSelect
+                label="Tipo de conta:"
+                getter={form.type}
+                setter={(value)=>setForm({...form, type: value})}
+                options={[
+                    new SelectOption({title: 'Conta Demo', value: 'demo'}),
+                    new SelectOption({title: 'Conta Real', value: 'live'})
+                ]}
             />
-            <Input
-                type="number"
-                label="Limite de Prejuízo (Mensal %):"
-                value={limits.monthlyLoss.percent || ''}
-                formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, percent: handleNumber(ev.target.value)}})}
-            />
-            <Input
-                type="number"
-                label="Limite de Prejuízo (Diário %):"
-                value={limits.dailyLoss.percent || ''}
-                formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, percent: handleNumber(ev.target.value)}})}
-            />
-            <Input
-                type="number"
-                label="Limite de Prejuízo (Mensal USDT):"
-                value={limits.monthlyLoss.money || ''}
-                formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, money: handleNumber(ev.target.value)}})}
-            />
-            <Input
-                type="number"
-                label="Limite de Prejuízo (Diário USDT):"
-                value={limits.dailyLoss.money || ''}
-                formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, money: handleNumber(ev.target.value)}})}
-            />
+
+            <div className="limits fields-wrap">
+                <h4 className="group-title">Limites da conta</h4>
+
+                <Input
+                    type="number"
+                    label="Alavancagem Máxima:"
+                    value={limits.leverege}
+                    formSetter={(ev)=>setLimits({...limits, leverege: handleLeverege(ev.target.value)})}
+                />
+
+                <div className="field-group">
+                    <Input
+                        type="number"
+                        label="Prejuízo (Mensal %):"
+                        value={limits.monthlyLoss.percent || ''}
+                        formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, percent: handleNumber(ev.target.value)}})}
+                    />
+                    <Input
+                        type="number"
+                        label="Prejuízo (Mensal USDT):"
+                        value={limits.monthlyLoss.money || ''}
+                        formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, money: handleNumber(ev.target.value)}})}
+                    />
+                </div>
+                <div className="field-group">
+                    <Input
+                        type="number"
+                        label="Prejuízo (Diário %):"
+                        value={limits.dailyLoss.percent || ''}
+                        formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, percent: handleNumber(ev.target.value)}})}
+                    />
+                    <Input
+                        type="number"
+                        label="Prejuízo (Diário USDT):"
+                        value={limits.dailyLoss.money || ''}
+                        formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, money: handleNumber(ev.target.value)}})}
+                    />
+                </div>
+            </div>
 
             <div className="buttons-wrap">
                 <button type="submit" className="button">Confirmar</button>

@@ -1,0 +1,49 @@
+.modal-backdrop {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #ecf1f340;
+    backdrop-filter: blur(9.5px);
+}
+
+.modal {
+    position: relative;
+    width: 96%;
+    max-width: 601px;
+    padding: 2rem 1rem 1rem;
+    background-color: #303c42;
+    border-radius: 1rem;
+    box-shadow: 0 0 71px #798687;
+
+    .options-list {
+        margin-top: 1rem;
+
+        button {
+            border: 0;
+            border-bottom: 1px solid $soft-text;
+            background: none;
+            color: $soft-text;
+            text-align: left;
+            padding: 1rem 0;
+            width: 100%;
+
+            &:first-of-type {
+                padding-top: 0;
+            }
+
+            &:last-of-type {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+
+            .title {
+                margin-bottom: 0.3rem;
+            }
+        }
+    }
+}

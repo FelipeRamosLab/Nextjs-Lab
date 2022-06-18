@@ -1,0 +1,13 @@
+.header-wrap {
+    display: flex;
+
+    .header-column {
+        display: flex;
+        align-items: center;
+    }
+
+    .menu-wrap {
+        justify-content: right;
+        flex: 1;
+    }
+}

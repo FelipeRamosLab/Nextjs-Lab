@@ -1,9 +1,8 @@
-import ModalButton from '../buttons/modalButton';
-import CreateBotAccount from '../forms/createBotAccount';
-import TableFlex from '../displays/tableFlex';
-import SlotTile from '../tiles/slotTile';
-import TransferPainel from '../common/transferPainel';
-import {toMoney} from '../../utils/numbers';
+import ModalButton from '../../buttons/modalButton';
+import CreateBotAccount from '../../forms/createBotAccount';
+import SlotTile from '../../tiles/slotTile';
+import TransferPainel from '../../common/transferPainel';
+import MasterInfos from './masterInfos';
 
 export default function MasterAccount({ pageData, setPageData }) {
     const { master, user } = pageData || {};
@@ -18,21 +17,21 @@ export default function MasterAccount({ pageData, setPageData }) {
                     <h1>{master.name}</h1>
                     <ModalButton className="button transparent" ModalContent={CreateBotAccount}>Editar</ModalButton>
                 </div>
-                <div className="result-cards">
+                <div className="stats-cards">
                     <div className="card card-grad">
-                        <span className="value">{toMoney(master.pnl)}</span>
+                        <span className="value">{toMoney(master, ['pnl'])}</span>
                         <label>PNL Acumulado</label>
                     </div>
                     <div className="card card-grad">
-                        <span className="value">{toMoney(master.futuresWallet.totalMarginBalance)}</span>
+                        <span className="value">{toMoney(master, ['futuresWallet', 'totalMarginBalance'])}</span>
                         <label>Margem Total</label>
                     </div>
                     <div className="card card-grad">
-                        <span className="value">{toMoney(master.futuresWallet.totalUnrealizedProfit)}</span>
+                        <span className="value">{toMoney(master, ['futuresWallet', 'totalUnrealizedProfit'])}</span>
                         <label>Não Realizado</label>
                     </div>
                     <div className="card card-grad">
-                        <span className="value">{toMoney(master.futuresWallet.totalRealizedPnl)}</span>
+                        <span className="value">{toMoney(master, ['futuresWallet', 'totalRealizedPnl'])}</span>
                         <label>Lucro Realizado</label>
                     </div>
                 </div>
@@ -41,22 +40,7 @@ export default function MasterAccount({ pageData, setPageData }) {
             <section className="content-sidebar">
                 <div className="content">
                     <TransferPainel master={master} />
-
-                    <div className="wallet">
-                        <TableFlex
-                            data={[
-                                [ 'Avalancagem Max.', master.limits.leverege + 'x' ],
-                                [ 'Prejuízo (Mensal %)', master.limits.monthlyLoss.percent || '--' ],
-                                [ 'Prejuízo (Diário %)', master.limits.dailyLoss.percent || '--'  ],
-                                [ 'Prejuízo (Mensal USDT)', master.limits.monthlyLoss.money || '--' ],
-                                [ 'Prejuízo (Diário USDT)', master.limits.dailyLoss.money || '--'  ]
-                            ]}
-                            lableClass="label"
-                            valueClass="value"
-                        />
-
-                        <button type="button" className="button full-width top-border transparent small">Ver Mais</button>
-                    </div>
+                    <MasterInfos master={master} />
 
                     <div className="section-header">
                         <h2>Gráfico PNL Acumulado</h2>

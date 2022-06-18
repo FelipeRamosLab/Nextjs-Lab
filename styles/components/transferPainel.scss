@@ -1,0 +1,19 @@
+.deposit-withdraw {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    .callback {
+        text-align: center;
+        flex: 1;
+    }
+
+    input {
+        flex: 1;
+    }
+
+    button.transfer-btn {
+        padding: 0.2rem;
+    }
+}

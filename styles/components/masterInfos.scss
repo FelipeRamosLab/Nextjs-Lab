@@ -1,0 +1,24 @@
+.master-infos {
+    padding: 0.5rem 0;
+
+    .title {
+        text-align: center;
+    }
+
+    td {
+        width: 100%;
+    }
+
+    .label {
+        font-size: 0.9rem;
+    }
+
+    .value {
+        font-size: 1rem;
+        text-align: right;
+    }
+
+    .button {
+        margin-top: 0.5rem;
+    }
+}

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useState } from 'react';
-import {toMoney} from '../../utils/numbers';
 import MainModal from '../modals/main';
 import { FaPlayCircle, FaStopCircle } from "react-icons/fa";
 
@@ -84,10 +83,10 @@ export default function SlotTile({slot}) {
                     <p><b>Bot:</b> {slot.bot ? slot.bot.name : '---'}</p>
                     <p><b>Moeda:</b> {slot.assets}</p>
                     <p><b>Intervalo:</b> {slot.interval}</p>
-                    <p><b>Lucro Realizado:</b> {toMoney(slot.totalRealizedPnl)}</p>
+                    <p><b>Lucro Realizado:</b> {toMoney(slot, ['totalRealizedPnl'])}</p>
                 </div>
                 <div className="results">
-                    <span className="pnl" state={state}>{toMoney(slot.pnl)}</span>
+                    <span className="pnl" state={state}>{toMoney(slot, ['pnl'])}</span>
                 </div>
             </div>
 
@@ -102,11 +101,11 @@ export default function SlotTile({slot}) {
                         </div>
                         <div className="footer-col">
                             <label>Cotação</label>
-                            <p className="value">{toMoney(trade.currentPrice)}</p>
+                            <p className="value">{toMoney(trade, ['currentPrice'])}</p>
                         </div>
                         <div className="footer-col">
                             <label>PNL</label>
-                            <p className="value">{toMoney(trade.pnl)}</p>
+                            <p className="value">{toMoney(trade, ['pnl'])}</p>
                         </div>
                     </div>
                 )

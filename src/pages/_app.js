@@ -1,3 +1,4 @@
+import './_globals';
 import '../../styles/style.scss';
 
 function MyApp({ Component, pageProps }) {

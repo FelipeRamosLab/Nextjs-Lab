@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-color: $secondary;
+    color: $soft-text;
+}
+
+header {
+    background-color: $primary;
+    margin-bottom: 2rem;
+    padding: 0.2rem;
+}
+
+h2 {
+    margin-bottom: 1rem;
+}
+
+hr {
+    margin: 0.3rem 0 1rem 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .fields-wrap {
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+
+        .group-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            margin-top: 0.7rem;
+        }
+
+        &.limits {
+            background-color: $secondary;
+        }
+    }
+
+    .field-group {
+        display: flex;
+        column-gap: 0.5rem;
+
+        &>fieldset {
+            flex: 50%;
+        }
+    }
+
+    fieldset {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-inline-size: 0;
+        border: none;
+        margin-bottom: 1rem;
+    }
+
+    label {
+        margin-left: 0.8rem;
+        margin-bottom: 0.2rem;
+        font-size: smaller;
+    }
+
+    input {
+        padding: 0.7rem 0.8rem 0.3rem 0.8rem;
+        background-color: $primary-bright;
+        border: 0;
+        border-bottom: 2px solid $soft-text;
+        border-radius: 0.5rem 0.5rem 0 0;
+        color: $soft-text;
+        flex: 1;
+        outline: none;
+
+        &:focus {
+            border-color: $success;
+        }
+    }
+}
+
+section {
+    margin-bottom: 1rem;
+}
