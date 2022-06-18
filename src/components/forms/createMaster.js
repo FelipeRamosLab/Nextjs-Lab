@@ -4,22 +4,17 @@ import config from '../../../config.json';
 import Input from '../inputs/input';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 
-export default function CreateMaster({pageData}) {
+export default function CreateMaster({pageData, initialData}) {
     const [spinner, setSpinner] = useState(false);
     const [limits, setLimits] = useState({
-        leverege: 120,
         monthlyLoss: {},
         dailyLoss: {},
         tradeLoss: {},
     });
     const [form, setForm] = useState({
         user: config.userTest,
-        type: '',
-        name: '',
-        initialBalance: 0,
         limits: limits
     });
-    
 
     useEffect(()=>{
         setForm({...form, limits});
@@ -30,38 +25,45 @@ export default function CreateMaster({pageData}) {
         setSpinner(true);
 
         try {
-            const saved = await axios.post('/api/master-account/create', form);
+            await axios.post('/api/master-account/create', form);
             window.location.reload();
         } catch(err) {
             throw err;
         }
     }
 
+    async function edit(ev) {
+        ev.preventDefault();
+    }
+
     if (!spinner) {
-        return (<form onSubmit={(ev)=>create(ev)}>
+        return (<form onSubmit={(ev)=>{
+            if (!initialData) create(ev);
+            else edit(ev);
+        }}>
             <h2 className="title">Criar conta</h2>
 
             <Input
                 label="Nome:"
-                value={form.name} 
+                value={validateProp(form, ['name']) || validateProp(initialData, ['name'])} 
                 formSetter={(ev)=>setForm({...form, name: ev.target.value})} 
             />
-            <Input
+            {!initialData && <Input
                 type="number"
                 label="Depósito inicial:"
-                value={form.initialBalance}
+                value={validateProp(form, ['initialBalance']) || validateProp(initialData, ['initialBalance'])}
                 formSetter={(ev)=>setForm({...form, initialBalance: Number(ev.target.value)})}
-            />
+            />}
 
-            <ModalSelect
+            {!initialData && <ModalSelect
                 label="Tipo de conta:"
-                getter={form.type}
+                getter={validateProp(form, ['type']) || validateProp(initialData, ['type'])}
                 setter={(value)=>setForm({...form, type: value})}
                 options={[
                     new SelectOption({title: 'Conta Demo', value: 'demo'}),
                     new SelectOption({title: 'Conta Real', value: 'live'})
                 ]}
-            />
+            />}
 
             <div className="limits fields-wrap">
                 <h4 className="group-title">Limites da conta</h4>
@@ -69,7 +71,7 @@ export default function CreateMaster({pageData}) {
                 <Input
                     type="number"
                     label="Alavancagem Máxima:"
-                    value={limits.leverege}
+                    value={validateProp(limits, ['leverege']) || validateProp(initialData, ['limits', 'leverege'])}
                     formSetter={(ev)=>setLimits({...limits, leverege: handleLeverege(ev.target.value)})}
                 />
 
@@ -77,13 +79,13 @@ export default function CreateMaster({pageData}) {
                     <Input
                         type="number"
                         label="Prejuízo (Mensal %):"
-                        value={limits.monthlyLoss.percent || ''}
+                        value={validateProp(limits, ['monthlyLoss', 'percent']) || ''}
                         formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, percent: handleNumber(ev.target.value)}})}
                     />
                     <Input
                         type="number"
                         label="Prejuízo (Mensal USDT):"
-                        value={limits.monthlyLoss.money || ''}
+                        value={validateProp(limits, ['monthlyLoss', 'money'])  || ''}
                         formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, money: handleNumber(ev.target.value)}})}
                     />
                 </div>
@@ -91,20 +93,20 @@ export default function CreateMaster({pageData}) {
                     <Input
                         type="number"
                         label="Prejuízo (Diário %):"
-                        value={limits.dailyLoss.percent || ''}
+                        value={validateProp(limits, ['dailyLoss', 'percent']) || ''}
                         formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, percent: handleNumber(ev.target.value)}})}
                     />
                     <Input
                         type="number"
                         label="Prejuízo (Diário USDT):"
-                        value={limits.dailyLoss.money || ''}
+                        value={validateProp(limits, ['dailyLoss', 'money']) || ''}
                         formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, money: handleNumber(ev.target.value)}})}
                     />
                 </div>
             </div>
 
             <div className="buttons-wrap">
-                <button type="submit" className="button">Confirmar</button>
+                <button type="submit" className="button">Salvar</button>
             </div>
         </form>);
     } else {

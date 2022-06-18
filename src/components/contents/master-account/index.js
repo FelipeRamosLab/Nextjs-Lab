@@ -1,11 +1,12 @@
 import ModalButton from '../../buttons/modalButton';
 import CreateBotAccount from '../../forms/createBotAccount';
+import CreateMaster from '../../forms/createMaster';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
 import MasterInfos from './masterInfos';
 
 export default function MasterAccount({ pageData, setPageData }) {
-    const { master, user } = pageData || {};
+    const { master } = pageData || {};
     console.log(pageData)
 
     return (
@@ -15,7 +16,7 @@ export default function MasterAccount({ pageData, setPageData }) {
             <section className="content-fullwidth">
                 <div className="section-header">
                     <h1>{master.name}</h1>
-                    <ModalButton className="button transparent" ModalContent={CreateBotAccount}>Editar</ModalButton>
+                    <ModalButton className="button transparent" ModalContent={(props)=> <CreateMaster {...props} initialData={master} />}>Editar</ModalButton>
                 </div>
                 <div className="stats-cards">
                     <div className="card card-grad">
