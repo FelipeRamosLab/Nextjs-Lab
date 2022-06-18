@@ -78,13 +78,13 @@ export default function CreateMaster({pageData, initialData}) {
                 <div className="field-group">
                     <Input
                         type="number"
-                        label="Prejuízo (Mensal %):"
+                        label="Prejuízo Mensal (%):"
                         value={validateProp(limits, ['monthlyLoss', 'percent']) || ''}
                         formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, percent: handleNumber(ev.target.value)}})}
                     />
                     <Input
                         type="number"
-                        label="Prejuízo (Mensal USDT):"
+                        label="Prejuízo Mensal ($):"
                         value={validateProp(limits, ['monthlyLoss', 'money'])  || ''}
                         formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, money: handleNumber(ev.target.value)}})}
                     />
@@ -92,13 +92,13 @@ export default function CreateMaster({pageData, initialData}) {
                 <div className="field-group">
                     <Input
                         type="number"
-                        label="Prejuízo (Diário %):"
+                        label="Prejuízo Diário (%):"
                         value={validateProp(limits, ['dailyLoss', 'percent']) || ''}
                         formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, percent: handleNumber(ev.target.value)}})}
                     />
                     <Input
                         type="number"
-                        label="Prejuízo (Diário USDT):"
+                        label="Prejuízo Diário ($):"
                         value={validateProp(limits, ['dailyLoss', 'money']) || ''}
                         formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, money: handleNumber(ev.target.value)}})}
                     />

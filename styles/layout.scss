@@ -101,5 +101,17 @@
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
+    column-gap: 0.5em;
+    align-items: center;
+
+    .title {
+        margin-right: auto;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .circle-button {
+        font-size: 1.4rem;
+    }
 }
 

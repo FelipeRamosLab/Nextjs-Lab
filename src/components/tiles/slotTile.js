@@ -74,8 +74,8 @@ export default function SlotTile({slot}) {
 
             <div className="tile-header">
                 <h4 className="title">{slot.name} <span className="badge" type={slot.status}>{slot.status}</span></h4>
-                {slot.status !== 'stopped' && <FaStopCircle className="circle-button" btn-color="error" onClick={() => setStopSelect(true)} />}
-                {slot.status !== 'running' && <FaPlayCircle className="circle-button" btn-color="success" onClick={() => runSlot(slot._id)} />}
+                {slot.status !== 'stopped' && <FaStopCircle className="circle-button reverse" btn-color="error" onClick={() => setStopSelect(true)} />}
+                {slot.status !== 'running' && <FaPlayCircle className="circle-button reverse" btn-color="success" onClick={() => runSlot(slot._id)} />}
             </div>
 
             <div className="tile-content">

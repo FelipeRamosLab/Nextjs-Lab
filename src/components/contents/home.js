@@ -11,7 +11,7 @@ export default function HomeContent({pageData}){
     console.log(pageData);
     return (<div className="container">
         <div className="section-header">
-            <h2>Contas</h2>
+            <h2 className="title">Contas</h2>
             <ModalButton className="button" ModalContent={CreateMaster} pageData={pageData}>Criar</ModalButton>
         </div>
         <hr/>

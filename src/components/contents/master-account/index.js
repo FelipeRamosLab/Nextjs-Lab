@@ -4,6 +4,7 @@ import CreateMaster from '../../forms/createMaster';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
 import MasterInfos from './masterInfos';
+import { FaTrash, FaPen } from 'react-icons/fa';
 
 export default function MasterAccount({ pageData, setPageData }) {
     const { master } = pageData || {};
@@ -15,8 +16,9 @@ export default function MasterAccount({ pageData, setPageData }) {
             
             <section className="content-fullwidth">
                 <div className="section-header">
-                    <h1>{master.name}</h1>
-                    <ModalButton className="button transparent" ModalContent={(props)=> <CreateMaster {...props} initialData={master} />}>Editar</ModalButton>
+                    <h1 className="title">{master.name}</h1>
+                    <ModalButton className="circle-button transparent" ModalContent={(props)=> <CreateMaster {...props} initialData={master} />}><FaPen /></ModalButton>
+                    <button type="button" className="circle-button" btn-color="error"><FaTrash /></button>
                 </div>
                 <div className="stats-cards">
                     <div className="card card-grad">
@@ -24,12 +26,12 @@ export default function MasterAccount({ pageData, setPageData }) {
                         <label>PNL Acumulado</label>
                     </div>
                     <div className="card card-grad">
-                        <span className="value">{toMoney(master, ['futuresWallet', 'totalMarginBalance'])}</span>
-                        <label>Margem Total</label>
-                    </div>
-                    <div className="card card-grad">
                         <span className="value">{toMoney(master, ['futuresWallet', 'totalUnrealizedProfit'])}</span>
                         <label>Não Realizado</label>
+                    </div>
+                    <div className="card card-grad">
+                        <span className="value">{toMoney(master, ['futuresWallet', 'totalMarginBalance'])}</span>
+                        <label>Margem Total</label>
                     </div>
                     <div className="card card-grad">
                         <span className="value">{toMoney(master, ['futuresWallet', 'totalRealizedPnl'])}</span>

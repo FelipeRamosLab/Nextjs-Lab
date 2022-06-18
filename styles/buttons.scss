@@ -47,7 +47,7 @@
 }
 
 .circle-button {
-    $btn-radius: 2rem;
+    $btn-radius: 2em;
 
     border-radius: $btn-radius;
     border: none;
@@ -63,6 +63,12 @@
 
     &:active {
         transform: scale(0.95);
+    }
+
+    &.transparent {
+        background-color: transparent;
+        color: $soft-text;
+        padding: 0.5rem;
     }
 
     &.add-button {
@@ -82,15 +88,25 @@
         }
     }
 
-    &[btn-color="success"] {
+    &[btn-color="success"].reverse {
         background-color: $success-dark;
         color: $success;
     }
-
-    &[btn-color="error"] {
+    
+    &[btn-color="error"].reverse {
         background-color: $error-dark;
         color: $error;
     }
+}
+
+[btn-color="success"] {
+    background-color: $success;
+    color: $success-dark;
+}
+
+[btn-color="error"] {
+    background-color: $error;
+    color: $soft-text;
 }
 
 .close-btn {

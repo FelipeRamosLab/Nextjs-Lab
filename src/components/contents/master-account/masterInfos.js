@@ -14,11 +14,11 @@ export default function MasterInfos({master}) {
                     [ 'Criado em:', createdAt.toLocaleDateString() + ' - ' + createdAt.toLocaleTimeString(), !seeMore ],
                     [ 'Exchange:', validateProp(master, ['exchange']).toUpperCase(), !seeMore ],
                     [ 'Avalancagem:', concatUnit(master, ['limits', 'leverege'], null, 'x' ) || '--'],
+                    [ 'Alocação disponível:', toPercent(master, ['availableAllocation']) ],
                     [ 'Total na carteira:', toMoney(master, ['futuresWallet', 'totalWalletBalance']) || '--' ],
                     [ 'Prejuízo (Mensal):', getLoss(master, 'monthlyLoss') || '--', !seeMore ],
                     [ 'Prejuízo (Diário):', getLoss(master, 'dailyLoss') || '--', !seeMore ],
                     [ 'Posição de venda:', shortPosition, !seeMore ],
-                    [ 'Alocação disponível:', toPercent(master, ['availableAllocation']) ],
                 ]}
                 labelClass="label"
                 valueClass="value"
