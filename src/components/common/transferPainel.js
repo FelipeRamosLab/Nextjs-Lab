@@ -41,8 +41,12 @@ export default function TransferPainel({master, pageData, setPageData}) {
             <form className="deposit-withdraw" onSubmit={(ev) => sendTransfer(ev)}>
                 <input type="text" inputMode="numeric" value={transferValue} onChange={(ev) => transferInput(ev)} placeholder="Valor a depositar/sacar..." />
 
-                <button type="submit" className="transfer-btn button transparent"><FaCheckCircle className="circle-button" btn-color="success" /></button>
-                <button type="reset" className="transfer-btn button transparent" onClick={() => setTranferType(false)}><FaTimesCircle className="circle-button" btn-color="error" /></button>
+                <button type="submit" className="transfer-btn button transparent">
+                    <FaCheckCircle className="circle-button reverse" btn-color="success" />
+                </button>
+                <button type="reset" className="transfer-btn button transparent" onClick={() => setTranferType(false)}>
+                    <FaTimesCircle className="circle-button reverse" btn-color="error" />
+                </button>
             </form>
         )}
 

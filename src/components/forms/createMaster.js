@@ -45,19 +45,19 @@ export default function CreateMaster({pageData, initialData}) {
 
             <Input
                 label="Nome:"
-                value={validateProp(form, ['name']) || validateProp(initialData, ['name'])} 
+                value={validateProp(form, ['name']) || validateProp(initialData, ['name']) || ''} 
                 formSetter={(ev)=>setForm({...form, name: ev.target.value})} 
             />
             {!initialData && <Input
                 type="number"
                 label="Depósito inicial:"
-                value={validateProp(form, ['initialBalance']) || validateProp(initialData, ['initialBalance'])}
+                value={validateProp(form, ['initialBalance']) || validateProp(initialData, ['initialBalance']) || ''}
                 formSetter={(ev)=>setForm({...form, initialBalance: Number(ev.target.value)})}
             />}
 
             {!initialData && <ModalSelect
                 label="Tipo de conta:"
-                getter={validateProp(form, ['type']) || validateProp(initialData, ['type'])}
+                getter={validateProp(form, ['type']) || validateProp(initialData, ['type']) || ''}
                 setter={(value)=>setForm({...form, type: value})}
                 options={[
                     new SelectOption({title: 'Conta Demo', value: 'demo'}),
@@ -71,7 +71,7 @@ export default function CreateMaster({pageData, initialData}) {
                 <Input
                     type="number"
                     label="Alavancagem Máxima:"
-                    value={validateProp(limits, ['leverege']) || validateProp(initialData, ['limits', 'leverege'])}
+                    value={validateProp(limits, ['leverege']) || validateProp(initialData, ['limits', 'leverege']) || ''}
                     formSetter={(ev)=>setLimits({...limits, leverege: handleLeverege(ev.target.value)})}
                 />
 
@@ -80,13 +80,13 @@ export default function CreateMaster({pageData, initialData}) {
                         type="number"
                         label="Prejuízo Mensal (%):"
                         value={validateProp(limits, ['monthlyLoss', 'percent']) || ''}
-                        formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, percent: handleNumber(ev.target.value)}})}
+                        formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, percent: handleNumber(ev.target.value)}}) || ''}
                     />
                     <Input
                         type="number"
                         label="Prejuízo Mensal ($):"
                         value={validateProp(limits, ['monthlyLoss', 'money'])  || ''}
-                        formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, money: handleNumber(ev.target.value)}})}
+                        formSetter={(ev)=>setLimits({...limits, monthlyLoss: {...limits.monthlyLoss, money: handleNumber(ev.target.value)}}) || ''}
                     />
                 </div>
                 <div className="field-group">
@@ -94,13 +94,13 @@ export default function CreateMaster({pageData, initialData}) {
                         type="number"
                         label="Prejuízo Diário (%):"
                         value={validateProp(limits, ['dailyLoss', 'percent']) || ''}
-                        formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, percent: handleNumber(ev.target.value)}})}
+                        formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, percent: handleNumber(ev.target.value)}}) || ''}
                     />
                     <Input
                         type="number"
                         label="Prejuízo Diário ($):"
                         value={validateProp(limits, ['dailyLoss', 'money']) || ''}
-                        formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, money: handleNumber(ev.target.value)}})}
+                        formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, money: handleNumber(ev.target.value)}}) || ''}
                     />
                 </div>
             </div>
