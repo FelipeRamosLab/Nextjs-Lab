@@ -42,7 +42,7 @@ export default function MasterAccount({ pageData, setPageData }) {
 
             <section className="content-sidebar">
                 <div className="content">
-                    <TransferPainel master={master} />
+                    <TransferPainel master={master} pageData={pageData} setPageData={setPageData} />
                     <MasterInfos master={master} />
 
                     <div className="section-header">

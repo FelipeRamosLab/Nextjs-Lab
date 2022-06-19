@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
-export default function TransferPainel({master}) {
+export default function TransferPainel({master, pageData, setPageData}) {
     const [transferValue, setTranferValue] = useState('');
     const [transferType, setTranferType] = useState(false);
 
@@ -24,8 +24,10 @@ export default function TransferPainel({master}) {
         }
         
         try {
-            await axios.post('/api/transfer/deposit-withdraw/', toSend);
+            const master = await axios.post('/api/transfer/deposit-withdraw/', toSend);
+
             setTranferType('success');
+            setPageData({...pageData, master: master.data});
             setTimeout(() => setTranferType(false), 3000);
         } catch(err) {
             setTranferType('error');
