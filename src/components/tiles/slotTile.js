@@ -93,14 +93,16 @@ export default function SlotTile({slot}) {
 
             {slot.trades.map(trade => {
                 const createdAt = new Date(trade.createdAt);
+                const side = validateProp(trade, ['positionType']) && trade.positionType === 'long' ? 'Long' : 'Short';
 
                 return (
                     <div key={trade._id} className="tile-footer">
+                        <div className="footer-col align-left position-side" btn-color={side === 'Long' ? 'success' : 'error'}></div>
                         <div className="footer-col align-left">
                             <label>COD</label>
                             <p className="value">{validateProp(trade, ['cod'])}</p>
                         </div>
-                        <div className="trade-date footer-col">
+                        <div className="footer-col stretch">
                             <label>Abertura</label>
                             <p className="value">{createdAt.toLocaleDateString()} - {createdAt.toLocaleTimeString()}</p>
                         </div>

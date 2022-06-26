@@ -87,8 +87,7 @@ a.card.item {
         display: flex;
         margin-top: 0.6rem;
         width: 100%;
-        padding: 0.4rem;
-        column-gap: 0.7rem;
+        overflow: hidden;
 
         p {
             color:  $soft-text;
@@ -101,14 +100,25 @@ a.card.item {
 
         .footer-col {
             text-align: right;
+            padding: 0.4rem;
 
             &.align-left {
                 text-align: left;
             }
 
-            &.trade-date {
+            &.stretch {
                 flex: 1;
                 text-align: left;
+            }
+
+            &.position-side {
+                display: flex;
+                max-width: 1.7em;
+
+                p {
+                    transform-origin: center;
+                    transform: rotate(-90deg);
+                }
             }
         }
     }
