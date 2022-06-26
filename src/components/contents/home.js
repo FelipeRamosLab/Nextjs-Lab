@@ -1,8 +1,8 @@
 import MiniMasterAccountTile from '../tiles/miniMasterAccount';
-import BotTile from '../tiles/botTile';
 import ModalButton from '../buttons/modalButton';
 import CreateMaster from '../forms/createMaster';
 import CreateBot from '../forms/createBot';
+import CardSlider from '../sliders/card-slider';
 
 export default function HomeContent({pageData}){
     const {user, myBots} = pageData || {};
@@ -14,7 +14,6 @@ export default function HomeContent({pageData}){
             <h2 className="title">Contas</h2>
             <ModalButton className="button" ModalContent={CreateMaster} pageData={pageData}>Criar</ModalButton>
         </div>
-        <hr/>
         <section className="standard-grid grid columns-3">
             {masterAccounts && masterAccounts.map(master=>{
                 return <MiniMasterAccountTile key={master.cod} master={master} />
@@ -25,11 +24,7 @@ export default function HomeContent({pageData}){
             <h2>Meus Bots</h2>
             <ModalButton className="button" ModalContent={CreateBot} pageData={pageData}>Criar</ModalButton>
         </div>
-        <hr/>
-        <section className="standard-grid grid columns-2">
-            {myBots && myBots.map(bot=>{
-                return <BotTile key={bot._id} pageData={pageData} bot={bot} />
-            })}
-        </section>
+        
+        <CardSlider data={myBots} pageData={pageData} />
     </div>);
 }

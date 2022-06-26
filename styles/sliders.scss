@@ -1,0 +1,21 @@
+.card-slider {
+    margin: 0 auto;
+
+    .card {
+        padding: 1rem;
+        box-shadow: none;
+    }
+
+    .slick-slide {
+        padding: 0 1rem;
+    }
+
+    .slick-dots {
+        li button:before {
+            color: $soft-text;
+        }
+        .slick-active button:before {
+            color: $bright-text;
+        }
+    }
+}
