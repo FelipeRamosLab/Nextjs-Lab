@@ -9,22 +9,22 @@ export default function HomeContent({pageData}){
     const {masterAccounts} = user || {};
 
     console.log(pageData);
-    return (<div className="container">
-        <div className="section-header">
+    return (<>
+        <div className="container section-header">
             <h2 className="title">Contas</h2>
-            <ModalButton className="button" ModalContent={CreateMaster} pageData={pageData}>Criar</ModalButton>
+            <ModalButton className="button transparent" ModalContent={CreateMaster} pageData={pageData}>Criar</ModalButton>
         </div>
-        <section className="standard-grid grid columns-3">
+        <section className="container standard-grid grid columns-2">
             {masterAccounts && masterAccounts.map(master=>{
                 return <MiniMasterAccountTile key={master.cod} master={master} />
             })}
         </section>
 
-        <div className="section-header">
+        <div className="container section-header">
             <h2>Meus Bots</h2>
-            <ModalButton className="button" ModalContent={CreateBot} pageData={pageData}>Criar</ModalButton>
+            <ModalButton className="button transparent" ModalContent={CreateBot} pageData={pageData}>Criar</ModalButton>
         </div>
         
         <CardSlider data={myBots} pageData={pageData} />
-    </div>);
+    </>);
 }

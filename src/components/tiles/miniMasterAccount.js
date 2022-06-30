@@ -2,13 +2,14 @@ import Link from 'next/link';
 
 export default function MiniMasterAccountTile({master}) {
     if (master) {
-        return (<Link href={'/master-account/?user=' + master.user + '&' + 'master=' + master._id}>
+        const masterAccountURL = createURL('/master-account', { user: master.user, master: master._id});
+
+        return (<Link href={masterAccountURL}>
             <a className="item card">
                 <div className="card-header">
                     <h3 className="title">{master.name}</h3>
                     <span className={'pnl ' + (master.pnl >= 0 ? 'profit' : 'loss')}> {toMoney(master, ['pnl'])}</span>
                 </div>
-                <hr />
 
                 <p><b>Rodando:</b> 5</p>
                 <p><b>Posições abertas:</b> 15</p>

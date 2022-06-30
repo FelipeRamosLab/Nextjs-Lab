@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import MainModal from '../modals/main';
 import { FaPlayCircle, FaStopCircle } from "react-icons/fa";
+import OpenTradeInfo from '../contents/master-account/openTradeInfos';
 
 export default function SlotTile({slot}) {
     const [stopSelect, setStopSelect] = useState(false);
@@ -91,32 +92,7 @@ export default function SlotTile({slot}) {
                 </div>
             </div>
 
-            {slot.trades.map(trade => {
-                const createdAt = new Date(trade.createdAt);
-                const side = validateProp(trade, ['positionType']) && trade.positionType === 'long' ? 'Long' : 'Short';
-
-                return (
-                    <div key={trade._id} className="tile-footer">
-                        <div className="footer-col align-left position-side" btn-color={side === 'Long' ? 'success' : 'error'}></div>
-                        <div className="footer-col align-left">
-                            <label>COD</label>
-                            <p className="value">{validateProp(trade, ['cod'])}</p>
-                        </div>
-                        <div className="footer-col stretch">
-                            <label>Abertura</label>
-                            <p className="value">{createdAt.toLocaleDateString()} - {createdAt.toLocaleTimeString()}</p>
-                        </div>
-                        <div className="footer-col">
-                            <label>Cotação</label>
-                            <p className="value">{toMoney(trade, ['currentPrice'])}</p>
-                        </div>
-                        <div className="footer-col">
-                            <label>PNL</label>
-                            <p className="value">{toMoney(trade, ['pnl'])}</p>
-                        </div>
-                    </div>
-                )
-            })}
+            {slot.trades.map(trade => <OpenTradeInfo key={trade._id} trade={trade} /> )}
         </div>
     );
 }

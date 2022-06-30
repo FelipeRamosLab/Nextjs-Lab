@@ -6,7 +6,7 @@ export default function CardSlider({data, pageData}) {
         <Slider
             className="card-slider"
             centerMode={true}
-            centerPadding="0px"
+            centerPadding="0"
             slidesToShow={3}
             dots={true}
             infinite={false}

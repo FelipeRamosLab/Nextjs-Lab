@@ -11,39 +11,6 @@
     cursor: pointer;
     transition: all 200ms;
     user-select: none;
-
-    &:active {
-        transform: scale(0.98);
-    }
-
-    &.full-width {
-        width: 100%;
-    }
-
-    &.top-border {
-        border-top: 2px solid $soft-text;
-        border-radius: 0;
-    }
-
-    &.transparent {
-        background-color: transparent;
-        color: $soft-text;
-        padding: 0.5rem;
-    }
-
-    &.small {
-        font-size: 0.8rem;
-    }
-
-    &.outlined {
-        border: 2px solid $soft-text;
-
-        &:hover {
-            background-color: $soft-text;
-            color: $primary;
-            transform: scale(1);
-        }
-    }
 }
 
 .circle-button {
@@ -60,16 +27,6 @@
     transition: all 200ms;
     cursor: pointer;
 
-    &:hover {
-        background-color: #3b414533;
-    }
-
-    &.transparent {
-        background-color: transparent;
-        color: $soft-text;
-        padding: 0.5rem;
-    }
-
     &.add-button {
         background-color: $success;
         color: $primary;
@@ -85,6 +42,46 @@
             font-size: $btn-radius * 0.6;
             font-weight: 500;
         }
+    }
+}
+
+.button,
+.circle-button {
+    &:hover {
+        background-color: #3b414533;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &.full-width {
+        width: 100%;
+    }
+
+    &.top-border {
+        border-top: 2px solid $soft-text;
+        border-radius: 0;
+    }
+
+    &.small {
+        font-size: 0.8rem;
+    }
+
+    &.outlined {
+        border: 2px solid $soft-text;
+
+        &:hover {
+            background-color: $soft-text;
+            color: $primary;
+            transform: scale(1);
+        }
+    }
+
+    &.transparent {
+        background-color: transparent;
+        color: $soft-text;
+        padding: 0.5rem;
     }
 
     &[btn-color="success"].reverse {
