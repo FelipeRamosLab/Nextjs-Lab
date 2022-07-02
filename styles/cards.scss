@@ -44,6 +44,10 @@ a.card.item {
     padding: 1rem;
     column-gap: 0.5rem;
     min-width: 100%;
+  
+    .modal {
+        max-height: 60vh;
+    }
 
     .circle-button {
         margin-left: 0.5rem;

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import MainModal from '../../modals/main';
+import OpenTradeDetailsModal from './openTradeDetailsModal';
 
 export default function OpenTradeInfo({trade}) {
     const [ modal, setModal ] = useState(false);
@@ -26,12 +27,7 @@ export default function OpenTradeInfo({trade}) {
                 <p className="value">{toMoney(trade, ['pnl'])}</p>
             </div>
 
-            <MainModal open={modal} modalCtrl={setModal} Content={()=>{
-                console.log(trade)
-                return (<>
-                    gfsdghfhfdshdjkf
-                </>)
-            }} />
+            <MainModal open={modal} modalCtrl={setModal} Content={()=> <OpenTradeDetailsModal trade={trade} />} />
         </div>
     );
 }

@@ -114,3 +114,30 @@
     }
 }
 
+.flex-data {
+    display: flex;
+    flex-direction: column;
+    
+    .row {
+        display: flex;
+        flex: 1;
+        column-gap: 0.5rem;
+        
+        .column {
+            flex: 1;
+            padding: 0.5rem 0;
+            
+            &.align-right {
+                text-align: right;
+            }
+
+            label {
+                font-weight: bold;
+            }
+            
+            p {
+                font-weight: normal;
+            }
+        }
+    }
+}

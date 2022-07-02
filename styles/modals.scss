@@ -16,7 +16,9 @@
     position: relative;
     width: 96%;
     max-width: 601px;
-    padding: 2rem 1rem 1rem;
+    max-height: 80vh;
+    overflow-y: scroll;
+    padding: 1rem;
     background-color: $secondary-dark;
     border-radius: 1rem;
     box-shadow: 0 0 71px #798687;

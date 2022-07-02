@@ -23,3 +23,13 @@
         margin-top: 0.5rem;
     }
 }
+
+.opentrade-details {
+    .row {
+        border-bottom: 1px dotted $primary-bright;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
