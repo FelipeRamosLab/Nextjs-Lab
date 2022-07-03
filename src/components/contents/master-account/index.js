@@ -10,6 +10,19 @@ export default function MasterAccount({ pageData, setPageData }) {
     const { master } = pageData || {};
     console.log(pageData)
 
+    async function deleteMaster() {
+        try {
+            const deleted = await axios.post('/api/master-account/delete', {
+                masterUID: master._id,
+                userUID: user._id
+            });
+
+            window.location.href = window.location.origin;
+        } catch(err) {
+            throw err;
+        }
+    }
+
     return (
         <div className="container">
             <ModalButton className="circle-button add-button floating" ModalContent={CreateBotAccount} pageData={pageData} setPageData={setPageData}>+</ModalButton>
@@ -18,7 +31,7 @@ export default function MasterAccount({ pageData, setPageData }) {
                 <div className="section-header">
                     <h1 className="title">{master.name}</h1>
                     <ModalButton className="circle-button transparent" ModalContent={(props)=> <CreateMaster {...props} initialData={master} />}><FaPen /></ModalButton>
-                    <button type="button" className="circle-button" btn-color="error"><FaTrash /></button>
+                    <button type="button" className="circle-button" btn-color="error" onClick={deleteMaster}><FaTrash /></button>
                 </div>
                 <div className="stats-cards">
                     <div className="card card-grad">
