@@ -1,12 +1,17 @@
 const {validateProp, validateNum} = require('./validate');
 
 function toMoney(rootObj, inputPath, options) {
-    const {zeroAsFalse} = options || {};
+    let {zeroAsFalse, numberDecimals} = options || {};
     const value = Number(validateProp(rootObj, inputPath));
-
     if (zeroAsFalse && value === 0) return undefined;
+    if (!numberDecimals) numberDecimals = 2;
     if(!validateNum(value)) return undefined;
-    return new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol'}).format(value);
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency', 
+        currency: 'USD', 
+        currencyDisplay: 'narrowSymbol', 
+        minimumFractionDigits: numberDecimals
+    }).format(value);
 }
 
 function toPercent(rootObj, inputPath) {

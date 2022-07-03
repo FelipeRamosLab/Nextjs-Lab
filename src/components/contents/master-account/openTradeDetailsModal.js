@@ -9,7 +9,7 @@ export default function OpenTradeDetailsModal({trade}) {
         'ROE': toPercent(trade, ['roe']),
         'Stop loss': toMoney(trade, ['stopPrice']),
         'Take profit': toMoney(trade, ['gainPrice']),
-        'Quantidade': validateProp(trade, ['quantity']),
+        'Quantidade': validateProp(trade, ['quantity']) ? trade.quantity.toFixed(4) : '--',
         'Alavancagem': validateProp(trade, ['usedLeverege']),
         'Tamanho atual': toMoney(trade, ['grossBalance']),
         'Tamanho inicial': toMoney(trade, ['initialGrossBalance']),
@@ -24,7 +24,7 @@ export default function OpenTradeDetailsModal({trade}) {
     return (<div className="opentrade-details container">
         <h3>Detalhes da Posição</h3>
 
-        <div className="flex-data">
+        <div className="modal-content flex-data">
             {Object.keys(data).map(key=>{
                 const currValue = data[key];
 
