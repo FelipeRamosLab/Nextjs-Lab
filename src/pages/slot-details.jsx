@@ -1,5 +1,5 @@
-import PageLayout from '../components/pageLayout';
-import PageComponent from '../components/pageComponent';
+import PageLayout from '../components/base/pageLayout';
+import PageComponent from '../components/base/activity';
 import SlotDetails from '../components/contents/slot-details';
 
 export default function SlotDetailsPage({queryParams}) {

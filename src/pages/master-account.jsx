@@ -1,5 +1,5 @@
-import PageLayout from '../components/pageLayout';
-import PageComponent from '../components/pageComponent';
+import PageLayout from '../components/base/pageLayout';
+import PageComponent from '../components/base/activity';
 import MasterAccount from '../components/contents/master-account';
 
 export default function MasterAccountPage({queryParams}) {

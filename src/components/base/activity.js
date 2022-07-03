@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from "react";
-import ServerError from "./contents/serverError";
-import Spinner from './loaders/spinner';
+import ServerError from "../contents/serverError";
+import Spinner from '../loaders/spinner';
 
-export default function PageComponent({ PageLayout, PageContent, activityUrl, queryParams }) {
+export default function Activity({ PageLayout, PageContent, activityUrl, queryParams }) {
     const [pageData, setPageData] = useState({status: 'loading'});
 
     function loadData(){

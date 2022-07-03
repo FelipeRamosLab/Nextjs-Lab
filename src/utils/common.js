@@ -5,7 +5,7 @@ function getUID() {
 function createURL(path, queryParams) {
     let params = '';
 
-    Object.keys(queryParams).map(key=>{
+    Object.keys(queryParams || {}).map(key=>{
         if(!params) params = '?';
         else params += '&';
         params += key + '=' + queryParams[key];

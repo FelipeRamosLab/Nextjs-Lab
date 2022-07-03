@@ -1,4 +1,4 @@
-import MainHeader from "./headers/mainHeader";
+import MainHeader from "../headers/mainHeader";
 
 export default function PageLayout({ pageData, children }) {
     return (<>
