@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useState, useEffect } from "react";
-import ServerError from "../components/contents/serverError";
+import ServerError from "./contents/serverError";
+import Spinner from './loaders/spinner';
 
 export default function PageComponent({ PageLayout, PageContent, activityUrl, queryParams }) {
     const [pageData, setPageData] = useState({status: 'loading'});
 
     function loadData(){
-        axios.post(activityUrl, queryParams || {}).then(res=>{
+        axios.post('/api/activities/' + activityUrl, queryParams || {}).then(res=>{
             setPageData(res.data);
         }).catch(err=>setPageData({status: 'error', errorObj: err.response.data}));
     }
@@ -31,7 +32,7 @@ export default function PageComponent({ PageLayout, PageContent, activityUrl, qu
         return (
             <PageLayout>
                 <div className="loading-page">
-                    <h1>Carregando...</h1>
+                    <Spinner />
                 </div>
             </PageLayout>
         );

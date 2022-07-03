@@ -6,6 +6,6 @@ export default function Index() {
   return <PageComponent
     PageLayout={PageLayout}
     PageContent={HomePage}
-    activityUrl="/api/activities/home"
+    activityUrl="home"
   />
 }

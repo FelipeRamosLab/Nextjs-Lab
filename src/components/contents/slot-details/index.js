@@ -1,4 +1,4 @@
-export default function MasterAccount({ pageData, setPageData }) {
+export default function SlotDetails({ pageData, setPageData }) {
     console.log(pageData)
 
     return (
