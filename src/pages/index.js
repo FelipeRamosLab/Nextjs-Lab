@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import PageLayout from "../components/pageLayout";
-import ServerError from "../components/contents/serverError";
-import HomePage from "../components/contents/home";
+import PageComponent from '../components/pageComponent';
+import PageLayout from '../components/pageLayout';
+import HomePage from '../components/contents/home';
 
-export default function Home({}) {
+export default function Index() {
   const [pageData, setPageData] = useState({status: 'loading'});
 
   useEffect(()=>{
@@ -13,24 +13,9 @@ export default function Home({}) {
     });
   }, []);
 
-  if(pageData.hasError) {
-    return (<PageLayout>
-      <ServerError err={pageData} />
-    </PageLayout>)
-  }
-
-  if(pageData.status === 'loading') {
-    return (<PageLayout>
-      <div className="loading-page">
-        <h1>Carregando...</h1>
-      </div>
-    </PageLayout>)
-  }
-
-  return (
-    <PageLayout pageData={pageData}>
-      <HomePage pageData={pageData} />
-    </PageLayout>
-  );
+  return <PageComponent
+    PageLayout={PageLayout}
+    PageContent={HomePage}
+    pageData={pageData}
+  />
 }
-

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import PageLayout from '../components/pageLayout';
-import ServerError from '../components/contents/serverError';
+import PageComponent from '../components/pageComponent';
 import MasterAccount from '../components/contents/master-account';
 
 export default function MasterAccountPage({queryParams}) {
@@ -21,25 +21,11 @@ export default function MasterAccountPage({queryParams}) {
     }, 5000);
   }, []);
 
-  if(pageData.hasError || pageData.status === 'error') {
-    return (<PageLayout>
-      <ServerError err={pageData} />
-    </PageLayout>)
-  }
-
-  if(pageData.status === 'loading') {
-    return (<PageLayout>
-      <div className="loading-page">
-        <h1>Carregando...</h1>
-      </div>
-    </PageLayout>)
-  }
-
-  return (
-    <PageLayout pageData={pageData}>
-      <MasterAccount pageData={pageData} setPageData={setPageData}/>
-    </PageLayout>
-  );
+  return <PageComponent
+    PageLayout={PageLayout}
+    PageContent={MasterAccount}
+    pageData={pageData}
+  />
 }
 
 export async function getServerSideProps(context){
