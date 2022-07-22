@@ -6,8 +6,8 @@ import TransferPainel from '../../common/transferPainel';
 import MasterInfos from './masterInfos';
 import { FaTrash, FaPen } from 'react-icons/fa';
 
-export default function MasterAccount({ pageData, setPageData }) {
-    const { master } = pageData || {};
+export default function MasterAccount({ pageData, setPageData, loadData }) {
+    const { master, masterSlots } = pageData || {};
     console.log(pageData)
 
     async function deleteMaster() {
@@ -21,6 +21,18 @@ export default function MasterAccount({ pageData, setPageData }) {
         } catch(err) {
             throw err;
         }
+    }
+
+    function seeMore() {
+        if (!window.queryParams) window.queryParams = {};
+        
+        if (!window.queryParams.slotsPage) {
+            window.queryParams.slotsPage = 2;
+        } else {
+            window.queryParams.slotsPage++;
+        }
+
+        loadData();
     }
 
     return (
@@ -71,10 +83,11 @@ export default function MasterAccount({ pageData, setPageData }) {
                     </div>
 
                     <div className="slots-list standard-grid grid columns-1">
-                        {master.botAccounts.map(slot => <SlotTile key={slot._id} slot={slot}/> )}
+                        {masterSlots.map(slot => <SlotTile key={slot._id} slot={slot}/> )}
                         <button
                             type="button"
                             className="button full-width top-border transparent small"
+                            onClick={seeMore}
                         >Ver Mais</button>
                     </div>
                 </div>

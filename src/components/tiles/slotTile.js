@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { useState } from 'react';
+import Link from 'next/link';
 import MainModal from '../modals/main';
 import { FaPlayCircle, FaStopCircle } from "react-icons/fa";
 import OpenTradeInfo from '../contents/master-account/openTradeInfos';
 
 export default function SlotTile({slot}) {
     const [stopSelect, setStopSelect] = useState(false);
+    const slotURL = createURL('/slot-details', {slotUID: slot._id, user: slot.user, master: slot.master});
     let state = '';
+
     if(slot.pnl > 0) state = 'profit';
     if(slot.pnl < 0) state = 'loss';
 
@@ -74,7 +77,10 @@ export default function SlotTile({slot}) {
             />
 
             <div className="tile-header">
-                <h4 className="title">{slot.name} <span className="badge" type={slot.status}>{slot.status}</span></h4>
+                <h4 className="title">
+                    <Link href={slotURL}>{slot.name}</Link> 
+                    <span className="badge" type={slot.status}>{slot.status}</span>
+                </h4>
                 {slot.status !== 'stopped' && <FaStopCircle className="circle-button reverse" btn-color="error" onClick={() => setStopSelect(true)} />}
                 {slot.status !== 'running' && <FaPlayCircle className="circle-button reverse" btn-color="success" onClick={() => runSlot(slot._id)} />}
             </div>

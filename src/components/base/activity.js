@@ -7,7 +7,9 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
     const [pageData, setPageData] = useState({status: 'loading'});
 
     function loadData(){
-        axios.post('/api/activities/' + activityUrl, queryParams || {}).then(res=>{
+        const params = {...queryParams, ...window.queryParams};
+
+        axios.post('/api/activities/' + activityUrl, params || {}).then(res=>{
             setPageData(res.data);
         }).catch(err=>setPageData({status: 'error', errorObj: err.response.data}));
     }
@@ -40,7 +42,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
 
     return (
         <PageLayout pageData={pageData}>
-            <PageContent pageData={pageData} />
+            <PageContent pageData={pageData} loadData={loadData} />
         </PageLayout>
     );
 }

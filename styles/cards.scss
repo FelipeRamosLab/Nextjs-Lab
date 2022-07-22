@@ -61,6 +61,10 @@ a.card.item {
         font-size: 1.5rem;
         display: inline-flex;
         align-items: center;
+
+        a {
+            color: $bright-text;
+        }
     }
 
     .tile-header {
