@@ -12,8 +12,24 @@ export default async function HomeActivity(req, res) {
             data: { collection: 'bots', filter: {author: config.userTest }, options: { populate: {levels: 3} } }
         });
 
+        let userRes = user.data.doc;
+
+        for (let i = 0; i < userRes.masterAccounts.length; i++) {
+            const item = userRes.masterAccounts[i];
+
+            const openTrades = await axios.get(root + '/collection/get/queryCollection', {
+                data: { collection: 'positions', filter: {user: item.user, master: item._id, status: 'opened' } }
+            });
+            const runningSlots = await axios.get(root + '/collection/get/queryCollection', {
+                data: { collection: 'bot_accounts', filter: {user: item.user, master: item._id, status: 'running' } }
+            });
+
+            userRes.masterAccounts[i].openTradesCount = openTrades.data.result.length;
+            userRes.masterAccounts[i].runningSlotsCount = runningSlots.data.result.length;
+        }
+
         res.status(200).json({
-            user: user.data.doc,
+            user: userRes,
             myBots: myBots.data.result
         });
     } catch (err) {

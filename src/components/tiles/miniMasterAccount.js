@@ -11,8 +11,8 @@ export default function MiniMasterAccountTile({master}) {
                     <span className={'pnl ' + (master.pnl >= 0 ? 'profit' : 'loss')}> {toMoney(master, ['pnl'])}</span>
                 </div>
 
-                <p><b>Rodando:</b> 5</p>
-                <p><b>Posições abertas:</b> 15</p>
+                <p><b>Rodando:</b> {master.runningSlotsCount}</p>
+                <p><b>Posições abertas:</b> {master.openTradesCount}</p>
                 <p><b>Total na carteira:</b> {toMoney(master, ['futuresWallet', 'totalWalletBalance'])}</p>
             </a>
         </Link>);
