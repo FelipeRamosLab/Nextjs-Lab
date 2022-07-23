@@ -8,7 +8,7 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
         user: pageData && pageData.user._id,
         master: pageData && pageData.master._id,
         name: '',
-        type: 'demo',
+        type: 'slot-demo',
         assets: [],
         interval: '1h',
         limits: {},

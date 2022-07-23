@@ -60,8 +60,8 @@ export default function CreateMaster({pageData, initialData}) {
                 getter={validateProp(form, ['type']) || validateProp(initialData, ['type']) || ''}
                 setter={(value)=>setForm({...form, type: value})}
                 options={[
-                    new SelectOption({title: 'Conta Demo', value: 'demo'}),
-                    new SelectOption({title: 'Conta Real', value: 'live'})
+                    new SelectOption({title: 'Conta Demo', value: 'master-demo'}),
+                    new SelectOption({title: 'Conta Real', value: 'master-live'})
                 ]}
             />}
 
