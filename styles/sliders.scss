@@ -46,10 +46,6 @@
 
             label {
                 text-decoration: underline;
-
-                &::after {
-                    content: ':';
-                }
             }
 
             .value {

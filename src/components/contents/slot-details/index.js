@@ -29,6 +29,25 @@ export default function SlotDetails({ pageData, setPageData }) {
                             <p>{slot.bot.description}</p>
                         </div>
 
+                        <div className="stats-cards">
+                            <div className="card card-grad">
+                                <span className="value">$1000</span>
+                                <label>PNL Acumulado</label>
+                            </div>
+                            <div className="card card-grad">
+                                <span className="value">$1000</span>
+                                <label>Não Realizado</label>
+                            </div>
+                            <div className="card card-grad">
+                                <span className="value">$1000</span>
+                                <label>Margem Total</label>
+                            </div>
+                            <div className="card card-grad">
+                                <span className="value">$1000</span>
+                                <label>Lucro Realizado</label>
+                            </div>
+                        </div>
+
                         <GridSlider data={[
                             { label: 'item1', value: '$ 1000'}
                         ]} />
