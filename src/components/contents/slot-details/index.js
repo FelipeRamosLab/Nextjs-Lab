@@ -29,7 +29,7 @@ export default function SlotDetails({ pageData, setPageData }) {
                             <p>{slot.bot.description}</p>
                         </div>
 
-                        <div className="stats-cards">
+                        <div className="stats-cards smaller">
                             <div className="card card-grad">
                                 <span className="value">$1000</span>
                                 <label>PNL Acumulado</label>

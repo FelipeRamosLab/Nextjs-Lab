@@ -5,7 +5,15 @@
     padding-bottom: 0.7rem;
     margin-top: 1rem;
 
+    
+    &.smaller {
+        .card {
+            min-height: auto;
+        }
+    }
+
     .card {
+        min-height: 8rem;
         min-width: 47%;
         padding: 1rem;
         display: flex;
