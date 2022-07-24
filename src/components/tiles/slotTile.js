@@ -7,7 +7,7 @@ import OpenTradeInfo from '../contents/master-account/openTradeInfos';
 
 export default function SlotTile({slot}) {
     const [stopSelect, setStopSelect] = useState(false);
-    const slotURL = createURL('/slot-details', {slotUID: slot._id, user: slot.user, master: slot.master});
+    const slotURL = createURL('/slot-details', {slotUID: slot._id, user: slot.user._id, master: slot.master});
     let state = '';
 
     if(slot.pnl > 0) state = 'profit';

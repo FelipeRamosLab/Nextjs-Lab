@@ -3,19 +3,20 @@ import config from '../../../../config.json';
 
 const root = config[config.root];
 
-export default async function MasterAccountActivity(req, res) {
+export default async function SlotDetailsActivity(req, res) {
     try {
-        // const master = await axios.post(root + '/master-account/get', { masterUID: req.body.master, userUID: req.body.user });
+        const slot = await axios.get(root + '/bot-account/details', { 
+            data: { slotUID: req.body.slotUID, masterUID: req.body.master, userUID: req.body.user }
+        });
 
-        // if (master.data.success) {
-        //     return res.status(200).send({
-        //         user: master.data.masterAccount.user,
-        //         master: master.data.masterAccount
-        //     });
-        // } else {
-        //     return res.status(500).send(master.data);
-        // }
-        return res.status(200).send({})
+        if (slot.data.success) {
+            return res.status(200).send({
+                user: slot.data.slotDetails.user,
+                slot: slot.data.slotDetails
+            });
+        } else {
+            return res.status(500).send(slot.data);
+        }
     } catch (err) {
         return res.status(500).send(err);
     }
