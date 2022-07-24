@@ -1,3 +1,5 @@
+import GridSlider from '../../sliders/grid-slider';
+
 export default function SlotDetails({ pageData, setPageData }) {
     const {slot} = pageData || {};
     console.log(pageData)
@@ -23,7 +25,9 @@ export default function SlotDetails({ pageData, setPageData }) {
                             <p>{slot.bot.description}</p>
                         </div>
 
-                        {/* Slider here */}
+                        <GridSlider data={[
+                            { label: 'item1', value: '$ 1000'}
+                        ]} />
                     </div>
 
                     <div className="section-header">
