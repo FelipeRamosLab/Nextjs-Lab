@@ -22,3 +22,17 @@
         color: $loss;
     }    
 }
+
+.avatar {
+    $radius: 5rem;
+
+    align-items: center;
+    border-radius: $radius;
+    background-color: $tertiary;
+    color: $primary;
+    display: flex;
+    font-size: $radius * 0.4;
+    height: $radius;
+    justify-content: center;
+    width: $radius;
+}

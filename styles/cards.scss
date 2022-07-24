@@ -11,6 +11,16 @@
         color: $primary;
     }
 
+    &.bot-card {
+        background: $grad-card-grey;
+        box-shadow: 0px 0px 57px rgba(0, 0, 0, 0.9);
+        padding: 1rem;
+
+        .avatar {
+            margin-bottom: 1rem;
+        }
+    }
+
     .card-header {
         display: flex;
         justify-content: space-between;
@@ -32,6 +42,7 @@
         font-size: 0.85rem;
     }
 }
+
 
 a.card.item {
     text-decoration: none;
