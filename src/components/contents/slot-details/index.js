@@ -1,4 +1,7 @@
 import GridSlider from '../../sliders/grid-slider';
+import ModalButton from '../../buttons/modalButton';
+import CreateMaster from '../../forms/createMaster';
+import { FaTrash, FaPen } from 'react-icons/fa';
 
 export default function SlotDetails({ pageData, setPageData }) {
     const {slot} = pageData || {};
@@ -7,15 +10,16 @@ export default function SlotDetails({ pageData, setPageData }) {
     return (
         <div className="container">
             <section className="content-fullwidth">
-                
+                <div className="section-header">
+                    <h1 className="title">{slot.name}</h1>
+                    <ModalButton className="circle-button transparent" ModalContent={(props)=> <></>}><FaPen /></ModalButton>
+                    <button type="button" className="circle-button" btn-color="error"><FaTrash /></button>
+                </div>
             </section>
 
             <section className="content-sidebar">
                 <div className="content">
                     <div className="section-wrap">
-                        <div className="section-header">
-                            <h2>{slot.name}</h2>
-                        </div>
 
                         <div className="card bot-card">
                             <div className="avatar">
