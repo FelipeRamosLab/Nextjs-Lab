@@ -6,7 +6,7 @@ export default function GridSlider({data, pageData}) {
             className="grid-slider"
             centerMode={true}
             centerPadding="0"
-            slidesToShow={3}
+            slidesToShow={1}
             dots={true}
             infinite={false}
             responsive={[{
