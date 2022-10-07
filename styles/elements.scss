@@ -36,3 +36,14 @@
     justify-content: center;
     width: $radius;
 }
+
+.thread-blackboard {
+    background: $black;
+    padding: 0.8rem;
+    width: 100%;
+
+    .block {
+        background: $primary-bright;
+        padding: 0.5rem;
+    }
+}
