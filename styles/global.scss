@@ -77,7 +77,8 @@ form {
         font-size: smaller;
     }
 
-    input {
+    input,
+    textarea {
         padding: 0.7rem 0.8rem 0.3rem 0.8rem;
         background-color: $primary-bright;
         border: 0;
@@ -95,4 +96,13 @@ form {
 
 section {
     margin-bottom: 1rem;
+}
+
+input,
+textarea {
+    width: 100%;
+}
+
+textarea {
+    min-height: 5em;
 }

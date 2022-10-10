@@ -39,11 +39,83 @@
 
 .thread-blackboard {
     background: $black;
-    padding: 0.8rem;
     width: 100%;
+    padding: 0.8rem;
+    
+    .content-body {
+        padding: 0.8rem;
+    }
 
     .block {
-        background: $primary-bright;
-        padding: 0.5rem;
+        background: $deep-space;
+        margin-bottom: 1rem;
+        border: 2px solid $black;
+
+        &.main-block {
+            background: transparent;
+        }
+
+        .toolbar {
+            .toolbar-button { 
+                background-color: $grey-mid;
+
+                &.selected {
+                    background-color: $success;
+                }
+            }
+        }
+    }
+
+    .rule {
+        background: $aquamarine;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+        color: $primary;
+    }
+    
+    .config {
+        background: $primary;
+        color: $soft-text;
+        margin-bottom: 1rem;
+    }
+
+    fieldset {
+        border: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .rounded {
+        border-radius: 0.4rem;
+        overflow: hidden;
+    }
+}
+
+.toolbar {
+    display: flex;
+
+    .toolbar-button {
+        border: none;
+        flex: 1;
+        padding: 0.5rem 1rem;
+
+        &.selected {
+            background-color: $success;
+        }
+
+        &.color-block {
+            background: $charleston-green !important;
+            color: $soft-text;
+        }
+
+        &.color-rule {
+            background: $aquamarine !important;
+        }
+
+        &.color-config {
+            background: $primary !important;
+            color: $soft-text;
+        }
     }
 }

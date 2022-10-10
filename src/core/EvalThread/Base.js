@@ -17,19 +17,12 @@ export default class Base {
         }
     }
 
-    set(value) {
-        this.setState((prev, props)=>{
-            let current = {};
-            current = prev.thread;
+    set(base) {
+        this.setState(new EvalThread(base));
+    }
 
-            this.path.map((item, i) => {
-                if (i === this.path.length -1) {
-                    current = {...current, ...value};
-                }
-            });
-
-
-            return new EvalThread({...prev, thread: current});
-        })
+    setValue(base, prop, value) {
+        this[prop] = value;
+        this.set(base);
     }
 }

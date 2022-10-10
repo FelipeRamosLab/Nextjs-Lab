@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import EvalThread from '../core/EvalThread';
+import BlockEl from '../components/botThread/BlockEl';
 
 export default function EvalThreadPage() {
     const state = useState();
@@ -13,37 +14,52 @@ export default function EvalThreadPage() {
         }));
     }, []);
     useEffect(()=>{
-        window.testEval = evalThread;
+        window.BotThread = evalThread;
     }, [evalThread]);
 
     return <>
         <h1>Eval Thread Editor</h1>
 
-        <div className="thread-blackboard">
-            {thread && <BlockEl getState={evalThread} currentEl={evalThread.thread} />}
-            {!thread && <>
-                <button className="button full-width" onClick={() => evalThread.addBlock(evalThread)}>Add a Block</button>
-            </>}
-        </div>
+        <form className="thread-blackboard">
+            {thread && <BlockEl className="main-block" thread={evalThread} currentEl={evalThread.thread} />}
+            {!thread && <div className="toolbar">
+                <button type="button" className="toolbar-button full-width selected" onClick={() => evalThread.addBlock(evalThread)}>Add a Block</button>
+            </div>}
+        </form>
     </>
 }
 
-function BlockEl({getState, currentEl}) {
-    const blockChildrenKeys = Object.keys(currentEl.children || {});
+export function Input({thread, currentEl, state}) {
+    const attributes = {};
+    const [get, set] = state;
 
-    return <div className="block">
-        {blockChildrenKeys.length ? blockChildrenKeys.map(key => {
-            const curr = currentEl.children[key];
+    switch(currentEl.primitiveType) {
+        case 'number': {
+            attributes.type = 'number';
+            attributes.inputMode = 'numeric';
+            break;
+        }
+        case 'string': {
+            attributes.type = 'text';
+            break;
+        }
+    }
 
-            switch (curr.type) {
-                case 'block': return <BlockEl key={curr.uid} currentEl={curr} />
-                case 'rule': return <>Rule</>
-                default: return <></>
-            }
-            
-        }) : ''}
-
-        <button className="button full-width" onClick={() => currentEl.addBlock(getState)}>Add Block</button>
-        <button className="button full-width">Add Rule</button>
-    </div>;
+    switch(currentEl.primitiveType) {
+        case 'string':
+        case 'number':
+            return (
+                <input
+                    {...attributes}
+                    value={get.primitiveValue || ''} 
+                    onBlur={(ev)=> currentEl.setValue(thread, 'primitiveValue', (currentEl.primitiveType === 'number') ? Number(ev.target.value) : ev.target.value)}
+                    onInput={(input) => set((prev) => {
+                        return {...prev, primitiveValue: input.target.value };
+                    })}
+                />
+            );
+        default: {
+            return <></>;
+        }
+    }
 }

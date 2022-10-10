@@ -1,4 +1,5 @@
 import Base from './Base';
+import Rule from './Rule';
 
 export default class Block extends Base {
     constructor(setup = {
@@ -14,38 +15,43 @@ export default class Block extends Base {
 
         this.type = 'block';
         this.ifType = ifType || null;
-        this.children = {};
+        this.children = [];
         this.path = [];
 
-        if (children && typeof children === 'object') {
+        if (children && Array.isArray(children)) {
             let internal = this;
 
-            Object.keys(children).map(key => {
-                const curr = children[key];
-
-                switch (curr.type) {
-                    case 'block': internal.children[key] = new Block(curr);
-                    default: '';
+            children.map(item => {
+                switch (item.type) {
+                    case 'block': {
+                        internal.children.push(new Block(item));
+                        break;
+                    }
+                    case 'rule': {
+                        internal.children.push(new Rule(item));
+                        break;
+                    }
+                    default: new Error('');
                 }
             });
         }
     }
-    
-    edit() {
-
-    }
-
-    remove() {
-
-    }
 
     addBlock(base) {
         const newBlock = new Block({path: this.path, state: this.state});
+        
+        this.children.push(newBlock);
+        this.set(base);
 
-        this.set({children: {...this.children, [newBlock.uid]: newBlock}})
+        return newBlock;
     }
 
-    addEvalRule() {
+    addRule(base) {
+        const newRule = new Rule({path: this.path, state: this.state});
+        
+        this.children.push(newRule);
+        this.set(base);
 
+        return newRule;
     }
 }

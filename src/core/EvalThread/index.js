@@ -1,7 +1,5 @@
 import Base from './Base';
 import Block from './Block';
-import Rule from './Rule';
-
 export default class EvalThread {
     constructor({
         thread,
@@ -10,12 +8,9 @@ export default class EvalThread {
         if (!state && state.length !== 2) throw new Error('');
 
         this.thread = thread ? new Block(thread) : null;
+        this.getState = state[0];
         this.setState = state[1];
         this.state = state;
-    }
-
-    edit() {
-
     }
 
     addBlock() {
