@@ -41,6 +41,22 @@
     background: $black;
     width: 100%;
     padding: 0.8rem;
+
+    .header {
+        width: 100%;
+        display: flex;
+        align-items: baseline;
+
+        .header-column {
+            flex: 1;
+        }
+
+        .button {
+            font-size: 1.2rem;
+            flex: 0;
+            padding: 0 0.5rem 0.5rem 0.5rem;
+        }
+    }
     
     .content-body {
         padding: 0.8rem;
@@ -72,6 +88,10 @@
         flex-direction: column;
         margin-bottom: 1rem;
         color: $primary;
+
+        .header .button {
+            color: $primary;
+        }
     }
     
     .config {

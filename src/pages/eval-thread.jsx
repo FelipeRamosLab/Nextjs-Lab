@@ -21,7 +21,7 @@ export default function EvalThreadPage() {
         <h1>Eval Thread Editor</h1>
 
         <form className="thread-blackboard">
-            {thread && <BlockEl className="main-block" thread={evalThread} currentEl={evalThread.thread} />}
+            {thread && <BlockEl className="main-block" thread={evalThread} currentEl={evalThread.thread} parentEl={evalThread} />}
             {!thread && <div className="toolbar">
                 <button type="button" className="toolbar-button full-width selected" onClick={() => evalThread.addBlock(evalThread)}>Add a Block</button>
             </div>}

@@ -23,4 +23,14 @@ export default class Rule extends Base {
         this.children.push(newConfig);
         this.set(base);
     }
+
+    remove(base, parent) {
+        if (parent.children) {
+            parent.children = parent.children.filter(item => {
+                if (item.uid !== this.uid) return item;
+            });
+
+            this.set(base);
+        }
+    }
 }

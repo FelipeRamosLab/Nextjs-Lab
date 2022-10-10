@@ -1,10 +1,17 @@
 import RuleEl from '../botThread/RuleEl';
 
-export default function BlockEl({thread, currentEl, className}) {
+export default function BlockEl({thread, currentEl, className, parentEl}) {
     const blockChildrenKeys = Object.keys(currentEl.children || {});
 
     return <>
-        <h5>Block</h5>
+        <div className="header">
+            <h4 className="header-column">Block</h4>
+            <button
+                type="button"
+                className="header-column button transparent"
+                onClick={() => currentEl.remove(thread, parentEl)}
+            >X</button>
+        </div>
         <div className={"block rounded " + (className || '')}>
             <div className="toolbar">
                 <button
@@ -24,8 +31,8 @@ export default function BlockEl({thread, currentEl, className}) {
                     const curr = currentEl.children[key];
 
                     switch (curr.type) {
-                        case 'block': return <BlockEl key={curr.uid} thread={thread} currentEl={curr} />
-                        case 'rule': return <RuleEl key={curr.uid} thread={thread} currentEl={curr} />
+                        case 'block': return <BlockEl key={curr.uid} thread={thread} currentEl={curr} parentEl={currentEl} />
+                        case 'rule': return <RuleEl key={curr.uid} thread={thread} currentEl={curr} parentEl={currentEl} />
                         default: return <></>
                     }
                     

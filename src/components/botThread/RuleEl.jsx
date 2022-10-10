@@ -1,12 +1,20 @@
 import ConfigEl from './ConfigEl';
 
-export default function RuleEl({thread, currentEl}) {
+export default function RuleEl({thread, currentEl, parentEl}) {
     const ruleChildrenKeys = currentEl.children;
 
     return (<>
         <div className="rule rounded">
             <div className="content-body">
-                <h4>Rule</h4>
+                <div className="header">
+                    <h4 className="header-column">Rule</h4>
+                    <button
+                        type="button"
+                        className="header-column button transparent"
+                        onClick={() => currentEl.remove(thread, parentEl)}
+                    >X</button>
+                </div>
+
                 {ruleChildrenKeys.length ? ruleChildrenKeys.map((item, i) => {
                     return <ConfigEl key={item.uid} thread={thread} currentEl={item} withCondition={i > 0 ? true : false}/>;
                 }) : ''}

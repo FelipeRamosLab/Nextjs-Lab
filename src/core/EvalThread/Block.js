@@ -1,3 +1,4 @@
+import EvalThread from './index';
 import Base from './Base';
 import Rule from './Rule';
 
@@ -53,5 +54,24 @@ export default class Block extends Base {
         this.set(base);
 
         return newRule;
+    }
+
+    remove(base, parent) {
+        if (parent.thread) {
+            parent.thread = null;
+
+            parent.setState(prev => {
+                return new EvalThread({...prev, ...parent});
+            });
+            return base;
+        }
+
+        if (parent.children) {
+            parent.children = parent.children.filter(item => {
+                if (item.uid !== this.uid) return item;
+            });
+
+            this.set(base);
+        }
     }
 }
