@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Input} from '../../pages/eval-thread';
+import {Input} from './BotThread';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 
 export default function ConfigEl({thread, currentEl, withCondition}) {

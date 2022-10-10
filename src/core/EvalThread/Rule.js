@@ -4,22 +4,22 @@ import Config from './Config';
 export default class Rule extends Base {
     constructor({
         children
-    }) {
-        super(arguments[0] || {});
+    }, getParent) {
+        super(arguments[0] || {}, getParent);
         if (!arguments[0]) throw new Error('');
 
         this.type = 'rule';
         this.children = [];
-        this.path = [];
+        this.path = [...this.getParent().path, this.uid];
 
         if (children && Array.isArray(children)) {
             let internal = this;
-            children.map(item => internal.children.push(new Config(item)));
+            children.map(item => internal.children.push(new Config(item, () => this)));
         }
     }
 
     addConfig(base) {
-        const newConfig = new Config({ state: this.state, path: this.path });
+        const newConfig = new Config({ state: this.state, path: this.path }, () => this);
         this.children.push(newConfig);
         this.set(base);
     }

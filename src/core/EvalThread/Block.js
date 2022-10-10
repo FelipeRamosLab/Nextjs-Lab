@@ -8,8 +8,8 @@ export default class Block extends Base {
         path,
         ifType,
         children
-    }) {
-        super(setup);
+    }, getParent) {
+        super(setup, getParent);
         const {type, children, ifType, path} = setup || {};
 
         if (type !== 'or' || type !== 'and') new Error('');
@@ -17,7 +17,6 @@ export default class Block extends Base {
         this.type = 'block';
         this.ifType = ifType || null;
         this.children = [];
-        this.path = [];
 
         if (children && Array.isArray(children)) {
             let internal = this;
@@ -25,11 +24,11 @@ export default class Block extends Base {
             children.map(item => {
                 switch (item.type) {
                     case 'block': {
-                        internal.children.push(new Block(item));
+                        internal.children.push(new Block(item, () => this));
                         break;
                     }
                     case 'rule': {
-                        internal.children.push(new Rule(item));
+                        internal.children.push(new Rule(item, () => this));
                         break;
                     }
                     default: new Error('');
@@ -39,7 +38,7 @@ export default class Block extends Base {
     }
 
     addBlock(base) {
-        const newBlock = new Block({path: this.path, state: this.state});
+        const newBlock = new Block({path: this.path, state: this.state}, () => this);
         
         this.children.push(newBlock);
         this.set(base);
@@ -48,7 +47,7 @@ export default class Block extends Base {
     }
 
     addRule(base) {
-        const newRule = new Rule({path: this.path, state: this.state});
+        const newRule = new Rule({path: this.path, state: this.state}, () => this);
         
         this.children.push(newRule);
         this.set(base);

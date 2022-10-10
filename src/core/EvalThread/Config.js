@@ -9,8 +9,8 @@ export default class Config extends Base {
         functionUID,
         toCompare,
         configs
-    }) {
-        super(arguments[0] || {});
+    }, getParent) {
+        super(arguments[0] || {}, getParent);
         if (!arguments[0]) throw new Error('');
 
         this.type = type || '';

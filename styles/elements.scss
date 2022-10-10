@@ -41,6 +41,12 @@
     background: $black;
     width: 100%;
     padding: 0.8rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow-y: auto;
 
     .header {
         width: 100%;

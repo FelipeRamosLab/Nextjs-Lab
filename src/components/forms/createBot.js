@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
 import SuggestionsSelect from '../inputs/suggestionsSelect';
+import BotThread from '../botThread/BotThread';
 
 export default function CreateBot({pageData}) {
     const [spinner, setSpinner] = useState(false);
+    const [threadCtrl, setThreadCtrl] = useState(false);
     const [form, setForm] = useState({
         author: pageData && pageData.user._id,
         name: '',
@@ -48,6 +50,9 @@ export default function CreateBot({pageData}) {
                 <hr/>
 
                 <SuggestionsSelect label="Open Long:" />
+
+                {threadCtrl && <BotThread formState={[form, setForm]} formProp="openLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />}
+                {!threadCtrl && <button type="button" className="button" onClick={() => setThreadCtrl(!threadCtrl)}>Editar Thread</button>}
             </fieldset>
 
             <div className="buttons-wrap">

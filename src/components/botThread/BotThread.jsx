@@ -1,31 +1,42 @@
 import {useState, useEffect} from 'react';
-import EvalThread from '../core/EvalThread';
-import BlockEl from '../components/botThread/BlockEl';
+import EvalThread from '../../core/EvalThread';
+import BlockEl from './BlockEl';
 
-export default function EvalThreadPage() {
+export default function BotThread({formState, formProp, threadCtrlState}) {
     const state = useState();
+    const [_, setThreadCtrl] = threadCtrlState;
+    const [form, setForm] = formState;
     const [evalThread, setEvalThread] = state;
     let thread = evalThread && evalThread.thread;
 
-    console.log(thread)
     useEffect(()=>{
+        console.log(form[formProp])
         setEvalThread(new EvalThread({
+            ...form.eval[formProp],
             state
         }));
     }, []);
+
     useEffect(()=>{
         window.BotThread = evalThread;
+
+        setForm((prev)=>{
+            console.log({ ...prev, eval: {...prev.eval, [formProp]: evalThread} })
+            return { ...prev, eval: {...prev.eval, [formProp]: evalThread} };
+        });
     }, [evalThread]);
 
     return <>
-        <h1>Eval Thread Editor</h1>
+        <div className="thread-blackboard">
+            <div className="header">
+                <button type="button" className="button transparent" onClick={()=>setThreadCtrl(false)}>Voltar</button>
+            </div>
 
-        <form className="thread-blackboard">
             {thread && <BlockEl className="main-block" thread={evalThread} currentEl={evalThread.thread} parentEl={evalThread} />}
             {!thread && <div className="toolbar">
                 <button type="button" className="toolbar-button full-width selected" onClick={() => evalThread.addBlock(evalThread)}>Add a Block</button>
             </div>}
-        </form>
+        </div>
     </>
 }
 
@@ -52,7 +63,13 @@ export function Input({thread, currentEl, state}) {
                 <input
                     {...attributes}
                     value={get.primitiveValue || ''} 
-                    onBlur={(ev)=> currentEl.setValue(thread, 'primitiveValue', (currentEl.primitiveType === 'number') ? Number(ev.target.value) : ev.target.value)}
+                    onBlur={(ev)=> {
+                        currentEl.setValue(
+                            thread, 
+                            'primitiveValue', 
+                            (currentEl.primitiveType === 'number') ? Number(ev.target.value) : ev.target.value
+                        );
+                    }}
                     onInput={(input) => set((prev) => {
                         return {...prev, primitiveValue: input.target.value };
                     })}

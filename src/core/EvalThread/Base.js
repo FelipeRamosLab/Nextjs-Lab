@@ -5,12 +5,13 @@ export default class Base {
         uid,
         path,
         state
-    }) {
+    }, getParent) {
         this.uid = uid || Math.random().toString(36).split('.')[1];
         this.state = state;
 
         if (!path) path = [];
-        this.path = path.concat([this.uid]);
+        this.getParent = getParent;
+        this.path = [...this.getParent().path, this.uid];
 
         if (state) {
             this.getState = state[0];
