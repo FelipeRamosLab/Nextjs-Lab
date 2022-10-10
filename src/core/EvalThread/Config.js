@@ -7,6 +7,7 @@ export default class Config extends Base {
         primitiveType,
         primitiveValue,
         functionUID,
+        toCompare,
         configs
     }) {
         super(arguments[0] || {});
@@ -17,7 +18,7 @@ export default class Config extends Base {
         this.primitiveType = primitiveType || '';
         this.functionUID = functionUID || '';
         this.configs = configs || '';
-        this.toCompare = '';
+        this.toCompare = toCompare || '';
 
         switch (primitiveType){
             case 'boolean': {

@@ -2,11 +2,13 @@ import Base from './Base';
 import Block from './Block';
 export default class EvalThread {
     constructor({
+        uid,
         thread,
         state
     }) {
         if (!state && state.length !== 2) throw new Error('');
 
+        this.uid = uid || Math.random().toString(36).split('.')[1];
         this.thread = thread ? new Block(thread) : null;
         this.getState = state[0];
         this.setState = state[1];

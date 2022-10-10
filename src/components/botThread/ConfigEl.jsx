@@ -10,8 +10,8 @@ export default function ConfigEl({thread, currentEl, withCondition}) {
             <div className="content-body">
                 <ModalSelect
                     label="Operador de comparação"
-                    getter={currentEl.type} 
-                    setter={(value) => currentEl.setValue(thread, 'type', value)} 
+                    getter={currentEl.toCompare} 
+                    setter={(value) => currentEl.setValue(thread, 'toCompare', value)} 
                     options={[
                         new SelectOption({title: '=', value: '='}),
                         new SelectOption({title: '>', value: '>'}),
