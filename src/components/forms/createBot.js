@@ -11,10 +11,15 @@ export default function CreateBot({pageData}) {
         name: '',
         description: '',
         eval: {
-            openLong: [],
-            openShort: [],
             closeLong: [],
-            closeShort: []
+            closeShort: [],
+            triggers: {
+                stopLossLong: {},
+                stopLossShort: {},
+                takeProfitLong: {},
+                takeProfitShort: {},
+                trailingStop: {}
+            }
         }
     });
     console.log(form)
