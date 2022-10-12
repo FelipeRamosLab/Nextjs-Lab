@@ -4,10 +4,12 @@ export default class Base {
     constructor({
         uid,
         path,
-        state
+        state,
+        createdDate
     }, getParent) {
         this.uid = uid || Math.random().toString(36).split('.')[1];
         this.state = state;
+        this.createdDate = createdDate || Date.now();
 
         if (!path) path = [];
         this.getParent = getParent;

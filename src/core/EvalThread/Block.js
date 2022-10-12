@@ -7,6 +7,8 @@ export default class Block extends Base {
         ...this,
         path,
         ifType,
+        blocks,
+        rules,
         children
     }, getParent) {
         super(setup, getParent);
@@ -16,7 +18,8 @@ export default class Block extends Base {
 
         this.type = 'block';
         this.ifType = ifType || null;
-        this.children = [];
+        this.blocks = [];
+        this.rules = [];
 
         if (children && Array.isArray(children)) {
             let internal = this;
@@ -24,17 +27,19 @@ export default class Block extends Base {
             children.map(item => {
                 switch (item.type) {
                     case 'block': {
-                        internal.children.push(new Block(item, () => this));
+                        internal.blocks.push(new Block(item, () => this));
                         break;
                     }
                     case 'rule': {
-                        internal.children.push(new Rule(item, () => this));
+                        internal.rules.push(new Rule(item, () => this));
                         break;
                     }
                     default: new Error('');
                 }
             });
         }
+
+        this.children = [...this.blocks, ...this.rules].sort((a, b) => a.createdDate - b.createdDate);
     }
 
     addBlock(base) {
