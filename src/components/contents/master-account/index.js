@@ -1,4 +1,3 @@
-import axios from 'axios';
 import ModalButton from '../../buttons/modalButton';
 import CreateBotAccount from '../../forms/createBotAccount';
 import CreateMaster from '../../forms/createMaster';
@@ -8,7 +7,7 @@ import MasterInfos from './masterInfos';
 import { FaTrash, FaPen } from 'react-icons/fa';
 
 export default function MasterAccount({ pageData, setPageData, loadData }) {
-    const { master, masterSlots, user } = pageData || {};
+    const { master, masterSlots } = pageData || {};
     console.log(pageData)
 
     async function deleteMaster() {

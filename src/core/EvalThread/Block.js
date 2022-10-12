@@ -1,11 +1,10 @@
 import EvalThread from './index';
 import Base from './Base';
-import Config from './Config';
+import Rule from './Rule';
 
 export default class Block extends Base {
     constructor(setup = {
         ...this,
-        type,
         path,
         ifType,
         children
@@ -13,39 +12,33 @@ export default class Block extends Base {
         super(setup, getParent);
         const {type, children, ifType, path} = setup || {};
 
-        this.type = type;
+        if (type !== 'or' || type !== 'and') new Error('');
+
+        this.type = 'block';
+        this.ifType = ifType || null;
         this.children = [];
-        
-        switch (this.type) {
-            case 'block': {
-                this.ifType = ifType || null;
-                break;
-            }
-            case 'rule': {
-                break;
-            }
-        }
 
         if (children && Array.isArray(children)) {
-            const self = this;
+            let internal = this;
 
             children.map(item => {
-                if (self.type === 'rule') {
-                    self.children.push(new Config(item, () => this));
-                } else {
-                    self.children.push(new Block(item, () => this));
+                switch (item.type) {
+                    case 'block': {
+                        internal.children.push(new Block(item, () => this));
+                        break;
+                    }
+                    case 'rule': {
+                        internal.children.push(new Rule(item, () => this));
+                        break;
+                    }
+                    default: new Error('');
                 }
             });
         }
-
     }
 
     addBlock(base) {
-        const newBlock = new Block({
-            type: 'block', 
-            path: this.path, 
-            state: this.state
-        }, () => this);
+        const newBlock = new Block({path: this.path, state: this.state}, () => this);
         
         this.children.push(newBlock);
         this.set(base);
@@ -54,22 +47,12 @@ export default class Block extends Base {
     }
 
     addRule(base) {
-        const newRule = new Block({
-            type: 'rule',
-            path: this.path, 
-            state: this.state
-        }, () => this);
+        const newRule = new Rule({path: this.path, state: this.state}, () => this);
         
         this.children.push(newRule);
         this.set(base);
 
         return newRule;
-    }
-
-    addConfig(base) {
-        const newConfig = new Config({ state: this.state, path: this.path }, () => this);
-        this.children.push(newConfig);
-        this.set(base);
     }
 
     remove(base, parent) {
