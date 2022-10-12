@@ -47,7 +47,7 @@ export default function CreateBot({pageData}) {
 
                 <SuggestionsSelect label="Open Long:" />
 
-                {threadCtrl && <BotThread formState={[form, setForm]} formProp="openLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />}
+                {threadCtrl && <BotThread pageData={pageData} formState={[form, setForm]} formProp="openLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />}
                 {!threadCtrl && <button type="button" className="button" onClick={() => setThreadCtrl(!threadCtrl)}>Editar Thread</button>}
             </fieldset>
 

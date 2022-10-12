@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import EvalThread from '../../core/EvalThread';
 import BlockEl from './BlockEl';
 
-export default function BotThread({formState, formProp, threadCtrlState}) {
+export default function BotThread({pageData, formState, formProp, threadCtrlState}) {
     const state = useState();
     const [_, setThreadCtrl] = threadCtrlState;
     const [form, setForm] = formState;
@@ -32,7 +32,7 @@ export default function BotThread({formState, formProp, threadCtrlState}) {
                 <button type="button" className="button transparent" onClick={()=>setThreadCtrl(false)}>Voltar</button>
             </div>
 
-            {thread && <BlockEl className="main-block" thread={evalThread} currentEl={evalThread.thread} parentEl={evalThread} />}
+            {thread && <BlockEl className="main-block" pageData={pageData} thread={evalThread} currentEl={evalThread.thread} parentEl={evalThread} />}
             {!thread && <div className="toolbar">
                 <button type="button" className="toolbar-button full-width selected" onClick={() => evalThread.addBlock(evalThread)}>Add a Block</button>
             </div>}

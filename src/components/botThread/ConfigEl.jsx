@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import {Input} from './BotThread';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 
-export default function ConfigEl({thread, currentEl, withCondition}) {
+export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
     const [data, setData] = useState(currentEl);
+    const functions = pageData && pageData.availableFunctions;
 
     return (<>
         {withCondition && <div className="config rounded">
@@ -40,10 +41,7 @@ export default function ConfigEl({thread, currentEl, withCondition}) {
                         label="Função"
                         getter={currentEl.functionUID} 
                         setter={(value) => currentEl.setValue(thread, 'functionUID', value)} 
-                        options={[
-                            new SelectOption({title: 'Média movel', value: 'avg'}),
-                            new SelectOption({title: 'Last High-Low', value: 'last-highlow'})
-                        ]}
+                        options={functions.map(fn =>  new SelectOption({title: fn.title, value: fn._id}))}
                     />
 
                     <label>Configs (JSON)</label>

@@ -11,7 +11,10 @@ export default async function HomeActivity(req, res) {
         const myBots = await axios.get(root + '/collection/get/queryCollection', {
             data: { collection: 'bots', filter: {author: config.userTest }, options: { populate: {levels: 3} } }
         });
-
+        console.log()
+        const availableFunctions = await axios.get(root + '/collection/get/queryCollection', {
+            data: { collection: 'functions', options: { populate: {levels: 3} } }
+        });
         let userRes = user.data.doc;
 
         for (let i = 0; i < userRes.masterAccounts.length; i++) {
@@ -30,7 +33,8 @@ export default async function HomeActivity(req, res) {
 
         res.status(200).json({
             user: userRes,
-            myBots: myBots.data.result
+            myBots: myBots.data.result,
+            availableFunctions: availableFunctions.data.result
         });
     } catch (err) {
         res.status(500).json(err);

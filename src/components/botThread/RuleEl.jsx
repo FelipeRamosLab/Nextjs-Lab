@@ -1,6 +1,6 @@
 import ConfigEl from './ConfigEl';
 
-export default function RuleEl({thread, currentEl, parentEl}) {
+export default function RuleEl({pageData, thread, currentEl, parentEl}) {
     const ruleChildrenKeys = currentEl.children;
 
     return (<>
@@ -16,7 +16,7 @@ export default function RuleEl({thread, currentEl, parentEl}) {
                 </div>
 
                 {ruleChildrenKeys.length ? ruleChildrenKeys.map((item, i) => {
-                    return <ConfigEl key={item.uid} thread={thread} currentEl={item} withCondition={i > 0 ? true : false}/>;
+                    return <ConfigEl key={item.uid} pageData={pageData} thread={thread} currentEl={item} withCondition={i > 0 ? true : false}/>;
                 }) : ''}
 
                 {ruleChildrenKeys.length < 2 && <div className="toolbar rounded">
