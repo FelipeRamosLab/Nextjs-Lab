@@ -16,7 +16,7 @@ export default class Config extends Base {
         this.type = type || '';
         this.valueType = valueType || '';
         this.primitiveType = primitiveType || '';
-        this.functionUID = functionUID || '';
+        this.functionUID = functionUID;
         this.configs = configs || '';
         this.toCompare = toCompare || '';
 

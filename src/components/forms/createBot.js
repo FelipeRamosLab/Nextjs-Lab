@@ -11,10 +11,6 @@ export default function CreateBot({pageData}) {
         name: '',
         description: '',
         eval: {
-            openLong: [],
-            openShort: [],
-            closeLong: [],
-            closeShort: []
         }
     });
     console.log(form)
