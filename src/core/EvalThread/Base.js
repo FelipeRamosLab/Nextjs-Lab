@@ -8,21 +8,29 @@ export default class Base {
         createdDate
     }, getParent) {
         this.uid = uid || Math.random().toString(36).split('.')[1];
-        this.state = state;
+        this.state = state || getParent().state;
         this.createdDate = createdDate || Date.now();
 
         if (!path) path = [];
         this.getParent = getParent;
         this.path = [...this.getParent().path, this.uid];
 
-        if (state) {
-            this.getState = state[0];
-            this.setState = state[1];
+        if (this.state) {
+            this.getState = this.state[0];
+            this.setState = this.state[1];
         }
     }
 
     set(base) {
         this.setState(new EvalThread(base));
+
+        if (this.type === 'action') {
+            this.appendBotThread();
+        }
+    }
+
+    appendBotThread() {
+        // this.getParent().getParent()[this.eventName] = self;
     }
 
     setValue(base, prop, value) {

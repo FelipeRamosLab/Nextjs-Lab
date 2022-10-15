@@ -3,15 +3,16 @@ import axios from 'axios';
 import SuggestionsSelect from '../inputs/suggestionsSelect';
 import BotThread from '../botThread/BotThread';
 
+const events = ['openLong', 'closeLong', 'openShort', 'closeShort']
+
 export default function CreateBot({pageData}) {
     const [spinner, setSpinner] = useState(false);
-    const [threadCtrl, setThreadCtrl] = useState(false);
+    const [threadCtrl, setThreadCtrl] = useState([]);
     const [form, setForm] = useState({
         author: pageData && pageData.user._id,
         name: '',
         description: '',
-        eval: {
-        }
+        eval: {}
     });
     console.log(form)
     async function create(ev) {
@@ -45,10 +46,10 @@ export default function CreateBot({pageData}) {
                 </div>
                 <hr/>
 
-                <SuggestionsSelect label="Open Long:" />
+                <label>Open Long:</label>
+                <button type="button" className="button" onClick={() => setThreadCtrl(!threadCtrl)}>Editar Thread</button>
+                <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="openLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />
 
-                {threadCtrl && <BotThread pageData={pageData} formState={[form, setForm]} formProp="openLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />}
-                {!threadCtrl && <button type="button" className="button" onClick={() => setThreadCtrl(!threadCtrl)}>Editar Thread</button>}
             </fieldset>
 
             <div className="buttons-wrap">

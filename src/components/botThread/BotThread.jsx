@@ -1,19 +1,24 @@
 import {useState, useEffect} from 'react';
 import EvalThread from '../../core/EvalThread';
+import Action from '../../core/EvalThread/Action';
 import BlockEl from './BlockEl';
+import ActionEl from './ActionEl';
 
-export default function BotThread({pageData, formState, formProp, threadCtrlState}) {
-    const state = useState();
-    const [_, setThreadCtrl] = threadCtrlState;
+export default function BotThread({pageData, formState, actionEvent, threadCtrlState}) {
+    const state = useState({});
+    const [threadCtrl, setThreadCtrl] = threadCtrlState;
     const [form, setForm] = formState;
     const [evalThread, setEvalThread] = state;
     let thread = evalThread && evalThread.thread;
 
     useEffect(()=>{
-        console.log(form[formProp])
+        console.log(form[actionEvent])
         setEvalThread(new EvalThread({
-            ...form.eval[formProp],
-            state
+            ...form.eval[actionEvent],
+            state: state,
+            action: {
+                eventName: actionEvent
+            }
         }));
     }, []);
 
@@ -21,16 +26,22 @@ export default function BotThread({pageData, formState, formProp, threadCtrlStat
         window.BotThread = evalThread;
 
         setForm((prev)=>{
-            console.log({ ...prev, eval: {...prev.eval, [formProp]: evalThread} })
-            return { ...prev, eval: {...prev.eval, [formProp]: evalThread} };
+            console.log({ ...prev, eval: {...prev.eval, [actionEvent]: evalThread} })
+            return { ...prev, eval: {...prev.eval, [actionEvent]: evalThread} };
         });
     }, [evalThread]);
 
     return <>
-        <div className="thread-blackboard">
+        <div className={`thread-blackboard ${!threadCtrl ? 'hide' : ''}`}>
             <div className="header">
                 <button type="button" className="button transparent" onClick={()=>setThreadCtrl(false)}>Voltar</button>
             </div>
+
+            <ActionEl
+                currentEl={evalThread && evalThread.action}
+                evalThread={evalThread}
+                setEvalThread={setEvalThread}
+            />
 
             {thread && <BlockEl className="main-block" pageData={pageData} thread={evalThread} currentEl={evalThread.thread} parentEl={evalThread} />}
             {!thread && <div className="toolbar">

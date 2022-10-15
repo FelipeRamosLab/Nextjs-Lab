@@ -1,19 +1,22 @@
-import Base from './Base';
 import Block from './Block';
+import Action from './Action';
+
 export default class EvalThread {
     constructor({
         uid,
         thread,
-        state
+        state,
+        action
     }) {
-        if (!state && state.length !== 2) throw new Error('');
+        if (!state || state.length !== 2) throw new Error('');
 
         this.uid = uid || Math.random().toString(36).split('.')[1];
         this.getState = state[0];
         this.setState = state[1];
         this.state = state;
         this.path = [this.uid];
-        this.thread = thread ? new Block(thread, () => this) : null;
+        this.thread = new Block(thread || {}, () => this);
+        this.action = new Action(action || {}, () => this);
     }
 
     addBlock() {
@@ -22,7 +25,6 @@ export default class EvalThread {
         if (!this.thread) {
             this.setState((prev)=>{ return new EvalThread({...prev, thread: newBlock }) });
         }
-
         return this;
     }
 }
