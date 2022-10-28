@@ -32,12 +32,13 @@ export default function BotThread({pageData, formState, actionEvent, threadCtrlS
     }, [evalThread]);
 
     return <>
-        <div className={`thread-blackboard ${!threadCtrl ? 'hide' : ''}`}>
+        <div className={`thread-blackboard ${threadCtrl === actionEvent ? '' : 'hide'}`}>
             <div className="header">
                 <button type="button" className="button transparent" onClick={()=>setThreadCtrl(false)}>Voltar</button>
             </div>
 
             <ActionEl
+                pageData={pageData}
                 currentEl={evalThread && evalThread.action}
                 evalThread={evalThread}
                 setEvalThread={setEvalThread}

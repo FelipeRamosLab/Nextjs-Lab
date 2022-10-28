@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {Input} from './BotThread';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 

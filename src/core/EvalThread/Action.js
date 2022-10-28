@@ -3,17 +3,26 @@ import Base from './Base';
 export default class Action extends Base {
     constructor(setup = {
         ...this,
+        botThread,
         eventName,
-        inputType
+        valueType,
+        valueFunction,
+        functionConfig
     }, getParent) {
         super(setup, getParent);
         const {
+            botThread,
             eventName,
-            inputType
+            valueType,
+            valueFunction,
+            functionConfig
         } = setup || {};
 
         this.type = 'action';
+        this.botThread = botThread;
         this.eventName = eventName;
-        this.inputType = inputType;
+        this.valueType = valueType;
+        this.valueFunction = valueFunction;
+        this.functionConfig = functionConfig;
     }
 }

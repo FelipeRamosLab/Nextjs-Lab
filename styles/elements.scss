@@ -38,7 +38,7 @@
 }
 
 .thread-blackboard {
-    background: $black;
+    background: $charcoal;
     width: 100%;
     padding: 0.8rem;
     position: fixed;
@@ -69,12 +69,12 @@
     }
 
     .block {
-        background: $deep-space;
         margin-bottom: 1rem;
-        border: 2px solid $black;
+        border: 2px dashed $soft-text;
+        background: transparent;
 
         &.main-block {
-            background: transparent;
+            border-style: solid;
         }
 
         .toolbar {
@@ -89,7 +89,7 @@
     }
 
     .rule {
-        background: $aquamarine;
+        background: $pewter-blue;
         display: flex;
         flex-direction: column;
         margin-bottom: 1rem;
