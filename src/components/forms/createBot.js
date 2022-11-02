@@ -54,6 +54,14 @@ export default function CreateBot({pageData}) {
                 <button type="button" className="button" onClick={() => setThreadCtrl('openShort')}>Editar Thread</button>
                 <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="openShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
 
+                <label>Close Long:</label>
+                <button type="button" className="button" onClick={() => setThreadCtrl('closeLong')}>Editar Thread</button>
+                <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="closeLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />
+
+                <label>Close Short:</label>
+                <button type="button" className="button" onClick={() => setThreadCtrl('closeShort')}>Editar Thread</button>
+                <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="closeShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
+
                 <label>Stop Loss: (Long)</label>
                 <button type="button" className="button" onClick={() => setThreadCtrl('stopLossLong')}>Editar Thread</button>
                 <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="stopLossLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />
