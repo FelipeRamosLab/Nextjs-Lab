@@ -69,6 +69,18 @@ export default function CreateBot({pageData}) {
                 <label>Stop Loss: (Short)</label>
                 <button type="button" className="button" onClick={() => setThreadCtrl('stopLossShort')}>Editar Thread</button>
                 <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="stopLossShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
+
+                <label>Take profit: (Long)</label>
+                <button type="button" className="button" onClick={() => setThreadCtrl('takeProfitLong')}>Editar Thread</button>
+                <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="takeProfitLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />
+
+                <label>Take profit: (Short)</label>
+                <button type="button" className="button" onClick={() => setThreadCtrl('takeProfitShort')}>Editar Thread</button>
+                <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="takeProfitShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
+
+                <label>Trailing stop: (Short)</label>
+                <button type="button" className="button" onClick={() => setThreadCtrl('trailingStop')}>Editar Thread</button>
+                <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="trailingStop" threadCtrlState={[threadCtrl, setThreadCtrl]} />
             </fieldset>
 
             <div className="buttons-wrap">
