@@ -32,6 +32,16 @@ export default function ActionEl({pageData, currentEl, evalThread}) {
                 })}
                 value={data && data.functionConfig}
             ></textarea>
+
+            <code datatype="json">
+                {functions.map(fn => {
+                    if (fn._id === currentEl.valueFunction) {
+                        return JSON.stringify(fn.options.map(item => {
+                            return { [item.name]: item.dataType };
+                        }));
+                    }
+                })}
+            </code>
         </div>}
     </div>);
 }

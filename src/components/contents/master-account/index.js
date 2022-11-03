@@ -82,7 +82,7 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
                         <h2>Slots</h2>
                     </div>
 
-                    <div className="slots-list standard-grid grid columns-1">
+                    <div className="slots-list standard-grid grid">
                         {masterSlots.map(slot => <SlotTile key={slot._id} slot={slot}/> )}
                         <button
                             type="button"

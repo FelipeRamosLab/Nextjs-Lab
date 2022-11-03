@@ -52,6 +52,16 @@ export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
                         })}
                         value={data.configs}
                     ></textarea>
+
+                    <code datatype="json">
+                        {functions.map(fn => {
+                            if (fn._id === currentEl.functionUID) {
+                                return JSON.stringify(fn.options.map(item => {
+                                    return { [item.name]: item.dataType };
+                                }));
+                            }
+                        })}
+                    </code>
                 </div>}
 
                 {currentEl.valueType === 'primitive' && <div className="primitive-fields">

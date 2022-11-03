@@ -52,10 +52,14 @@ a.card.item {
 .slot-display {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1rem;  
     column-gap: 0.5rem;
     min-width: 100%;
-  
+
+    @media screen and (min-width: $l) {
+        max-width: 49%;
+        min-width: 49%;
+    }
     .modal {
         max-height: 60vh;
     }

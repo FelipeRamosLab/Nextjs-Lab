@@ -78,7 +78,7 @@ export default function CreateBot({pageData}) {
                 <button type="button" className="button" onClick={() => setThreadCtrl('takeProfitShort')}>Editar Thread</button>
                 <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="takeProfitShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
 
-                <label>Trailing stop: (Short)</label>
+                <label>Trailing stop:</label>
                 <button type="button" className="button" onClick={() => setThreadCtrl('trailingStop')}>Editar Thread</button>
                 <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="trailingStop" threadCtrlState={[threadCtrl, setThreadCtrl]} />
             </fieldset>
