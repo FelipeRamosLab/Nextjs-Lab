@@ -5,12 +5,8 @@
     padding-bottom: 0.7rem;
     margin-top: 1rem;
 
-    @media screen and (min-width: $md) {
-        overflow-x: scroll;
-    }
-    
     @media screen and (min-width: $sm) {
-        overflow-x: visible;
+        overflow-x: auto;
     }
     
     &.smaller {

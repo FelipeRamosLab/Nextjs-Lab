@@ -57,8 +57,11 @@ a.card.item {
     min-width: 100%;
 
     @media screen and (min-width: $l) {
-        max-width: 49%;
         min-width: 49%;
+
+        &:nth-child(1) {
+            min-width: 100%;
+        }
     }
     .modal {
         max-height: 60vh;
