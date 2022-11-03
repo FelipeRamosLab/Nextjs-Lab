@@ -3,6 +3,8 @@ import ModalButton from '../buttons/modalButton';
 import CreateMaster from '../forms/createMaster';
 import CreateBot from '../forms/createBot';
 import CardSlider from '../sliders/card-slider';
+import ListDocs from '../base/listDocs';
+import ListDocContent from './listDocs/FisrtTest';
 
 export default function HomeContent({pageData}){
     const {user, myBots} = pageData || {};
@@ -18,6 +20,14 @@ export default function HomeContent({pageData}){
             {masterAccounts && masterAccounts.map(master=>{
                 return <MiniMasterAccountTile key={master.cod} master={master} />
             })}
+        </section>
+
+        <section className="container">
+            <h2>New ListDocs component</h2>
+            <ListDocs
+                collection="functions"
+                Content={ListDocContent}
+            />
         </section>
 
         <div className="container section-header">
