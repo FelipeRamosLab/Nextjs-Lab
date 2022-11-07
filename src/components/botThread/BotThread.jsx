@@ -12,7 +12,6 @@ export default function BotThread({pageData, formState, actionEvent, threadCtrlS
     let thread = evalThread && evalThread.thread;
 
     useEffect(()=>{
-        console.log(form[actionEvent])
         setEvalThread(new EvalThread({
             ...form.eval[actionEvent],
             state: state,

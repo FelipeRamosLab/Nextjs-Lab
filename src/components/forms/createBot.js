@@ -14,7 +14,7 @@ export default function CreateBot({pageData}) {
         description: '',
         eval: {}
     });
-    console.log(form)
+
     async function create(ev) {
         ev.preventDefault();
         setSpinner(true);

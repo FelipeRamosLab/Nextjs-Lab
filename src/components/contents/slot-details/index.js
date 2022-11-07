@@ -5,7 +5,6 @@ import { FaTrash, FaPen } from 'react-icons/fa';
 
 export default function SlotDetails({ pageData, setPageData }) {
     const {slot} = pageData || {};
-    console.log(pageData)
 
     return (
         <div className="container">

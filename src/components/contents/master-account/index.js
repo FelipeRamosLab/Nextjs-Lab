@@ -8,7 +8,6 @@ import { FaTrash, FaPen } from 'react-icons/fa';
 
 export default function MasterAccount({ pageData, setPageData, loadData }) {
     const { master, masterSlots } = pageData || {};
-    console.log(pageData)
 
     async function deleteMaster() {
         try {

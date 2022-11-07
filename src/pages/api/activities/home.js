@@ -11,7 +11,7 @@ export default async function HomeActivity(req, res) {
         const myBots = await axios.get(root + '/collection/get/queryCollection', {
             data: { collection: 'bots', filter: {author: config.userTest }, options: { populate: {levels: 3} } }
         });
-        console.log()
+
         const availableFunctions = await axios.get(root + '/collection/get/queryCollection', {
             data: { collection: 'functions', options: { populate: {levels: 3} } }
         });

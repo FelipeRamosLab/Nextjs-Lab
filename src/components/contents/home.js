@@ -10,7 +10,6 @@ export default function HomeContent({pageData}){
     const {user, myBots} = pageData || {};
     const {masterAccounts} = user || {};
 
-    console.log(pageData);
     return (<>
         <div className="container section-header">
             <h2 className="title">Contas</h2>
