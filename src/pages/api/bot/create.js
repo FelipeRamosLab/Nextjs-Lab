@@ -8,7 +8,7 @@ export default async function CreateBot(req, res) {
         const bot = await axios.put(root + '/bot/create', req.body);
 
         res.status(200).send(bot.data);
-    } catch (err) {
-        res.status(500).send(err);
+    } catch ({response: {data}}) {
+        res.status(500).send(data);
     }
 }
