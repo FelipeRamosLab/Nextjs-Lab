@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {Input} from './BotThread';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
+import DevCharToolbar from '../inputs/devCharToolbar';
 
 export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
     const [data, setData] = useState(currentEl);
     const functions = pageData && pageData.availableFunctions;
+    const textarea = useRef();
 
     return (<>
         {withCondition && <div className="config rounded">
@@ -45,13 +47,16 @@ export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
                     />
 
                     <label>Configs (JSON)</label>
-                    <textarea 
+                    <textarea
+                        ref={textarea}
                         onBlur={(ev)=> currentEl.setValue(thread, 'configs', ev.target.value)}
                         onInput={(input) => setData((prev) => {
                             return {...prev, configs: input.target.value };
                         })}
                         value={data.configs}
                     ></textarea>
+
+                    <DevCharToolbar textarea={textarea} setData={setData} />
 
                     <code datatype="json">
                         {functions.map(fn => {

@@ -13,12 +13,12 @@ export default class Config extends Base {
         super(arguments[0] || {}, getParent);
         if (!arguments[0]) throw new Error('');
 
-        this.type = type || '';
-        this.valueType = valueType || '';
-        this.primitiveType = primitiveType || '';
+        this.type = type;
+        this.valueType = valueType;
+        this.primitiveType = primitiveType;
         this.functionUID = functionUID;
-        this.configs = configs || '';
-        this.toCompare = toCompare || '';
+        this.configs = configs;
+        this.toCompare = toCompare;
 
         switch (primitiveType){
             case 'boolean': {
