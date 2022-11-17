@@ -5,27 +5,22 @@ import BlockEl from './BlockEl';
 import ActionEl from './ActionEl';
 
 export default function BotThread({pageData, formState, actionEvent, threadCtrlState}) {
-    const state = useState({});
+    const state = useState();
     const [threadCtrl, setThreadCtrl] = threadCtrlState;
     const [form, setForm] = formState;
     const [evalThread, setEvalThread] = state;
     let thread = evalThread && evalThread.thread;
+    let action = evalThread && evalThread.action;
 
     useEffect(()=>{
         setEvalThread(new EvalThread({
             ...form.eval[actionEvent],
-            state: state,
-            action: {
-                eventName: actionEvent
-            }
+            state: state
         }));
     }, []);
 
     useEffect(()=>{
-        window.BotThread = evalThread;
-
         setForm((prev)=>{
-            console.log({ ...prev, eval: {...prev.eval, [actionEvent]: evalThread} })
             return { ...prev, eval: {...prev.eval, [actionEvent]: evalThread} };
         });
     }, [evalThread]);
@@ -36,16 +31,20 @@ export default function BotThread({pageData, formState, actionEvent, threadCtrlS
                 <button type="button" className="button transparent" onClick={()=>setThreadCtrl(false)}>Voltar</button>
             </div>
 
-            <ActionEl
+            {action && <ActionEl
                 pageData={pageData}
                 currentEl={evalThread && evalThread.action}
                 evalThread={evalThread}
                 setEvalThread={setEvalThread}
-            />
+                actionEvent={actionEvent}
+            />}
+            {!action && <div className="toolbar">
+                <button type="button" className="toolbar-button full-width selected" onClick={() => evalThread.addAction(actionEvent)}>Add a Action</button>
+            </div>}
 
             {thread && <BlockEl className="main-block" pageData={pageData} thread={evalThread} currentEl={evalThread.thread} parentEl={evalThread} />}
             {!thread && <div className="toolbar">
-                <button type="button" className="toolbar-button full-width selected" onClick={() => evalThread.addBlock(evalThread)}>Add a Block</button>
+                <button type="button" className="toolbar-button full-width selected" onClick={() => evalThread.addBlock()}>Add a Block</button>
             </div>}
         </div>
     </>

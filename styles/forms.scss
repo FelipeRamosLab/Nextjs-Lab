@@ -1,0 +1,22 @@
+.form-create-bot {
+    .eval-fields {
+        .bot-thread {
+            display: flex;
+            align-items: center;
+            min-height: 2.5rem;
+
+            input[type="checkbox"] {
+                flex: 0;
+                margin-right: 1rem;
+            }
+
+            label {
+                margin: 0;
+            }
+
+            .edit-button {
+                margin-left: auto;
+            }
+        }
+    }
+}

@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 
-export default function ActionEl({pageData, currentEl, evalThread}) {
+export default function ActionEl({pageData, currentEl, evalThread, actionEvent}) {
     const [data, setData] = useState(currentEl);
     const functions = pageData && pageData.availableFunctions;
+
+    useEffect(() => {
+        setData(prev => {
+            return {...prev, eventName: actionEvent}
+        });
+    }, []);
 
     return (<div className="rounded">
         <ModalSelect

@@ -1,13 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import SuggestionsSelect from '../inputs/suggestionsSelect';
 import BotThread from '../botThread/BotThread';
+import EvalThread from '../../core/EvalThread';
 
-const events = ['openLong', 'closeLong', 'openShort', 'closeShort']
+const events = {
+    openLong: 'Open long', 
+    openShort: 'Open short', 
+    closeLong: 'Close long', 
+    closeShort: 'Close short', 
+    stopLossLong: 'Stoploss long', 
+    stopLossShort: 'Stoploss short', 
+    takeProfitLong: 'Takeprofit long', 
+    takeProfitShort: 'Takeprofit short', 
+    trailingStop: 'Trailing stop'
+};
 
 export default function CreateBot({pageData}) {
     const [spinner, setSpinner] = useState(false);
-    const [threadCtrl, setThreadCtrl] = useState([]);
+    const [selectedEvents, setSelectedEvents] = useState({});
+    const [threadCtrl, setThreadCtrl] = useState();
     const [error, setError] = useState();
     const [form, setForm] = useState({
         author: pageData && pageData.user._id,
@@ -15,6 +26,8 @@ export default function CreateBot({pageData}) {
         description: '',
         eval: {}
     });
+
+    console.log('BotThread form update:', form);
 
     async function create(ev) {
         ev.preventDefault();
@@ -31,9 +44,21 @@ export default function CreateBot({pageData}) {
         }
     }
 
+    function handleCheckbox(ev, botEvent) {
+        if (ev.target.checked){
+            setSelectedEvents(prev => new Object({...prev, [botEvent]: true }));
+        } else {
+            setSelectedEvents(prev => new Object({...prev, [botEvent]: false }));
+            setForm(prev => {
+                delete prev.eval[botEvent];
+                return prev;
+            });
+        }
+    }
+
     if (!spinner) {
         if (!error) {
-            return (<form onSubmit={(ev)=>create(ev)}>
+            return (<form className="form-create-bot" onSubmit={(ev)=>create(ev)}>
                 <h2 className="title">Criar Bot Configs</h2>
 
                 <fieldset>
@@ -45,47 +70,23 @@ export default function CreateBot({pageData}) {
                     <textarea value={form.description} onChange={(ev)=>setForm({...form, description: ev.target.value})}></textarea>
                 </fieldset>
 
-                <fieldset className="vertical-flex">
+                <fieldset className="vertical-flex eval-fields">
                     <div className="section-header">
                         <h3>Avaliações</h3>
                     </div>
                     <hr/>
 
-                    <label>Open Long:</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('openLong')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="openLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />
+                    {Object.keys(events).map((key, i) => (
+                        <div key={key + i} className="bot-thread">
+                            <input id={key + i} type="checkbox" onClick={(ev) => handleCheckbox(ev, key)} defaultChecked={selectedEvents[key] || false} />
+                            <label htmlFor={key + i}>{events[key]}</label>
 
-                    <label>Open Short:</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('openShort')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="openShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
-
-                    <label>Close Long:</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('closeLong')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="closeLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />
-
-                    <label>Close Short:</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('closeShort')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="closeShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
-
-                    <label>Stop Loss: (Long)</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('stopLossLong')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="stopLossLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />
-
-                    <label>Stop Loss: (Short)</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('stopLossShort')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="stopLossShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
-
-                    <label>Take profit: (Long)</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('takeProfitLong')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="takeProfitLong" threadCtrlState={[threadCtrl, setThreadCtrl]} />
-
-                    <label>Take profit: (Short)</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('takeProfitShort')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="takeProfitShort" threadCtrlState={[threadCtrl, setThreadCtrl]} />
-
-                    <label>Trailing stop:</label>
-                    <button type="button" className="button" onClick={() => setThreadCtrl('trailingStop')}>Editar Thread</button>
-                    <BotThread pageData={pageData} formState={[form, setForm]} actionEvent="trailingStop" threadCtrlState={[threadCtrl, setThreadCtrl]} />
+                            {selectedEvents[key] && (<>
+                                <button type="button" className="edit-button button" onClick={() => setThreadCtrl(key)}>Editar Thread</button>
+                                <BotThread pageData={pageData} formState={[form, setForm]} actionEvent={key} threadCtrlState={[threadCtrl, setThreadCtrl]} />
+                            </>)}
+                        </div>
+                    ))}
                 </fieldset>
 
                 <div className="buttons-wrap">
