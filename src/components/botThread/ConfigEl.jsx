@@ -56,7 +56,7 @@ export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
                         value={data.configs}
                     ></textarea>
 
-                    <DevCharToolbar textarea={textarea} setData={setData} />
+                    <DevCharToolbar textarea={textarea} setData={setData} fieldName="configs" />
 
                     <code datatype="json">
                         {functions.map(fn => {

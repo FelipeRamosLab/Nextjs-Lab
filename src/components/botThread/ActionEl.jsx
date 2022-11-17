@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 import DevCharToolbar from '../inputs/devCharToolbar';
 
 export default function ActionEl({pageData, currentEl, evalThread, actionEvent}) {
     const [data, setData] = useState(currentEl);
     const functions = pageData && pageData.availableFunctions;
+    const textarea = useRef();
 
     useEffect(() => {
         setData(prev => {
@@ -32,7 +33,8 @@ export default function ActionEl({pageData, currentEl, evalThread, actionEvent})
             />
 
             <label>Configs (JSON)</label>
-            <textarea 
+            <textarea
+                ref={textarea}
                 onBlur={(ev)=> currentEl.setValue(evalThread, 'functionConfig', ev.target.value)}
                 onInput={(input) => setData((prev) => {
                     return {...prev, functionConfig: input.target.value };
@@ -40,7 +42,7 @@ export default function ActionEl({pageData, currentEl, evalThread, actionEvent})
                 value={data && data.functionConfig}
             ></textarea>
 
-            <DevCharToolbar textarea={textarea} setData={setData} />
+            <DevCharToolbar textarea={textarea} setData={setData} fieldName="functionConfig" />
 
             <code datatype="json">
                 {functions.map(fn => {
