@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
+import DevCharToolbar from '../inputs/devCharToolbar';
 
 export default function ActionEl({pageData, currentEl, evalThread, actionEvent}) {
     const [data, setData] = useState(currentEl);
@@ -38,6 +39,8 @@ export default function ActionEl({pageData, currentEl, evalThread, actionEvent})
                 })}
                 value={data && data.functionConfig}
             ></textarea>
+
+            <DevCharToolbar textarea={textarea} setData={setData} />
 
             <code datatype="json">
                 {functions.map(fn => {
