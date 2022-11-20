@@ -37,8 +37,20 @@ export default function CreateBot({pageData}) {
         ev.preventDefault();
         setSpinner(true);
 
+        const params = {...form};
+        params.values = Object.keys(params.values).map(key => {
+            const current = params.values[key];
+
+            delete current.getParent;
+            delete current.getState;
+            delete current.setState;
+            delete current.state;
+
+            return {...current};
+        });
+
         try {
-            const saved = await axios.post('/api/bot/create', form);
+            const saved = await axios.post('/api/bot/create', params);
             window.location.reload();
         } catch({response: {data}}) {
             setError(data);
@@ -171,11 +183,12 @@ export default function CreateBot({pageData}) {
             </form>);
         } else {
             return (<div className="error">
-                <ul className="error-list">
+                <h3 className="title">Something went wrong!</h3>
+                <div className="error-list">
                     {error.errors && error.errors.map((err, i) => {
-                        return (<li key={error.name + i}>{err.message}</li>);
+                        return (<p key={error.name + i}>{err.message}</p>);
                     })}
-                </ul>
+                </div>
 
                 <button type="button" className="button" onClick={() => setError(null)}>Voltar</button>
             </div>);

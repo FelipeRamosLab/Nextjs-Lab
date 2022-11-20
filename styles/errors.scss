@@ -1,0 +1,20 @@
+.error {
+    .title {
+        margin-bottom: 1rem;
+    }
+
+    .error-list {
+        margin-bottom: 1rem;
+
+        p {
+            background: $error-light;
+            border-radius: 0.3rem;
+            color: $primary-dark;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            padding: 0.7rem;
+            width: 100%;
+        }
+    }
+}
+
