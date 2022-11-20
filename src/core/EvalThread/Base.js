@@ -16,7 +16,7 @@ export default class Base {
 
         if (!path) path = [];
         this.getParent = getParent;
-        this.path = [...this.getParent().path, this.uid];
+        // this.path = [...this.getParent().path, this.uid];
 
         if (this.state) {
             this.getState = this.state[0];
@@ -24,20 +24,14 @@ export default class Base {
         }
     }
 
-    set(base) {
-        this.setState(new EvalThread(base));
-
-        if (this.type === 'action') {
-            this.appendBotThread();
-        }
+    set() {
+        this.setState((prev) => {
+            return new EvalThread(prev);
+        });
     }
 
-    appendBotThread() {
-        // this.getParent().getParent()[this.eventName] = self;
-    }
-
-    setValue(base, prop, value) {
+    setValue(prop, value) {
         this[prop] = value;
-        this.set(base);
+        this.set();
     }
 }

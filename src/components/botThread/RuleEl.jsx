@@ -1,4 +1,4 @@
-import ConfigEl from './ConfigEl';
+import BotValue from './BotValueEl';
 
 export default function RuleEl({pageData, thread, currentEl, parentEl}) {
     const ruleChildrenKeys = currentEl.children;
@@ -16,14 +16,20 @@ export default function RuleEl({pageData, thread, currentEl, parentEl}) {
                 </div>
 
                 {ruleChildrenKeys.length ? ruleChildrenKeys.map((item, i) => {
-                    return <ConfigEl key={item.uid} pageData={pageData} thread={thread} currentEl={item} withCondition={i > 0 ? true : false}/>;
+                    return <BotValue 
+                        key={item.uid}
+                        pageData={pageData}
+                        currentEl={item}
+                        withCondition={i > 0 ? true : false}
+                        parentInstance="ThreadRule"
+                    />;
                 }) : ''}
 
                 {ruleChildrenKeys.length < 2 && <div className="toolbar rounded">
                     <button
                         type="button"
                         className="toolbar-button color-config"
-                        onClick={() => currentEl.addConfig(thread)}
+                        onClick={() => currentEl.addBotValue(thread)}
                     >Add Configs</button>
                 </div>}
             </div>

@@ -21,6 +21,29 @@
         }
     }
 
+    &.bot-value {
+        background: $primary-grey;
+        padding: 0.5rem;
+        box-shadow: none;
+        margin-bottom: 0.5rem;
+
+        &.stop-loss {
+            background: $loss;
+        }
+
+        &.take-profit {
+            background: $profit;
+        }
+
+        summary {
+            display: inline;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0;
+            min-width: 100%;
+        }
+    }
+
     .card-header {
         display: flex;
         justify-content: space-between;

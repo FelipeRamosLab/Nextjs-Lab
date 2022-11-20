@@ -1,5 +1,5 @@
 import Base from './Base';
-import Config from './Config';
+import BotValue from './BotValue';
 
 export default class Rule extends Base {
     constructor({
@@ -10,17 +10,17 @@ export default class Rule extends Base {
 
         this.type = 'rule';
         this.children = [];
-        this.path = [...this.getParent().path, this.uid];
+        // this.path = [...this.getParent().path, this.uid];
 
         if (children && Array.isArray(children)) {
             let internal = this;
-            children.map(item => internal.children.push(new Config(item, () => this)));
+            children.map(item => internal.children.push(new BotValue(item, () => this)));
         }
     }
 
-    addConfig(base) {
-        const newConfig = new Config({ state: this.state, path: this.path }, () => this);
-        this.children.push(newConfig);
+    addBotValue(base) {
+        const newBotValue = new BotValue({ state: this.state, path: this.path }, () => this);
+        this.children.push(newBotValue);
         this.set(base);
     }
 

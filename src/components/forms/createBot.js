@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import BotThread from '../botThread/BotThread';
-import EvalThread from '../../core/EvalThread';
+import BotValue from '../../core/EvalThread/BotValue';
+import BotValueEl from '../../components/botThread/BotValueEl';
 
 const events = {
     openLong: 'Open long', 
     openShort: 'Open short', 
     closeLong: 'Close long', 
-    closeShort: 'Close short', 
-    stopLossLong: 'Stoploss long', 
-    stopLossShort: 'Stoploss short', 
-    takeProfitLong: 'Takeprofit long', 
-    takeProfitShort: 'Takeprofit short', 
+    closeShort: 'Close short',
     trailingStop: 'Trailing stop'
 };
 
@@ -24,10 +21,11 @@ export default function CreateBot({pageData}) {
         author: pageData && pageData.user._id,
         name: '',
         description: '',
+        values: {},
         eval: {}
     });
 
-    console.log('BotThread form update:', form);
+    console.log('createBot form:', form);
 
     async function create(ev) {
         ev.preventDefault();
@@ -56,6 +54,15 @@ export default function CreateBot({pageData}) {
         }
     }
 
+    function addBotValue(propName) {
+        const self = this;
+
+        setForm(prev => {
+            prev.values[propName] = new BotValue({slug: propName, state: [form, setForm]}, () => self);
+            return {...prev};
+        });
+    }
+
     if (!spinner) {
         if (!error) {
             return (<form className="form-create-bot" onSubmit={(ev)=>create(ev)}>
@@ -68,6 +75,33 @@ export default function CreateBot({pageData}) {
                 <fieldset className="vertical-flex">
                     <label>Descrição:</label>
                     <textarea value={form.description} onChange={(ev)=>setForm({...form, description: ev.target.value})}></textarea>
+                </fieldset>
+
+                <fieldset className="vertical-flex eval-fields">
+                    <div className="section-header">
+                        <h3>Valores</h3>
+                    </div>
+                    <hr/>
+
+                    <details className="card bot-value stop-loss">
+                        <summary>Stoploss</summary>
+
+                        {/* {form.values['stoploss-long'] && <BotValueEl key={item.slug} pageData={pageData} currentEl={form.values['stoploss-long']}/>} */}
+                        <button type="button" className="edit-button button" onClick={() => addBotValue('stoploss-long')}>+</button>
+                        {/* {form.values[0] && <BotValueEl
+                            key={form.values[0].slug}
+                            pageData={pageData}
+                            currentEl={form.values[0]}
+                        />} */}
+                        {form.values['stoploss-long'] && <BotValueEl
+                            pageData={pageData}
+                            currentEl={form.values['stoploss-long']}
+                        />}
+                    </details>
+
+                    <details className="card bot-value take-profit">
+                        <summary>Takeprofit</summary>
+                    </details>
                 </fieldset>
 
                 <fieldset className="vertical-flex eval-fields">

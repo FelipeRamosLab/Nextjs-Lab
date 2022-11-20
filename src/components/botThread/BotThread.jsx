@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import EvalThread from '../../core/EvalThread';
-import Action from '../../core/EvalThread/Action';
 import BlockEl from './BlockEl';
 import ActionEl from './ActionEl';
 
@@ -15,7 +14,8 @@ export default function BotThread({pageData, formState, actionEvent, threadCtrlS
     useEffect(()=>{
         setEvalThread(new EvalThread({
             ...form.eval[actionEvent],
-            state: state
+            state: state,
+            eventName: actionEvent
         }));
     }, []);
 
@@ -50,7 +50,7 @@ export default function BotThread({pageData, formState, actionEvent, threadCtrlS
     </>
 }
 
-export function Input({thread, currentEl, state}) {
+export function Input({currentEl, state}) {
     const attributes = {};
     const [get, set] = state;
 
@@ -75,7 +75,6 @@ export function Input({thread, currentEl, state}) {
                     value={get.primitiveValue || ''} 
                     onBlur={(ev)=> {
                         currentEl.setValue(
-                            thread, 
                             'primitiveValue', 
                             (currentEl.primitiveType === 'number') ? Number(ev.target.value) : ev.target.value
                         );

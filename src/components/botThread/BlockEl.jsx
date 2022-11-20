@@ -17,12 +17,12 @@ export default function BlockEl({pageData, thread, currentEl, className, parentE
                 <button
                     type="button"
                     className={'toolbar-button' + (currentEl.ifType === 'or' ? ' selected': '')}
-                    onClick={() => currentEl.setValue(thread, 'ifType', 'or')}
+                    onClick={() => currentEl.setValue('ifType', 'or')}
                 >OR</button>
                 <button
                     type="button"
                     className={'toolbar-button' + (currentEl.ifType === 'and' ? ' selected': '')}
-                    onClick={() => currentEl.setValue(thread, 'ifType', 'and')}
+                    onClick={() => currentEl.setValue('ifType', 'and')}
                 >AND</button>
             </div>
 

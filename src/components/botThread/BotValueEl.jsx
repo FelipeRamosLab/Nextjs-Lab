@@ -1,12 +1,26 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {Input} from './BotThread';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 import DevCharToolbar from '../inputs/devCharToolbar';
 
-export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
+export default function BotValue({pageData, currentEl, withCondition, parentInstance}) {
     const [data, setData] = useState(currentEl);
     const functions = pageData && pageData.availableFunctions;
     const textarea = useRef();
+
+    useEffect(() => {
+        if (parentInstance === 'ThreadRule') {
+            Object.keys(data).map(key => {
+                currentEl[key] = data[key];
+            });
+
+            currentEl.set();
+        } else {
+            currentEl.setState(prev => {
+                return {...prev, values: {...prev.values, [currentEl.slug]: data}}
+            });
+        }
+    }, [data]);
 
     return (<>
         {withCondition && <div className="config rounded">
@@ -14,12 +28,13 @@ export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
                 <ModalSelect
                     label="Operador de comparação"
                     getter={currentEl.toCompare} 
-                    setter={(value) => currentEl.setValue(thread, 'toCompare', value)} 
+                    setter={(value) => currentEl.setValue('toCompare', value)} 
                     options={[
-                        new SelectOption({title: '=', value: '='}),
-                        new SelectOption({title: '>', value: '>'}),
-                        new SelectOption({title: '<', value: '<'}),
-                        new SelectOption({title: '>=', value: '>='}),
+                        new SelectOption({title: 'Igual', value: '='}),
+                        new SelectOption({title: 'Maior que', value: '>'}),
+                        new SelectOption({title: 'Menor que', value: '<'}),
+                        new SelectOption({title: 'Maior ou igual a', value: '>='}),
+                        new SelectOption({title: 'Menor ou igual a', value: '<='}),
                         new SelectOption({title: 'Diferente', value: '!='}),
                         new SelectOption({title: 'Oposto', value: '!'}),
                     ]}
@@ -31,7 +46,9 @@ export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
                 <ModalSelect
                     label="Tipo de valor"
                     getter={currentEl.valueType} 
-                    setter={(value) => currentEl.setValue(thread, 'valueType', value)} 
+                    setter={(value) => setData(prev => {
+                        return {...prev, valueType: value}
+                    })} 
                     options={[
                         new SelectOption({title: 'Função', value: 'function'}),
                         new SelectOption({title: 'Primitivo', value: 'primitive'})
@@ -42,14 +59,16 @@ export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
                     <ModalSelect
                         label="Função"
                         getter={currentEl.functionUID} 
-                        setter={(value) => currentEl.setValue(thread, 'functionUID', value)} 
-                        options={functions.map(fn =>  new SelectOption({title: fn.title, value: fn._id}))}
+                        setter={(value) => setData(prev => {
+                            return {...prev, functionUID: value}
+                        })} 
+                        options={functions.map(fn => new SelectOption({title: fn.title, value: fn._id}))}
                     />
 
                     <label>Configs (JSON)</label>
                     <textarea
                         ref={textarea}
-                        onBlur={(ev)=> currentEl.setValue(thread, 'configs', ev.target.value)}
+                        // onBlur={(ev)=> currentEl.setValue('configs', ev.target.value)}
                         onInput={(input) => setData((prev) => {
                             return {...prev, configs: input.target.value };
                         })}
@@ -73,10 +92,10 @@ export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
                     <ModalSelect
                         label="Tipo de primitivo"
                         getter={currentEl.primitiveType} 
-                        setter={(value) => {
+                        setter={(value) => setData(prev => {
                             currentEl.primitiveValue = null;
-                            currentEl.setValue(thread, 'primitiveType', value);
-                        }} 
+                            return {...prev, primitiveType: value}
+                        })} 
                         options={[
                             new SelectOption({title: 'Boolean', value: 'boolean'}),
                             new SelectOption({title: 'Number', value: 'number'}),
@@ -88,14 +107,16 @@ export default function ConfigEl({pageData, thread, currentEl, withCondition}) {
                     {currentEl.primitiveType === 'boolean' && <ModalSelect
                         label="Valor Primitivo"
                         getter={currentEl.primitiveValue} 
-                        setter={(value) => currentEl.setValue(thread, 'primitiveValue', value)} 
+                        setter={(value) => setData(prev => {
+                            return {...prev, primitiveValue: value}
+                        })} 
                         options={[
                             new SelectOption({title: 'True', value: true}),
                             new SelectOption({title: 'False', value: false})
                         ]}
                     />}
 
-                    <Input thread={thread} currentEl={currentEl} state={[data, setData]} />
+                    <Input currentEl={currentEl} state={[data, setData]} />
                 </div>}
             </div>
         </div>
