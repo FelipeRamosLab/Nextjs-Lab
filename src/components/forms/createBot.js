@@ -14,6 +14,7 @@ const events = {
 
 export default function CreateBot({pageData}) {
     const takeProfitDOM = useRef();
+    const accordion = useRef();
     const [spinner, setSpinner] = useState(false);
     const [selectedEvents, setSelectedEvents] = useState({});
     const [threadCtrl, setThreadCtrl] = useState();
@@ -72,6 +73,15 @@ export default function CreateBot({pageData}) {
         }
     }
 
+    function handleAccordion(ev) {
+        const items = accordion.current.querySelectorAll('details');
+        if (!ev.target.parentElement.hasAttribute('open')) {
+            items.forEach(item => {
+                item.removeAttribute('open');
+            });
+        }
+    }
+
     function addBotValue(propName) {
         const self = this;
 
@@ -95,14 +105,14 @@ export default function CreateBot({pageData}) {
                     <textarea value={form.description} onChange={(ev)=>setForm({...form, description: ev.target.value})}></textarea>
                 </fieldset>
 
-                <fieldset className="vertical-flex eval-fields">
+                <fieldset ref={accordion} className="vertical-flex eval-fields accordion">
                     <div className="section-header">
                         <h3>Valores</h3>
                     </div>
                     <hr/>
 
                     <details className="card bot-value stop-loss">
-                        <summary>
+                        <summary onClick={handleAccordion}>
                             Stoploss
                             <button type="button" className="add-button button transparent" onClick={() => {
                                 addBotValue('stoploss_long');
@@ -110,6 +120,7 @@ export default function CreateBot({pageData}) {
                             }}>Reset</button>
                         </summary>
                         
+
                         <div className="wrap-config">
                             <h4 className="title">Long position</h4>
 
@@ -129,7 +140,7 @@ export default function CreateBot({pageData}) {
                     </details>
 
                     <details ref={takeProfitDOM} className="card bot-value take-profit">
-                        <summary>
+                        <summary onClick={handleAccordion}>
                             Takeprofit
 
                             <button type="button" className="add-button button transparent" onClick={() => {
@@ -139,22 +150,44 @@ export default function CreateBot({pageData}) {
                             }}>Add</button>
                         </summary>
 
-                        <div className="wrap-config">
-                            <h4 className="title">Long position</h4>
+                        {form.values['takeprofit_long'] && <>
+                            <div className="wrap-config">
+                                <h4 className="title">Long position</h4>
 
-                            {form.values['takeprofit_long'] && <BotValueEl
-                                pageData={pageData}
-                                currentEl={form.values['takeprofit_long']}
-                            />}
-                        </div>
-                        <div className="wrap-config">
-                            <h4 className="title">Short position</h4>
+                                {form.values['takeprofit_long'] && <BotValueEl
+                                    pageData={pageData}
+                                    currentEl={form.values['takeprofit_long']}
+                                />}
+                            </div>
+                            <div className="wrap-config">
+                                <h4 className="title">Short position</h4>
 
-                            {form.values['takeprofit_short'] && <BotValueEl
-                                pageData={pageData}
-                                currentEl={form.values['takeprofit_short']}
-                            />}
-                        </div>
+                                {form.values['takeprofit_short'] && <BotValueEl
+                                    pageData={pageData}
+                                    currentEl={form.values['takeprofit_short']}
+                                />}
+                            </div>
+                        </>}
+                    </details>
+
+                    <details ref={takeProfitDOM} className="card bot-value trailing-stop">
+                        <summary onClick={handleAccordion}>
+                            Trailing stop
+
+                            <button type="button" className="add-button button transparent" onClick={() => {
+                                addBotValue('trailing_stop');
+                                takeProfitDOM.current.setAttribute('open', 'true');
+                            }}>Add</button>
+                        </summary>
+
+                        {form.values['trailing_stop'] && <>
+                            <div className="wrap-config">
+                                {form.values['trailing_stop'] && <BotValueEl
+                                    pageData={pageData}
+                                    currentEl={form.values['trailing_stop']}
+                                />}
+                            </div>
+                        </>}
                     </details>
                 </fieldset>
 

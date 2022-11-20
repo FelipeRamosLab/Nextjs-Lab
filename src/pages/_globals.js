@@ -6,3 +6,7 @@ function declareGlobals(obj) {
 declareGlobals(require('../utils/common'));
 declareGlobals(require('../utils/numbers'));
 declareGlobals(require('../utils/validate'));
+
+export default function ToRender() {
+    return <></>;
+}

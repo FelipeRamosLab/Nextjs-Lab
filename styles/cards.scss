@@ -43,6 +43,14 @@
             }
         }
 
+        &.trailing-stop {
+            background: $warn;
+
+            .wrap-config {
+                background: $warn-dark;
+            }
+        }
+
         .wrap-config {
             border-radius: 0.4rem;
             padding: 0.5rem;
