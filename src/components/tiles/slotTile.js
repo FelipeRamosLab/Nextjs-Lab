@@ -18,7 +18,7 @@ export default function SlotTile({slot}) {
             const runned = await axios.post('/api/bot-account/run', {
                 botAccountUID: slot._id,
                 masterUID: slot.master,
-                userUID: slot.user
+                userUID: slot.user._id
             });
             
             if (runned.data.success) window.location.reload();
