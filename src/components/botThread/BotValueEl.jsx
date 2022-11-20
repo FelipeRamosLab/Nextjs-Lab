@@ -14,9 +14,9 @@ export default function BotValue({pageData, currentEl, withCondition, parentInst
                 currentEl[key] = data[key];
             });
 
-            currentEl.set();
+            currentEl && currentEl.set && currentEl.set();
         } else {
-            currentEl.setState(prev => {
+            currentEl && currentEl.setState && currentEl.setState(prev => {
                 return {...prev, values: {...prev.values, [currentEl.slug]: data}}
             });
         }
@@ -28,7 +28,9 @@ export default function BotValue({pageData, currentEl, withCondition, parentInst
                 <ModalSelect
                     label="Operador de comparação"
                     getter={currentEl.toCompare} 
-                    setter={(value) => currentEl.setValue('toCompare', value)} 
+                    setter={(value) => setData(prev => {
+                        return {...prev, toCompare: value}
+                    })} 
                     options={[
                         new SelectOption({title: 'Igual', value: '='}),
                         new SelectOption({title: 'Maior que', value: '>'}),
@@ -68,7 +70,6 @@ export default function BotValue({pageData, currentEl, withCondition, parentInst
                     <label>Configs (JSON)</label>
                     <textarea
                         ref={textarea}
-                        // onBlur={(ev)=> currentEl.setValue('configs', ev.target.value)}
                         onInput={(input) => setData((prev) => {
                             return {...prev, configs: input.target.value };
                         })}

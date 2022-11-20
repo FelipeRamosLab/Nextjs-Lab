@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react';
 import EvalThread from '../../core/EvalThread';
 import BlockEl from './BlockEl';
-import ActionEl from './ActionEl';
 
 export default function BotThread({pageData, formState, actionEvent, threadCtrlState}) {
     const state = useState();
@@ -9,7 +8,6 @@ export default function BotThread({pageData, formState, actionEvent, threadCtrlS
     const [form, setForm] = formState;
     const [evalThread, setEvalThread] = state;
     let thread = evalThread && evalThread.thread;
-    let action = evalThread && evalThread.action;
 
     useEffect(()=>{
         setEvalThread(new EvalThread({
@@ -30,17 +28,7 @@ export default function BotThread({pageData, formState, actionEvent, threadCtrlS
             <div className="header">
                 <button type="button" className="button transparent" onClick={()=>setThreadCtrl(false)}>Voltar</button>
             </div>
-
-            {action && <ActionEl
-                pageData={pageData}
-                currentEl={evalThread && evalThread.action}
-                evalThread={evalThread}
-                setEvalThread={setEvalThread}
-                actionEvent={actionEvent}
-            />}
-            {!action && <div className="toolbar">
-                <button type="button" className="toolbar-button full-width selected" onClick={() => evalThread.addAction(actionEvent)}>Add a Action</button>
-            </div>}
+            <h3>Configurar Thread ({actionEvent})</h3>
 
             {thread && <BlockEl className="main-block" pageData={pageData} thread={evalThread} currentEl={evalThread.thread} parentEl={evalThread} />}
             {!thread && <div className="toolbar">
@@ -73,12 +61,6 @@ export function Input({currentEl, state}) {
                 <input
                     {...attributes}
                     value={get.primitiveValue || ''} 
-                    onBlur={(ev)=> {
-                        currentEl.setValue(
-                            'primitiveValue', 
-                            (currentEl.primitiveType === 'number') ? Number(ev.target.value) : ev.target.value
-                        );
-                    }}
                     onInput={(input) => set((prev) => {
                         return {...prev, primitiveValue: input.target.value };
                     })}

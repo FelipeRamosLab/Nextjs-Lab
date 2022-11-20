@@ -1,5 +1,4 @@
 import Block from './Block';
-import Action from './Action';
 import configs from '../../../config.json';
 
 export default class EvalThread {
@@ -8,7 +7,7 @@ export default class EvalThread {
         author,
         thread,
         state,
-        action
+        eventName
     }) {
         if (!state || state.length !== 2) throw new Error('');
 
@@ -17,19 +16,9 @@ export default class EvalThread {
         this.getState = state[0];
         this.setState = state[1];
         this.state = state;
-        this.path = [this.uid];
+        this.eventName = eventName;
 
         if (thread) this.thread = new Block(thread || {}, () => this);
-        if (action) this.action = new Action(action || {}, () => this);
-    }
-
-    addAction(actionEvent) {
-        const newAction = new Action({ eventName: actionEvent }, () => this);
-
-        if (!this.action) {
-            this.setState((prev)=>{ return new EvalThread({...prev, action: newAction }) });
-        }
-        return this;
     }
 
     addBlock() {

@@ -29,18 +29,50 @@
 
         &.stop-loss {
             background: $loss;
+
+            .wrap-config {
+                background: $error-dark;
+            }
         }
 
         &.take-profit {
             background: $profit;
+
+            .wrap-config {
+                background: $success-dark;
+            }
+        }
+
+        .wrap-config {
+            border-radius: 0.4rem;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+
+            &:first-of-type {
+                margin-top: 1rem;
+            }
+            
+            .title {
+                font-size: 1rem;
+                justify-content: center;
+                min-width: 100%;
+            }
         }
 
         summary {
-            display: inline;
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 0;
             min-width: 100%;
+            cursor: pointer;
+        }
+
+        summary,
+        summary .button {
+            color: $primary-dark;
         }
     }
 

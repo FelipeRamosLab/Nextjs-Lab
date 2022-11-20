@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import BotThread from '../botThread/BotThread';
 import BotValue from '../../core/EvalThread/BotValue';
@@ -13,6 +13,7 @@ const events = {
 };
 
 export default function CreateBot({pageData}) {
+    const takeProfitDOM = useRef();
     const [spinner, setSpinner] = useState(false);
     const [selectedEvents, setSelectedEvents] = useState({});
     const [threadCtrl, setThreadCtrl] = useState();
@@ -26,6 +27,11 @@ export default function CreateBot({pageData}) {
     });
 
     console.log('createBot form:', form);
+
+    useEffect(() => {
+        addBotValue('stoploss_long');
+        addBotValue('stoploss_short');
+    }, []);
 
     async function create(ev) {
         ev.preventDefault();
@@ -84,23 +90,59 @@ export default function CreateBot({pageData}) {
                     <hr/>
 
                     <details className="card bot-value stop-loss">
-                        <summary>Stoploss</summary>
+                        <summary>
+                            Stoploss
+                            <button type="button" className="add-button button transparent" onClick={() => {
+                                addBotValue('stoploss_long');
+                                addBotValue('stoploss_short');
+                            }}>Reset</button>
+                        </summary>
+                        
+                        <div className="wrap-config">
+                            <h4 className="title">Long position</h4>
 
-                        {/* {form.values['stoploss-long'] && <BotValueEl key={item.slug} pageData={pageData} currentEl={form.values['stoploss-long']}/>} */}
-                        <button type="button" className="edit-button button" onClick={() => addBotValue('stoploss-long')}>+</button>
-                        {/* {form.values[0] && <BotValueEl
-                            key={form.values[0].slug}
-                            pageData={pageData}
-                            currentEl={form.values[0]}
-                        />} */}
-                        {form.values['stoploss-long'] && <BotValueEl
-                            pageData={pageData}
-                            currentEl={form.values['stoploss-long']}
-                        />}
+                            {form.values['stoploss_long'] && <BotValueEl
+                                pageData={pageData}
+                                currentEl={form.values['stoploss_long']}
+                            />}
+                        </div>
+                        <div className="wrap-config">
+                            <h4 className="title">Short position</h4>
+
+                            {form.values['stoploss_short'] && <BotValueEl
+                                pageData={pageData}
+                                currentEl={form.values['stoploss_short']}
+                            />}
+                        </div>
                     </details>
 
-                    <details className="card bot-value take-profit">
-                        <summary>Takeprofit</summary>
+                    <details ref={takeProfitDOM} className="card bot-value take-profit">
+                        <summary>
+                            Takeprofit
+
+                            <button type="button" className="add-button button transparent" onClick={() => {
+                                addBotValue('takeprofit_long');
+                                addBotValue('takeprofit_short');
+                                takeProfitDOM.current.setAttribute('open', 'true');
+                            }}>Add</button>
+                        </summary>
+
+                        <div className="wrap-config">
+                            <h4 className="title">Long position</h4>
+
+                            {form.values['takeprofit_long'] && <BotValueEl
+                                pageData={pageData}
+                                currentEl={form.values['takeprofit_long']}
+                            />}
+                        </div>
+                        <div className="wrap-config">
+                            <h4 className="title">Short position</h4>
+
+                            {form.values['takeprofit_short'] && <BotValueEl
+                                pageData={pageData}
+                                currentEl={form.values['takeprofit_short']}
+                            />}
+                        </div>
                     </details>
                 </fieldset>
 
