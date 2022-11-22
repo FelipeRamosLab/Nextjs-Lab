@@ -8,7 +8,7 @@ export default async function CreateMasterAccount(req, res) {
         const masterAccount = await axios.put(root + '/master-account/create', req.body);
 
         res.status(200).send(masterAccount.data);
-    } catch (err) {
-        res.status(500).send(err);
+    } catch ({response: {data}}) {
+        res.status(500).send(data);
     }
 }
