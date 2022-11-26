@@ -1,3 +1,4 @@
+import axios from 'axios';
 import ModalButton from '../../buttons/modalButton';
 import CreateBotAccount from '../../forms/createBotAccount';
 import CreateMaster from '../../forms/createMaster';
@@ -13,12 +14,12 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
         try {
             const deleted = await axios.post('/api/master-account/delete', {
                 masterUID: master._id,
-                userUID: user._id
+                userUID: master.user._id
             });
 
             window.location.href = window.location.origin;
-        } catch(err) {
-            throw err;
+        } catch({response: { data }}) {
+            throw data;
         }
     }
 

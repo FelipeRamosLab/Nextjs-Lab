@@ -17,8 +17,8 @@ export default function TransferPainel({master, pageData, setPageData}) {
         ev.preventDefault();
         setTranferType('loading');
         const toSend = {
-            userUID: master.user._id,
-            masterUID: master._id,
+            user: master.user._id,
+            master: master._id,
             type: transferType,
             value: transferValue
         }

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
 import SuggestionsSelect from '../inputs/suggestionsSelect';
+import ErrorList from '../common/errorList';
 
 export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
+    const [error, setError] = useState();
     const [spinner, setSpinner] = useState(false);
     const [form, setForm] = useState({
         user: pageData && pageData.user._id,
@@ -21,14 +23,23 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
 
         try {
             const saved = await axios.post('/api/bot-account/create', form);
-            const updateState = {...pageData};
-            updateState.master.botAccounts.push(saved.data.botAccount);
 
-            setPageData(updateState);
+            setPageData(prev => {
+                return {...prev, botAccounts: [...prev.master.botAccounts, saved.data.botAccount]}
+            });
             modalCtrl(false);
-        } catch(err) {
-            throw err;
+        } catch({response: {data}}) {
+            setError(data);
+            throw data;
+        } finally {
+            setSpinner(false);
         }
+    }
+
+    if (error) {
+        return (<div className="error">
+            <ErrorList error={error} />
+        </div>);
     }
 
     if (!spinner) {
