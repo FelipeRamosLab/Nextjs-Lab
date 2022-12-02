@@ -6,14 +6,14 @@ const root = config[config.root];
 export default async function HomeActivity(req, res) {
     try {
         const user = await axios.get(root + '/collection/get/doc', {
-            data: { collection: 'users', filter: config.userTest, options: { populate: {levels: 3} } }
+            data: { collectionName: 'users', filter: config.userTest, options: { populate: {levels: 3} } }
         });
         const myBots = await axios.get(root + '/collection/get/queryCollection', {
-            data: { collection: 'bots', filter: {author: config.userTest }, options: { populate: {levels: 3} } }
+            data: { collectionName: 'bots', filter: {author: config.userTest }, options: { populate: {levels: 3} } }
         });
 
         const availableFunctions = await axios.get(root + '/collection/get/queryCollection', {
-            data: { collection: 'functions', options: { populate: {levels: 3} } }
+            data: { collectionName: 'functions', options: { populate: {levels: 3} } }
         });
         let userRes = user.data.doc;
 
@@ -21,10 +21,10 @@ export default async function HomeActivity(req, res) {
             const item = userRes.masterAccounts[i];
 
             const openTrades = await axios.get(root + '/collection/get/queryCollection', {
-                data: { collection: 'positions', filter: {user: item.user, master: item._id, status: 'opened' } }
+                data: { collectionName: 'positions', filter: {user: item.user, master: item._id, status: 'opened' } }
             });
             const runningSlots = await axios.get(root + '/collection/get/queryCollection', {
-                data: { collection: 'bot_accounts', filter: {user: item.user, master: item._id, status: 'running' } }
+                data: { collectionName: 'bot_accounts', filter: {user: item.user, master: item._id, status: 'running' } }
             });
 
             userRes.masterAccounts[i].openTradesCount = openTrades.data.result.length;

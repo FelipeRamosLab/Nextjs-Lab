@@ -7,7 +7,7 @@ export default async function MyBots(req, res) {
     try {
         const bot = await axios.get(root + '/collection/get/queryCollection', {
             data: {
-                collection: 'bots',
+                collectionName: 'bots',
                 filter: {author: config.userTest},
                 options: {populate: true}
             }

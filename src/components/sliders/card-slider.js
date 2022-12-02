@@ -7,16 +7,10 @@ export default function CardSlider({data, pageData}) {
             className="card-slider"
             centerMode={true}
             centerPadding="0"
-            slidesToShow={3}
+            slidesToShow={1}
             dots={true}
-            infinite={false}
-            responsive={[{
-                breakpoint: 601,
-                settings: {
-                    arrows: false,
-                    slidesToShow: 1
-                }
-            }]}
+            infinite={true}
+            arrows={false}
         >
             {data && data.map(bot=>{
                 return <BotTile key={bot._id} pageData={pageData} bot={bot} />
