@@ -81,8 +81,8 @@ export default function BotValue({pageData, currentEl, withCondition, parentInst
                     <code datatype="json">
                         {functions.map(fn => {
                             if (fn._id === currentEl.functionUID) {
-                                return JSON.stringify(fn.options.map(item => {
-                                    return { [item.name]: item.dataType };
+                                return JSON.stringify(Object.entries(fn.options).map(([key, item]) => {
+                                    return { [key]: item.type };
                                 }));
                             }
                         })}
