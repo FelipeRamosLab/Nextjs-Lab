@@ -11,11 +11,16 @@ export default function CreateMaster({pageData, initialData}) {
         monthlyLoss: {},
         dailyLoss: {},
         tradeLoss: {},
+        monthlyGain: {},
+        dailyGain: {},
+        tradeGain: {},
     });
     const [form, setForm] = useState({
         user: config.userTest,
         limits: limits
     });
+
+    console.log(form)
 
     useEffect(()=>{
         setForm({...form, limits});
@@ -125,6 +130,62 @@ export default function CreateMaster({pageData, initialData}) {
                             label="Prejuízo Diário ($):"
                             value={validateProp(limits, ['dailyLoss', 'money']) || ''}
                             formSetter={(ev)=>setLimits({...limits, dailyLoss: {...limits.dailyLoss, money: handleNumber(ev.target.value)}}) || ''}
+                        />
+                    </div>
+                    <div className="field-group">
+                        <Input
+                            type="number"
+                            label="Prejuízo por Trade (%):"
+                            value={validateProp(limits, ['tradeLoss', 'percent']) || ''}
+                            formSetter={(ev)=>setLimits({...limits, tradeLoss: {...limits.tradeLoss, percent: handleNumber(ev.target.value)}}) || ''}
+                        />
+                        <Input
+                            type="number"
+                            label="Prejuízo por Trade ($):"
+                            value={validateProp(limits, ['tradeLoss', 'money']) || ''}
+                            formSetter={(ev)=>setLimits({...limits, tradeLoss: {...limits.tradeLoss, money: handleNumber(ev.target.value)}}) || ''}
+                        />
+                    </div>
+                    <div className="field-group">
+                        <Input
+                            type="number"
+                            label="Lucro Mensal (%):"
+                            value={validateProp(limits, ['monthlyGain', 'percent']) || ''}
+                            formSetter={(ev)=>setLimits({...limits, monthlyGain: {...limits.monthlyGain, percent: handleNumber(ev.target.value)}}) || ''}
+                        />
+                        <Input
+                            type="number"
+                            label="Lucro Mensal ($):"
+                            value={validateProp(limits, ['monthlyGain', 'money'])  || ''}
+                            formSetter={(ev)=>setLimits({...limits, monthlyGain: {...limits.monthlyGain, money: handleNumber(ev.target.value)}}) || ''}
+                        />
+                    </div>
+                    <div className="field-group">
+                        <Input
+                            type="number"
+                            label="Lucro Diário (%):"
+                            value={validateProp(limits, ['dailyGain', 'percent']) || ''}
+                            formSetter={(ev)=>setLimits({...limits, dailyGain: {...limits.dailyGain, percent: handleNumber(ev.target.value)}}) || ''}
+                        />
+                        <Input
+                            type="number"
+                            label="Lucro Diário ($):"
+                            value={validateProp(limits, ['dailyGain', 'money']) || ''}
+                            formSetter={(ev)=>setLimits({...limits, dailyGain: {...limits.dailyGain, money: handleNumber(ev.target.value)}}) || ''}
+                        />
+                    </div>
+                    <div className="field-group">
+                        <Input
+                            type="number"
+                            label="Lucro por Trade (%):"
+                            value={validateProp(limits, ['tradeGain', 'percent']) || ''}
+                            formSetter={(ev)=>setLimits({...limits, tradeGain: {...limits.tradeGain, percent: handleNumber(ev.target.value)}}) || ''}
+                        />
+                        <Input
+                            type="number"
+                            label="Lucro por Trade ($):"
+                            value={validateProp(limits, ['tradeGain', 'money'])  || ''}
+                            formSetter={(ev)=>setLimits({...limits, tradeGain: {...limits.tradeGain, money: handleNumber(ev.target.value)}}) || ''}
                         />
                     </div>
                 </div>

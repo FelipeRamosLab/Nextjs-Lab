@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import SuggestionsSelect from '../inputs/suggestionsSelect';
 import ErrorList from '../common/errorList';
+import Input from '../inputs/input';
 
 export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
     const [error, setError] = useState();
@@ -16,6 +17,8 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
         limits: {},
         walletAllocation: 0
     });
+
+    console.log(form)
 
     async function create(ev) {
         ev.preventDefault();
@@ -44,7 +47,7 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
 
     if (!spinner) {
         return (<form onSubmit={(ev)=>create(ev)}>
-            <h2 className="title">Criar Bot</h2>
+            <h2 className="title">Criar Slot</h2>
 
             <fieldset>
                 <label>Nome:</label>
@@ -89,6 +92,223 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
                     setForm({...form, bot: item._id})
                 }}
             />
+
+            <div className="field-group">
+                <Input
+                    type="number"
+                    label="Prejuízo Mensal (%):"
+                    value={form?.limits?.monthlyLoss?.percent || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                monthlyLoss: {
+                                    ...prev.limits.monthlyLoss,
+                                    percent: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+                <Input
+                    type="number"
+                    label="Prejuízo Mensal ($):"
+                    value={form?.limits?.monthlyLoss?.money || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                monthlyLoss: {
+                                    ...prev.limits.monthlyLoss,
+                                    money: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+            </div>
+            <div className="field-group">
+                <Input
+                    type="number"
+                    label="Prejuízo Diário (%):"
+                    value={form?.limits?.dailyLoss?.percent || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                dailyLoss: {
+                                    ...prev.limits.dailyLoss,
+                                    percent: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+                <Input
+                    type="number"
+                    label="Prejuízo Diário ($):"
+                    value={form?.limits?.dailyLoss?.money || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                dailyLoss: {
+                                    ...prev.limits.dailyLoss,
+                                    money: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+            </div>
+            <div className="field-group">
+                <Input
+                    type="number"
+                    label="Prejuízo por Trade (%):"
+                    value={form?.limits?.tradeLoss?.percent || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                tradeLoss: {
+                                    ...prev.limits.tradeLoss,
+                                    percent: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+                <Input
+                    type="number"
+                    label="Prejuízo por Trade ($):"
+                    value={form?.limits?.tradeLoss?.money || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                tradeLoss: {
+                                    ...prev.limits.tradeLoss,
+                                    money: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+            </div>
+            <div className="field-group">
+                <Input
+                    type="number"
+                    label="Lucro Mensal (%):"
+                    value={form?.limits?.monthlyGain?.percent || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                monthlyGain: {
+                                    ...prev.limits.monthlyGain,
+                                    percent: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+                <Input
+                    type="number"
+                    label="Lucro Mensal ($):"
+                    value={form?.limits?.monthlyGain?.money || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                monthlyGain: {
+                                    ...prev.limits.monthlyGain,
+                                    money: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+            </div>
+            <div className="field-group">
+                <Input
+                    type="number"
+                    label="Lucro Diário (%):"
+                    value={form?.limits?.dailyGain?.percent || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                dailyGain: {
+                                    ...prev.limits.dailyGain,
+                                    percent: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+                <Input
+                    type="number"
+                    label="Lucro Diário ($):"
+                    value={form?.limits?.dailyGain?.money || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                dailyGain: {
+                                    ...prev.limits.dailyGain,
+                                    money: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+            </div>
+            <div className="field-group">
+                <Input
+                    type="number"
+                    label="Lucro por Trade (%):"
+                    value={form?.limits?.tradeGain?.percent || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                tradeGain: {
+                                    ...prev.limits.tradeGain,
+                                    percent: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+                <Input
+                    type="number"
+                    label="Lucro por Trade ($):"
+                    value={form?.limits?.tradeGain?.money || 0}
+                    formSetter={(ev) => setForm(prev => {
+                        return {
+                            ...prev,
+                            limits: {
+                                ...prev.limits,
+                                tradeGain: {
+                                    ...prev.limits.tradeGain,
+                                    money: Number(ev.target.value)
+                                }
+                            }
+                        };
+                    }) || ''}
+                />
+            </div>
 
             <div className="buttons-wrap">
                 <button type="submit" className="button">Confirmar</button>
