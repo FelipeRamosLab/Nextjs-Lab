@@ -11,6 +11,16 @@
         background-color: $success;
         color: $primary;
     }
+
+    &[type="paused"] {
+        background-color: $warn;
+        color: $primary;
+    }
+
+    &[type="error"] {
+        background-color: $error;
+        color: $primary;
+    }
 }
 
 .pnl {
