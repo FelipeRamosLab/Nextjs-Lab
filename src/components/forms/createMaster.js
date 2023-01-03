@@ -20,8 +20,6 @@ export default function CreateMaster({pageData, initialData}) {
         limits: limits
     });
 
-    console.log(form)
-
     useEffect(()=>{
         setForm({...form, limits});
     }, [limits]);

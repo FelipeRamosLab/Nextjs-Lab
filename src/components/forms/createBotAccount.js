@@ -18,8 +18,6 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
         walletAllocation: 0
     });
 
-    console.log(form)
-
     async function create(ev) {
         ev.preventDefault();
         setSpinner(true);
