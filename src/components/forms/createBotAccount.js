@@ -13,7 +13,7 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
         name: '',
         type: 'slot-demo',
         assets: [],
-        interval: '1h',
+        interval: '15m',
         limits: {},
         walletAllocation: 0
     });
