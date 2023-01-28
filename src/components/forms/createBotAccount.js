@@ -14,7 +14,14 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
         type: 'slot-demo',
         assets: [],
         interval: '15m',
-        limits: {},
+        limits: {
+            tradeLoss: { percent: 1 },
+            dailyLoss: { percent: 3 },
+            monthlyLoss: { percent: 9 },
+            tradeGain: { percent: 3 },
+            dailyGain: { percent: 6 },
+            monthlyGain: { percent: 30 },
+        },
         walletAllocation: 0
     });
 

@@ -18,7 +18,7 @@ export default function Input({label, type, placeholder, value, formSetter, css}
 function pickInputMode(type) {
     switch (type) {
         case 'number': {
-            return { type: 'text', inputMode: 'numeric' }
+            return { type: 'number', inputMode: 'numeric' }
         }
         case 'phone': {
             return { type: 'text', inputMode: 'tel'}
