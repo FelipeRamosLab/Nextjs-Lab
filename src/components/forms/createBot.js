@@ -28,12 +28,26 @@ export default function CreateBot({pageData}) {
         eval: {}
     });
 
-    console.log('createBot form:', form);
-
     useEffect(() => {
         addBotValue('stoploss_long');
         addBotValue('stoploss_short');
+
+        window.setFormState = setForm;
     }, []);
+
+    if (window) {
+        const seen = new WeakSet();
+        const formString = JSON.stringify(form, function(key, value) {
+          if (typeof value === "object" && value !== null) {
+            if (seen.has(value)) {
+              return;
+            }
+            seen.add(value);
+          }
+          return value;
+        });
+        window.localStorage.setItem('lastDraft', JSON.stringify(formString));
+    }
 
     async function create(ev) {
         ev.preventDefault();
