@@ -20,7 +20,8 @@
     "react-icons": "^4.4.0",
     "react-slick": "^0.29.0",
     "sass": "^1.52.2",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "vercel": "^28.16.2"
   },
   "devDependencies": {
     "eslint": "7.32.0",

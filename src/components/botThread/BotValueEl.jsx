@@ -7,6 +7,22 @@ export default function BotValue({pageData, currentEl, withCondition, parentInst
     const [data, setData] = useState(currentEl);
     const functions = pageData && pageData.availableFunctions;
     const textarea = useRef();
+    const textAreaDefault = {};
+    const instructionsDefault = {};
+    
+    functions.map(fn => {
+        if (fn._id === currentEl.functionUID) {
+            Object.entries(fn.options).map(([key, opt]) => {
+                instructionsDefault[key] = opt;
+                switch (opt.type) {
+                    case 'string': return textAreaDefault[key] = 'valueHere';
+                    case 'number': return textAreaDefault[key] = 0;
+                    case 'array': return textAreaDefault[key] = [];
+                    case 'object': return textAreaDefault[key] = {};
+                }
+            });
+        }
+    });
 
     useEffect(() => {
         if (parentInstance === 'ThreadRule') {
@@ -74,19 +90,11 @@ export default function BotValue({pageData, currentEl, withCondition, parentInst
                             return {...prev, configs: input.target.value };
                         })}
                         value={data.configs}
+                        defaultValue={Object.keys(textAreaDefault).length ? JSON.stringify(textAreaDefault, null, 2) : ''}
+                        spellCheck={false}
                     ></textarea>
 
-                    <DevCharToolbar textarea={textarea} setData={setData} fieldName="configs" />
-
-                    <code datatype="json">
-                        {functions.map(fn => {
-                            if (fn._id === currentEl.functionUID) {
-                                return JSON.stringify(Object.entries(fn.options).map(([key, item]) => {
-                                    return { [key]: item.type };
-                                }));
-                            }
-                        })}
-                    </code>
+                    <DevCharToolbar textarea={textarea} setData={setData} fieldName="configs" textAreaDefault={textAreaDefault} />
                 </div>}
 
                 {currentEl.valueType === 'primitive' && <div className="primitive-fields">

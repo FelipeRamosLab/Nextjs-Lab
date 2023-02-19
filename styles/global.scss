@@ -92,6 +92,10 @@ form {
             border-color: $success;
         }
     }
+
+    textarea {
+        min-height: 12rem;
+    }
 }
 
 section {
@@ -105,4 +109,8 @@ textarea {
 
 textarea {
     min-height: 5em;
+}
+
+button {
+    cursor: pointer;
 }
