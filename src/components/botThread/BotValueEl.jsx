@@ -9,7 +9,7 @@ export default function BotValue({pageData, currentEl, withCondition, parentInst
     const textarea = useRef();
     const textAreaDefault = {};
     const instructionsDefault = {};
-    
+
     functions.map(fn => {
         if (fn._id === currentEl.functionUID) {
             Object.entries(fn.options).map(([key, opt]) => {

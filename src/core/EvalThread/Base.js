@@ -16,7 +16,6 @@ export default class Base {
 
         if (!path) path = [];
         this.getParent = getParent;
-        // this.path = [...this.getParent().path, this.uid];
 
         if (this.state) {
             this.getState = this.state[0];

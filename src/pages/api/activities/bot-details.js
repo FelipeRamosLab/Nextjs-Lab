@@ -11,9 +11,19 @@ export default async function BotDetails(req, res) {
                 botUID: req.body.bot
             }
         });
+        const user = await axios.get(root + '/collection/get/doc', {
+            data: { collectionName: 'users', filter: config.userTest, options: { populate: {levels: 3} } }
+        });
+        const availableFunctions = await axios.get(root + '/collection/get/queryCollection', {
+            data: { collectionName: 'functions', options: { populate: {levels: 3} } }
+        });
 
         if (bot.data) {
-            res.status(200).send(bot.data);
+            res.status(200).send({
+                availableFunctions: availableFunctions.data.result,
+                bot: bot.data,
+                user: user.data.doc
+            });
         } else {
             res.status(500).send(bot);
         }

@@ -72,8 +72,6 @@ form {
     }
 
     label {
-        margin-left: 0.8rem;
-        margin-bottom: 0.2rem;
         font-size: smaller;
     }
 
@@ -92,10 +90,6 @@ form {
             border-color: $success;
         }
     }
-
-    textarea {
-        min-height: 12rem;
-    }
 }
 
 section {
@@ -105,10 +99,6 @@ section {
 input,
 textarea {
     width: 100%;
-}
-
-textarea {
-    min-height: 5em;
 }
 
 button {

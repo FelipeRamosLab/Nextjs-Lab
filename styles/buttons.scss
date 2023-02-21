@@ -2,6 +2,19 @@
     text-align: center;
 }
 
+.wrap-btns-flex {
+    display: flex;
+    gap: 10px;
+
+    button {
+        flex: 1;
+    }
+
+    &.vertical {
+        flex-direction: column;
+    }
+}
+
 .button {
     padding: 0.3rem 1.4rem;
     text-transform: uppercase;

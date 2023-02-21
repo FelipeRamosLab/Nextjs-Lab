@@ -10,6 +10,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/lab": "^5.0.0-alpha.120",
+    "@mui/material": "^5.11.10",
     "apexcharts": "^3.33.2",
     "axios": "^0.24.0",
     "jquery": "^3.6.0",

@@ -1,9 +1,11 @@
 import ModalButton from '../../buttons/modalButton';
-import CreateBot from '../../forms/createBot';
 import { FaTrash, FaPen } from 'react-icons/fa';
+import BotValuesAccordion from './botValuesAccordion';
+import BotEventsAccordion from './botEventsAccordion';
 
 export default function BotDetails({ pageData, setPageData }) {
-    const {cod, name, author} = pageData || {};
+    const { bot: { cod, name, author}} = pageData || {};
+    const botEval = pageData.bot.eval;
 
     return (<>
         <div className="container">
@@ -20,6 +22,17 @@ export default function BotDetails({ pageData, setPageData }) {
 
             <section className="content-sidebar">
                 <div className="content">
+                    <div className="section-header">
+                        <h3>Limites da operação</h3>
+                    </div>
+                    <hr/>
+                    <BotValuesAccordion pageData={pageData} />
+
+                    <div className="section-header">
+                        <h3>Avaliações do Bot</h3>
+                    </div>
+                    <hr/>
+                    <BotEventsAccordion pageData={pageData} />
                 </div>
 
                 <div className="sidebar">

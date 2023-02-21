@@ -33,7 +33,9 @@ export default function HomeContent({pageData}){
             <h2>Meus Bots</h2>
             <ModalButton className="button transparent" ModalContent={CreateBot} pageData={pageData}>Criar</ModalButton>
         </div>
-        
-        <CardSlider data={myBots} pageData={pageData} />
+
+        <section className="container">
+            <CardSlider data={myBots} pageData={pageData} />
+        </section>
     </>);
 }
