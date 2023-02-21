@@ -6,10 +6,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { Backdrop, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useState } from "react";
 
-export default function ThreadBlockEdit({blockData, pageData}) {
+export default function ThreadBlockEdit({blockData, pageData, setPageData}) {
+    const [backDrop, setBackDrop] = useState(false);
+    const [addBlockRuleLoading, setAddBlockRuleLoading] = useState(false);
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const threadChildren = [...blockData.blocks, ...blockData.rules];
@@ -18,16 +23,20 @@ export default function ThreadBlockEdit({blockData, pageData}) {
             return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
         }
     });
-    const [sorted, setSorted] = useState(chidrenSorted);
 
     async function deleteBlock() {
         try {
             setDeleteLoading(true);
             const UID = blockData._id;
-            const {data} = await axios.post('/api/bot/delete-block', { UID });
+            const {data} = await axios.post('/api/bot/delete-block', { UID, botUID: pageData.bot._id });
 
             if (data && data.success) {
-                window.location.reload();
+                setPageData(prev => {
+                    return {...prev, bot: data.bot}
+                });
+
+                setDeleteLoading(false);
+                setDeleteDialog(false);
             } else {
                 throw new Error({data});
             }
@@ -55,6 +64,48 @@ export default function ThreadBlockEdit({blockData, pageData}) {
         );
     }
 
+    async function createBlockRule(type) {
+        setAddBlockRuleLoading(type);
+
+        try {
+            const added = await axios.post('/api/bot/add-block-rule', {
+                type: type,
+                parentBlockUID: blockData._id,
+                botUID: pageData.bot._id
+            });
+    
+            if (added.data.bot) {
+                setPageData(prev => {
+                    return {...prev, bot: added.data.bot};
+                });
+            }
+            setAddBlockRuleLoading(false);
+        } catch(err) {
+            setAddBlockRuleLoading(false);
+            throw new Error(err);
+        }
+    }
+
+    async function updateThreadBlock(value) {
+        setBackDrop(true);
+
+        try {
+            const updated = await axios.post('/api/bot/update-block', {
+                _id: blockData._id,
+                toUpdate: value,
+                botUID: pageData.bot._id
+            });
+            
+            setPageData(prev => {
+                return {...prev, bot: updated.data.bot};
+            });
+            setBackDrop(false);
+        } catch(err) {
+            setBackDrop(false);
+            throw err.response || err;
+        }
+    }
+
     return (
         <div className="thread-block-form">
             <div className="section-header">
@@ -63,18 +114,54 @@ export default function ThreadBlockEdit({blockData, pageData}) {
                 <Dialog />
             </div>
             <hr/>
-            {sorted.map(child => {
+
+            <ToggleButtonGroup
+                exclusive
+                value={blockData.ifType}
+                sx={{minWidth: '100%'}}
+                onChange={(_, value) => updateThreadBlock({ifType: value})}
+            >
+                <ToggleButton value="and" sx={{flex: 1}}>
+                    E
+                </ToggleButton>
+                <ToggleButton value="or" sx={{flex: 1}}>
+                    OU
+                </ToggleButton>
+            </ToggleButtonGroup>
+
+            {chidrenSorted.map(child => {
                 switch (child.type) {
                     case 'evaluation': {
-                        return <ThreadRuleEdit key={child._id} ruleData={child} pageData={pageData} />
+                        return <ThreadRuleEdit key={child._id} ruleData={child} pageData={pageData} setPageData={setPageData} />
                     }
                     case 'block': {
-                        return <ThreadBlockEdit key={child._id} blockData={child} pageData={pageData} />
+                        return <ThreadBlockEdit key={child._id} blockData={child} pageData={pageData} setPageData={setPageData} />
                     }
                 }
             })}
 
-            <Button variant="standard" sx={{width: '100%'}}>Adicionar Bloco</Button>
+            <div className="wrap-btn-flex">
+                <LoadingButton
+                    loading={(addBlockRuleLoading === 'blocks')}
+                    variant="standard"
+                    sx={{width: '100%'}}
+                    onClick={() => createBlockRule('blocks')}
+                >Adicionar Bloco</LoadingButton>
+                <LoadingButton
+                    loading={(addBlockRuleLoading === 'rules')}
+                    variant="standard"
+                    sx={{width: '100%'}}
+                    onClick={() => createBlockRule('rules')}
+                >Adicionar Regra</LoadingButton>
+            </div>
+
+            
+            <Backdrop
+                sx={{ color: '#fff', zIndex: 999999 }}
+                open={backDrop}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </div>
     );
 }

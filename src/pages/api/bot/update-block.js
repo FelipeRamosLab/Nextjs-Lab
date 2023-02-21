@@ -1,15 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
 import config from '../../../../config.json';
 
 const root = config[config.root];
 
-export default async function DeleteBlock(req, res) {
+export default async function UpdateThreadBlock(req, res) {
     try {
-        const {data} = await axios.delete(root + '/collection/delete',  {
-            data: {
-                collectionName: 'thread_blocks',
-                filter: { _id: req.body.UID }
-            }
+        await axios.post(root + '/collection/update/document', {
+            collectionName: 'thread_blocks',
+            filter: req.body._id,
+            data: req.body.toUpdate
         });
 
         const bot = await axios.get(root + '/bot/details', {
@@ -20,10 +19,10 @@ export default async function DeleteBlock(req, res) {
         });
 
         res.status(200).send({
-            success: data.deleted ? true : false,
             bot: bot.data
         });
     } catch (err) {
-        res.status(500).send(err);
+        const response = err.response;
+        res.status(500).send(response ? response.data : err);
     }
 }

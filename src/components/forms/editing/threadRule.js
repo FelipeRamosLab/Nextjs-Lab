@@ -3,27 +3,30 @@ import BotValuesAccordion from '../../contents/bot-details/botValuesAccordion';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-import configs from '../../../../config.json';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DialogPopUp from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Backdrop, CircularProgress } from '@mui/material';
 import axios from 'axios';
 
-export default function ThreadRuleEdit({ruleData, pageData}) {
-    const [ruleChildren, setRuleChildren] = useState(ruleData.children);
-    const [addRuleLoading, setAddRuleLoading] = useState(false);
+export default function ThreadRuleEdit({ruleData, pageData, setPageData}) {
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [backDrop, setBackDrop] = useState(false);
+    const maxValuesReached = (ruleData.children.length >= 2);
+    let ruleTitle = '';
+    
+    ruleData.children.map((child, index) => {
+        if (child.toCompare) ruleTitle += ` ${child.toCompare} `;
+        else if (index === 1) ruleTitle += ' / ';
 
-    function handleAddRule() {
-        setRuleChildren(prev => {
-            const newData = [...prev, {author: configs.userTest}];
-            return newData;
-        });
-    }
+        if (child.title) ruleTitle += child.title;
+        if (child.valueType === 'function') ruleTitle += child.functionUID && child.functionUID.title;
+        if (child.valueType === 'primitive') ruleTitle += child.primitiveValue || child.primitiveType;
+    });
 
     async function deleteRule(confirmation) {
         if (confirmation) {
@@ -34,10 +37,15 @@ export default function ThreadRuleEdit({ruleData, pageData}) {
         try {
             setDeleteLoading(true);
             const UID = ruleData._id;
-            const {data} = await axios.post('/api/bot/delete-rule', { UID });
+            const {data} = await axios.post('/api/bot/delete-rule', { UID, botUID: pageData.bot._id });
 
             if (data && data.success) {
-                window.location.reload();
+                setPageData(prev => {
+                    return {...prev, bot: data.bot}
+                });
+
+                setDeleteLoading(false);
+                setDeleteDialog(false);
             } else {
                 throw new Error(data);
             }
@@ -66,10 +74,30 @@ export default function ThreadRuleEdit({ruleData, pageData}) {
         );
     }
 
+    async function addBotValue() {
+        setBackDrop(true);
+
+        try {
+            const added = await axios.post('/api/bot/add-value', {
+                threadRuleUID: ruleData._id,
+                botUID: pageData.bot._id
+            });
+
+            if (added.data.bot) {
+                setPageData(prev => {
+                    return {...prev, bot: added.data.bot};
+                });
+            }
+            setBackDrop(false);
+        } catch(err) {
+            throw err;
+        }
+    }
+
     return (
         <div className="thread-rule-form">
             <div className="section-header">
-                <h3>Regra</h3>
+                <h3>Regra [ {ruleTitle} ]</h3>
 
                 <IconButton 
                     size="small"
@@ -80,9 +108,18 @@ export default function ThreadRuleEdit({ruleData, pageData}) {
                 </IconButton>
                 <Dialog />
             </div>
-            <BotValuesAccordion pageData={pageData} ruleChildren={ruleChildren} />
+            <BotValuesAccordion pageData={pageData} setPageData={setPageData} ruleChildren={ruleData.children} />
 
-            <LoadingButton loading={addRuleLoading} variant="standard" sx={{width: '100%'}} onClick={() => handleAddRule()}>Adicionar Regra</LoadingButton>
+            {!maxValuesReached && <div className="wrap-btn-flex">
+                <Button variant="contained" onClick={() => addBotValue()}>Adicionar Parâmetro</Button>
+            </div>}
+
+            <Backdrop
+                sx={{ color: '#fff', zIndex: 999999 }}
+                open={backDrop}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </div>
     );
 }

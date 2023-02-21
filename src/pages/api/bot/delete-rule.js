@@ -12,7 +12,17 @@ export default async function DeleteRule(req, res) {
             }
         });
 
-        res.status(200).send({ success: data.deleted ? true : false});
+        const bot = await axios.get(root + '/bot/details', {
+            data: {
+                userUID: config.userTest,
+                botUID: req.body.botUID,
+            }
+        });
+
+        res.status(200).send({
+            success: data.deleted ? true : false,
+            bot: bot.data
+        });
     } catch (err) {
         res.status(500).send(err);
     }

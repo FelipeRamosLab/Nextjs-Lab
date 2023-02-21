@@ -3,7 +3,7 @@ import { FaTrash, FaPen } from 'react-icons/fa';
 import BotValuesAccordion from './botValuesAccordion';
 import BotEventsAccordion from './botEventsAccordion';
 
-export default function BotDetails({ pageData, setPageData }) {
+export default function BotDetails({ pageData, setPageData, queryParams }) {
     const { bot: { cod, name, author}} = pageData || {};
     const botEval = pageData.bot.eval;
 
@@ -26,13 +26,13 @@ export default function BotDetails({ pageData, setPageData }) {
                         <h3>Limites da operação</h3>
                     </div>
                     <hr/>
-                    <BotValuesAccordion pageData={pageData} />
+                    <BotValuesAccordion pageData={pageData} setPageData={setPageData} queryParams={queryParams} />
 
                     <div className="section-header">
                         <h3>Avaliações do Bot</h3>
                     </div>
                     <hr/>
-                    <BotEventsAccordion pageData={pageData} />
+                    <BotEventsAccordion pageData={pageData} setPageData={setPageData} queryParams={queryParams} />
                 </div>
 
                 <div className="sidebar">

@@ -42,7 +42,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
 
     return (
         <PageLayout pageData={pageData}>
-            <PageContent pageData={pageData} setPageData={setPageData} loadData={loadData} />
+            <PageContent pageData={pageData} setPageData={setPageData} loadData={loadData} queryParams={queryParams} />
         </PageLayout>
     );
 }

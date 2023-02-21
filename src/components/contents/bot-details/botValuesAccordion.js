@@ -9,11 +9,11 @@ import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 import BotValueEdit from '../../forms/editing/botValue';
 
-export default function BotValuesAccordion({ pageData, ruleChildren }) {
+export default function BotValuesAccordion({ pageData, setPageData, ruleChildren }) {
     const values = pageData && pageData.bot && pageData.bot.values;
     const [editToggles, setEditToggles] = useState({});
     const botValues = ruleChildren ? ruleChildren : values;
-    
+
     function toggleEdit(value){
         setEditToggles(prev => {
             const newObj = {...prev};
@@ -25,15 +25,16 @@ export default function BotValuesAccordion({ pageData, ruleChildren }) {
 
     return (
         <div className="accordion-wrap">
-            {botValues && botValues.length && botValues.map((value) => {
-                const functionData = value.functionUID;
+            {botValues && botValues.length && botValues.map((value, index) => {
+                const functionData = value.functionUID || {};
+                const categories = functionData.categories;
 
                 return (
                     <Accordion key={value.cod || (Math.random() * 1000000000).toFixed(0)}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                         >
-                            <Typography>[{value.cod}] {value.slug}</Typography>
+                            <Typography>[{value.cod}] {value.title || functionData.title || String(value.primitiveValue || '')} ({value.slug})</Typography>
                         </AccordionSummary>
 
                         <AccordionDetails style={{position: 'relative'}}>
@@ -41,22 +42,22 @@ export default function BotValuesAccordion({ pageData, ruleChildren }) {
                                 <h3>{functionData.title}</h3>
 
                                 <div>   
-                                    <label>Categorias:</label> <span>{functionData.categories.join(', ')}</span>
+                                    <label>Categorias:</label> <span>{categories && categories.join(', ')}</span>
                                 </div>
                                 <div>
                                     <label>Parâmetros:</label>
-                                    {Object.entries(JSON.parse(value.configs)).map(([key, item]) => {
+                                    {Object.entries(JSON.parse(value.configs || '{}')).map(([key, item]) => {
                                         switch (key) {
                                             case '_id': break;
                                             default: {
-                                                return <p key={key}><b>{key}:</b> {item}</p>
+                                                return <p key={key}><b>{key}:</b> {String(item)}</p>
                                             }
                                         }
                                     })}
                                 </div>
                             </div>}
 
-                            {editToggles[value._id] && <BotValueEdit pageData={pageData} value={value} toggleEdit={toggleEdit} />}
+                            {editToggles[value._id] && <BotValueEdit pageData={pageData} setPageData={setPageData} value={value} currentIndex={index} toggleEdit={toggleEdit} />}
 
                             {!editToggles[value._id] && <Fab size="small" aria-label="edit" onClick={() => toggleEdit(value)} style={{
                                 position: 'absolute',
@@ -68,7 +69,7 @@ export default function BotValuesAccordion({ pageData, ruleChildren }) {
                         </AccordionDetails>
                     </Accordion>
                 )
-            })}
+            }) || ''}
         </div>
     );
 }

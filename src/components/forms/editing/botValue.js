@@ -15,8 +15,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 
-export default function BotValueEdit({value, pageData, toggleEdit}) {
-    const {availableFunctions} = pageData || {};
+export default function BotValueEdit({value, pageData, setPageData, toggleEdit, currentIndex}) {
+    const {availableFunctions, bot } = pageData || {};
     const [form, setForm] = useState(value);
     const [updateLoading, setUpdateLoading] = useState(false);
     
@@ -36,20 +36,37 @@ export default function BotValueEdit({value, pageData, toggleEdit}) {
         const result = {};
 
         setUpdateLoading(true);
-        Object.entries(value || {}).map(([key, item]) => {
-            if (form[key] !== item) {
+        Object.entries(form || {}).map(([key, item]) => {
+            if (value[key] !== item) {
                 result[key] = form[key];
+            }
+
+            if (result.valueType) {
+                if (result.valueType === 'function') {
+                    result.primitiveType = '';
+                    result.primitiveValue = '';
+                }
+
+                if (result.valueType === 'primitive') {
+                    result.functionUID = null;
+                    result.configs = '{}';
+                }
             }
         });
 
         try {
-            const {data} = await axios.post('/api/bot/update-botvalue', {
+            const {data} = await axios.post('/api/bot/update-value', {
                 _id: value._id,
+                botUID: pageData.bot._id,
                 toUpdate: result
             });
             
-            if (data.success) {
-                window.location.reload();
+            if (data) {
+                setPageData(prev => {
+                    return {...prev, bot: data}
+                });
+                setUpdateLoading(false);
+                toggleEdit(value)
             }
         } catch(err) {
             setUpdateLoading(false);
@@ -59,6 +76,25 @@ export default function BotValueEdit({value, pageData, toggleEdit}) {
 
     return (
         <form>
+            {(currentIndex == 1) && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
+                <InputLabel id={'label-' + value._id}>Sinal de comparação</InputLabel>
+                <Select
+                    labelId={'label-' + value._id}
+                    defaultValue={form.toCompare}
+                    value={form.toCompare || ''}
+                    onChange={(ev) => setForm(prev => {
+                        return {...prev, toCompare: ev.target.value}
+                    })}
+                >
+                    <MenuItem value="=">Igual ({'='})</MenuItem>
+                    <MenuItem value=">=">Maior ou Igual ({'>='})</MenuItem>
+                    <MenuItem value="<=">Menor ou Igual ({'<='})</MenuItem>
+                    <MenuItem value=">">Maior ({'>'})</MenuItem>
+                    <MenuItem value="<">Menor ({'<'})</MenuItem>
+                    <MenuItem value="!=">Diferente ({'!='})</MenuItem>
+                </Select>
+            </FormControl>}
+
             <FormControl variant="standard" sx={{marginBottom: '10px'}}>
                 <InputLabel id={'label-' + value._id}>Tipo de valor</InputLabel>
                 <Select
@@ -70,16 +106,35 @@ export default function BotValueEdit({value, pageData, toggleEdit}) {
                     })}
                 >
                     <MenuItem value="function">Dinâmico</MenuItem>
-                    <MenuItem value="primitive">Valor primitivo</MenuItem>
+                    <MenuItem value="primitive">Valor Primitivo</MenuItem>
+                    <MenuItem value="existent">Valor Existente</MenuItem>
                 </Select>
             </FormControl>
+
+            {form.valueType === 'existent' && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
+                <InputLabel id={'label-' + value._id}>Escolha um valor:</InputLabel>
+                <Select
+                    labelId={'label-' + value._id}
+                    onChange={(ev) => {
+                        const dataStored = bot.values.find(item => item._id === ev.target.value);
+                        setForm(dataStored);
+                    }}
+                >
+
+                    {bot.values.map((item, index) => {
+                        return <MenuItem
+                            key={item._id + index}
+                            value={item._id}
+                        >[{item.cod}] {item.title || item.functionUID && item.functionUID.title}</MenuItem>
+                    })}
+                </Select>
+            </FormControl>}
 
             {form.valueType === 'function' && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
                 <InputLabel id={'label-' + value._id}>Nome da função</InputLabel>
                 <Select
                     labelId={'label-' + value._id}
-                    defaultValue={value.functionUID && value.functionUID._id}
-                    value={value.functionUID && form.functionUID._id || form.functionUID || ''}
+                    value={form.functionUID && form.functionUID._id}
                     id=""
                     label=""
                     onChange={(ev) => setForm(prev => {
@@ -126,12 +181,26 @@ export default function BotValueEdit({value, pageData, toggleEdit}) {
                     noValidate
                     autoComplete="off"
                 >
-                    {form.primitiveType === 'string' && <TextField sx={{width: '100%'}} label="Valor de texto" variant="standard" type="text" onChange={(ev) => setForm(prev => {
-                        return {...prev, primitiveValue: ev.target.value}
-                    })} />}
-                    {form.primitiveType === 'number' && <TextField sx={{width: '100%'}} label="Valor de número" variant="standard" type="number" onChange={(ev) => setForm(prev => {
-                        return {...prev, primitiveValue: Number(ev.target.value)}
-                    })} />}
+                    {form.primitiveType === 'string' && <TextField
+                        sx={{width: '100%'}}
+                        label="Valor de texto"
+                        variant="standard"
+                        type="text"
+                        value={form.primitiveValue}
+                        onChange={(ev) => setForm(prev => {
+                            return {...prev, primitiveValue: ev.target.value}
+                        })}
+                    />}
+                    {form.primitiveType === 'number' && <TextField
+                        sx={{width: '100%'}}
+                        label="Valor de número"
+                        variant="standard"
+                        type="number"
+                        value={form.primitiveValue}
+                        onChange={(ev) => setForm(prev => {
+                            return {...prev, primitiveValue: Number(ev.target.value)}
+                        })}
+                    />}
                 </Box>}
             </FormControl>}
 
@@ -151,7 +220,7 @@ export default function BotValueEdit({value, pageData, toggleEdit}) {
                 />
             </FormControl>}
 
-            <div className="wrap-btns-flex">
+            <div className="wrap-btn-flex">
                 <Button variant="standard" onClick={() => toggleEdit(form)}>Cancelar</Button>
                 <LoadingButton
                     loading={updateLoading}

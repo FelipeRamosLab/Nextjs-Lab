@@ -29,8 +29,8 @@ export default function CreateBot({pageData}) {
     });
 
     useEffect(() => {
-        addBotValue('stoploss_long');
-        addBotValue('stoploss_short');
+        addBotValue('stoploss_long', 'Stoploss Compra');
+        addBotValue('stoploss_short', 'Stoploss Venda');
 
         window.setFormState = setForm;
     }, []);
@@ -97,11 +97,11 @@ export default function CreateBot({pageData}) {
         }
     }
 
-    function addBotValue(propName) {
+    function addBotValue(propName, title) {
         const self = this;
 
         setForm(prev => {
-            prev.values[propName] = new BotValue({slug: propName, state: [form, setForm]}, () => self);
+            prev.values[propName] = new BotValue({title, slug: propName, state: [form, setForm]}, () => self);
             return {...prev};
         });
     }
