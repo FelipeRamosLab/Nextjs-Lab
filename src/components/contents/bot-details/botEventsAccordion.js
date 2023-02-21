@@ -12,16 +12,6 @@ import ThreadBlockEdit from '../../forms/editing/threadBlock';
 
 export default function BotEventsAccordion({ pageData }) {
     const botEval = pageData.bot.eval;
-    const [editToggles, setEditToggles] = useState({});
-    
-    function toggleEdit(value){
-        setEditToggles(prev => {
-            const newObj = {...prev};
-            newObj[value._id] = !newObj[value._id];
-
-            return newObj;
-        });
-    }
 
     return (
         <div className="accordion-wrap">
