@@ -1,13 +1,12 @@
-import axios from "axios";
 import config from '../../../../config.json';
 
 const root = config[config.root];
 
 export default async function CreateBotAccount(req, res) {
     try {
-        const botAccount = await axios.put(root + '/bot-account/create', req.body);
+        const botAccount = await ajax(root + '/bot-account/create', req.body).put();
 
-        res.status(200).send(botAccount.data);
+        res.status(200).send(botAccount);
     } catch ({response: {data}}) {
         res.status(500).send(data);
     }
