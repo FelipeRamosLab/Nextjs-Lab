@@ -34,7 +34,7 @@ export default function BotValuesAccordion({ pageData, setPageData, ruleChildren
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                         >
-                            <Typography>[{value.cod}] {value.title || functionData.title || String(value.primitiveValue || '')} ({value.slug})</Typography>
+                            <Typography>[{value.cod}] {value.title || functionData.title || String(value.primitiveValue || '')}</Typography>
                         </AccordionSummary>
 
                         <AccordionDetails style={{position: 'relative'}}>

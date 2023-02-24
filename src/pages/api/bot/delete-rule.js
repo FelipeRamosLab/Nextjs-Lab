@@ -1,27 +1,22 @@
-import axios from "axios";
 import config from '../../../../config.json';
 
 const root = config[config.root];
 
 export default async function DeleteRule(req, res) {
     try {
-        const {data} = await axios.delete(root + '/collection/delete',  {
-            data: {
-                collectionName: 'thread_rules',
-                filter: { _id: req.body.UID }
-            }
-        });
+        const ruleDeleted = await ajax(root + '/collection/delete', {
+            collectionName: 'thread_rules',
+            filter: { _id: req.body.UID }
+        }).delete();
 
-        const bot = await axios.get(root + '/bot/details', {
-            data: {
-                userUID: config.userTest,
-                botUID: req.body.botUID,
-            }
-        });
+        const bot = await ajax(root + '/bot/details', {
+            userUID: config.userTest,
+            botUID: req.body.botUID
+        }).get();
 
         res.status(200).send({
-            success: data.deleted ? true : false,
-            bot: bot.data
+            success: ruleDeleted.deleted ? true : false,
+            bot: bot
         });
     } catch (err) {
         res.status(500).send(err);

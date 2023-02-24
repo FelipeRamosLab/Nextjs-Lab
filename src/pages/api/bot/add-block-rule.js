@@ -1,4 +1,3 @@
-import axios from "axios";
 import config from '../../../../config.json';
 
 const root = config[config.root];
@@ -9,40 +8,38 @@ export default async function AddBlockRule(req, res) {
 
     try {
         if (type === 'blocks') {
-            created = await axios.put(root + '/collection/create',  {
+            created = await ajax(root + '/collection/create',  {
                 collectionName: 'thread_blocks',
                 data: {
                     author: config.userTest,
                     ifType: 'and'
                 }
-            });
+            }).put();
         } else if (type === 'rules') { 
-            created = await axios.put(root + '/collection/create',  {
+            created = await ajax(root + '/collection/create',  {
                 collectionName: 'thread_rules',
                 data: { author: config.userTest }
-            });
+            }).put();
         } else {
             res.status(500).send({success: false, message: 'The param req.body.type param should be "blocks" or "rules", but received' + type});
         }
 
-        if (created && created.data && created.data.createdDoc) {
-            const blockAppended = await axios.post(root + '/collection/update/document',  {
+        if (created && created.createdDoc) {
+            const blockAppended = await ajax(root + '/collection/update/document',  {
                 collectionName: 'thread_blocks',
                 filter: { _id: req.body.parentBlockUID},
-                data: { $addToSet: {[type]: created.data.createdDoc._id} }
-            });
+                data: { $addToSet: {[type]: created.createdDoc._id} }
+            }).post();
 
-            const bot = await axios.get(root + '/bot/details', {
-                data: {
-                    userUID: config.userTest,
-                    botUID: req.body.botUID,
-                }
-            });
+            const bot = await ajax(root + '/bot/details', {
+                userUID: config.userTest,
+                botUID: req.body.botUID
+            }).get();
     
-            if (blockAppended.data.success) {
+            if (blockAppended.success) {
                 res.status(200).send({
-                    bot: bot.data,
-                    created: created.data.createdDoc
+                    bot: bot,
+                    created: created.createdDoc
                 });
             } else {
                 res.status(500).send(blockAppended);

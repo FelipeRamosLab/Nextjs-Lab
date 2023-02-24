@@ -1,3 +1,5 @@
+import ajax from '../services/ajax';
+
 function getUID() {
     return Math.random().toString(36).split('.')[1];
 }
@@ -13,6 +15,8 @@ function createURL(path, queryParams) {
 
     return path + params;
 }
+
+global.ajax = ajax;
 
 module.exports = {
     getUID,

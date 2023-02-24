@@ -1,43 +1,40 @@
-import axios from "axios";
 import config from '../../../../config.json';
 
 const root = config[config.root];
 
 export default async function AddBotThread(req, res) {
     try {
-        const {data} = await axios.put(root + '/collection/create',  {
+        const block = await ajax(root + '/collection/create',  {
             collectionName: 'thread_blocks',
             data: {
                 author: config.userTest,
                 ifType: 'and'
             }
-        });
+        }).put();
 
-        const botThread = await axios.put(root + '/collection/create',  {
+        const botThread = await ajax(root + '/collection/create',  {
             collectionName: 'bot_threads',
             data: {
                 author: config.userTest,
                 eventName: req.body.eventName,
                 parentBot: req.body.botUID,
-                thread: data && data.createdDoc && data.createdDoc._id
+                thread: block.createdDoc && block.createdDoc._id
             }
-        });
+        }).put();
 
-        if (botThread.data && botThread.data.createdDoc) {
-            const bot = await axios.post(root + '/collection/update/document',  {
+        if (botThread && botThread.createdDoc) {
+            const bot = await ajax(root + '/collection/update/document',  {
                 collectionName: 'bots',
                 filter: { _id: req.body.botUID},
                 data: {
-                    [`eval.${req.body.eventName}`]: botThread.data.createdDoc._id
+                    [`eval.${req.body.eventName}`]: botThread.createdDoc._id
                 }
-            });
-            const BotDetails = await axios.get(root + '/bot/details', {
-                data: {
-                    userUID: config.userTest,
-                    botUID: req.body.botUID
-                }
-            });
-            res.status(200).send(BotDetails.data);
+            }).post();
+            const BotDetails = await ajax(root + '/bot/details', {
+                userUID: config.userTest,
+                botUID: req.body.botUID
+            }).get();
+            res.status(200).send(BotDetails);
         } else {
             res.status(500).send(botThread);
         }

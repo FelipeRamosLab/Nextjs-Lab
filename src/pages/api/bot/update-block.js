@@ -1,25 +1,22 @@
-import axios from 'axios';
 import config from '../../../../config.json';
 
 const root = config[config.root];
 
 export default async function UpdateThreadBlock(req, res) {
     try {
-        await axios.post(root + '/collection/update/document', {
+        await ajax(root + '/collection/update/document', {
             collectionName: 'thread_blocks',
             filter: req.body._id,
             data: req.body.toUpdate
-        });
+        }).post();
 
-        const bot = await axios.get(root + '/bot/details', {
-            data: {
-                userUID: config.userTest,
-                botUID: req.body.botUID,
-            }
-        });
+        const bot = await ajax(root + '/bot/details', {
+            userUID: config.userTest,
+            botUID: req.body.botUID
+        }).get();
 
         res.status(200).send({
-            bot: bot.data
+            bot: bot
         });
     } catch (err) {
         const response = err.response;

@@ -17,9 +17,9 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
     useEffect(()=>{
         loadData();
       
-        // setInterval(()=>{
-        //     loadData();
-        // }, 3000);
+        setInterval(()=>{
+            loadData();
+        }, 180000);
     }, []);
 
     if (pageData.status === 'error') {

@@ -1,19 +1,16 @@
-import axios from "axios";
 import config from '../../../../config.json';
 
 const root = config[config.root];
 
 export default async function MyBots(req, res) {
     try {
-        const bot = await axios.get(root + '/collection/get/queryCollection', {
-            data: {
-                collectionName: 'bots',
-                filter: {author: config.userTest},
-                options: {populate: true}
-            }
-        });
+        const bot = await ajax(root + '/collection/get/queryCollection', {
+            collectionName: 'bots',
+            filter: {author: config.userTest},
+            options: {populate: true}
+        }).get();
 
-        res.status(200).send(bot.data);
+        res.status(200).send(bot);
     } catch (err) {
         res.status(500).send(err);
     }

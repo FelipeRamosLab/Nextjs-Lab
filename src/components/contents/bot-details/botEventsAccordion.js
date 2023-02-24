@@ -57,12 +57,12 @@ export default function BotEventsAccordion({ pageData, setPageData, queryParams 
                     </ListItem>
                     <ListItem>
                         <ListItemButton disabled={Boolean(botEval.openShort && botEval.openShort.thread)} onClick={() => addBotEvent('openShort')}>
-                            <ListItemText primary={'Fechar Compra'} />
+                            <ListItemText primary={'Abrir Venda'} />
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
                         <ListItemButton disabled={Boolean(botEval.closeLong && botEval.closeLong.thread)} onClick={() => addBotEvent('closeLong')}>
-                            <ListItemText primary={'Abrir Venda'} />
+                            <ListItemText primary={'Fechar Compra'} />
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
