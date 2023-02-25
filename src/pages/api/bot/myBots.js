@@ -4,7 +4,7 @@ export default async function MyBots(req, res) {
     try {
         const bot = await ajax(root + '/collection/get/queryCollection', {
             collectionName: 'bots',
-            filter: {author: process.env.userTest},
+            filter: {author: testData.userUID},
             options: {populate: true}
         }).get();
 

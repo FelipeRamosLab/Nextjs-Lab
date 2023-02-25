@@ -10,7 +10,7 @@ export default class Base {
     }, getParent) {
         this.uid = uid || Math.random().toString(36).split('.')[1];
         this.state = state || getParent().state;
-        this.author = author || process.env.userTest;
+        this.author = author || testData.userUID;
         this.createdDate = createdDate || Date.now();
 
         if (!path) path = [];

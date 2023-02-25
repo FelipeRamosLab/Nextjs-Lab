@@ -9,14 +9,14 @@ export default async function AddBlockRule(req, res) {
             created = await ajax(root + '/collection/create',  {
                 collectionName: 'thread_blocks',
                 data: {
-                    author: process.env.userTest,
+                    author: testData.userUID,
                     ifType: 'and'
                 }
             }).put();
         } else if (type === 'rules') { 
             created = await ajax(root + '/collection/create',  {
                 collectionName: 'thread_rules',
-                data: { author: process.env.userTest }
+                data: { author: testData.userUID }
             }).put();
         } else {
             res.status(500).send({success: false, message: 'The param req.body.type param should be "blocks" or "rules", but received' + type});
@@ -30,7 +30,7 @@ export default async function AddBlockRule(req, res) {
             }).post();
 
             const bot = await ajax(root + '/bot/details', {
-                userUID: process.env.userTest,
+                userUID: testData.userUID,
                 botUID: req.body.botUID
             }).get();
     

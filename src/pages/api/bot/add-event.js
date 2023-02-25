@@ -5,7 +5,7 @@ export default async function AddBotThread(req, res) {
         const block = await ajax(root + '/collection/create',  {
             collectionName: 'thread_blocks',
             data: {
-                author: process.env.userTest,
+                author: testData.userUID,
                 ifType: 'and'
             }
         }).put();
@@ -13,7 +13,7 @@ export default async function AddBotThread(req, res) {
         const botThread = await ajax(root + '/collection/create',  {
             collectionName: 'bot_threads',
             data: {
-                author: process.env.userTest,
+                author: testData.userUID,
                 eventName: req.body.eventName,
                 parentBot: req.body.botUID,
                 thread: block.createdDoc && block.createdDoc._id
@@ -29,7 +29,7 @@ export default async function AddBotThread(req, res) {
                 }
             }).post();
             const BotDetails = await ajax(root + '/bot/details', {
-                userUID: process.env.userTest,
+                userUID: testData.userUID,
                 botUID: req.body.botUID
             }).get();
             res.status(200).send(BotDetails);

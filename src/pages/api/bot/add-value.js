@@ -6,7 +6,7 @@ export default async function AddBotValue(req, res) {
         const valueDoc = await ajax(root + '/collection/create',  {
             collectionName: 'bot_values',
             data: {
-                author: process.env.userTest,
+                author: testData.userUID,
                 botParent: body.botUID,
                 valueType: 'function'
             }
@@ -28,7 +28,7 @@ export default async function AddBotValue(req, res) {
             }).post();
 
             const botDetails = await ajax(root + '/bot/details', {
-                userUID: process.env.userTest,
+                userUID: testData.userUID,
                 botUID: req.body.botUID
             }).get();
 

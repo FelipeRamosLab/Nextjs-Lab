@@ -5,7 +5,10 @@ function declareGlobals(obj) {
 // Declaring the globals
 declareGlobals({
     URLs: {
-        serverHost: process.env.hostURL
+        serverHost: process.env.NEXT_PUBLIC_hostURL
+    },
+    testData: {
+        userUID: process.env.NEXT_PUBLIC_testUserUID
     }
 });
 declareGlobals(require('../utils/common'));

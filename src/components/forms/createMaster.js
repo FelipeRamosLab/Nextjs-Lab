@@ -15,7 +15,7 @@ export default function CreateMaster({pageData, initialData}) {
         tradeGain: {},
     });
     const [form, setForm] = useState({
-        user: process.env.userTest,
+        user: testData.userUID,
         limits: limits
     });
 

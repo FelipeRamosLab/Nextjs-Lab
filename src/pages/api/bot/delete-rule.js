@@ -8,7 +8,7 @@ export default async function DeleteRule(req, res) {
         }).delete();
 
         const bot = await ajax(root + '/bot/details', {
-            userUID: process.env.userTest,
+            userUID: testData.userUID,
             botUID: req.body.botUID
         }).get();
 

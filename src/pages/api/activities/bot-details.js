@@ -1,12 +1,12 @@
 export default async function BotDetails(req, res) {
     try {
         const bot = await ajax(URLs.serverHost + '/bot/details', {
-            userUID: process.env.userTest,
+            userUID: testData.userUID,
             botUID: req.body.bot
         }).get();
         const user = await ajax(URLs.serverHost + '/collection/get/doc', {
             collectionName: 'users',
-            filter: process.env.userTest, options: { populate: {levels: 3}
+            filter: testData.userUID, options: { populate: {levels: 3}
         }}).get();
         const availableFunctions = await ajax(URLs.serverHost + '/collection/get/queryCollection', {
             collectionName: 'functions',

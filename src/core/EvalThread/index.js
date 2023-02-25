@@ -10,7 +10,7 @@ export default class EvalThread {
     }) {
         if (!state || state.length !== 2) throw new Error('');
 
-        this.author = author || process.env.userTest;
+        this.author = author || testData.userUID;
         this.uid = uid || Math.random().toString(36).split('.')[1];
         this.getState = state[0];
         this.setState = state[1];
