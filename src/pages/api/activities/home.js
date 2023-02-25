@@ -9,17 +9,17 @@ export default async function HomeActivity(req, res) {
         const availableFunctions = await ajax(URLs.serverHost + '/collection/get/queryCollection', availableFunctionsData).get();
         let userRes = user.doc;
 
-        for (let i = 0; i < userRes.masterAccounts.length; i++) {
-            const item = userRes.masterAccounts[i];
-            const openedTradesData = { collectionName: 'positions', filter: {user: item.user, master: item._id, status: 'opened' }};
-            const runningSlotsData = { collectionName: 'bot_accounts', filter: {user: item.user, master: item._id, status: 'running' }};
+        // for (let i = 0; i < userRes.masterAccounts.length; i++) {
+        //     const item = userRes.masterAccounts[i];
+        //     const openedTradesData = { collectionName: 'positions', filter: {user: item.user, master: item._id, status: 'opened' }};
+        //     const runningSlotsData = { collectionName: 'bot_accounts', filter: {user: item.user, master: item._id, status: 'running' }};
 
-            const openTrades = await ajax(URLs.serverHost + '/collection/get/queryCollection', openedTradesData).get();
-            const runningSlots = await ajax(URLs.serverHost + '/collection/get/queryCollection', runningSlotsData).get();
+        //     const openTrades = await ajax(URLs.serverHost + '/collection/get/queryCollection', openedTradesData).get();
+        //     const runningSlots = await ajax(URLs.serverHost + '/collection/get/queryCollection', runningSlotsData).get();
 
-            userRes.masterAccounts[i].openTradesCount = openTrades.result.length;
-            userRes.masterAccounts[i].runningSlotsCount = runningSlots.result.length;
-        }
+        //     userRes.masterAccounts[i].openTradesCount = openTrades.result.length;
+        //     userRes.masterAccounts[i].runningSlotsCount = runningSlots.result.length;
+        // }
 
         res.status(200).json({
             user: userRes,

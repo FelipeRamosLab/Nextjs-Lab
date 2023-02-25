@@ -48,7 +48,9 @@ export default function BotValueEdit({value, pageData, setPageData, toggleEdit, 
     });
 
     async function updateBotValue() {
-        const result = {};
+        const result = {
+            functionUID: form.functionUID._id
+        };
 
         setUpdateLoading(true);
         Object.entries(form || {}).map(([key, item]) => {
@@ -88,7 +90,7 @@ export default function BotValueEdit({value, pageData, setPageData, toggleEdit, 
             }
         } catch(err) {
             setUpdateLoading(false);
-            throw new Error(err);
+            throw err;
         }
     }
 
