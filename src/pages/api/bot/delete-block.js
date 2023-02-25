@@ -1,7 +1,4 @@
-import axios from "axios";
-import config from '../../../../config.json';
-
-const root = config[config.root];
+const root = URLs.serverHost;
 
 export default async function DeleteBlock(req, res) {
     try {
@@ -11,7 +8,7 @@ export default async function DeleteBlock(req, res) {
         }).delete();
 
         const bot = await ajax(root + '/bot/details', {
-            userUID: config.userTest,
+            userUID: process.env.userTest,
             botUID: req.body.botUID
         }).get();
 

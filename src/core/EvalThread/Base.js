@@ -1,5 +1,4 @@
 import EvalThread from '.';
-import configs from '../../../config.json';
 
 export default class Base {
     constructor({
@@ -11,7 +10,7 @@ export default class Base {
     }, getParent) {
         this.uid = uid || Math.random().toString(36).split('.')[1];
         this.state = state || getParent().state;
-        this.author = author || configs.userTest;
+        this.author = author || process.env.userTest;
         this.createdDate = createdDate || Date.now();
 
         if (!path) path = [];

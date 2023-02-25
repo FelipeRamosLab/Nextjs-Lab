@@ -1,18 +1,14 @@
-import config from '../../../../config.json';
-
-const root = config[config.root];
-
 export default async function BotDetails(req, res) {
     try {
-        const bot = await ajax(root + '/bot/details', {
-            userUID: config.userTest,
+        const bot = await ajax(URLs.serverHost + '/bot/details', {
+            userUID: process.env.userTest,
             botUID: req.body.bot
         }).get();
-        const user = await ajax(root + '/collection/get/doc', {
+        const user = await ajax(URLs.serverHost + '/collection/get/doc', {
             collectionName: 'users',
-            filter: config.userTest, options: { populate: {levels: 3}
+            filter: process.env.userTest, options: { populate: {levels: 3}
         }}).get();
-        const availableFunctions = await ajax(root + '/collection/get/queryCollection', {
+        const availableFunctions = await ajax(URLs.serverHost + '/collection/get/queryCollection', {
             collectionName: 'functions',
             options: { populate: { levels: 3 } }
         }).get();
@@ -26,7 +22,7 @@ export default async function BotDetails(req, res) {
         } else {
             res.status(500).send(bot);
         }
-    } catch ({response: {data}}) {
-        res.status(500).send(data);
+    } catch (err) {
+        res.status(500).send(err);
     }
 }

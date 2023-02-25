@@ -1,6 +1,4 @@
-import config from '../../../../config.json';
-
-const root = config[config.root];
+const root = URLs.serverHost;
 
 export default async function AddBotValue(req, res) {
     try {
@@ -8,7 +6,7 @@ export default async function AddBotValue(req, res) {
         const valueDoc = await ajax(root + '/collection/create',  {
             collectionName: 'bot_values',
             data: {
-                author: config.userTest,
+                author: process.env.userTest,
                 botParent: body.botUID,
                 valueType: 'function'
             }
@@ -30,7 +28,7 @@ export default async function AddBotValue(req, res) {
             }).post();
 
             const botDetails = await ajax(root + '/bot/details', {
-                userUID: config.userTest,
+                userUID: process.env.userTest,
                 botUID: req.body.botUID
             }).get();
 

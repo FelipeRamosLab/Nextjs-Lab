@@ -1,7 +1,4 @@
-import axios from "axios";
-import config from '../../../../config.json';
-
-const root = config[config.root];
+const root = URLs.serverHost;
 
 export default async function UpdateBotValue(req, res) {
     try {
@@ -12,7 +9,7 @@ export default async function UpdateBotValue(req, res) {
         }).post();
 
         const bot = await ajax(root + '/bot/details', {
-            userUID: config.userTest,
+            userUID: process.env.userTest,
             botUID: req.body.botUID
         }).get();
 

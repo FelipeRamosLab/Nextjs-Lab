@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import config from '../../../config.json';
 import Input from '../inputs/input';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 
@@ -16,7 +15,7 @@ export default function CreateMaster({pageData, initialData}) {
         tradeGain: {},
     });
     const [form, setForm] = useState({
-        user: config.userTest,
+        user: process.env.userTest,
         limits: limits
     });
 

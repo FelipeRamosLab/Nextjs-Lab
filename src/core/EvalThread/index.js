@@ -1,5 +1,4 @@
 import Block from './Block';
-import configs from '../../../config.json';
 
 export default class EvalThread {
     constructor({
@@ -11,7 +10,7 @@ export default class EvalThread {
     }) {
         if (!state || state.length !== 2) throw new Error('');
 
-        this.author = author || configs.userTest;
+        this.author = author || process.env.userTest;
         this.uid = uid || Math.random().toString(36).split('.')[1];
         this.getState = state[0];
         this.setState = state[1];

@@ -1,7 +1,4 @@
-import axios from "axios";
-import config from '../../../../config.json';
-
-const root = config[config.root];
+const root = URLs.serverHost;
 
 export default async function CreateBot(req, res) {
     try {

@@ -1,10 +1,6 @@
-import config from '../../../../config.json';
-
-const root = config[config.root];
-
 export default async function MasterAccountActivity(req, res) {
     try {
-        const master = await ajax(root + '/master-account/get', { 
+        const master = await ajax(URLs.serverHost + '/master-account/get', { 
             masterUID: req.body.master, 
             userUID: req.body.user, 
             slotsPage: req.body.slotsPage

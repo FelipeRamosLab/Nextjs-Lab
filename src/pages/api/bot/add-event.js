@@ -1,13 +1,11 @@
-import config from '../../../../config.json';
-
-const root = config[config.root];
+const root = URLs.serverHost;
 
 export default async function AddBotThread(req, res) {
     try {
         const block = await ajax(root + '/collection/create',  {
             collectionName: 'thread_blocks',
             data: {
-                author: config.userTest,
+                author: process.env.userTest,
                 ifType: 'and'
             }
         }).put();
@@ -15,7 +13,7 @@ export default async function AddBotThread(req, res) {
         const botThread = await ajax(root + '/collection/create',  {
             collectionName: 'bot_threads',
             data: {
-                author: config.userTest,
+                author: process.env.userTest,
                 eventName: req.body.eventName,
                 parentBot: req.body.botUID,
                 thread: block.createdDoc && block.createdDoc._id
@@ -31,7 +29,7 @@ export default async function AddBotThread(req, res) {
                 }
             }).post();
             const BotDetails = await ajax(root + '/bot/details', {
-                userUID: config.userTest,
+                userUID: process.env.userTest,
                 botUID: req.body.botUID
             }).get();
             res.status(200).send(BotDetails);

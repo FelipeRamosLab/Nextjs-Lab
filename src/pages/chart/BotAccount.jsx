@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import config from '../../../config.json';
 
 export default function BotAccountChart({ acc }) {
     const [chartID, setChartID] = useState(genCode(15));
@@ -65,7 +64,7 @@ export function openChart(ev, chartID, acc, interval) {
 
 export async function getRecords({ masterID, botAccountID }) {
     try {
-        const res = await axios.post(config[config.root] + '/result-records/get/', { masterID, botAccountID });
+        const res = await axios.post(URLs.serverHost + '/result-records/get/', { masterID, botAccountID });
         return res.data;
     } catch (err) {
         console.error(err)

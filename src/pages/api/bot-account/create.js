@@ -1,6 +1,4 @@
-import config from '../../../../config.json';
-
-const root = config[config.root];
+const root = URLs.serverHost;
 
 export default async function CreateBotAccount(req, res) {
     try {

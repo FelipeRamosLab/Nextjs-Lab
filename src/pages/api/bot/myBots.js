@@ -1,12 +1,10 @@
-import config from '../../../../config.json';
-
-const root = config[config.root];
+const root = URLs.serverHost;
 
 export default async function MyBots(req, res) {
     try {
         const bot = await ajax(root + '/collection/get/queryCollection', {
             collectionName: 'bots',
-            filter: {author: config.userTest},
+            filter: {author: process.env.userTest},
             options: {populate: true}
         }).get();
 

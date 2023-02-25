@@ -3,6 +3,11 @@ function declareGlobals(obj) {
 }
 
 // Declaring the globals
+declareGlobals({
+    URLs: {
+        serverHost: process.env.hostURL
+    }
+});
 declareGlobals(require('../utils/common'));
 declareGlobals(require('../utils/numbers'));
 declareGlobals(require('../utils/validate'));
