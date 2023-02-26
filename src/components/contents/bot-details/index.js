@@ -2,10 +2,74 @@ import ModalButton from '../../buttons/modalButton';
 import { FaTrash, FaPen } from 'react-icons/fa';
 import BotValuesAccordion from './botValuesAccordion';
 import BotEventsAccordion from './botEventsAccordion';
+import Button from '@mui/material/Button';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Typography from '@mui/material/Typography';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import CreateBot from '../../forms/createBot';
+import { useState } from 'react';
+import EditBotForm from '../../forms/editing/bot';
+
 
 export default function BotDetails({ pageData, setPageData, queryParams }) {
-    const { bot: { cod, name, author}} = pageData || {};
-    const botEval = pageData.bot.eval;
+    const { bot: { cod, name, description, _id}} = pageData || {};
+    const [editModal, setEditModal] = useState(false);
+    const formState = useState(pageData.bot);
+    const [form] = formState;
+
+    function BootstrapDialogTitle(props) {
+        const { children, onClose, ...other } = props;
+      
+        return (
+          <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+            {children}
+            {onClose ? (
+              <IconButton
+                aria-label="close"
+                onClick={onClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            ) : null}
+          </DialogTitle>
+        );
+    }
+
+    async function updateBot() {
+        try {
+            const response = await ajax('/api/bot/update', form).post();
+
+            setEditModal(false);
+            setPageData(prev => {
+                return {...prev, bot: response.bot}
+            })
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async function deleteBot() {
+        try {
+            const deleted = await ajax('/api/bot/delete', {
+                botUID: _id
+            }).post();
+
+            if (deleted.success) {
+                window.open('/', '_self');
+            }
+        } catch(err) {
+            throw err;
+        }
+    }
 
     return (<>
         <div className="container">
@@ -13,15 +77,36 @@ export default function BotDetails({ pageData, setPageData, queryParams }) {
                 <div className="section-header">
                     <h1 className="title">[{cod}] {name}</h1>
 
-                    <ModalButton className="circle-button transparent" ModalContent={(props)=> <></>}>
-                        <FaPen />
-                    </ModalButton>
-                    <button type="button" className="circle-button" btn-color="error"><FaTrash /></button>
+                    <button type="button" className="circle-button" onClick={() => setEditModal(true)}><FaPen /></button>
+                    <button type="button" className="circle-button" btn-color="error" onClick={deleteBot}><FaTrash /></button>
+
+                    <Dialog
+                        open={editModal}
+                        maxWidth="lg"
+                        PaperProps={{
+                            sx: { width: '95%', maxWidth: 700, margin: 0}
+                        }}
+                    >
+                        <BootstrapDialogTitle onClose={() => setEditModal(false)}>
+                            Editar Bot
+                        </BootstrapDialogTitle>
+                        <DialogContent dividers>
+                            <EditBotForm pageData={pageData} formState={formState} />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={updateBot}>
+                                Salvar
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </div>
+                
             </section>
 
             <section className="content-sidebar">
                 <div className="content">
+                    <p>{description}</p>
+
                     <div className="section-header">
                         <h3>Limites da operação</h3>
                     </div>

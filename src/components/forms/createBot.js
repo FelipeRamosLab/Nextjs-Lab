@@ -66,8 +66,10 @@ export default function CreateBot({pageData}) {
         });
 
         try {
-            const saved = await axios.post('/api/bot/create', params);
-            window.location.reload();
+            const saved = await ajax('/api/bot/create', params).post();
+            const botURL = createURL('/bot-details', { bot: saved.bot._id});
+
+            window.open(botURL, '_self');
         } catch({response: {data}}) {
             setError(data);
             throw data;
@@ -207,25 +209,6 @@ export default function CreateBot({pageData}) {
                         </div>
                     </>}
                 </details>
-            </fieldset>
-
-            <fieldset className="vertical-flex eval-fields">
-                <div className="section-header">
-                    <h3>Avaliações</h3>
-                </div>
-                <hr/>
-
-                {Object.keys(events).map((key, i) => (
-                    <div key={key + i} className="bot-thread">
-                        <input id={key + i} type="checkbox" onClick={(ev) => handleCheckbox(ev, key)} defaultChecked={selectedEvents[key] || false} />
-                        <label htmlFor={key + i}>{events[key]}</label>
-
-                        {selectedEvents[key] && (<>
-                            <button type="button" className="edit-button button" onClick={() => setThreadCtrl(key)}>Editar Thread</button>
-                            <BotThread pageData={pageData} formState={[form, setForm]} actionEvent={key} threadCtrlState={[threadCtrl, setThreadCtrl]} />
-                        </>)}
-                    </div>
-                ))}
             </fieldset>
 
             <div className="buttons-wrap">

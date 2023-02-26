@@ -3,7 +3,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import ListSubheader from '@mui/material/ListSubheader';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -14,6 +13,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import Checkbox from '@mui/material/Checkbox';
 
 export default function BotValueEdit({value, pageData, setPageData, toggleEdit, currentIndex}) {
     const {availableFunctions, bot } = pageData || {};
@@ -49,7 +49,7 @@ export default function BotValueEdit({value, pageData, setPageData, toggleEdit, 
 
     async function updateBotValue() {
         const result = {
-            functionUID: form.functionUID._id
+            functionUID: form.functionUID && form.functionUID._id
         };
 
         setUpdateLoading(true);
@@ -96,6 +96,29 @@ export default function BotValueEdit({value, pageData, setPageData, toggleEdit, 
 
     return (
         <form>
+            <FormControl sx={{marginBottom: '10px'}}>
+                <FormControlLabel
+                    label={form.name ? 'Editar nome' : 'Adicionar nome'}
+                    control={<Checkbox
+                        checked={form.toSet ? true : false}
+                        onChange={(ev) => setForm(prev => {
+                            return {...prev, toSet: ev.target.checked}
+                        })}
+                    />}
+                />
+
+                {form.toSet && <TextField
+                    sx={{width: '100%'}}
+                    label="Nome do valor"
+                    variant="standard"
+                    type="text"
+                    value={form.name || ''}
+                    onChange={(ev) => setForm(prev => {
+                        return {...prev, name: ev.target.value}
+                    })}
+                />}
+            </FormControl>
+
             {(currentIndex == 1) && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
                 <InputLabel id={'label-' + value._id}>Sinal de comparação</InputLabel>
                 <Select
@@ -146,7 +169,7 @@ export default function BotValueEdit({value, pageData, setPageData, toggleEdit, 
                         return <MenuItem
                             key={item._id + index}
                             value={item._id}
-                        >[{item.cod}] {item.title || item.functionUID && item.functionUID.title}</MenuItem>
+                        >[{item.cod}] {item.name || item.functionUID && item.functionUID.title}</MenuItem>
                     })}
                 </Select>
             </FormControl>}
@@ -157,7 +180,7 @@ export default function BotValueEdit({value, pageData, setPageData, toggleEdit, 
                     labelId={'label-' + value._id}
                     value={typeof form.functionUID === 'string' ? form.functionUID : typeof form.functionUID === 'object' ? form.functionUID._id : ''}
                     onChange={(ev) => setForm(prev => {
-                        return {...prev, functionUID: ev.target.value}
+                        return {...prev, configs: '{}', functionUID: ev.target.value}
                     })}
                 >
 
@@ -223,10 +246,12 @@ export default function BotValueEdit({value, pageData, setPageData, toggleEdit, 
                 </Box>}
             </FormControl>}
 
-            {form.valueType === 'function' && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
-                <TextareaAutosize
+            {form.valueType === 'function' && <FormControl sx={{marginBottom: '10px'}}>
+                <TextField
                     value={form.configs}
-                    minRows={10}
+                    minRows={7}
+                    variant="standard"
+                    multiline
                     onChange={(ev) => setForm(prev => {
                         try {
                             const parsed = JSON.parse(ev.target.value);

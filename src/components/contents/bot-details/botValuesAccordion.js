@@ -28,13 +28,22 @@ export default function BotValuesAccordion({ pageData, setPageData, ruleChildren
             {botValues && botValues.length && botValues.map((value, index) => {
                 const functionData = value.functionUID || {};
                 const categories = functionData.categories;
+                let slugTitle = '';
+
+                if (value.slug === 'stoploss_long') {
+                    slugTitle = 'Stoploss (Compra)'
+                }
+
+                if (value.slug === 'stoploss_short') {
+                    slugTitle = 'Stoploss (Venda)'
+                }
 
                 return (
                     <Accordion key={value.cod || (Math.random() * 1000000000).toFixed(0)}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                         >
-                            <Typography>[{value.cod}] {value.title || functionData.title || String(value.primitiveValue || '')}</Typography>
+                            <Typography>[{value.cod}] {slugTitle || value.name || functionData.title || String(value.primitiveValue || '')}</Typography>
                         </AccordionSummary>
 
                         <AccordionDetails style={{position: 'relative'}}>

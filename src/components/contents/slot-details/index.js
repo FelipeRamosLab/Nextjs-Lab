@@ -1,6 +1,5 @@
 import GridSlider from '../../sliders/grid-slider';
 import ModalButton from '../../buttons/modalButton';
-import CreateMaster from '../../forms/createMaster';
 import { FaTrash, FaPen } from 'react-icons/fa';
 
 export default function SlotDetails({ pageData, setPageData }) {
@@ -50,10 +49,6 @@ export default function SlotDetails({ pageData, setPageData }) {
                         <GridSlider data={[
                             { label: 'item1', value: '$ 1000'}
                         ]} />
-                    </div>
-
-                    <div className="section-header">
-                        <h2>Monitor</h2>
                     </div>
 
                     <div className="section-header">
