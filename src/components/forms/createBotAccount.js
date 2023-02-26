@@ -92,7 +92,7 @@ export default function CreateBotAccount({pageData, setPageData, modalCtrl}) {
             <SuggestionsSelect
                 label="Escolher bot:"
                 valueLabel="name"
-                mySuggestionsPath="/api/bot/myBots"
+                mySuggestionsPath="/api/bot/my-bots"
                 setValue={(item)=>{
                     setForm({...form, bot: item._id})
                 }}

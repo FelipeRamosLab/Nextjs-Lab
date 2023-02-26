@@ -20,3 +20,18 @@
         }
     }
 }
+
+.steps-form {
+    .step-fields {
+        width: 96%;
+
+        @media only screen and (max-width: 600px) {
+            width: 100%;
+        }
+    }
+
+    .fields-group {
+        display: flex;
+        gap: 1rem;
+    }
+}

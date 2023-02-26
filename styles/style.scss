@@ -12,6 +12,10 @@
 @import "utils";
 @import "errors";
 
+// MUI override
+@import "mui/buttons";
+@import "mui/forms";
+
 // Components
 @import "components/transferPainel";
 @import "components/statsCards";

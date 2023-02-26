@@ -5,7 +5,7 @@ export default async function CreateBot(req, res) {
         const bot = await ajax(root + '/bot/create', req.body).put();
 
         res.status(200).send(bot);
-    } catch ({response: {data}}) {
-        res.status(500).send(data);
+    } catch (err) {
+        res.status(500).send(err);
     }
 }

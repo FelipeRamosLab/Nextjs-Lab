@@ -1,13 +1,18 @@
 import axios from 'axios';
 import ModalButton from '../../buttons/modalButton';
-import CreateBotAccount from '../../forms/createBotAccount';
+import CreateSlotForm from '../../forms/createSlot';
 import CreateMaster from '../../forms/createMaster';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
 import MasterInfos from './masterInfos';
 import { FaTrash, FaPen } from 'react-icons/fa';
+import FormFillModal from '../../modals/formFill';
+import { useState } from 'react';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function MasterAccount({ pageData, setPageData, loadData }) {
+    const [addNewSlotModal, setAddNewSlotModal] = useState(false);
     const { master, masterSlots } = pageData || {};
 
     async function deleteMaster() {
@@ -37,7 +42,17 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
 
     return (
         <div className="container">
-            <ModalButton className="circle-button add-button floating" ModalContent={CreateBotAccount} pageData={pageData} setPageData={setPageData}>+</ModalButton>
+            <Fab color="primary" className="bottom-right" onClick={() => setAddNewSlotModal(true)}>
+                <AddIcon />
+            </Fab>
+            <FormFillModal
+                title="Criar novo slot"
+                openState={addNewSlotModal}
+                onClose={() => setAddNewSlotModal(false)}
+                Content={CreateSlotForm}
+                pageData={pageData}
+                setPageData={setPageData}
+            />
             
             <section className="content-fullwidth">
                 <div className="section-header">

@@ -1,0 +1,11 @@
+.MuiFormControl-root {
+    width: 100%;
+}
+
+form {
+    .step-fields {
+        .MuiAccordionSummary-root .MuiAccordionSummary-content {
+            flex-direction: column;
+        }
+    }
+}
