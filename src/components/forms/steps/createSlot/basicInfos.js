@@ -10,7 +10,6 @@ export default function SlotBasicInfoStep({formState, master}) {
     return (<div className="step-fields">
         <FormControl margin="dense">
             <TextField
-                required
                 label="Nome de identificação"
                 variant="standard"
                 value={form.name || ''}
@@ -40,7 +39,7 @@ export default function SlotBasicInfoStep({formState, master}) {
                 defaultValue={master && master.availableAllocation || 0}
                 valueLabelDisplay="auto"
                 max={master && master.availableAllocation || 0}
-                min={1}
+                min={0}
                 value={form.walletAllocation || master && master.availableAllocation}
                 onChange={(ev) => setForm(prev => {
                     return { ...prev, walletAllocation: ev.target.value }

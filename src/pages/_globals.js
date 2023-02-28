@@ -5,7 +5,7 @@ function declareGlobals(obj) {
 // Declaring the globals
 declareGlobals({
     URLs: {
-        serverHost: process.env.NEXT_PUBLIC_hostURL
+        serverHost: process.env.NEXT_PUBLIC_host
     },
     testData: {
         userUID: process.env.NEXT_PUBLIC_testUserUID

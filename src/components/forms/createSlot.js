@@ -121,6 +121,10 @@ export default function CreateSlotForm({pageData, isLoadingState, formState, onC
         setIsLoading(true);
 
         try {
+            if (!form.name && form.assets && form.assets.length) {
+                form.name = form.assets[0].split('USDT')[0];
+            }
+
             const saved = await ajax('/api/bot-account/create', form).post();
 
             onClose();

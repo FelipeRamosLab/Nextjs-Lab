@@ -1,8 +1,8 @@
 import ajax from '../../../services/ajax';
 
 export default async function HomeActivity(req, res) {
-    const userData = { collectionName: 'users', filter: process.env.NEXT_PUBLIC_userUID, options: { populate: {levels: 3} } };
-    const myBotsData = { collectionName: 'bots', filter: {author: process.env.NEXT_PUBLIC_userUID }, options: { populate: {levels: 3} } };
+    const userData = { collectionName: 'users', filter: process.env.NEXT_PUBLIC_testUserUID, options: { populate: {levels: 3} } };
+    const myBotsData = { collectionName: 'bots', filter: {author: process.env.NEXT_PUBLIC_testUserUID }, options: { populate: {levels: 3} } };
     const availableFunctionsData = { collectionName: 'functions', options: { populate: {levels: 3} } };
 
     try {
