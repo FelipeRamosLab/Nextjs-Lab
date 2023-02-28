@@ -1,6 +1,8 @@
+import ajax from '../../../services/ajax';
+
 export default async function MasterAccountActivity(req, res) {
     try {
-        const master = await ajax(URLs.serverHost + '/master-account/get', { 
+        const master = await ajax(process.env.NEXT_PUBLIC_host + '/master-account/get', { 
             masterUID: req.body.master, 
             userUID: req.body.user, 
             slotsPage: req.body.slotsPage

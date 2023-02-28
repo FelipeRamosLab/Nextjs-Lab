@@ -1,11 +1,13 @@
-const root = URLs.serverHost;
+import ajax from '../../../services/ajax';
+
+const root = process.env.NEXT_PUBLIC_host;
 
 export default async function AddBotThread(req, res) {
     try {
         const block = await ajax(root + '/collection/create',  {
             collectionName: 'thread_blocks',
             data: {
-                author: testData.userUID,
+                author: process.env.NEXT_PUBLIC_testUserUID,
                 ifType: 'and'
             }
         }).put();
@@ -13,7 +15,7 @@ export default async function AddBotThread(req, res) {
         const botThread = await ajax(root + '/collection/create',  {
             collectionName: 'bot_threads',
             data: {
-                author: testData.userUID,
+                author: process.env.NEXT_PUBLIC_testUserUID,
                 eventName: req.body.eventName,
                 parentBot: req.body.botUID,
                 thread: block.createdDoc && block.createdDoc._id
@@ -29,7 +31,7 @@ export default async function AddBotThread(req, res) {
                 }
             }).post();
             const BotDetails = await ajax(root + '/bot/details', {
-                userUID: testData.userUID,
+                userUID: process.env.NEXT_PUBLIC_testUserUID,
                 botUID: req.body.botUID
             }).get();
             res.status(200).send(BotDetails);

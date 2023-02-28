@@ -19,7 +19,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
       
         setInterval(()=>{
             loadData();
-        }, 180000);
+        }, 120000);
     }, []);
 
     if (pageData.status === 'error') {

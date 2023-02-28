@@ -1,10 +1,12 @@
-const root = URLs.serverHost;
+import ajax from '../../../services/ajax';
+
+const root = process.env.NEXT_PUBLIC_host;
 
 export default async function MyBots(req, res) {
     try {
         const bots = await ajax(root + '/collection/get/queryCollection', {
             collectionName: 'bots',
-            filter: {author: testData.userUID},
+            filter: {author: process.env.NEXT_PUBLIC_testUserUID},
             options: {populate: true}
         }).get();
 

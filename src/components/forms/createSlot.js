@@ -12,7 +12,7 @@ import SlotAssetConfigStep from './steps/createSlot/assetConfig';
 import SlotBotSelectStep from './steps/createSlot/botSelect';
 import SlotLimitsConfigStep from './steps/createSlot/limitsConfig';
 
-const steps = [
+export const steps = [
     {
         label: 'Dados do slot',
         description: 'Insira abaixo os dados básicos do seu slot, colocar um nome no slot ajuda na visualização dos seus slots depois.',
@@ -78,11 +78,12 @@ const steps = [
     }
 ];
 
-export default function CreateSlotForm({pageData, setPageData, formState, onClose}) {
+export default function CreateSlotForm({pageData, isLoadingState, formState, onClose}) {
     const [activeStep, setActiveStep] = useState(0);
     const [assets, setAssets] = useState([]);
     const [bots, setBots] = useState([]);
     const [form, setForm] = formState;
+    const [isLoading, setIsLoading] = isLoadingState;
 
     useEffect(() => {
         if (!form.limits) {
@@ -109,25 +110,30 @@ export default function CreateSlotForm({pageData, setPageData, formState, onClos
         loadFormDependencies().then(res => {
             setAssets(res.assets);
             setBots(res.bots);
+
+            setIsLoading(false);
         }).catch(err => {
             throw err;
         });
     }, []);
     
     async function saveNewSlot() {
+        setIsLoading(true);
+
         try {
             const saved = await ajax('/api/bot-account/create', form).post();
 
             onClose();
             window.location.reload();
         } catch(err) {
+            setIsLoading(false);
             throw err;
         }
     }
 
     return (
         <form className="steps-form">
-            <Stepper activeStep={activeStep} orientation="vertical">
+            {!isLoading && <Stepper activeStep={activeStep} orientation="vertical">
                 {steps.map((step, index) => (
                     <Step key={step.label}>
                         <StepLabel
@@ -169,12 +175,12 @@ export default function CreateSlotForm({pageData, setPageData, formState, onClos
                         </StepContent>
                     </Step>
                 ))}
-            </Stepper>
+            </Stepper>}
         </form>
     );
 }
 
-async function loadFormDependencies() {
+export async function loadFormDependencies() {
     try {
         const assets = await ajax('/api/exchange/get-assets').post();
         const myBots = await ajax('/api/bot/my-bots').post();

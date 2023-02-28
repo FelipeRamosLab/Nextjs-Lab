@@ -1,6 +1,8 @@
+import ajax from '../../../services/ajax';
+
 export default async function ExchangeGetAssets(req, res) {
     try {
-        const assets = await ajax(URLs.serverHost + '/exchange/get-assets').get();
+        const assets = await ajax(process.env.NEXT_PUBLIC_host + '/exchange/get-assets').get();
 
         if (assets.success) {
             res.status(200).send(assets);

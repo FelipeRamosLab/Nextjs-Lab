@@ -1,4 +1,6 @@
-const root = URLs.serverHost;
+import ajax from '../../../services/ajax';
+
+const root = process.env.NEXT_PUBLIC_host;
 
 export default async function AddBlockRule(req, res) {
     const type = req.body && req.body.type;
@@ -9,14 +11,14 @@ export default async function AddBlockRule(req, res) {
             created = await ajax(root + '/collection/create',  {
                 collectionName: 'thread_blocks',
                 data: {
-                    author: testData.userUID,
+                    author: process.env.NEXT_PUBLIC_testUserUID,
                     ifType: 'and'
                 }
             }).put();
         } else if (type === 'rules') { 
             created = await ajax(root + '/collection/create',  {
                 collectionName: 'thread_rules',
-                data: { author: testData.userUID }
+                data: { author: process.env.NEXT_PUBLIC_testUserUID }
             }).put();
         } else {
             res.status(500).send({success: false, message: 'The param req.body.type param should be "blocks" or "rules", but received' + type});
@@ -30,7 +32,7 @@ export default async function AddBlockRule(req, res) {
             }).post();
 
             const bot = await ajax(root + '/bot/details', {
-                userUID: testData.userUID,
+                userUID: process.env.NEXT_PUBLIC_testUserUID,
                 botUID: req.body.botUID
             }).get();
     

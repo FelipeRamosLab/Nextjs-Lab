@@ -1,4 +1,5 @@
-const root = URLs.serverHost;
+import ajax from '../../../services/ajax';
+const root = process.env.NEXT_PUBLIC_host;
 
 export default async function DeleteBlock(req, res) {
     try {
@@ -8,7 +9,7 @@ export default async function DeleteBlock(req, res) {
         }).delete();
 
         const bot = await ajax(root + '/bot/details', {
-            userUID: testData.userUID,
+            userUID: process.env.NEXT_PUBLIC_testUserUID,
             botUID: req.body.botUID
         }).get();
 

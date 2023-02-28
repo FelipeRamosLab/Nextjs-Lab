@@ -1,4 +1,3 @@
-import EvalThread from './index';
 import Base from './Base';
 import Rule from './Rule';
 
@@ -61,6 +60,8 @@ export default class Block extends Base {
     }
 
     remove(base, parent) {
+        const EvalThread = require('./index');
+
         if (parent.thread) {
             parent.thread = null;
 

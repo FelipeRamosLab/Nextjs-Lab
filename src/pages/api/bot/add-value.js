@@ -1,4 +1,6 @@
-const root = URLs.serverHost;
+import ajax from '../../../services/ajax';
+
+const root = process.env.NEXT_PUBLIC_host;
 
 export default async function AddBotValue(req, res) {
     try {
@@ -6,7 +8,7 @@ export default async function AddBotValue(req, res) {
         const valueDoc = await ajax(root + '/collection/create',  {
             collectionName: 'bot_values',
             data: {
-                author: testData.userUID,
+                author: process.env.NEXT_PUBLIC_testUserUID,
                 botParent: body.botUID,
                 valueType: 'function'
             }
@@ -28,7 +30,7 @@ export default async function AddBotValue(req, res) {
             }).post();
 
             const botDetails = await ajax(root + '/bot/details', {
-                userUID: testData.userUID,
+                userUID: process.env.NEXT_PUBLIC_testUserUID,
                 botUID: req.body.botUID
             }).get();
 

@@ -3,8 +3,8 @@
 }
 
 form {
-    .step-fields {
-        .MuiAccordionSummary-root .MuiAccordionSummary-content {
+    .MuiAccordionSummary-root {
+        .MuiAccordionSummary-content {
             flex-direction: column;
         }
     }

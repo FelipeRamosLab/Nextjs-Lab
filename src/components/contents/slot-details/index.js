@@ -1,17 +1,56 @@
 import GridSlider from '../../sliders/grid-slider';
 import ModalButton from '../../buttons/modalButton';
 import { FaTrash, FaPen } from 'react-icons/fa';
+import FormFillModal from '../../modals/formFill';
+import EditSlotForm from '../../forms/editing/slot';
+import { useState } from 'react';
 
 export default function SlotDetails({ pageData, setPageData }) {
     const {slot} = pageData || {};
+    const [editModal, setEditModal] = useState(false);
+
+    async function updateSlot(form) {
+        const result = {};
+
+        try {
+            Object.entries(form).map(([key, item]) => {
+                if (JSON.stringify(item) !== JSON.stringify(pageData.slot[key])) {
+                    result[key] = form[key];
+                }
+            });
+
+            const response = await ajax('/api/bot-account/edit', {
+                slotUID: slot._id,
+                data: result
+            }).post();
+
+            setPageData(prev => {
+                return {...prev, slot: response.slot}
+            });
+            setEditModal(false);
+        } catch(err) {
+            throw err;
+        }
+    }
 
     return (
         <div className="container">
             <section className="content-fullwidth">
                 <div className="section-header">
                     <h1 className="title">{slot.name}</h1>
-                    <ModalButton className="circle-button transparent" ModalContent={(props)=> <></>}><FaPen /></ModalButton>
+
+                    <button type="button" className="circle-button" onClick={() => setEditModal(true)}><FaPen /></button>
                     <button type="button" className="circle-button" btn-color="error"><FaTrash /></button>
+
+                    <FormFillModal
+                        title="Editar Slot"
+                        defaultData={pageData.slot}
+                        Content={EditSlotForm}
+                        openState={editModal}
+                        onClose={() => setEditModal(false)}
+                        saveAction={updateSlot}
+                        pageData={pageData}
+                    />
                 </div>
             </section>
 

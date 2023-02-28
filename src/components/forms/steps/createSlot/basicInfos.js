@@ -2,6 +2,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
+import FormHelperText from '@mui/material/FormHelperText';
 
 export default function SlotBasicInfoStep({formState, master}) {
     const [form, setForm] = formState;
@@ -9,6 +10,7 @@ export default function SlotBasicInfoStep({formState, master}) {
     return (<div className="step-fields">
         <FormControl margin="dense">
             <TextField
+                required
                 label="Nome de identificação"
                 variant="standard"
                 value={form.name || ''}

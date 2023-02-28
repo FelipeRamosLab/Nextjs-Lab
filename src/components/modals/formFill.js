@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
@@ -6,10 +6,16 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export default function FormFillModal({title, Content, saveAction, onClose, openState, defaultData, dialogProps, pageData}) {
+    const spinnerWrap = useRef();
     const formState = useState(defaultData || {});
+    const isLoadingState = useState(true);
     const [form] = formState;
+    const [isLoading] = isLoadingState;
+    const contentHeight = spinnerWrap && spinnerWrap.current && spinnerWrap.current.offsetHeight;
 
     return (
         <Dialog
@@ -37,8 +43,18 @@ export default function FormFillModal({title, Content, saveAction, onClose, open
                 ) : null}
             </DialogTitle>
 
-            <DialogContent dividers>
-                {Content && <Content pageData={pageData} formState={formState} onClose={onClose} />}
+            <DialogContent ref={spinnerWrap} dividers>
+                {Content && <Content pageData={pageData} formState={formState} onClose={onClose} isLoadingState={isLoadingState} />}
+
+                {isLoading && <Box
+                    justifyContent="center"
+                    alignItems="center"
+                    width="100%"
+                    height={contentHeight}
+                    sx={{ display: 'flex' }}
+                >
+                    <CircularProgress />
+                </Box>}        
             </DialogContent>
 
             {saveAction && <DialogActions>
@@ -48,27 +64,4 @@ export default function FormFillModal({title, Content, saveAction, onClose, open
             </DialogActions>}
         </Dialog>
     )
-}
-
-function ModalDialogTitle(props) {
-    const { children, onClose, ...other } = props;
-  
-    return (
-      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-        {children}
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={() => onClose()}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </DialogTitle>
-    );
 }

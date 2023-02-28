@@ -18,3 +18,5 @@ declareGlobals(require('../utils/validate'));
 export default function ToRender() {
     return <></>;
 }
+
+export const globals = global;
