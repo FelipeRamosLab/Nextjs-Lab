@@ -5,11 +5,11 @@ import TextField from '@mui/material/TextField';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 
-export default function MasterInfosStep({formState}) {
+export default function MasterInfosStep({formState, isEditMode}) {
     const [form, setForm] = formState;
 
     return (<div className="step-fields">
-        <FormControl>
+        {!isEditMode && <FormControl>
             <FormLabel>Tipo de conta</FormLabel>
             <RadioGroup
                 row
@@ -23,7 +23,7 @@ export default function MasterInfosStep({formState}) {
                 <FormControlLabel value="master-live" control={<Radio />} label="Live" />
                 <FormControlLabel value="master-demo" control={<Radio />} label="Demo" />
             </RadioGroup>
-        </FormControl>
+        </FormControl>}
 
         <FormControl margin="dense">
             <TextField

@@ -4,25 +4,15 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react';
-import {steps, loadFormDependencies} from '../createSlot';
+import { steps } from '../createMaster';
 
-export default function EditSlotForm({formState, isLoadingState, pageData}) {
-    const [assets, setAssets] = useState([]);
-    const [bots, setBots] = useState([]);
+export default function EditMasterForm({formState, isLoadingState, pageData, isEditMode}) {
     const [expanded, setExpanded] = useState('panel0');
     const [isLoading, setIsLoading] = isLoadingState;
 
     useEffect(() => {
-        loadFormDependencies().then(res => {
-            setAssets(res.assets);
-            setBots(res.bots);
-
-            setIsLoading(false);
-        }).catch(err => {
-            setIsLoading(false);
-            throw err;
-        });
-    }, []);
+        setIsLoading(false);
+    }, [setIsLoading]);
 
     return <form>
         {!isLoading && steps.map((step, index) => (
@@ -43,9 +33,8 @@ export default function EditSlotForm({formState, isLoadingState, pageData}) {
                 <AccordionDetails>
                     <step.Content
                         formState={formState}
-                        assets={assets}
-                        bots={bots}
-                        master={pageData.slot.master}
+                        pageData={pageData}
+                        isEditMode={isEditMode}
                     />
                 </AccordionDetails>
             </Accordion>

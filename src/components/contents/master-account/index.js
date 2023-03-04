@@ -1,5 +1,4 @@
 import axios from 'axios';
-import ModalButton from '../../buttons/modalButton';
 import CreateSlotForm from '../../forms/createSlot';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
@@ -9,10 +8,34 @@ import FormFillModal from '../../modals/formFill';
 import { useState } from 'react';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import EditMasterForm from '../../forms/editing/master';
 
 export default function MasterAccount({ pageData, setPageData, loadData }) {
     const [addNewSlotModal, setAddNewSlotModal] = useState(false);
+    const [editMasterModal, setEditMasterModal] = useState(false);
     const { master, masterSlots } = pageData || {};
+
+    async function editMaster(form) {
+        const result = {};
+
+        try {
+            Object.entries(form).map(([key, item]) => {
+                if (JSON.stringify(item) !== JSON.stringify(pageData.master[key])) {
+                    result[key] = form[key];
+                }
+            });
+
+            result._id = master._id;
+            const response = await ajax('/api/master-account/edit', form).post();
+
+            setPageData(prev => {
+                return {...prev, master: response.master}
+            });
+            setEditMasterModal(false);
+        } catch(err) {
+            throw err;
+        }
+    }
 
     async function deleteMaster() {
         try {
@@ -57,7 +80,19 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
                 <div className="section-header">
                     <h1 className="title">{master.name}</h1>
 
+                    <button type="button" className="circle-button" onClick={() => setEditMasterModal(true)}><FaPen /></button>
                     <button type="button" className="circle-button" btn-color="error" onClick={deleteMaster}><FaTrash /></button>
+
+                    <FormFillModal
+                        title="Editar conta"
+                        defaultData={pageData.master}
+                        openState={editMasterModal}
+                        onClose={() => setEditMasterModal(false)}
+                        Content={EditMasterForm}
+                        pageData={pageData}
+                        setPageData={setPageData}
+                        saveAction={editMaster}
+                    />
                 </div>
                 <div className="stats-cards">
                     <div className="card card-grad">

@@ -14,7 +14,7 @@ export default function FormFillModal({title, Content, saveAction, onClose, open
     const formState = useState(defaultData || {});
     const isLoadingState = useState(true);
     const [form] = formState;
-    const [isLoading] = isLoadingState;
+    const [isLoading, setIsLoading] = isLoadingState;
     const contentHeight = spinnerWrap && spinnerWrap.current && spinnerWrap.current.offsetHeight;
 
     return (
@@ -49,6 +49,7 @@ export default function FormFillModal({title, Content, saveAction, onClose, open
                     formState={formState}
                     onClose={onClose}
                     isLoadingState={isLoadingState}
+                    isEditMode={Boolean(defaultData)}
                 />}
 
                 {isLoading && <Box
@@ -63,7 +64,10 @@ export default function FormFillModal({title, Content, saveAction, onClose, open
             </DialogContent>
 
             {saveAction && <DialogActions>
-                <Button onClick={() => saveAction(form)}>
+                <Button onClick={() => {
+                    setIsLoading(true);
+                    saveAction(form);
+                }}>
                     Salvar
                 </Button>
             </DialogActions>}

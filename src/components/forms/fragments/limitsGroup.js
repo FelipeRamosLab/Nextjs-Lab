@@ -7,6 +7,7 @@ export default function LimitsGroupFormFragment({formState, fieldName, label, de
 
     function handleLimitField(limitType, value) {
         setForm(prev => {
+            if (!prev.limits) prev.limits = {};
             return { ...prev, limits: {
                 ...prev.limits,
                 [fieldName]: {
