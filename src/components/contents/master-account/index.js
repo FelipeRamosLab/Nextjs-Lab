@@ -9,10 +9,13 @@ import { useState } from 'react';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import EditMasterForm from '../../forms/editing/master';
+import DeleteConfirmation from '../../modals/confirmation';
 
 export default function MasterAccount({ pageData, setPageData, loadData }) {
     const [addNewSlotModal, setAddNewSlotModal] = useState(false);
     const [editMasterModal, setEditMasterModal] = useState(false);
+    const deleteConfirmationState = useState(false);
+    const [_, setDeleteConfirmation] = deleteConfirmationState;
     const { master, masterSlots } = pageData || {};
 
     async function editMaster(form) {
@@ -39,16 +42,22 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
 
     async function deleteMaster() {
         try {
-            const deleted = await axios.post('/api/master-account/delete', {
-                masterUID: master._id,
-                userUID: master.user._id
-            });
+            const deleted = await ajax('/api/master-account/delete', {
+                userUID: master.user._id,
+                masterUID: master._id
+            }).post();
 
-            window.location.href = window.location.origin;
-        } catch({response: { data }}) {
-            throw data;
+            if (deleted.success) {
+                setDeleteConfirmation(false);
+
+                window.open('/', '_self');
+            }
+        } catch(err) {
+            setDeleteConfirmation(false);
+            throw err;
         }
     }
+
 
     function seeMore() {
         if (!window.queryParams) window.queryParams = {};
@@ -81,7 +90,7 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
                     <h1 className="title">{master.name}</h1>
 
                     <button type="button" className="circle-button" onClick={() => setEditMasterModal(true)}><FaPen /></button>
-                    <button type="button" className="circle-button" btn-color="error" onClick={deleteMaster}><FaTrash /></button>
+                    <button type="button" className="circle-button" btn-color="error" onClick={() => setDeleteConfirmation(true)}><FaTrash /></button>
 
                     <FormFillModal
                         title="Editar conta"
@@ -92,6 +101,13 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
                         pageData={pageData}
                         setPageData={setPageData}
                         saveAction={editMaster}
+                    />
+
+                    <DeleteConfirmation
+                        title="Deseja excluir a conta?"
+                        message={`Tem certeza que você deseja excluir a conta [${master.cod}][${master.name}] permanentemente? Você perderá todo o histórico de operações feito nela!`}
+                        openState={deleteConfirmationState}
+                        onConfirm={deleteMaster}
                     />
                 </div>
                 <div className="stats-cards">
@@ -118,14 +134,6 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
                 <div className="content">
                     <TransferPainel master={master} pageData={pageData} setPageData={setPageData} />
                     <MasterInfos master={master} />
-
-                    <div className="section-header">
-                        <h2>Gráfico PNL Acumulado</h2>
-                    </div>
-
-                    <div className="chart-wrap">
-                        <button type="button" className="button full-width top-border transparent small">Abrir Gráfico</button>
-                    </div>
 
                     <div className="section-header">
                         <h2>Slots</h2>
