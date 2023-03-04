@@ -1,8 +1,8 @@
 import MainHeader from "../headers/mainHeader";
 
-export default function PageLayout({ pageData, children }) {
+export default function PageLayout({ children }) {
     return (<>
-        <MainHeader pageData={pageData}></MainHeader>
+        <MainHeader></MainHeader>
         {children}
     </>);
 }

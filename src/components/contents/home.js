@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import MiniMasterAccountTile from '../tiles/miniMasterAccount';
 import ModalButton from '../buttons/modalButton';
@@ -8,8 +8,10 @@ import ListDocs from '../base/listDocs';
 import ListDocContent from './listDocs/FisrtTest';
 import FormFillModal from '../modals/formFill';
 import CreateMasterForm from '../forms/createMaster';
+import PageDataContext from '../../context/pageData';
 
-export default function HomeContent({pageData}){
+export default function HomeContent(){
+    const {pageData} = useContext(PageDataContext);
     const {user, myBots} = pageData || {};
     const {masterAccounts} = user || {};
     const createMasterState = useState(false);

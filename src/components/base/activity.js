@@ -1,16 +1,20 @@
 import axios from 'axios';
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import ServerError from "../contents/serverError";
 import Spinner from '../loaders/spinner';
+import PageDataContext from '../../context/pageData';
 
 export default function Activity({ PageLayout, PageContent, activityUrl, queryParams }) {
-    const [pageData, setPageData] = useState({status: 'loading'});
+    const {pageData, setPageData} = useContext(PageDataContext);
 
     function loadData(){
         const params = {...queryParams, ...window.queryParams};
 
         axios.post('/api/activities/' + activityUrl, params || {}).then(res=>{
-            setPageData(res.data);
+            setPageData(prev => {
+                delete prev.status;
+                return {...prev, ...res.data}
+            });
         }).catch(err=>setPageData({status: 'error', errorObj: err.response.data}));
     }
     
@@ -41,7 +45,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
     }
 
     return (
-        <PageLayout pageData={pageData}>
+        <PageLayout>
             <PageContent pageData={pageData} setPageData={setPageData} loadData={loadData} queryParams={queryParams} />
         </PageLayout>
     );

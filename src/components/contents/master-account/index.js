@@ -1,17 +1,18 @@
-import axios from 'axios';
+import { useState, useContext } from 'react';
 import CreateSlotForm from '../../forms/createSlot';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
 import MasterInfos from './masterInfos';
 import { FaTrash, FaPen } from 'react-icons/fa';
 import FormFillModal from '../../modals/formFill';
-import { useState } from 'react';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import EditMasterForm from '../../forms/editing/master';
 import DeleteConfirmation from '../../modals/confirmation';
+import PageDataContext from '../../../context/pageData';
 
-export default function MasterAccount({ pageData, setPageData, loadData }) {
+export default function MasterAccount({ loadData }) {
+    const {pageData, setPageData} = useContext(PageDataContext);
     const [addNewSlotModal, setAddNewSlotModal] = useState(false);
     const [editMasterModal, setEditMasterModal] = useState(false);
     const deleteConfirmationState = useState(false);

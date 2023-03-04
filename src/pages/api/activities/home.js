@@ -1,15 +1,10 @@
 import ajax from '../../../services/ajax';
 
 export default async function HomeActivity(req, res) {
-    const userData = { collectionName: 'users', filter: process.env.NEXT_PUBLIC_testUserUID, options: { populate: {levels: 3} } };
     const myBotsData = { collectionName: 'bots', filter: {author: process.env.NEXT_PUBLIC_testUserUID }, options: { populate: {levels: 3} } };
-    const availableFunctionsData = { collectionName: 'functions', options: { populate: {levels: 3} } };
 
     try {
-        const user = await ajax(process.env.NEXT_PUBLIC_host + '/collection/get/doc', userData).get();
         const myBots = await ajax(process.env.NEXT_PUBLIC_host + '/collection/get/queryCollection', myBotsData).get();
-        const availableFunctions = await ajax(process.env.NEXT_PUBLIC_host + '/collection/get/queryCollection', availableFunctionsData).get();
-        let userRes = user.doc;
 
         // for (let i = 0; i < userRes.masterAccounts.length; i++) {
         //     const item = userRes.masterAccounts[i];
@@ -24,9 +19,7 @@ export default async function HomeActivity(req, res) {
         // }
 
         res.status(200).json({
-            user: userRes,
-            myBots: myBots.result,
-            availableFunctions: availableFunctions.result
+            myBots: myBots.result
         });
     } catch (err) {
         res.status(500).json(err);
