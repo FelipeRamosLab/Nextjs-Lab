@@ -1,5 +1,7 @@
 .header-wrap {
     display: flex;
+    padding-top: 4px;
+    padding-bottom: 0px;
 
     .header-column {
         display: flex;
@@ -9,5 +11,13 @@
     .menu-wrap {
         justify-content: right;
         flex: 1;
+    }
+
+    .icon-button {
+        svg {
+            font-size: 2rem;
+            cursor: pointer;
+            color: $white;
+        }
     }
 }
