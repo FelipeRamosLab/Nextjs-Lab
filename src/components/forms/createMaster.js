@@ -28,8 +28,6 @@ export default function CreateMasterForm({pageData, isLoadingState, formState, o
     const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
     const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
-    console.log(form);
-
     useEffect(() => {
         if (!form.limits) {
             setForm(prev => {
