@@ -4,5 +4,11 @@
     "DEV": "http://king-prawn-app-4ow24.ondigitalocean.app",
     "LOCAL": "http://localhost",
     "userTest": "627acf881e10121be3e718e0",
-    "userTestPROD": "63f586096fffb553b44447d0"
+    "userTestPROD": "63f586096fffb553b44447d0",
+
+    "pages": {
+        "logs": {
+            "itemsPerPage": 10
+        }
+    }
 }

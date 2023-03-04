@@ -1,0 +1,52 @@
+.accordion-wrap {
+    .MuiAccordion-root {
+        overflow: hidden;
+    }
+
+    &.logs-list {
+        .MuiCollapse-root,
+        .summary-content {
+            padding-left: 6px;
+        }
+
+        .log-type {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+
+            &.log-type[log-type=error] {
+                background-color: $error;
+            }
+        }
+    }
+
+    .summary-content {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+
+        .summary-col {
+            font-weight: bold;
+            flex: 1;
+
+            &.log-name {
+                flex: 3
+            }
+            
+            .log-message {
+                font-weight: normal;
+                color: #999
+            }
+        }
+    }
+
+    .details-item {
+        margin-bottom: 10px;
+
+        label {
+            font-weight: bold;
+        }
+    }
+}

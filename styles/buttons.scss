@@ -1,5 +1,23 @@
 .buttons-wrap {
     text-align: center;
+    margin-top: 10px;
+
+    .MuiButtonBase-root {
+        width: 100%;
+        background-color: $primary;
+
+        &:hover {
+            background-color: lighten($color: $primary, $amount: 10);
+        }
+
+        &.MuiLoadingButton-loading {
+            background-color: lighten($color: $primary, $amount: 10);
+        }
+
+        .MuiCircularProgress-svg {
+            color: $tertiary;
+        }
+    }
 }
 
 .wrap-btn-flex {
