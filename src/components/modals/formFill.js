@@ -44,7 +44,12 @@ export default function FormFillModal({title, Content, saveAction, onClose, open
             </DialogTitle>
 
             <DialogContent ref={spinnerWrap} dividers>
-                {Content && <Content pageData={pageData} formState={formState} onClose={onClose} isLoadingState={isLoadingState} />}
+                {Content && <Content
+                    pageData={pageData}
+                    formState={formState}
+                    onClose={onClose}
+                    isLoadingState={isLoadingState}
+                />}
 
                 {isLoading && <Box
                     justifyContent="center"

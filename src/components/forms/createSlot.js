@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import SlotBasicInfoStep from './steps/createSlot/basicInfos';
 import SlotAssetConfigStep from './steps/createSlot/assetConfig';
 import SlotBotSelectStep from './steps/createSlot/botSelect';
-import SlotLimitsConfigStep from './steps/createSlot/limitsConfig';
+import {lossConfig, gainConfig} from './steps/limitsConfig';
 
 export const steps = [
     {
@@ -28,54 +28,8 @@ export const steps = [
         description: 'Escolha qual robô irá operar o seu slot.',
         Content: SlotBotSelectStep
     },
-    {
-        label: 'Limites de perda',
-        description: 'Configure abaixo os limites de perda para trade, diário e mensal.',
-        Content: ({formState}) => <SlotLimitsConfigStep
-            formState={formState}
-            configFields={[
-                {
-                    title: 'Trade',
-                    description: 'Será baseado nesse valor que os stops dos trades serão calculados',
-                    fieldName: 'tradeLoss'
-                },
-                {
-                    title: 'Diário',
-                    description: 'Caso o PNL do dia fique abaixo desse valor, o slot é pausado e só volta a operar no próximo dia',
-                    fieldName: 'dailyLoss'
-                },
-                {
-                    title: 'Mensal',
-                    description: 'Caso o PNL do mês fique abaixo desse valor, o slot é pausado e só volta a operar no próximo mês',
-                    fieldName: 'monthlyLoss'
-                }
-            ]}
-        />
-    },
-    {
-        label: 'Metas de lucro',
-        description: 'Configure abaixo metas de lucro para o slot pausar quando forem atingidas.',
-        Content: ({formState}) => <SlotLimitsConfigStep
-            formState={formState}
-            configFields={[
-                {
-                    title: 'Trade',
-                    description: 'Será baseado nesse valor que os takeprofits dos trades serão calculados',
-                    fieldName: 'tradeGain'
-                },
-                {
-                    title: 'Diário',
-                    description: 'Caso o PNL do dia seja maior que esse valor, o slot é pausado e só volta a operar no próximo dia',
-                    fieldName: 'dailyGain'
-                },
-                {
-                    title: 'Mensal',
-                    description: 'Caso o PNL do mês seja maior que esse valor, o slot é pausado e só volta a operar no próximo mês',
-                    fieldName: 'monthlyGain'
-                }
-            ]}
-        />
-    }
+    lossConfig,
+    gainConfig
 ];
 
 export default function CreateSlotForm({pageData, isLoadingState, formState, onClose}) {
@@ -84,6 +38,9 @@ export default function CreateSlotForm({pageData, isLoadingState, formState, onC
     const [bots, setBots] = useState([]);
     const [form, setForm] = formState;
     const [isLoading, setIsLoading] = isLoadingState;
+    
+    const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     useEffect(() => {
         if (!form.limits) {
@@ -97,14 +54,6 @@ export default function CreateSlotForm({pageData, isLoadingState, formState, onC
             });
         }
     }, [setForm, form.limits, pageData, pageData.user._id, pageData.master._id]);
-
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-  
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
 
     useEffect(() => {
         loadFormDependencies().then(res => {
@@ -125,7 +74,7 @@ export default function CreateSlotForm({pageData, isLoadingState, formState, onC
                 form.name = form.assets[0].split('USDT')[0];
             }
 
-            const saved = await ajax('/api/bot-account/create', form).post();
+            await ajax('/api/bot-account/create', form).post();
 
             onClose();
             window.location.reload();

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import ModalButton from '../../buttons/modalButton';
 import CreateSlotForm from '../../forms/createSlot';
-import CreateMaster from '../../forms/createMaster';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
 import MasterInfos from './masterInfos';
@@ -57,7 +56,7 @@ export default function MasterAccount({ pageData, setPageData, loadData }) {
             <section className="content-fullwidth">
                 <div className="section-header">
                     <h1 className="title">{master.name}</h1>
-                    <ModalButton className="circle-button transparent" ModalContent={(props)=> <CreateMaster {...props} initialData={master} />}><FaPen /></ModalButton>
+
                     <button type="button" className="circle-button" btn-color="error" onClick={deleteMaster}><FaTrash /></button>
                 </div>
                 <div className="stats-cards">
