@@ -1,13 +1,15 @@
+import { useState } from 'react';
 import GridSlider from '../../sliders/grid-slider';
-import ModalButton from '../../buttons/modalButton';
 import { FaTrash, FaPen } from 'react-icons/fa';
 import FormFillModal from '../../modals/formFill';
 import EditSlotForm from '../../forms/editing/slot';
-import { useState } from 'react';
+import DeleteConfirmation from '../../modals/confirmation';
 
 export default function SlotDetails({ pageData, setPageData }) {
     const {slot} = pageData || {};
     const [editModal, setEditModal] = useState(false);
+    const deleteConfirmationState = useState(false);
+    const [_, setDeleteConfirmation] = deleteConfirmationState;
 
     async function updateSlot(form) {
         const result = {};
@@ -33,6 +35,26 @@ export default function SlotDetails({ pageData, setPageData }) {
         }
     }
 
+    async function deleteSlot() {
+        try {
+            const deleted = await ajax('/api/bot-account/delete', {
+                slotUID: slot._id
+            }).post();
+
+            if (deleted.success) {
+                setDeleteConfirmation(false);
+
+                window.open(createURL('/master-account', {
+                    user: testData.userUID,
+                    master: slot.master._id
+                }), '_self');
+            }
+        } catch(err) {
+            setDeleteConfirmation(false);
+            throw err;
+        }
+    }
+
     return (
         <div className="container">
             <section className="content-fullwidth">
@@ -40,7 +62,7 @@ export default function SlotDetails({ pageData, setPageData }) {
                     <h1 className="title">{slot.name}</h1>
 
                     <button type="button" className="circle-button" onClick={() => setEditModal(true)}><FaPen /></button>
-                    <button type="button" className="circle-button" btn-color="error"><FaTrash /></button>
+                    <button type="button" className="circle-button" btn-color="error" onClick={() => setDeleteConfirmation(true)}><FaTrash /></button>
 
                     <FormFillModal
                         title="Editar Slot"
@@ -50,6 +72,13 @@ export default function SlotDetails({ pageData, setPageData }) {
                         onClose={() => setEditModal(false)}
                         saveAction={updateSlot}
                         pageData={pageData}
+                    />
+
+                    <DeleteConfirmation
+                        title="Deseja excluir o slot?"
+                        message={`Tem certeza que você deseja excluir o slot [${slot.cod}][${slot.name}] permanentemente? Você perderá todo o histórico de operações feito nele.`}
+                        openState={deleteConfirmationState}
+                        onConfirm={deleteSlot}
                     />
                 </div>
             </section>
