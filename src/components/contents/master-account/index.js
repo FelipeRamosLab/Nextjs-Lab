@@ -9,22 +9,22 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import EditMasterForm from '../../forms/editing/master';
 import DeleteConfirmation from '../../modals/confirmation';
-import PageDataContext from '../../../context/pageData';
+import ActivityDataContext from '../../../context/activityData';
 
 export default function MasterAccount({ loadData }) {
-    const {pageData, setPageData} = useContext(PageDataContext);
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [addNewSlotModal, setAddNewSlotModal] = useState(false);
     const [editMasterModal, setEditMasterModal] = useState(false);
     const deleteConfirmationState = useState(false);
     const [_, setDeleteConfirmation] = deleteConfirmationState;
-    const { master, masterSlots } = pageData || {};
+    const { master, masterSlots } = activityData || {};
 
     async function editMaster(form) {
         const result = {};
 
         try {
             Object.entries(form).map(([key, item]) => {
-                if (JSON.stringify(item) !== JSON.stringify(pageData.master[key])) {
+                if (JSON.stringify(item) !== JSON.stringify(activityData.master[key])) {
                     result[key] = form[key];
                 }
             });
@@ -32,7 +32,7 @@ export default function MasterAccount({ loadData }) {
             result._id = master._id;
             const response = await ajax('/api/master-account/edit', form).post();
 
-            setPageData(prev => {
+            setActivityData(prev => {
                 return {...prev, master: response.master}
             });
             setEditMasterModal(false);
@@ -82,8 +82,6 @@ export default function MasterAccount({ loadData }) {
                 openState={addNewSlotModal}
                 onClose={() => setAddNewSlotModal(false)}
                 Content={CreateSlotForm}
-                pageData={pageData}
-                setPageData={setPageData}
             />
             
             <section className="content-fullwidth">
@@ -95,12 +93,10 @@ export default function MasterAccount({ loadData }) {
 
                     <FormFillModal
                         title="Editar conta"
-                        defaultData={pageData.master}
+                        defaultData={activityData.master}
                         openState={editMasterModal}
                         onClose={() => setEditMasterModal(false)}
                         Content={EditMasterForm}
-                        pageData={pageData}
-                        setPageData={setPageData}
                         saveAction={editMaster}
                     />
 
@@ -133,7 +129,7 @@ export default function MasterAccount({ loadData }) {
 
             <section className="content-sidebar">
                 <div className="content">
-                    <TransferPainel master={master} pageData={pageData} setPageData={setPageData} />
+                    <TransferPainel master={master} />
                     <MasterInfos master={master} />
 
                     <div className="section-header">

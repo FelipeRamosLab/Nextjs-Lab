@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -17,9 +17,11 @@ import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
+import ActivityDataContext from '../../../context/activityData';
 
-export default function BotEventsAccordion({ pageData, setPageData, queryParams }) {
-    const botEval = pageData.bot && pageData.bot.eval;
+export default function BotEventsAccordion() {
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
+    const botEval = activityData.bot && activityData.bot.eval;
     const [loadingAddEvent, setLoadingAddEvent] = useState(false);
     const [addEventDialog, setAddEventDialog] = useState(false);
     const [addEventName, setAddEventName] = useState('');
@@ -30,11 +32,11 @@ export default function BotEventsAccordion({ pageData, setPageData, queryParams 
 
         try {
             const added = await axios.post('/api/bot/add-event', {
-                botUID: pageData.bot._id,
+                botUID: activityData.bot._id,
                 eventName
             });
             
-            setPageData(prev => {
+            setActivityData(prev => {
                 return {...prev, bot: added.data}
             });
             setAddEventDialog(false)
@@ -96,7 +98,7 @@ export default function BotEventsAccordion({ pageData, setPageData, queryParams 
                                 </AccordionSummary>
 
                                 <AccordionDetails>
-                                    <ThreadBlockEdit blockData={item.thread} pageData={pageData} setPageData={setPageData} />
+                                    <ThreadBlockEdit blockData={item.thread} />
                                 </AccordionDetails>
                             </Accordion>
                         );

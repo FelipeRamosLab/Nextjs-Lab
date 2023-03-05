@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
@@ -7,8 +7,10 @@ import {
     AccordionDetails,
     TextField
 } from '@mui/material';
+import ActivityDataContext from '../../../context/activityData';
 
-export default function LogsList({logs, read, setPageData}) {
+export default function LogsList({logs, read}) {
+    const {setActivityData} = useContext(ActivityDataContext);
     const [itemOpened, setItemOpened] = useState('');
     const [seemoreUnreadLoading, setSeemoreUnreadLoading] = useState(false);
     const [seemoreReadLoading, setSeemoreReadLoading] = useState(false);
@@ -26,7 +28,7 @@ export default function LogsList({logs, read, setPageData}) {
             }).post();
             
             if (response.success){
-                setPageData(prev => {
+                setActivityData(prev => {
                     return {...prev, [read ? 'logsRead' : 'logsUnread']: response.logs || []}
                 });
             }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -6,6 +6,7 @@ import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import ActivityDataContext from '../../context/activityData';
 
 import SlotBasicInfoStep from './steps/createSlot/basicInfos';
 import SlotAssetConfigStep from './steps/createSlot/assetConfig';
@@ -32,7 +33,8 @@ export const steps = [
     gainConfig
 ];
 
-export default function CreateSlotForm({pageData, isLoadingState, formState, onClose}) {
+export default function CreateSlotForm({isLoadingState, formState, onClose}) {
+    const {activityData} = useContext(ActivityDataContext);
     const [activeStep, setActiveStep] = useState(0);
     const [assets, setAssets] = useState([]);
     const [bots, setBots] = useState([]);
@@ -47,13 +49,13 @@ export default function CreateSlotForm({pageData, isLoadingState, formState, onC
             setForm(prev => {
                 return {
                     ...prev,
-                    user: pageData && pageData.user._id,
-                    master: pageData && pageData.master._id,
+                    user: activityData && activityData.user._id,
+                    master: activityData && activityData.master._id,
                     limits: {} 
                 }
             });
         }
-    }, [setForm, form.limits, pageData, pageData.user._id, pageData.master._id]);
+    }, [setForm, form.limits, activityData, activityData.user._id, activityData.master._id]);
 
     useEffect(() => {
         loadFormDependencies().then(res => {
@@ -105,7 +107,7 @@ export default function CreateSlotForm({pageData, isLoadingState, formState, onC
                                 formState={formState}
                                 assets={assets}
                                 bots={bots}
-                                master={pageData && pageData.master}
+                                master={activityData && activityData.master}
                             />}
                             
                             <Box sx={{ mb: 2 }}>

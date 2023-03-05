@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import GridSlider from '../../sliders/grid-slider';
 import { FaTrash, FaPen } from 'react-icons/fa';
 import FormFillModal from '../../modals/formFill';
 import EditSlotForm from '../../forms/editing/slot';
 import DeleteConfirmation from '../../modals/confirmation';
+import ActivityDataContext from '../../../context/activityData';
 
-export default function SlotDetails({ pageData, setPageData }) {
-    const {slot} = pageData || {};
+export default function SlotDetails() {
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
+    const {slot} = activityData || {};
     const [editModal, setEditModal] = useState(false);
     const deleteConfirmationState = useState(false);
     const [_, setDeleteConfirmation] = deleteConfirmationState;
@@ -16,7 +18,7 @@ export default function SlotDetails({ pageData, setPageData }) {
 
         try {
             Object.entries(form).map(([key, item]) => {
-                if (JSON.stringify(item) !== JSON.stringify(pageData.slot[key])) {
+                if (JSON.stringify(item) !== JSON.stringify(activityData.slot[key])) {
                     result[key] = form[key];
                 }
             });
@@ -26,7 +28,7 @@ export default function SlotDetails({ pageData, setPageData }) {
                 data: result
             }).post();
 
-            setPageData(prev => {
+            setActivityData(prev => {
                 return {...prev, slot: response.slot}
             });
             setEditModal(false);
@@ -66,12 +68,11 @@ export default function SlotDetails({ pageData, setPageData }) {
 
                     <FormFillModal
                         title="Editar Slot"
-                        defaultData={pageData.slot}
+                        defaultData={activityData.slot}
                         Content={EditSlotForm}
                         openState={editModal}
                         onClose={() => setEditModal(false)}
                         saveAction={updateSlot}
-                        pageData={pageData}
                     />
 
                     <DeleteConfirmation

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -6,6 +6,8 @@ import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import ActivityDataContext from '../../context/activityData';
+import PageDataContext from '../../context/pageData';
 
 import MasterInfosStep from './steps/createMaster/masterInfos';
 import { lossConfig, gainConfig } from './steps/limitsConfig';
@@ -20,7 +22,9 @@ export const steps = [
     gainConfig
 ];
 
-export default function CreateMasterForm({pageData, isLoadingState, formState, onClose}) {
+export default function CreateMasterForm({isLoadingState, formState, onClose}) {
+    const {activityData} = useContext(ActivityDataContext);
+    const {pageData} = useContext(PageDataContext);
     const [activeStep, setActiveStep] = useState(0);
     const [form, setForm] = formState;
     const [isLoading, setIsLoading] = isLoadingState;
@@ -77,7 +81,7 @@ export default function CreateMasterForm({pageData, isLoadingState, formState, o
 
                             {step.Content && <step.Content
                                 formState={formState}
-                                master={pageData && pageData.master}
+                                master={activityData && activityData.master}
                             />}
                             
                             <Box sx={{ mb: 2 }}>

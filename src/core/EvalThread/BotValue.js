@@ -1,6 +1,6 @@
-import Base from './Base';
+// import Base from './Base';
 
-export default class BotValue extends Base {
+export default class BotValue {
     constructor({
         type,
         slug,
@@ -11,7 +11,7 @@ export default class BotValue extends Base {
         toCompare,
         configs
     }, getParent) {
-        super(arguments[0] || {}, getParent);
+        // super(arguments[0] || {}, getParent);
         if (!arguments[0]) throw new Error('');
 
         this.type = type;

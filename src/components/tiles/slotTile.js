@@ -78,7 +78,7 @@ export default function SlotTile({slot}) {
 
             <div className="tile-header">
                 <h4 className="title">
-                    <Link href={slotURL}>{slot.name}</Link> 
+                    <a href={slotURL}>{slot.name}</a> 
                     <span className="badge" type={slot.status}>{slot.status}</span>
                 </h4>
                 {slot.status !== 'stopped' && <FaStopCircle className="circle-button reverse" btn-color="error" onClick={() => setStopSelect(true)} />}

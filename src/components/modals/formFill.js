@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-export default function FormFillModal({title, Content, saveAction, onClose, openState, defaultData, dialogProps, pageData}) {
+export default function FormFillModal({title, Content, saveAction, onClose, openState, defaultData, dialogProps}) {
     const spinnerWrap = useRef();
     const formState = useState(defaultData || {});
     const isLoadingState = useState(true);
@@ -45,7 +45,7 @@ export default function FormFillModal({title, Content, saveAction, onClose, open
 
             <DialogContent ref={spinnerWrap} dividers>
                 {Content && <Content
-                    pageData={pageData}
+                    
                     formState={formState}
                     onClose={onClose}
                     isLoadingState={isLoadingState}

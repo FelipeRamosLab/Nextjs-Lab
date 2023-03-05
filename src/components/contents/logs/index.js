@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import LogsList from './logsList';
+import ActivityDataContext from '../../../context/activityData';
 
-export default function LogsContent({pageData, setPageData}){
-    const {logsRead, logsUnread} = pageData || {};
+export default function LogsContent(){
+    const {activityData} = useContext(ActivityDataContext);
+    const {logsRead, logsUnread} = activityData || {};
 
     useEffect(() => {
         if (!window.queryParams) window.queryParams = {};
@@ -23,13 +25,11 @@ export default function LogsContent({pageData, setPageData}){
                 {logsUnread?.result?.length && <LogsList
                     logs={logsUnread}
                     read={false}
-                    setPageData={setPageData}
                 />}
 
                 {logsRead?.result?.length ? <LogsList
                     logs={logsRead}
                     read={true}
-                    setPageData={setPageData}
                 /> : ''}
             </div>
 

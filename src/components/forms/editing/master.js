@@ -33,7 +33,7 @@ export default function EditMasterForm({formState, isLoadingState, pageData, isE
                 <AccordionDetails>
                     <step.Content
                         formState={formState}
-                        pageData={pageData}
+                        
                         isEditMode={isEditMode}
                     />
                 </AccordionDetails>

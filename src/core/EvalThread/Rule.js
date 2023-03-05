@@ -1,11 +1,11 @@
-import Base from './Base';
+// import Base from './Base';
 import BotValue from './BotValue';
 
-export default class Rule extends Base {
+export default class Rule {
     constructor({
         children
     }, getParent) {
-        super(arguments[0] || {}, getParent);
+        // super(arguments[0] || {}, getParent);
         if (!arguments[0]) throw new Error('');
 
         this.type = 'rule';

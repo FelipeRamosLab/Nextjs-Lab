@@ -1,24 +1,23 @@
-import ModalButton from '../../buttons/modalButton';
 import { FaTrash, FaPen } from 'react-icons/fa';
 import BotValuesAccordion from './botValuesAccordion';
 import BotEventsAccordion from './botEventsAccordion';
 import Button from '@mui/material/Button';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import Typography from '@mui/material/Typography';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import CreateBot from '../../forms/createBot';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import EditBotForm from '../../forms/editing/bot';
+import ActivityDataContext from '../../../context/activityData';
 
 
-export default function BotDetails({ pageData, setPageData, queryParams }) {
-    const { bot: { cod, name, description, _id}} = pageData || {};
+export default function BotDetails({ queryParams }) {
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
+    const { bot: { cod, name, description, _id}} = activityData || {};
     const [editModal, setEditModal] = useState(false);
-    const formState = useState(pageData.bot);
+    const formState = useState(activityData.bot);
     const [form] = formState;
 
     function BootstrapDialogTitle(props) {
@@ -49,7 +48,7 @@ export default function BotDetails({ pageData, setPageData, queryParams }) {
             const response = await ajax('/api/bot/update', form).post();
 
             setEditModal(false);
-            setPageData(prev => {
+            setActivityData(prev => {
                 return {...prev, bot: response.bot}
             })
         } catch(err) {
@@ -91,7 +90,7 @@ export default function BotDetails({ pageData, setPageData, queryParams }) {
                             Editar Bot
                         </BootstrapDialogTitle>
                         <DialogContent dividers>
-                            <EditBotForm pageData={pageData} formState={formState} />
+                            <EditBotForm formState={formState} />
                         </DialogContent>
                         <DialogActions>
                             <Button autoFocus onClick={updateBot}>
@@ -111,13 +110,13 @@ export default function BotDetails({ pageData, setPageData, queryParams }) {
                         <h3>Limites da operação</h3>
                     </div>
                     <hr/>
-                    <BotValuesAccordion pageData={pageData} setPageData={setPageData} queryParams={queryParams} />
+                    <BotValuesAccordion queryParams={queryParams} />
 
                     <div className="section-header">
                         <h3>Avaliações do Bot</h3>
                     </div>
                     <hr/>
-                    <BotEventsAccordion pageData={pageData} setPageData={setPageData} queryParams={queryParams} />
+                    <BotEventsAccordion queryParams={queryParams} />
                 </div>
 
                 <div className="sidebar">

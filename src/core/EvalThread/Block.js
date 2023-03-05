@@ -1,7 +1,7 @@
-import Base from './Base';
+// import Base from './Base';
 import Rule from './Rule';
 
-export default class Block extends Base {
+export default class Block {
     constructor(setup = {
         ...this,
         path,
@@ -10,7 +10,7 @@ export default class Block extends Base {
         rules,
         children
     }, getParent) {
-        super(setup, getParent);
+        // super(setup, getParent);
         const {type, children, ifType, path} = setup || {};
 
         if (type !== 'or' || type !== 'and') new Error('');

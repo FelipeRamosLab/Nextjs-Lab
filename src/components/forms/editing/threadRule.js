@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react';
+import { useState, useContext } from 'react';
 import BotValuesAccordion from '../../contents/bot-details/botValuesAccordion';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -11,8 +11,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Backdrop, CircularProgress } from '@mui/material';
 import axios from 'axios';
+import ActivityDataContext from '../../../context/activityData';
 
-export default function ThreadRuleEdit({ruleData, pageData, setPageData}) {
+export default function ThreadRuleEdit({ruleData}) {
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [backDrop, setBackDrop] = useState(false);
@@ -37,10 +39,10 @@ export default function ThreadRuleEdit({ruleData, pageData, setPageData}) {
         try {
             setDeleteLoading(true);
             const UID = ruleData._id;
-            const {data} = await axios.post('/api/bot/delete-rule', { UID, botUID: pageData.bot._id });
+            const {data} = await axios.post('/api/bot/delete-rule', { UID, botUID: activityData.bot._id });
 
             if (data && data.success) {
-                setPageData(prev => {
+                setActivityData(prev => {
                     return {...prev, bot: data.bot}
                 });
 
@@ -80,11 +82,11 @@ export default function ThreadRuleEdit({ruleData, pageData, setPageData}) {
         try {
             const added = await axios.post('/api/bot/add-value', {
                 threadRuleUID: ruleData._id,
-                botUID: pageData.bot._id
+                botUID: activityData.bot._id
             });
 
             if (added.data.bot) {
-                setPageData(prev => {
+                setActivityData(prev => {
                     return {...prev, bot: added.data.bot};
                 });
             }
@@ -108,7 +110,7 @@ export default function ThreadRuleEdit({ruleData, pageData, setPageData}) {
                 </IconButton>
                 <Dialog />
             </div>
-            <BotValuesAccordion pageData={pageData} setPageData={setPageData} ruleChildren={ruleData.children} />
+            <BotValuesAccordion   ruleChildren={ruleData.children} />
 
             {!maxValuesReached && <div className="wrap-btn-flex">
                 <Button variant="contained" onClick={() => addBotValue()}>Adicionar Parâmetro</Button>

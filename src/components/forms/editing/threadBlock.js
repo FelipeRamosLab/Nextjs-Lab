@@ -10,9 +10,11 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Backdrop, CircularProgress } from '@mui/material';
 import axios from 'axios';
-import { useState } from "react";
+import { useState, useContext } from "react";
+import ActivityDataContext from '../../../context/activityData';
 
-export default function ThreadBlockEdit({blockData, pageData, setPageData}) {
+export default function ThreadBlockEdit({blockData}) {
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [backDrop, setBackDrop] = useState(false);
     const [addBlockRuleLoading, setAddBlockRuleLoading] = useState(false);
     const [deleteDialog, setDeleteDialog] = useState(false);
@@ -28,10 +30,10 @@ export default function ThreadBlockEdit({blockData, pageData, setPageData}) {
         try {
             setDeleteLoading(true);
             const UID = blockData._id;
-            const {data} = await axios.post('/api/bot/delete-block', { UID, botUID: pageData.bot._id });
+            const {data} = await axios.post('/api/bot/delete-block', { UID, botUID: activityData.bot._id });
 
             if (data && data.success) {
-                setPageData(prev => {
+                setActivityData(prev => {
                     return {...prev, bot: data.bot}
                 });
 
@@ -71,11 +73,11 @@ export default function ThreadBlockEdit({blockData, pageData, setPageData}) {
             const added = await axios.post('/api/bot/add-block-rule', {
                 type: type,
                 parentBlockUID: blockData._id,
-                botUID: pageData.bot._id
+                botUID: activityData.bot._id
             });
     
             if (added.data.bot) {
-                setPageData(prev => {
+                setActivityData(prev => {
                     return {...prev, bot: added.data.bot};
                 });
             }
@@ -93,10 +95,10 @@ export default function ThreadBlockEdit({blockData, pageData, setPageData}) {
             const updated = await axios.post('/api/bot/update-block', {
                 _id: blockData._id,
                 toUpdate: value,
-                botUID: pageData.bot._id
+                botUID: activityData.bot._id
             });
             
-            setPageData(prev => {
+            setActivityData(prev => {
                 return {...prev, bot: updated.data.bot};
             });
             setBackDrop(false);
@@ -132,10 +134,10 @@ export default function ThreadBlockEdit({blockData, pageData, setPageData}) {
             {chidrenSorted.map(child => {
                 switch (child.type) {
                     case 'evaluation': {
-                        return <ThreadRuleEdit key={child._id} ruleData={child} pageData={pageData} setPageData={setPageData} />
+                        return <ThreadRuleEdit key={child._id} ruleData={child}   />
                     }
                     case 'block': {
-                        return <ThreadBlockEdit key={child._id} blockData={child} pageData={pageData} setPageData={setPageData} />
+                        return <ThreadBlockEdit key={child._id} blockData={child}   />
                     }
                 }
             })}

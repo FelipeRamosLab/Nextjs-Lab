@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -8,9 +8,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 import BotValueEdit from '../../forms/editing/botValue';
+import ActivityDataContext from '../../../context/activityData';
 
-export default function BotValuesAccordion({ pageData, setPageData, ruleChildren }) {
-    const values = pageData && pageData.bot && pageData.bot.values;
+export default function BotValuesAccordion({ ruleChildren }) {
+    const {activityData} = useContext(ActivityDataContext);
+    const values = activityData && activityData.bot && activityData.bot.values;
     const [editToggles, setEditToggles] = useState({});
     const botValues = ruleChildren ? ruleChildren : values;
 
@@ -66,7 +68,7 @@ export default function BotValuesAccordion({ pageData, setPageData, ruleChildren
                                 </div>
                             </div>}
 
-                            {editToggles[value._id] && <BotValueEdit pageData={pageData} setPageData={setPageData} value={value} currentIndex={index} toggleEdit={toggleEdit} />}
+                            {editToggles[value._id] && <BotValueEdit value={value} currentIndex={index} toggleEdit={toggleEdit} />}
 
                             {!editToggles[value._id] && <Fab size="small" aria-label="edit" onClick={() => toggleEdit(value)} style={{
                                 position: 'absolute',

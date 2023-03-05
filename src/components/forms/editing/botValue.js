@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -14,9 +14,11 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import Checkbox from '@mui/material/Checkbox';
+import ActivityDataContext from '../../../context/activityData';
 
-export default function BotValueEdit({value, pageData, setPageData, toggleEdit, currentIndex}) {
-    const {availableFunctions, bot } = pageData || {};
+export default function BotValueEdit({value, toggleEdit, currentIndex}) {
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
+    const {availableFunctions, bot } = activityData || {};
     const [form, setForm] = useState(value);
     const [updateLoading, setUpdateLoading] = useState(false);
     const textAreaDefault = {};
@@ -77,12 +79,12 @@ export default function BotValueEdit({value, pageData, setPageData, toggleEdit, 
         try {
             const {data} = await axios.post('/api/bot/update-value', {
                 _id: value._id,
-                botUID: pageData.bot._id,
+                botUID: activityData.bot._id,
                 toUpdate: result
             });
             
             if (data) {
-                setPageData(prev => {
+                setActivityData(prev => {
                     return {...prev, bot: data}
                 });
                 setUpdateLoading(false);

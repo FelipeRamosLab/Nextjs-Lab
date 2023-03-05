@@ -1,24 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import BotThread from '../botThread/BotThread';
+import { useState, useEffect, useRef, useContext } from 'react';
 import BotValue from '../../core/EvalThread/BotValue';
 import BotValueEl from '../../components/botThread/BotValueEl';
 import ErrorList from '../common/errorList';
+import PageDataContext from '../../context/pageData';
 
-const events = {
-    openLong: 'Open long', 
-    openShort: 'Open short', 
-    closeLong: 'Close long', 
-    closeShort: 'Close short',
-    trailingStop: 'Trailing stop'
-};
-
-export default function CreateBot({pageData}) {
+export default function CreateBot() {
+    const {pageData} = useContext(PageDataContext);
     const takeProfitDOM = useRef();
     const accordion = useRef();
     const [spinner, setSpinner] = useState(false);
-    const [selectedEvents, setSelectedEvents] = useState({});
-    const [threadCtrl, setThreadCtrl] = useState();
     const [error, setError] = useState();
     const [form, setForm] = useState({
         author: pageData && pageData.user._id,
@@ -78,18 +68,6 @@ export default function CreateBot({pageData}) {
         }
     }
 
-    function handleCheckbox(ev, botEvent) {
-        if (ev.target.checked){
-            setSelectedEvents(prev => new Object({...prev, [botEvent]: true }));
-        } else {
-            setSelectedEvents(prev => new Object({...prev, [botEvent]: false }));
-            setForm(prev => {
-                delete prev.eval[botEvent];
-                return prev;
-            });
-        }
-    }
-
     function handleAccordion(ev) {
         const items = accordion.current.querySelectorAll('details');
         if (!ev.target.parentElement.hasAttribute('open')) {
@@ -145,7 +123,6 @@ export default function CreateBot({pageData}) {
                         <h4 className="title">Long position</h4>
 
                         {form.values['stoploss_long'] && <BotValueEl
-                            pageData={pageData}
                             currentEl={form.values['stoploss_long']}
                         />}
                     </div>
@@ -153,7 +130,6 @@ export default function CreateBot({pageData}) {
                         <h4 className="title">Short position</h4>
 
                         {form.values['stoploss_short'] && <BotValueEl
-                            pageData={pageData}
                             currentEl={form.values['stoploss_short']}
                         />}
                     </div>
@@ -175,7 +151,6 @@ export default function CreateBot({pageData}) {
                             <h4 className="title">Long position</h4>
 
                             {form.values['takeprofit_long'] && <BotValueEl
-                                pageData={pageData}
                                 currentEl={form.values['takeprofit_long']}
                             />}
                         </div>
@@ -183,7 +158,6 @@ export default function CreateBot({pageData}) {
                             <h4 className="title">Short position</h4>
 
                             {form.values['takeprofit_short'] && <BotValueEl
-                                pageData={pageData}
                                 currentEl={form.values['takeprofit_short']}
                             />}
                         </div>
@@ -203,7 +177,6 @@ export default function CreateBot({pageData}) {
                     {form.values['trailing_stop'] && <>
                         <div className="wrap-config">
                             {form.values['trailing_stop'] && <BotValueEl
-                                pageData={pageData}
                                 currentEl={form.values['trailing_stop']}
                             />}
                         </div>

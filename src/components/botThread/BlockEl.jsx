@@ -1,6 +1,6 @@
 import RuleEl from '../botThread/RuleEl';
 
-export default function BlockEl({pageData, thread, currentEl, className, parentEl}) {
+export default function BlockEl({thread, currentEl, className, parentEl}) {
     const blockChildrenKeys = Object.keys(currentEl.children || {});
 
     return <>
@@ -31,8 +31,8 @@ export default function BlockEl({pageData, thread, currentEl, className, parentE
                     const curr = currentEl.children[key];
 
                     switch (curr.type) {
-                        case 'block': return <BlockEl key={curr.uid} pageData={pageData} thread={thread} currentEl={curr} parentEl={currentEl} />
-                        case 'rule': return <RuleEl key={curr.uid} pageData={pageData} thread={thread} currentEl={curr} parentEl={currentEl} />
+                        case 'block': return <BlockEl key={curr.uid}  thread={thread} currentEl={curr} parentEl={currentEl} />
+                        case 'rule': return <RuleEl key={curr.uid}  thread={thread} currentEl={curr} parentEl={currentEl} />
                         default: return <></>
                     }
                     

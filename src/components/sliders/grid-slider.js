@@ -1,6 +1,6 @@
 import Slider from 'react-slick';
 
-export default function GridSlider({data, pageData}) {
+export default function GridSlider() {
     return (
         <Slider
             className="grid-slider"

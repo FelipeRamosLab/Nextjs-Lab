@@ -1,18 +1,17 @@
 import { useState, useContext } from 'react';
 
 import MiniMasterAccountTile from '../tiles/miniMasterAccount';
-import ModalButton from '../buttons/modalButton';
-import CreateBot from '../forms/createBot';
 import CardSlider from '../sliders/card-slider';
-import ListDocs from '../base/listDocs';
-import ListDocContent from './listDocs/FisrtTest';
 import FormFillModal from '../modals/formFill';
 import CreateMasterForm from '../forms/createMaster';
+import ActivityDataContext from '../../context/activityData';
 import PageDataContext from '../../context/pageData';
 
 export default function HomeContent(){
+    const {activityData} = useContext(ActivityDataContext);
     const {pageData} = useContext(PageDataContext);
-    const {user, myBots} = pageData || {};
+    const {user} = pageData || {};
+    const {myBots} = activityData || {};
     const {masterAccounts} = user || {};
     const createMasterState = useState(false);
     const [ createMaster, setCreateMaster ] = createMasterState;
@@ -24,7 +23,6 @@ export default function HomeContent(){
 
             <FormFillModal
                 openState={createMaster}
-                pageData={pageData}
                 title="Criar conta"
                 Content={CreateMasterForm}
                 onClose={() => setCreateMaster(false)}
@@ -36,21 +34,14 @@ export default function HomeContent(){
             })}
         </section>
 
-        <section className="container">
-            <h2>New ListDocs component</h2>
-            <ListDocs
-                collection="functions"
-                Content={ListDocContent}
-            />
-        </section>
-
         <div className="container section-header">
             <h2>Meus Bots</h2>
-            <ModalButton className="button transparent" ModalContent={CreateBot} pageData={pageData}>Criar</ModalButton>
+
+
         </div>
 
         <section className="container">
-            <CardSlider data={myBots} pageData={pageData} />
+            <CardSlider data={myBots} />
         </section>
     </>);
 }

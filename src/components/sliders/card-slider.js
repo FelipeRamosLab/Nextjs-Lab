@@ -2,7 +2,7 @@ import BotTile from '../tiles/botTile';
 import Slider from 'react-slick';
 import Link from 'next/link';
 
-export default function CardSlider({data, pageData}) {
+export default function CardSlider({data}) {
     return (
         <Slider
             className="card-slider"
@@ -15,9 +15,9 @@ export default function CardSlider({data, pageData}) {
         >
             {data && data.map(bot=>{
                 const botURL = createURL('/bot-details', { bot: bot._id});
-                return <Link key={bot._id} href={botURL} passHref={true}>
-                    <div><BotTile pageData={pageData} bot={bot} /></div>
-                </Link>
+                return <a key={bot._id} href={botURL}>
+                    <div><BotTile  bot={bot} /></div>
+                </a>
             })}
         </Slider>
     )

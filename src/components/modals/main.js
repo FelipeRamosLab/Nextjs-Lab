@@ -1,9 +1,9 @@
-export default function MainModal({open, Content, pageData, setPageData, modalCtrl}){
+export default function MainModal({open, Content, modalCtrl}){
     if (open) {
         return (<div className="modal-backdrop">
             <div className="modal">
                 <button type="button" className="close-btn" onClick={()=>modalCtrl(false)}>X</button>
-                <Content pageData={pageData} setPageData={setPageData} modalCtrl={modalCtrl}/>
+                <Content   modalCtrl={modalCtrl}/>
             </div>
         </div>);
     } else {

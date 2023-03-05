@@ -1,11 +1,13 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import {Input} from './BotThread';
 import ModalSelect, {ModalSelectOptionModel as SelectOption} from '../inputs/modalSelect';
 import DevCharToolbar from '../inputs/devCharToolbar';
+import PageDataContext from '../../context/pageData';
 
-export default function BotValue({pageData, currentEl, withCondition, parentInstance}) {
+export default function BotValue({ currentEl, withCondition, parentInstance}) {
+    const {pageData} = useContext(PageDataContext);
     const [data, setData] = useState(currentEl);
-    const functions = pageData && pageData.availableFunctions;
+    const functions = pageData && pageData.availableFunctions || [];
     const textarea = useRef();
     const textAreaDefault = {};
     const instructionsDefault = {};

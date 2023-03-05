@@ -4,8 +4,8 @@ export default function MiniMasterAccountTile({master}) {
     if (master) {
         const masterAccountURL = createURL('/master-account', { user: master.user, master: master._id});
 
-        return (<Link href={masterAccountURL}>
-            <a className="item card">
+        return (
+            <a href={masterAccountURL} className="item card">
                 <div className="card-header">
                     <h3 className="title">{master.name}</h3>
                     <span className={'pnl ' + (master.pnl >= 0 ? 'profit' : 'loss')}> {toMoney(master, ['pnl'])}</span>
@@ -14,8 +14,7 @@ export default function MiniMasterAccountTile({master}) {
                 <p><b>Rodando:</b> {master.runningSlotsCount}</p>
                 <p><b>Posições abertas:</b> {master.openTradesCount}</p>
                 <p><b>Total na carteira:</b> {toMoney(master, ['futuresWallet', 'totalWalletBalance'])}</p>
-            </a>
-        </Link>);
+            </a>);
     } else {
         return (
             <div className="loading-page">

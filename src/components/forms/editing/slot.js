@@ -3,10 +3,12 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {steps, loadFormDependencies} from '../createSlot';
+import ActivityDataContext from '../../../context/activityData';
 
 export default function EditSlotForm({formState, isLoadingState, pageData}) {
+    const {activityData} = useContext(ActivityDataContext);
     const [assets, setAssets] = useState([]);
     const [bots, setBots] = useState([]);
     const [expanded, setExpanded] = useState('panel0');
@@ -45,7 +47,7 @@ export default function EditSlotForm({formState, isLoadingState, pageData}) {
                         formState={formState}
                         assets={assets}
                         bots={bots}
-                        master={pageData.slot.master}
+                        master={activityData.slot.master}
                     />
                 </AccordionDetails>
             </Accordion>

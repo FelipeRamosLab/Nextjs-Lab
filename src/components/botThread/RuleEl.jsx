@@ -1,6 +1,6 @@
 import BotValue from './BotValueEl';
 
-export default function RuleEl({pageData, thread, currentEl, parentEl}) {
+export default function RuleEl({ thread, currentEl, parentEl}) {
     const ruleChildrenKeys = currentEl.children;
 
     return (<>
@@ -18,7 +18,7 @@ export default function RuleEl({pageData, thread, currentEl, parentEl}) {
                 {ruleChildrenKeys.length ? ruleChildrenKeys.map((item, i) => {
                     return <BotValue 
                         key={item.uid}
-                        pageData={pageData}
+                        
                         currentEl={item}
                         withCondition={i > 0 ? true : false}
                         parentInstance="ThreadRule"

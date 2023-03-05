@@ -2,22 +2,20 @@ import axios from 'axios';
 import React, { useEffect, useContext } from "react";
 import ServerError from "../contents/serverError";
 import Spinner from '../loaders/spinner';
-import PageDataContext from '../../context/pageData';
+import ActivityDataContext from '../../context/activityData';
 
 export default function Activity({ PageLayout, PageContent, activityUrl, queryParams }) {
-    const {pageData, setPageData} = useContext(PageDataContext);
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
 
     function loadData(){
         const params = {...queryParams, ...window.queryParams};
+        setActivityData({status: 'loading'})
 
         axios.post('/api/activities/' + activityUrl, params || {}).then(res=>{
-            setPageData(prev => {
-                delete prev.status;
-                return {...prev, ...res.data}
-            });
-        }).catch(err=>setPageData({status: 'error', errorObj: err.response.data}));
+            setActivityData(res.data);
+        }).catch(err => setActivityData({status: 'error', errorObj: err.response.data}));
     }
-    
+
     useEffect(()=>{
         loadData();
       
@@ -26,15 +24,15 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
         }, 120000);
     }, []);
 
-    if (pageData.status === 'error') {
+    if (activityData.status === 'error') {
         return (
             <PageLayout>
-                <ServerError err={pageData} />
+                <ServerError err={activityData} />
             </PageLayout>
         );
     }
 
-    if (pageData.status === "loading") {
+    if (!activityData || activityData.status === "loading") {
         return (
             <PageLayout>
                 <div className="loading-page">
@@ -46,7 +44,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
 
     return (
         <PageLayout>
-            <PageContent pageData={pageData} setPageData={setPageData} loadData={loadData} queryParams={queryParams} />
+            <PageContent loadData={loadData} queryParams={queryParams} />
         </PageLayout>
     );
 }
