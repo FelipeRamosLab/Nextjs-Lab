@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CreateSlotForm from '../../forms/createSlot';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
@@ -86,14 +86,14 @@ export default function MasterAccount({ loadData }) {
             
             <section className="content-fullwidth">
                 <div className="section-header">
-                    <h1 className="title">{master.name}</h1>
+                    <h1 className="title">{master?.name}</h1>
 
                     <button type="button" className="circle-button" onClick={() => setEditMasterModal(true)}><FaPen /></button>
                     <button type="button" className="circle-button" btn-color="error" onClick={() => setDeleteConfirmation(true)}><FaTrash /></button>
 
                     <FormFillModal
                         title="Editar conta"
-                        defaultData={activityData.master}
+                        defaultData={activityData?.master}
                         openState={editMasterModal}
                         onClose={() => setEditMasterModal(false)}
                         Content={EditMasterForm}
@@ -102,7 +102,7 @@ export default function MasterAccount({ loadData }) {
 
                     <DeleteConfirmation
                         title="Deseja excluir a conta?"
-                        message={`Tem certeza que você deseja excluir a conta [${master.cod}][${master.name}] permanentemente? Você perderá todo o histórico de operações feito nela!`}
+                        message={`Tem certeza que você deseja excluir a conta [${master?.cod}][${master?.name}] permanentemente? Você perderá todo o histórico de operações feito nela!`}
                         openState={deleteConfirmationState}
                         onConfirm={deleteMaster}
                     />
@@ -137,7 +137,7 @@ export default function MasterAccount({ loadData }) {
                     </div>
 
                     <div className="slots-list standard-grid grid">
-                        {masterSlots.map(slot => <SlotTile key={slot._id} slot={slot}/> )}
+                        {masterSlots?.map(slot => <SlotTile key={slot?._id} slot={slot}/> )}
                         <button
                             type="button"
                             className="button full-width top-border transparent small"

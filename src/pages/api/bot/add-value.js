@@ -10,20 +10,21 @@ export default async function AddBotValue(req, res) {
             data: {
                 author: process.env.NEXT_PUBLIC_testUserUID,
                 botParent: body.botUID,
-                valueType: 'function'
+                valueType: 'function',
+                slug: body.slug
             }
         }).put();
         
         if (valueDoc.createdDoc) {
             if (body.threadRuleUID) {
-                const appendRule = await ajax(root + '/collection/update/document',  {
+                await ajax(root + '/collection/update/document',  {
                     collectionName: 'thread_rules',
                     filter: { _id: body.threadRuleUID },
                     data: {$addToSet: { children: valueDoc.createdDoc._id }}
                 }).post();
             }
 
-            const botUpdated = await ajax(root + '/collection/update/document',  {
+            await ajax(root + '/collection/update/document',  {
                 collectionName: 'bots',
                 filter: { _id: body.botUID },
                 data: {$addToSet: { values: valueDoc.createdDoc._id }}

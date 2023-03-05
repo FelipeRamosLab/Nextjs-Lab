@@ -39,11 +39,11 @@ export default function BotEventsAccordion() {
             setActivityData(prev => {
                 return {...prev, bot: added.data}
             });
+        } catch(err) {
+            throw new Error(err);
+        } finally {
             setAddEventDialog(false)
             setLoadingAddEvent(false);
-        } catch(err) {
-            setLoadingAddEvent(true);
-            throw new Error(err);
         }
     }
 

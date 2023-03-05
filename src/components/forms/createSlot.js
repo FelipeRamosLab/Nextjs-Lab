@@ -140,10 +140,10 @@ export async function loadFormDependencies() {
         const assets = await ajax('/api/exchange/get-assets').post();
         const myBots = await ajax('/api/bot/my-bots').post();
 
-        if (assets.success && myBots.length) {
+        if (assets.success) {
             return {
                 assets: assets.data,
-                bots: myBots
+                bots: myBots || []
             };
         } else {
             throw assets;

@@ -6,6 +6,7 @@ import FormFillModal from '../modals/formFill';
 import CreateMasterForm from '../forms/createMaster';
 import ActivityDataContext from '../../context/activityData';
 import PageDataContext from '../../context/pageData';
+import CreateBotForm from '../forms/createBot';
 
 export default function HomeContent(){
     const {activityData} = useContext(ActivityDataContext);
@@ -15,6 +16,8 @@ export default function HomeContent(){
     const {masterAccounts} = user || {};
     const createMasterState = useState(false);
     const [ createMaster, setCreateMaster ] = createMasterState;
+    const createBotState = useState(false);
+    const [ createBot, setCreateBot ] = createBotState;
 
     return (<>
         <div className="container section-header">
@@ -37,7 +40,14 @@ export default function HomeContent(){
         <div className="container section-header">
             <h2>Meus Bots</h2>
 
+            <button className="button transparent" onClick={() => setCreateBot(true)}>Criar Bot</button>
 
+            <FormFillModal
+                openState={createBot}
+                title="Criar robô"
+                Content={CreateBotForm}
+                onClose={() => setCreateBot(false)}
+            />
         </div>
 
         <section className="container">

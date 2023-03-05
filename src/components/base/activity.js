@@ -9,7 +9,6 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
 
     function loadData(){
         const params = {...queryParams, ...window.queryParams};
-        setActivityData({status: 'loading'})
 
         axios.post('/api/activities/' + activityUrl, params || {}).then(res=>{
             setActivityData(res.data);

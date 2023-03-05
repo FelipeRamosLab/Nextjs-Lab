@@ -19,8 +19,8 @@ import ActivityDataContext from '../../../context/activityData';
 export default function BotValueEdit({value, toggleEdit, currentIndex}) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const {availableFunctions, bot } = activityData || {};
-    const [form, setForm] = useState(value);
     const [updateLoading, setUpdateLoading] = useState(false);
+    const [form, setForm] = useState(value);
     const textAreaDefault = {};
 
     useEffect(() => {
@@ -33,9 +33,8 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
                 return {...prev, configs: prev.configs}
             }
         });
-
     }, []);
-    
+
     availableFunctions.map(fn => {
         if (form.functionUID && (fn._id === form.functionUID || fn._id === form.functionUID._id)) {
             Object.entries(fn.options).map(([key, opt]) => {
@@ -51,7 +50,7 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
 
     async function updateBotValue() {
         const result = {
-            functionUID: form.functionUID && form.functionUID._id
+            functionUID: form?.functionUID?._id
         };
 
         setUpdateLoading(true);
@@ -97,7 +96,7 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
     }
 
     return (
-        <form>
+        <div>
             <FormControl sx={{marginBottom: '10px'}}>
                 <FormControlLabel
                     label={form.name ? 'Editar nome' : 'Adicionar nome'}
@@ -121,7 +120,7 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
                 />}
             </FormControl>
 
-            {(currentIndex == 1) && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
+            {(currentIndex === 1) && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
                 <InputLabel id={'label-' + value._id}>Sinal de comparação</InputLabel>
                 <Select
                     labelId={'label-' + value._id}
@@ -141,9 +140,9 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
             </FormControl>}
 
             <FormControl variant="standard" sx={{marginBottom: '10px'}}>
-                <InputLabel id={'label-' + value._id}>Tipo de valor</InputLabel>
+                <InputLabel id={'label-' + value?._id}>Tipo de valor</InputLabel>
                 <Select
-                    labelId={'label-' + value._id}
+                    labelId={'label-' + value?._id}
                     id=""
                     value={form.valueType || ''}
                     onChange={(ev) => setForm(prev => {
@@ -157,9 +156,9 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
             </FormControl>
 
             {form.valueType === 'existent' && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
-                <InputLabel id={'label-' + value._id}>Escolha um valor:</InputLabel>
+                <InputLabel id={'label-' + value?._id}>Escolha um valor:</InputLabel>
                 <Select
-                    labelId={'label-' + value._id}
+                    labelId={'label-' + value?._id}
                     value={''}
                     onChange={(ev) => {
                         const dataStored = bot.values.find(item => item._id === ev.target.value);
@@ -177,9 +176,9 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
             </FormControl>}
 
             {form.valueType === 'function' && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
-                <InputLabel id={'label-' + value._id}>Nome da função</InputLabel>
+                <InputLabel id={'label-' + value?._id}>Nome da função</InputLabel>
                 <Select
-                    labelId={'label-' + value._id}
+                    labelId={'label-' + value?._id}
                     value={typeof form.functionUID === 'string' ? form.functionUID : typeof form.functionUID === 'object' ? form.functionUID._id : ''}
                     onChange={(ev) => setForm(prev => {
                         return {...prev, configs: '{}', functionUID: ev.target.value}
@@ -193,9 +192,9 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
             </FormControl>}
 
             {form.valueType === 'primitive' && <FormControl variant="standard" sx={{marginBottom: '10px'}}>
-                <InputLabel id={'label-' + value._id}>Tipo de primitivo</InputLabel>
+                <InputLabel id={'label-' + value?._id}>Tipo de primitivo</InputLabel>
                 <Select
-                    labelId={'label-' + value._id}
+                    labelId={'label-' + value?._id}
                     id=""
                     value={form.primitiveType || ''}
                     onChange={(ev) => setForm(prev => {
@@ -280,6 +279,6 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
                     <SaveIcon /> Save
                 </LoadingButton>
             </div>
-        </form>
+        </div>
     );
 }
