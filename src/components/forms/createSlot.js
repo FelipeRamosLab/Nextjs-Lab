@@ -34,7 +34,7 @@ export const steps = [
 ];
 
 export default function CreateSlotForm({isLoadingState, formState, onClose}) {
-    const {activityData} = useContext(ActivityDataContext);
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [activeStep, setActiveStep] = useState(0);
     const [assets, setAssets] = useState([]);
     const [bots, setBots] = useState([]);
@@ -76,13 +76,17 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
                 form.name = form.assets[0].split('USDT')[0];
             }
 
-            await ajax('/api/bot-account/create', form).post();
+            const saved = await ajax('/api/bot-account/create', form).post();
+
 
             onClose();
-            window.location.reload();
+            setActivityData(prev => {
+                return {...prev, masterSlots: saved?.master?.botAccounts}
+            });
         } catch(err) {
-            setIsLoading(false);
             throw err;
+        } finally {
+            setIsLoading(false);
         }
     }
 

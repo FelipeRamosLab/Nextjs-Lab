@@ -1,12 +1,16 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Link from 'next/link';
 import MainModal from '../modals/main';
 import { FaPlayCircle, FaStopCircle } from "react-icons/fa";
 import OpenTradeInfo from '../contents/master-account/openTradeInfos';
+import { Backdrop, CircularProgress } from '@mui/material';
+import ActivityDataContext from '../../context/activityData';
 
 export default function SlotTile({slot}) {
+    const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [stopSelect, setStopSelect] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const slotURL = createURL('/slot-details', {slotUID: slot._id, user: slot.user._id, master: slot.master});
     let state = '';
 
@@ -14,21 +18,30 @@ export default function SlotTile({slot}) {
     if(slot.pnl < 0) state = 'loss';
 
     async function runSlot() {
+        setIsLoading(true);
         try {
-            const runned = await axios.post('/api/bot-account/run', {
+            const runned = await ajax('/api/bot-account/run', {
                 botAccountUID: slot._id,
                 masterUID: slot.master,
                 userUID: slot.user._id
-            });
-            
-            if (runned.data.success) window.location.reload();
-            else alert('Ocorreu um erro ao iniciar o slot!');
+            }).post();
+
+            if (runned.success) {
+                setActivityData(prev => {
+                    return { ...prev, masterSlots: runned.masterSlots }
+                });
+            } else alert('Ocorreu um erro ao iniciar o slot!');
         } catch(err) {
             alert('Ocorreu um erro ao iniciar o slot!');
+        } finally {
+            setIsLoading(false);
         }
     }
 
     async function stopSlot(type) {
+        setStopSelect(false);
+        setIsLoading(true);
+
         switch (type) {
             case 'await':
             case 'forced': break;
@@ -39,18 +52,22 @@ export default function SlotTile({slot}) {
         }
 
         try {
-            const stopping = await axios.post('/api/bot-account/stop', {
+            const stopping = await ajax('/api/bot-account/stop', {
                 type,
                 slotUID: slot._id,
                 masterUID: slot.master,
                 userUID: slot.user
-            });
+            }).post();
 
-            if (stopping.hasError) alert('Ocorreu um erro ao parar o slot!');
-            setStopSelect(false);
-            window.location.reload();
+            if (!stopping.success) alert('Ocorreu um erro ao parar o slot!');
+
+            setActivityData(prev => {
+                return { ...prev, masterSlots: stopping.masterSlots }
+            });
         } catch(err) {
             alert('Ocorreu um erro ao parar o slot!');
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -99,6 +116,13 @@ export default function SlotTile({slot}) {
             </div>
 
             {slot.trades.map(trade => <OpenTradeInfo key={trade._id} trade={trade} /> )}
+
+            <Backdrop
+                sx={{ color: '#fff', zIndex: 999999 }}
+                open={isLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </div>
     );
 }
