@@ -38,4 +38,12 @@
       transform: rotate(360deg);
     }
 }
+
+.spinner-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    width: 100%;
+}
   

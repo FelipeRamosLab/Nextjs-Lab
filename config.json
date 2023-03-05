@@ -9,6 +9,9 @@
     "pages": {
         "logs": {
             "itemsPerPage": 10
+        },
+        "slotDetails": {
+            "closedTradesPerPage": 10
         }
     }
 }

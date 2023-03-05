@@ -1,6 +1,6 @@
 import Slider from 'react-slick';
 
-export default function GridSlider() {
+export default function GridSlider({data}) {
     return (
         <Slider
             className="grid-slider"
@@ -19,22 +19,10 @@ export default function GridSlider() {
         >
             <div className="slide-wrap">
                 <div className="slider-item">
-                    <div className="item">
-                        <label>item1</label>
-                        <span className="value">$ 10000</span>
-                    </div>
-                    <div className="item">
-                        <label>item1</label>
-                        <span className="value">$ 10000</span>
-                    </div>
-                    <div className="item">
-                        <label>item1</label>
-                        <span className="value">$ 10000</span>
-                    </div>
-                    <div className="item">
-                        <label>item1</label>
-                        <span className="value">$ 10000</span>
-                    </div>
+                    {data?.map((item, index) => <div key={item.label + index} className="item">
+                        <label>{item.label}</label>
+                        <span className="value">{item.value}</span>
+                    </div>)}
                 </div>
             </div>
         </Slider>

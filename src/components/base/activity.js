@@ -11,7 +11,10 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
         const params = {...queryParams, ...window.queryParams};
 
         axios.post('/api/activities/' + activityUrl, params || {}).then(res=>{
-            setActivityData(res.data);
+            setActivityData(prev => {
+                delete prev.status;
+                return {...prev, ...res.data} 
+            });
         }).catch(err => setActivityData({status: 'error', errorObj: err.response.data}));
     }
 

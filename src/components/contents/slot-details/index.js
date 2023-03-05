@@ -5,6 +5,7 @@ import FormFillModal from '../../modals/formFill';
 import EditSlotForm from '../../forms/editing/slot';
 import DeleteConfirmation from '../../modals/confirmation';
 import ActivityDataContext from '../../../context/activityData';
+import SlotClosedPositions from './closedPositions';
 
 export default function SlotDetails() {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
@@ -98,35 +99,40 @@ export default function SlotDetails() {
 
                         <div className="stats-cards smaller">
                             <div className="card card-grad">
-                                <span className="value">$1000</span>
+                                <span className="value">{toMoney(slot?.pnl)}</span>
                                 <label>PNL Acumulado</label>
                             </div>
                             <div className="card card-grad">
-                                <span className="value">$1000</span>
+                                <span className="value">{toMoney(slot?.totalUnrealizedPnl)}</span>
                                 <label>Não Realizado</label>
                             </div>
                             <div className="card card-grad">
-                                <span className="value">$1000</span>
-                                <label>Margem Total</label>
-                            </div>
-                            <div className="card card-grad">
-                                <span className="value">$1000</span>
+                                <span className="value">{toMoney(slot?.totalRealizedPnl)}</span>
                                 <label>Lucro Realizado</label>
                             </div>
                         </div>
 
                         <GridSlider data={[
-                            { label: 'item1', value: '$ 1000'}
+                            { label: 'PNL Dia', value: toMoney(slot?.results?.dayPnl)},
+                            { label: 'ROE Dia', value: toPercent(slot?.results?.dayRoe)},
+                            { label: 'PNL Mês', value: toMoney(slot?.results?.monthPnl)},
+                            { label: 'ROE Mês', value: toPercent(slot?.results?.monthRoe)},
                         ]} />
-                    </div>
-
-                    <div className="section-header">
-                        <h2>Posições fechadas</h2>
                     </div>
                 </div>
 
                 <div className="sidebar">
                     
+                </div>
+            </section>
+
+            <section className="content-fullwidth">
+                <div className="section-header">
+                    <h2>Posições fechadas</h2>
+                </div>
+
+                <div className="closed-positions" style={{maxWidth: '100%'}}>
+                    <SlotClosedPositions />
                 </div>
             </section>
         </div>
