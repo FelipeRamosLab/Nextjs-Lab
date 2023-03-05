@@ -6,7 +6,7 @@ export default async function GetPageData(req, res) {
 
         const logs = await ajax(root + '/collection/get/queryCollection', {
             collectionName: 'logs',
-            filter: {read: false},
+            filter: { read: false },
             options: { onlyCount: true }
         }).get();
         const user = await ajax(root + '/collection/get/doc', userData).get();
