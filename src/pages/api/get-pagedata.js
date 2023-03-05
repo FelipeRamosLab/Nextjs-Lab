@@ -1,3 +1,5 @@
+import ajax from '../../services/ajax';
+
 const root = process.env.NEXT_PUBLIC_host;
 
 export default async function GetPageData(req, res) {
