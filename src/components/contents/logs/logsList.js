@@ -42,7 +42,7 @@ export default function LogsList({logs, read}) {
 
     return (<>
         <div className="accordion-wrap logs-list">
-            {logs && logs.result.map((item) => {
+            {logs ? logs.result.map((item) => {
                 return (<Accordion
                     key={item.cod}
                     expanded={itemOpened === item.cod}
@@ -88,7 +88,7 @@ export default function LogsList({logs, read}) {
                         </div>
                     </AccordionDetails>
                 </Accordion>);
-            })}
+            }) : ''}
         </div>
         
         <div className="buttons-wrap">

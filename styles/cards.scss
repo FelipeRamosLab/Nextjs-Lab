@@ -213,3 +213,12 @@ a.card.item {
     }
 }
 
+.bot-tile {
+    &.carousel-item {
+        a,
+        h3 {
+            text-decoration: none;
+            color: $soft-text;
+        }
+    }
+}

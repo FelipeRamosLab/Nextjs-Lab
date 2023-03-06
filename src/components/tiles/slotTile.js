@@ -109,6 +109,7 @@ export default function SlotTile({slot}) {
                     <p><b>Moeda:</b> {slot.assets}</p>
                     <p><b>Intervalo:</b> {slot.interval}</p>
                     <p><b>Lucro Realizado:</b> {toMoney(slot, ['totalRealizedPnl'])}</p>
+                    <p><b>Última atualização:</b> {slot?.modifiedAt && new Date(slot?.modifiedAt).toLocaleString()}</p>
                 </div>
                 <div className="results">
                     <span className="pnl" state={state}>{toMoney(slot, ['pnl'])}</span>

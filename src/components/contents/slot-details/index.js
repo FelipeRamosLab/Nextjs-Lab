@@ -88,7 +88,6 @@ export default function SlotDetails() {
             <section className="content-sidebar">
                 <div className="content">
                     <div className="section-wrap">
-
                         <div className="card bot-card">
                             <div className="avatar">
                                 <h4>AV</h4>

@@ -21,16 +21,26 @@ export default function LogsContent(){
         </section>
 
         <section className="content-sidebar">
-            <div className="content">  
-                {logsUnread?.result?.length && <LogsList
-                    logs={logsUnread}
-                    read={false}
-                />}
+            <div className="content">
+                <div className="logs-list-wrap">
+                    <div className="section-header">
+                        <h3 className="title">Não Lidos</h3>
+                    </div>
+                    {logsUnread?.result?.length ? <LogsList
+                        logs={logsUnread}
+                        read={false}
+                    /> : ''}
+                </div>
 
-                {logsRead?.result?.length ? <LogsList
-                    logs={logsRead}
-                    read={true}
-                /> : ''}
+                <div className="logs-list-wrap">
+                    <div className="section-header">
+                        <h3 className="title">Lidos</h3>
+                    </div>
+                    {logsRead?.result?.length ? <LogsList
+                        logs={logsRead}
+                        read={true}
+                    /> : ''}
+                </div>
             </div>
 
             <div className="sidebar">

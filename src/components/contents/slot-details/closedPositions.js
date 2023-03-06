@@ -15,12 +15,6 @@ const columns = [
     { id: 'positionType', label: 'Operação', minWidth: 50, format: (value) => value === 'long' ? 'Compra' : 'Venda' },
     { id: 'closeTime', label: 'Fechada em', minWidth: 100, format: (value) => new Date(value).toLocaleString() },
     {
-      id: 'openTime',
-      label: 'Aberta em',
-      minWidth: 100,
-      format: (value) => new Date(value).toLocaleString()
-    },
-    {
       id: 'pnl',
       label: 'PNL',
       align: 'center',
@@ -59,7 +53,8 @@ const columns = [
     {
       id: 'quantity',
       label: 'Quantidade',
-      align: 'right'
+      align: 'right',
+      format: (value) => value.toFixed(5)
     },
     {
       id: 'usedLeverege',

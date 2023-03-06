@@ -26,6 +26,15 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
         }, 120000);
     }, []);
 
+    useEffect(() => {
+        if (!window?.sessionStorage.getItem('vercel-live-feedback-optout')) {
+            document.querySelector('vercel-live-feedback').remove();
+            sessionStorage.setItem('vercel-live-feedback-optout', '1');
+            console.log('>> "vercel-live-feedback-optout" removed!')
+        }
+    }, []);
+
+
     if (activityData.status === 'error') {
         return (
             <PageLayout>

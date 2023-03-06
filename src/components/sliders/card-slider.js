@@ -15,7 +15,7 @@ export default function CardSlider({data}) {
         >
             {data && data.map(bot=>{
                 const botURL = createURL('/bot-details', { bot: bot._id});
-                return <a key={bot._id} href={botURL}>
+                return <a key={bot._id} href={botURL} className="bot-tile carousel-item">
                     <div><BotTile  bot={bot} /></div>
                 </a>
             })}
