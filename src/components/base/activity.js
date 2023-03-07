@@ -27,10 +27,11 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
     }, []);
 
     useEffect(() => {
-        if (!window?.sessionStorage.getItem('vercel-live-feedback-optout')) {
-            document.querySelector('vercel-live-feedback').remove();
+        if (window) {
+            const vercelTool = document.querySelector('vercel-live-feedback');
+            
             sessionStorage.setItem('vercel-live-feedback-optout', '1');
-            console.log('>> "vercel-live-feedback-optout" removed!')
+            vercelTool && vercelTool.remove();
         }
     }, []);
 
