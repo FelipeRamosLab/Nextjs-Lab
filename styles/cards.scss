@@ -1,10 +1,15 @@
 .card {
     background: $grad-card;
     box-sizing: border-box;
-    border-radius: 0.8rem;
+    border-radius: 4px;
     box-shadow: 0 0 37px $primary-dark;
     overflow: hidden;
     user-select: none;
+    gap: 1rem;
+
+    .card-body {
+        flex: 1;
+    }
 
     &.card-grad {
         background: $grad-card-result;            
@@ -12,13 +17,11 @@
     }
 
     &.bot-card {
+        display: flex;
         background: $grad-card-grey;
         box-shadow: 0px 0px 57px rgba(0, 0, 0, 0.9);
         padding: 1rem;
-
-        .avatar {
-            margin-bottom: 1rem;
-        }
+        cursor: pointer;
     }
 
     &.bot-value {
@@ -97,7 +100,6 @@
     .pnl,
     .roe {
         font-size: 2rem;
-        color: $tertiary;
         font-weight: bold;
     }
 

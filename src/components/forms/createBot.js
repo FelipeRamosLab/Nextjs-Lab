@@ -37,11 +37,15 @@ export default function CreateBotForm({isLoadingState, formState, onClose}) {
     }, [ setIsLoading, setForm, pageData ]);
 
     async function saveBot() {
+        setIsLoading(true);
+
         try {
             const saved = await ajax('/api/bot/create', form).post();
             window.open(createURL('/bot-details', {bot: saved.bot._id}), '_self');
         } catch(err) {
             throw err;
+        } finally {
+            setIsLoading(false);
         }
     }    
 

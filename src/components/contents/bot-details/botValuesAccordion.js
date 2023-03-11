@@ -171,6 +171,7 @@ export default function BotValuesAccordion({ ruleChildren }) {
             {!ruleChildren && <div className="wrap-btn-flex">
                 <LoadingButton
                     loading={loadingAddValue}
+                    className="cta"
                     variant="contained"
                     aria-label="save"
                     onClick={() => setAddValueDialog(true)}

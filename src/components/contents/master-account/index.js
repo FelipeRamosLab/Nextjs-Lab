@@ -132,30 +132,30 @@ export default function MasterAccount({ loadData }) {
                     <TransferPainel master={master} transferType={transferType} setTransferType={setTransferType} />
 
                     <section className="master-results results stats-cards">
-                        <Paper className="card">
+                        <div className="card">
                             <p className="value pnl" state={master?.results?.dayPnl > 0 ? 'profit' : 'loss'}>
                                 {toMoney(master?.results?.dayPnl)}
                             </p>
                             <label>PNL dia</label>
-                        </Paper>
-                        <Paper className="card pnl">
+                        </div>
+                        <div className="card pnl">
                             <p className="value pnl" state={master?.results?.monthPnl > 0 ? 'profit' : 'loss'}>
                                 {toMoney(master?.results?.monthPnl)}
                             </p>
                             <label>PNL mês</label>
-                        </Paper>
-                        <Paper className="card">
+                        </div>
+                        <div className="card">
                             <p className="value roe" state={master?.results?.dayRoe > 0 ? 'profit' : 'loss'}>
                                 {toPercent(master?.results?.dayRoe, null, 2)}
                             </p>
                             <label>ROE dia</label>
-                        </Paper>
-                        <Paper className="card">
+                        </div>
+                        <div className="card">
                             <p className="value roe" state={master?.results?.monthRoe > 0 ? 'profit' : 'loss'}>
                                 {toPercent(master?.results?.monthRoe, null, 2)}
                             </p>
                             <label>ROE mês</label>
-                        </Paper>
+                        </div>
                     </section>
 
                     <div className="section-header">

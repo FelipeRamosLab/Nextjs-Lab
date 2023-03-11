@@ -5,6 +5,7 @@ import PaginationTable from '../../displays/paginationTable';
 const columns = [
     { id: 'cod', label: 'COD', minWidth: 50 },
     { id: 'positionType', label: 'Operação', minWidth: 50, format: (value) => value === 'long' ? 'Compra' : 'Venda' },
+    { id: 'openTime', label: 'Aberta em', minWidth: 100, format: (value) => new Date(value).toLocaleString() },
     { id: 'closeTime', label: 'Fechada em', minWidth: 100, format: (value) => new Date(value).toLocaleString() },
     {
       id: 'pnl',
@@ -53,6 +54,12 @@ const columns = [
       label: 'Alavancagem',
       align: 'right',
       format: (value) => value.toFixed(0)
+    },
+    {
+      id: 'initialMargin',
+      label: 'Margem inicial',
+      align: 'right',
+      format: (value) => toMoney(value)
     },
     {
       id: 'initialGrossBalance',

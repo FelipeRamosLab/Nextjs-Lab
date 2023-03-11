@@ -49,7 +49,7 @@
 
 .MuiCircularProgress-root {
     svg {
-        color: $tertiary;
+        color: lighten($color: #000000, $amount: 20);
     }
 }
   

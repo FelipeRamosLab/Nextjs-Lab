@@ -46,6 +46,10 @@ export default function BotsWidgets({myBots}) {
         return setter(value);
     }
 
+    function handleBotClick(e, _id) {
+        window.open(createURL('/bot-details', { bot: _id }));
+    }
+
     return (
         <section className="bots-widgets grid columns-2 no-padding">
             <div className="widget item no-padding">
@@ -73,6 +77,8 @@ export default function BotsWidgets({myBots}) {
                     ]}
                     rowsPerPage={5}
                     rowsPerPageOptions={[5, 10, 50, 100]}
+                    handleRowClick={handleBotClick}
+                    pointerCursor={true}
                 />}
             </div>
             <div className="widget item no-padding">
@@ -100,6 +106,8 @@ export default function BotsWidgets({myBots}) {
                     ]}
                     rowsPerPage={5}
                     rowsPerPageOptions={[5, 10, 50, 100]}
+                    handleRowClick={handleBotClick}
+                    pointerCursor={true}
                 />}
             </div>
         </section>

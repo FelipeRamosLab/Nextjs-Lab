@@ -25,6 +25,8 @@
 
 .pnl,
 .roe {
+    color: $primary-grey-light;
+
     &[state="profit"] {
         color: $profit;
     }
@@ -189,6 +191,10 @@
     .widget {
         max-width: 100%;
     }
+
+    .MuiTableRow-hover {
+        cursor: pointer;
+    }
 }
 
 .results {
@@ -196,7 +202,7 @@
         margin-top: 0;
     }
 
-    .MuiPaper-root {
+    .card {
         padding: 10px;
         min-width: auto;
         box-shadow: none;

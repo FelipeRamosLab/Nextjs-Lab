@@ -11,12 +11,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState, useContext } from 'react';
 import EditBotForm from '../../forms/editing/bot';
 import ActivityDataContext from '../../../context/activityData';
+import SelctionHeader from '../../headers/sectionHeader'
+import IconButtonConfig from '../../../models/IconButtonConfig';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteConfirmation from '../../modals/confirmation';
 
 
 export default function BotDetails({ queryParams }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const { bot: { cod, name, description, _id}} = activityData || {};
     const [editModal, setEditModal] = useState(false);
+    const deleteConfirmationState = useState(false);
+    const [_, setDeleteConfirmation] = deleteConfirmationState;
     const formState = useState(activityData.bot);
     const [form] = formState;
 
@@ -73,33 +80,19 @@ export default function BotDetails({ queryParams }) {
     return (<>
         <div className="container">
             <section className="content-fullwidth">
-                <div className="section-header">
-                    <h1 className="title">[{cod}] {name}</h1>
-
-                    <button type="button" className="circle-button" onClick={() => setEditModal(true)}><FaPen /></button>
-                    <button type="button" className="circle-button" btn-color="error" onClick={deleteBot}><FaTrash /></button>
-
-                    <Dialog
-                        open={editModal}
-                        maxWidth="lg"
-                        PaperProps={{
-                            sx: { width: '95%', maxWidth: 700, margin: 0}
-                        }}
-                    >
-                        <BootstrapDialogTitle onClose={() => setEditModal(false)}>
-                            Editar Bot
-                        </BootstrapDialogTitle>
-                        <DialogContent dividers>
-                            <EditBotForm formState={formState} />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button autoFocus onClick={updateBot}>
-                                Salvar
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                </div>
-                
+                <SelctionHeader
+                    title={`[${cod}] ${name}`}
+                    iconButtons={[
+                        new IconButtonConfig({
+                            Icon: EditIcon,
+                            action: () => setEditModal(true)
+                        }),
+                        new IconButtonConfig({
+                            Icon: DeleteIcon,
+                            action: () => setDeleteConfirmation(true)
+                        })
+                    ]}
+                />                
             </section>
 
             <section className="content-sidebar">
@@ -122,6 +115,33 @@ export default function BotDetails({ queryParams }) {
                 <div className="sidebar">
                 </div>
             </section>
+
+            <Dialog
+                open={editModal}
+                maxWidth="lg"
+                PaperProps={{
+                    sx: { width: '95%', maxWidth: 700, margin: 0}
+                }}
+            >
+                <BootstrapDialogTitle onClose={() => setEditModal(false)}>
+                    Editar Bot
+                </BootstrapDialogTitle>
+                <DialogContent dividers>
+                    <EditBotForm formState={formState} />
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={updateBot}>
+                        Salvar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            <DeleteConfirmation
+                title="Deseja excluir o robô?"
+                message={`Tem certeza que você deseja excluir o robô [${cod}][${name}] permanentemente? Você perderá todo o histórico de operações feito nele!`}
+                openState={deleteConfirmationState}
+                onConfirm={deleteBot}
+            />
         </div>
     </>);
 }

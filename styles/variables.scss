@@ -1,10 +1,11 @@
 // Colors
 $primary: #293B48;
 $secondary: #1b282c;
-$tertiary: #A5F9AD;
+$tertiary: #1ab587;
 // Alternative colors
 $primary-dark: #181a1c;
 $primary-grey: #1d2425;
+$primary-grey-light: lighten($color: $primary-grey, $amount: 70);
 $primary-bright: #394b52;
 $secondary-dark: #233236;
 $soft-text: #e3e4e3;

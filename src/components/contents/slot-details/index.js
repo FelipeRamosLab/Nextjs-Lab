@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import GridSlider from '../../sliders/grid-slider';
-import { FaTrash, FaPen } from 'react-icons/fa';
+import Link from 'next/link';
 import FormFillModal from '../../modals/formFill';
 import EditSlotForm from '../../forms/editing/slot';
 import DeleteConfirmation from '../../modals/confirmation';
@@ -86,13 +86,18 @@ export default function SlotDetails() {
             <section className="content-sidebar">
                 <div className="content">
                     <div className="section-wrap">
-                        <div className="card bot-card">
-                            <div className="avatar">
-                                <h4>AV</h4>
+                        <Link href={createURL('/bot-details', { bot: bot._id})} passHref>
+                            <div className="card bot-card">
+                                <div className="avatar">
+                                    <h4>AV</h4>
+                                </div>
+
+                                <div className="card-body">
+                                    <h3 className="title">{bot?.name || '---'}</h3>
+                                    <p>{bot?.description || '---'}</p>
+                                </div>
                             </div>
-                            <h3 className="title">{bot?.name || '---'}</h3>
-                            <p>{bot?.description || '---'}</p>
-                        </div>
+                        </Link>
 
                         <div className="stats-cards smaller">
                             <div className="card card-grad">
@@ -109,12 +114,15 @@ export default function SlotDetails() {
                             </div>
                         </div>
 
-                        <GridSlider data={[
-                            { label: 'PNL Dia', value: toMoney(slot?.results?.dayPnl)},
-                            { label: 'ROE Dia', value: toPercent(slot?.results?.dayRoe)},
-                            { label: 'PNL Mês', value: toMoney(slot?.results?.monthPnl)},
-                            { label: 'ROE Mês', value: toPercent(slot?.results?.monthRoe)},
-                        ]} />
+                        
+                        <div className="slot-infos">
+                            <GridSlider data={[
+                                { label: 'PNL Dia', value: toMoney(slot?.results?.dayPnl)},
+                                { label: 'ROE Dia', value: toPercent(slot?.results?.dayRoe)},
+                                { label: 'PNL Mês', value: toMoney(slot?.results?.monthPnl)},
+                                { label: 'ROE Mês', value: toPercent(slot?.results?.monthRoe)}
+                            ]} />
+                        </div>
                     </div>
                 </div>
 

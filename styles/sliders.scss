@@ -29,10 +29,15 @@
         flex-wrap: wrap;
 
         .item {
-            display: flex;
+            display: inline-flex;
             flex-direction: column;
             flex: 1;
             padding: 0.5rem 1rem;
+            min-width: 50%;
+
+            @media screen and (min-width: $md) {
+                min-width: 25%;
+            }
 
             label {
                 text-decoration: underline;

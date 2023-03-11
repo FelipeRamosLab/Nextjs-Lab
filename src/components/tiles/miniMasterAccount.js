@@ -1,14 +1,17 @@
-import Link from 'next/link';
-
 export default function MiniMasterAccountTile({master}) {
     if (master) {
         const masterAccountURL = createURL('/master-account', { user: master.user, master: master._id});
+        let state = '';
+
+        if(master.pnl > 0) state = 'profit';
+        if(master.pnl < 0) state = 'loss';
 
         return (
             <a href={masterAccountURL} className="item card">
+                <div className="pnl-indicator" pnl-state={state}></div>
                 <div className="card-header">
                     <h3 className="title">{master.name}</h3>
-                    <span className={'pnl ' + (master.pnl >= 0 ? 'profit' : 'loss')}> {toMoney(master, ['pnl'])}</span>
+                    <span className="pnl" state={state}> {toMoney(master, ['pnl'])}</span>
                 </div>
 
                 <p><b>Rodando:</b> {master.runningSlotsCount}</p>

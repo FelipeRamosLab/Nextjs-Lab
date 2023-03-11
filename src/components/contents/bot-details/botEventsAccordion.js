@@ -109,6 +109,7 @@ export default function BotEventsAccordion() {
             <div className="wrap-btn-flex">
                 <LoadingButton
                     loading={loadingAddEvent}
+                    className="cta"
                     variant="contained"
                     aria-label="save"
                     onClick={() => setAddEventDialog(true)}

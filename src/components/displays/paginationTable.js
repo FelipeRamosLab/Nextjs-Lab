@@ -17,7 +17,9 @@ export default function PaginationTable({
     rowsPerPage,
     changePageAction,
     changeRowsPerPageAction,
-    errorCallback
+    errorCallback,
+    handleRowClick,
+    pointerCursor
 }) {
     const [data, setData] = useState(defaultData || []);
     const [page, setPage] = useState(0);
@@ -75,7 +77,7 @@ export default function PaginationTable({
                 
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow className={pointerCursor && 'pointer-cursor'}>
                             {Array.isArray(columns) && columns.map((column) => (
                                 <TableCell
                                     key={column.id}
@@ -90,7 +92,7 @@ export default function PaginationTable({
                     <TableBody>
                         {Array.isArray(data) && data.slice(page * rowsPerPageConfig, page * rowsPerPageConfig + rowsPerPageConfig).map((row, index) => {
                             return (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={row.cod + index}>
+                                <TableRow hover role="checkbox" tabIndex={-1} key={row.cod + index} onClick={(e) => handleRowClick(e, row._id)}>
                                     {Array.isArray(columns) && columns.map((column, i) => {
                                         const value = row[column.id];
                                         return (

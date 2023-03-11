@@ -33,7 +33,7 @@
         flex: 32% 0;
 
         @media screen and (max-width: 601px) {
-            flex: 49% 0;
+            flex: 100% 0;
         }
     }
 }
@@ -43,6 +43,30 @@
 }
 
 .standard-grid {
+    &.master-accounts {
+        .item {
+            position: relative;
+            padding-left: 20px;
+            
+            .pnl-indicator {
+                position: absolute;
+                left: 0; 
+                top: 0;
+                bottom: 0;
+                width: 7px;
+                background-color: lighten($color: $charcoal, $amount: 15);
+
+                &[pnl-state=profit] {
+                    background-color: $profit;
+                }
+
+                &[pnl-state=loss] {
+                    background-color: $loss;
+                }
+            }
+        }
+    }
+
     .item {
         user-select: none;
         cursor: pointer;
@@ -57,13 +81,17 @@
 
     @media screen and (min-width: $md) {
         flex-direction: row;
+        margin-top: 2.5rem;
     }
 
     .content {
         display: flex;
         flex-direction: column;
         flex: 4;
-        // max-width: 66%;
+
+        @media screen and (min-width: $md) {
+            max-width: 66.66%;
+        }
     }
 
     .sidebar {

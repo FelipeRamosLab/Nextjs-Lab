@@ -160,6 +160,20 @@
     &.MuiFab-root {
         background-color: $cta;
         color: $primary-dark;
+
+        &:hover {
+            background-color: lighten($color: $cta, $amount: 20);
+        }
     }
 }
 
+.MuiButtonBase-root {
+    &.cta {
+        background-color: $tertiary;
+
+        &:hover {
+            background-color: lighten($color: $tertiary, $amount: 3);
+        }
+    }
+
+}
