@@ -15,7 +15,7 @@
         }
 
         .MuiCircularProgress-svg {
-            color: $tertiary;
+            background-color: lighten($color: $primary, $amount: 10);
         }
     }
 }
@@ -154,6 +154,7 @@
     position: fixed;
     bottom: 25px;
     right: 25px;
+    z-index: 3;
 }
 
 .MuiButtonBase-root {

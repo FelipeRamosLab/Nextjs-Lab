@@ -10,13 +10,17 @@ export default function SpeedDialButton({actions,  className}) {
   const handleClose = () => setOpen(false);
 
   return (<>
+        <Backdrop open={open} />
         <SpeedDial
             className={className} 
             ariaLabel="SpeedDial tooltip example"
             icon={<SpeedDialIcon />}
             onClose={handleClose}
-            onOpen={handleOpen}
+            onOpen={() => {}}
             open={open}
+            FabProps={{
+                onClick: handleOpen
+            }}
         >
             {actions.map((item) => (
                 <SpeedDialAction

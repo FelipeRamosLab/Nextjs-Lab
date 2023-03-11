@@ -133,25 +133,25 @@ export default function MasterAccount({ loadData }) {
 
                     <section className="master-results results stats-cards">
                         <div className="card">
-                            <p className="value pnl" state={master?.results?.dayPnl > 0 ? 'profit' : 'loss'}>
+                            <p className="value pnl" state={master?.results?.dayPnl !== 0 ? master?.results?.dayPnl > 0 ? 'profit' : 'loss' : ''}>
                                 {toMoney(master?.results?.dayPnl)}
                             </p>
                             <label>PNL dia</label>
                         </div>
                         <div className="card pnl">
-                            <p className="value pnl" state={master?.results?.monthPnl > 0 ? 'profit' : 'loss'}>
+                            <p className="value pnl" state={master?.results?.monthPnl !== 0 ? master?.results?.monthPnl > 0 ? 'profit' : 'loss' : ''}>
                                 {toMoney(master?.results?.monthPnl)}
                             </p>
                             <label>PNL mês</label>
                         </div>
                         <div className="card">
-                            <p className="value roe" state={master?.results?.dayRoe > 0 ? 'profit' : 'loss'}>
+                            <p className="value roe" state={master?.results?.dayRoe !== 0 ? master?.results?.dayRoe > 0 ? 'profit' : 'loss' : ''}>
                                 {toPercent(master?.results?.dayRoe, null, 2)}
                             </p>
                             <label>ROE dia</label>
                         </div>
                         <div className="card">
-                            <p className="value roe" state={master?.results?.monthRoe > 0 ? 'profit' : 'loss'}>
+                            <p className="value roe" state={master?.results?.monthRoe !== 0 ? master?.results?.monthRoe > 0 ? 'profit' : 'loss' : ''}>
                                 {toPercent(master?.results?.monthRoe, null, 2)}
                             </p>
                             <label>ROE mês</label>

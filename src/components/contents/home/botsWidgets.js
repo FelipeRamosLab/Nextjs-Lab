@@ -6,6 +6,8 @@ import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import TocIcon from '@mui/icons-material/Toc';
 import PageDataContext from '../../../context/pageData';
 import CardSlider from '../../sliders/card-slider';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import StoreIcon from '@mui/icons-material/Store';
 
 export default function BotsWidgets({myBots}) {
     const [myBotsView, setMyBotsView] = useState('carousel');
@@ -47,13 +49,13 @@ export default function BotsWidgets({myBots}) {
     }
 
     function handleBotClick(e, _id) {
-        window.open(createURL('/bot-details', { bot: _id }));
+        window.open(createURL('/bot-details', { bot: _id }), '_self');
     }
 
     return (
         <section className="bots-widgets grid columns-2 no-padding">
             <div className="widget item no-padding">
-                <SectionHeader title="Meus robôs" iconButtons={[
+                <SectionHeader title="Meus robôs" Icon={SmartToyIcon} iconButtons={[
                     new IconButtonConfig({
                         id: Math.random(),
                         display: myBotsView !== 'carousel',
@@ -82,7 +84,7 @@ export default function BotsWidgets({myBots}) {
                 />}
             </div>
             <div className="widget item no-padding">
-                <SectionHeader title="Bot Store" iconButtons={[
+                <SectionHeader title="Bot Store" Icon={StoreIcon} iconButtons={[
                     new IconButtonConfig({
                         id: Math.random(),
                         display: botStoreView !== 'carousel',

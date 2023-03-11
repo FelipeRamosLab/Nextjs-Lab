@@ -5,6 +5,7 @@ import Badge from '@mui/material/Badge';
 import LogoDevIcon from '@mui/icons-material/LogoDev';
 import IconButton from '@mui/material/IconButton';
 import PageDataContext from '../../context/pageData';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function MainHeader(){
     const {pageData} = useContext(PageDataContext);
@@ -30,6 +31,9 @@ export default function MainHeader(){
                             </Badge>
                         </IconButton>
                     </Link>
+                    <IconButton className="icon-button">
+                        <AccountCircleIcon />
+                    </IconButton>
                 </div>
             </div>
         </header>

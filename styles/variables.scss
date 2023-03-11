@@ -29,9 +29,10 @@ $error: #db4949;
 $error-light: #ffbfb9;
 $error-dark: #893831;
 $warn: #ebc856;
-$cta: #51eb92;
+$cta: #00fca8;
 $warn-dark: #b8a051;
 $backdrop: #0000004f;
+$backdrop-gradient: linear-gradient(45deg, rgba(34, 41, 48, 0), rgba(56, 121, 102, 0.075), rgba(65, 104, 87, 0.11));
 // Profit/Loss
 $profit: $success;
 $loss: $error;

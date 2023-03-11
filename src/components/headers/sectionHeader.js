@@ -1,10 +1,13 @@
 import { IconButton } from '@mui/material';
 
-export default function SectionHeader({title, description, iconButtons}) {
+export default function SectionHeader({title, Icon, description, iconButtons}) {
     return (
         <div className="section-header">
-            {title && <h2 className="title">{title}</h2>}
-            {description && <p>{description}</p>}
+            <div className="title-description">
+                {Icon && <Icon />}
+                {title && <h2 className="title">{title}</h2>}
+                {description && <p>{description}</p>}
+            </div>
 
             {/* Buttons */}
             {Array.isArray(iconButtons) && <div className="wrap-btns">

@@ -7,7 +7,7 @@ export default function Limits({entity}) {
 
     return (
         <div className="master-infos card">
-            <h3 className="title">Limites</h3>
+            <h3 className="title">Limites de Operação</h3>
 
             <TableFlex
                 data={[

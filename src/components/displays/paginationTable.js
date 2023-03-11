@@ -75,7 +75,7 @@ export default function PaginationTable({
             </div>}
             {!isLoading && <TableContainer sx={{ maxWidth: '100%' }}>
                 
-                <Table stickyHeader aria-label="sticky table">
+                <Table aria-label="sticky table">
                     <TableHead>
                         <TableRow className={pointerCursor && 'pointer-cursor'}>
                             {Array.isArray(columns) && columns.map((column) => (

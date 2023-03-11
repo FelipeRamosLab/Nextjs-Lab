@@ -165,11 +165,21 @@
     align-items: center;
     flex-direction: column;
     backdrop-filter: blur(10px);
-    background-color: $backdrop;
+    background: $backdrop;
 }
 
 .section-header {
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
+
+    .title-description {
+        display: inline-flex;
+        gap: 0.7rem;
+        
+        svg {
+            transform: translate(-3px);
+            font-size: 3.2rem;
+        }
+    }
 
     .title {
         margin: 0;
@@ -205,7 +215,6 @@
     .card {
         padding: 10px;
         min-width: auto;
-        box-shadow: none;
         flex: 1;
     }
 
