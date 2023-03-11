@@ -155,3 +155,8 @@
         }
     }
 }
+
+.MuiBackdrop-root {
+    backdrop-filter: blur(10px);
+    background-color: transparent;
+}

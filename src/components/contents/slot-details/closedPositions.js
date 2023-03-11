@@ -1,14 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import ActivityDataContext from '../../../context/activityData';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import { CircularProgress } from '@mui/material';
+import PaginationTable from '../../displays/paginationTable';
 
 const columns = [
     { id: 'cod', label: 'COD', minWidth: 50 },
@@ -77,33 +69,7 @@ const columns = [
 ];
 
 export default function SlotClosedPositions() {
-    const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const [positions, setPositions] = useState([]);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [isLoading, setIsLoading] = useState(true);
-    const rows = positions;
-
-    useEffect(() => {
-        loadPositions(0);
-    }, []);
-
-    const handleChangePage = async (event, newPage) => {
-        setIsLoading(true);
-
-
-        if (newPage > page && (rowsPerPage * (newPage + 1) > positions.length)) {
-            await loadPositions(newPage);
-        }
-
-        setPage(newPage);
-        setIsLoading(false);
-    };
-    
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
+    const {activityData} = useContext(ActivityDataContext);
 
     async function loadPositions(page) {
         try {
@@ -113,65 +79,14 @@ export default function SlotClosedPositions() {
                 page: page + 1
             }).post();
 
-            return setPositions(response.trades);
+            return response.trades;
         } catch(err) {
             throw err;
-        } finally {
-            setIsLoading(false);
         }
     }
 
-    return (
-        <Paper sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-            {isLoading && <div className="spinner-wrap">
-                <CircularProgress />
-            </div>}
-            {!isLoading && <TableContainer sx={{ maxWidth: '100%' }}>
-                
-                <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                    <TableRow>
-                    {columns.map((column) => (
-                        <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ minWidth: column.minWidth }}
-                        >
-                            {column.label}
-                        </TableCell>
-                    ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                        return (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.cod + index}>
-                                {columns.map((column, i) => {
-                                    const value = row[column.id];
-                                    return (
-                                        <TableCell key={column.id + i} align={column.align}>
-                                            {column.format ? column.format(value) : value}
-                                        </TableCell>
-                                    );
-                                })}
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
-                </Table>
-            </TableContainer>}
-            <TablePagination
-                nextIconButtonProps={{
-                    disabled: (page+1) * rowsPerPage > positions.length ? true : false
-                }}
-                rowsPerPageOptions={[10, 50, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-        </Paper>
-    );
+    return <PaginationTable
+        loadData={loadPositions}
+        columns={columns}
+    />;
 }

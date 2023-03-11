@@ -7,6 +7,9 @@ import CreateMasterForm from '../forms/createMaster';
 import ActivityDataContext from '../../context/activityData';
 import PageDataContext from '../../context/pageData';
 import CreateBotForm from '../forms/createBot';
+import SpeedDialButton from '../buttons/speedDial';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 export default function HomeContent(){
     const {activityData} = useContext(ActivityDataContext);
@@ -22,7 +25,6 @@ export default function HomeContent(){
     return (<>
         <div className="container section-header">
             <h2 className="title">Contas</h2>
-            <button className="button transparent" onClick={() => setCreateMaster(true)}>Criar conta</button>
 
             <FormFillModal
                 openState={createMaster}
@@ -40,8 +42,6 @@ export default function HomeContent(){
         <div className="container section-header">
             <h2>Meus Bots</h2>
 
-            <button className="button transparent" onClick={() => setCreateBot(true)}>Criar Bot</button>
-
             <FormFillModal
                 openState={createBot}
                 title="Criar robô"
@@ -53,5 +53,13 @@ export default function HomeContent(){
         <section className="container">
             <CardSlider data={myBots} />
         </section>
+
+        <SpeedDialButton
+            actions={[
+                { icon: <SmartToyIcon/>, name: 'Robô', action: () => setCreateBot(true) },
+                { icon: <AccountBalanceWalletIcon/>, name: 'Conta', action: () => setCreateMaster(true) }
+            ]}
+            className="home-page"
+        />
     </>);
 }
