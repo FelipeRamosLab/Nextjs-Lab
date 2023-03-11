@@ -7,28 +7,25 @@ export default function MasterInfos({master}) {
     const createdAt = new Date(validateProp(master, ['createdAt']));
 
     return (
-        <div className="master-infos">
+        <div className="master-infos card">
             <TableFlex
                 data={[
                     [ 'ID da conta:', validateProp(master, ['cod']) || '--'],
-                    [ 'Criado em:', createdAt.toLocaleDateString() + ' - ' + createdAt.toLocaleTimeString(), !seeMore ],
-                    [ 'Exchange:', validateProp(master, ['exchange']).toUpperCase(), !seeMore ],
-                    [ 'Avalancagem:', concatUnit(master, ['limits', 'leverege'], null, 'x' ) || '--'],
+                    [ 'Criado em:', createdAt.toLocaleDateString() + ' - ' + createdAt.toLocaleTimeString() ],
+                    [ 'Exchange:', validateProp(master, ['exchange']).toUpperCase() ],
                     [ 'Alocação disponível:', toPercent(master, ['availableAllocation']) ],
                     [ 'Total na carteira:', toMoney(master, ['futuresWallet', 'totalWalletBalance']) || '--' ],
-                    [ 'Prejuízo (Mensal):', getLoss(master, 'monthlyLoss') || '--', !seeMore ],
-                    [ 'Prejuízo (Diário):', getLoss(master, 'dailyLoss') || '--', !seeMore ],
-                    [ 'Posição de venda:', shortPosition, !seeMore ],
+                    [ 'Posição de venda:', shortPosition ],
                 ]}
                 labelClass="label"
                 valueClass="value"
             />
 
-            <button
+            {/* <button
                 type="button"
                 className="button full-width top-border transparent small"
                 onClick={()=>setSeeMore(!seeMore)}
-            >{!seeMore ? 'Ver Mais' : 'Ver Menos'}</button>
+            >{!seeMore ? 'Ver Mais' : 'Ver Menos'}</button> */}
         </div>
     )
 }

@@ -46,4 +46,10 @@
     min-height: 300px;
     width: 100%;
 }
+
+.MuiCircularProgress-root {
+    svg {
+        color: $tertiary;
+    }
+}
   

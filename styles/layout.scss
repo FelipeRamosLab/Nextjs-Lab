@@ -52,7 +52,7 @@
 
 .content-sidebar {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     column-gap: 3rem;
 
     @media screen and (min-width: $md) {

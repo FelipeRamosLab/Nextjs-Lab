@@ -3,18 +3,25 @@ import CreateSlotForm from '../../forms/createSlot';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
 import MasterInfos from './masterInfos';
-import { FaTrash, FaPen } from 'react-icons/fa';
+import MasterResults from '../../common/limits';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import FormFillModal from '../../modals/formFill';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import EditMasterForm from '../../forms/editing/master';
 import DeleteConfirmation from '../../modals/confirmation';
 import ActivityDataContext from '../../../context/activityData';
+import SectionHeader from '../../headers/sectionHeader';
+import IconButtonConfig from '../../../models/IconButtonConfig';
+import Paper from '@mui/material/Paper';
 
 export default function MasterAccount({ loadData }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [addNewSlotModal, setAddNewSlotModal] = useState(false);
     const [editMasterModal, setEditMasterModal] = useState(false);
+    const [transferType, setTransferType] = useState(false);
     const deleteConfirmationState = useState(false);
     const [_, setDeleteConfirmation] = deleteConfirmationState;
     const { master, masterSlots } = activityData || {};
@@ -85,28 +92,21 @@ export default function MasterAccount({ loadData }) {
             />
             
             <section className="content-fullwidth">
-                <div className="section-header">
-                    <h1 className="title">{master?.name}</h1>
+                <SectionHeader title={master?.name} iconButtons={[
+                    new IconButtonConfig({
+                        Icon: AttachMoneyIcon,
+                        action: () => setTransferType('deposit')
+                    }),
+                    new IconButtonConfig({
+                        Icon: EditIcon,
+                        action: () => setEditMasterModal(true)
+                    }),
+                    new IconButtonConfig({
+                        Icon: DeleteIcon,
+                        action: () => setDeleteConfirmation(true)
+                    })
+                ]}/>
 
-                    <button type="button" className="circle-button" onClick={() => setEditMasterModal(true)}><FaPen /></button>
-                    <button type="button" className="circle-button" btn-color="error" onClick={() => setDeleteConfirmation(true)}><FaTrash /></button>
-
-                    <FormFillModal
-                        title="Editar conta"
-                        defaultData={activityData?.master}
-                        openState={editMasterModal}
-                        onClose={() => setEditMasterModal(false)}
-                        Content={EditMasterForm}
-                        saveAction={editMaster}
-                    />
-
-                    <DeleteConfirmation
-                        title="Deseja excluir a conta?"
-                        message={`Tem certeza que você deseja excluir a conta [${master?.cod}][${master?.name}] permanentemente? Você perderá todo o histórico de operações feito nela!`}
-                        openState={deleteConfirmationState}
-                        onConfirm={deleteMaster}
-                    />
-                </div>
                 <div className="stats-cards">
                     <div className="card card-grad">
                         <span className="value">{toMoney(master, ['pnl'])}</span>
@@ -129,8 +129,34 @@ export default function MasterAccount({ loadData }) {
 
             <section className="content-sidebar">
                 <div className="content">
-                    <TransferPainel master={master} />
-                    <MasterInfos master={master} />
+                    <TransferPainel master={master} transferType={transferType} setTransferType={setTransferType} />
+
+                    <section className="master-results results stats-cards">
+                        <Paper className="card">
+                            <p className="value pnl" state={master?.results?.dayPnl > 0 ? 'profit' : 'loss'}>
+                                {toMoney(master?.results?.dayPnl)}
+                            </p>
+                            <label>PNL dia</label>
+                        </Paper>
+                        <Paper className="card pnl">
+                            <p className="value pnl" state={master?.results?.monthPnl > 0 ? 'profit' : 'loss'}>
+                                {toMoney(master?.results?.monthPnl)}
+                            </p>
+                            <label>PNL mês</label>
+                        </Paper>
+                        <Paper className="card">
+                            <p className="value roe" state={master?.results?.dayRoe > 0 ? 'profit' : 'loss'}>
+                                {toPercent(master?.results?.dayRoe, null, 2)}
+                            </p>
+                            <label>ROE dia</label>
+                        </Paper>
+                        <Paper className="card">
+                            <p className="value roe" state={master?.results?.monthRoe > 0 ? 'profit' : 'loss'}>
+                                {toPercent(master?.results?.monthRoe, null, 2)}
+                            </p>
+                            <label>ROE mês</label>
+                        </Paper>
+                    </section>
 
                     <div className="section-header">
                         <h2>Slots</h2>
@@ -147,9 +173,26 @@ export default function MasterAccount({ loadData }) {
                 </div>
 
                 <div className="sidebar">
-                    
+                    <MasterInfos master={master} />
+                    <MasterResults entity={master} />
                 </div>
             </section>
+
+            <FormFillModal
+                title="Editar conta"
+                defaultData={activityData?.master}
+                openState={editMasterModal}
+                onClose={() => setEditMasterModal(false)}
+                Content={EditMasterForm}
+                saveAction={editMaster}
+            />
+
+            <DeleteConfirmation
+                title="Deseja excluir a conta?"
+                message={`Tem certeza que você deseja excluir a conta [${master?.cod}][${master?.name}] permanentemente? Você perderá todo o histórico de operações feito nela!`}
+                openState={deleteConfirmationState}
+                onConfirm={deleteMaster}
+            />
         </div>
     );
 }

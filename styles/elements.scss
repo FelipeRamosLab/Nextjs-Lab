@@ -23,7 +23,8 @@
     }
 }
 
-.pnl {
+.pnl,
+.roe {
     &[state="profit"] {
         color: $profit;
     }
@@ -157,8 +158,12 @@
 }
 
 .MuiBackdrop-root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     backdrop-filter: blur(10px);
-    background-color: transparent;
+    background-color: $backdrop;
 }
 
 .section-header {
@@ -172,6 +177,7 @@
         background-color: $primary;
         color: $soft-text;
         transition: all 200ms;
+        margin-left: 10px;
 
         &:hover {
             background-color: lighten($color: $primary, $amount: 10);
@@ -182,5 +188,48 @@
 .bots-widgets {
     .widget {
         max-width: 100%;
+    }
+}
+
+.results {
+    &.stats-cards {
+        margin-top: 0;
+    }
+
+    .MuiPaper-root {
+        padding: 10px;
+        min-width: auto;
+        box-shadow: none;
+        flex: 1;
+    }
+
+    .card {
+        background: $primary;
+        color: $soft-text;
+        min-width: 47%;
+
+        @media screen and (min-width: $md) {
+            min-width: 33%;
+        }
+
+        @media screen and (min-width: $l) {
+            min-width: auto;
+            flex: 1;
+        }
+
+        label,
+        p {
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+        p {
+            font-size: 1.7rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+        }
     }
 }

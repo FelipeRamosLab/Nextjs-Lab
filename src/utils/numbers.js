@@ -14,11 +14,11 @@ function toMoney(rootObj, inputPath, options) {
     }).format(value);
 }
 
-function toPercent(rootObj, inputPath) {
+function toPercent(rootObj, inputPath, maximumFractionDigits) {
     const value = Number(validateProp(rootObj, inputPath));
 
     if(!validateNum(value)) return undefined;
-    return new Intl.NumberFormat('pt-BR', { style: 'percent' }).format(value / 100);
+    return new Intl.NumberFormat('pt-BR', { style: 'percent', maximumFractionDigits }).format(value / 100);
 }
 
 function concatUnit(rootObj, inputPath, prefix, suffix) {

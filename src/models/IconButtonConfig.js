@@ -5,9 +5,10 @@ export default class IconButtonConfig {
         action,
         display
     }) {
-        this.id = id;
+        if (display === undefined) this.display = true;
+        this.id = id || Math.random();
         this.Icon = Icon;
         this.action = action;
-        this.display = display;
+        this.display = display === undefined || display ? true : false;
     }
 }

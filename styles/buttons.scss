@@ -154,8 +154,10 @@
     position: fixed;
     bottom: 25px;
     right: 25px;
+}
 
-    .MuiButtonBase-root {
+.MuiButtonBase-root {
+    &.MuiFab-root {
         background-color: $cta;
         color: $primary-dark;
     }

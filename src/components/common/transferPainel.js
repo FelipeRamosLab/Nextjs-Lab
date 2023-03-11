@@ -3,10 +3,9 @@ import axios from 'axios';
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import ActivityDataContext from '../../context/activityData';
 
-export default function TransferPainel({master}) {
+export default function TransferPainel({master, transferType, setTransferType}) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [transferValue, setTranferValue] = useState('');
-    const [transferType, setTranferType] = useState(false);
 
     function transferInput(ev) {
         const value = Number(ev.target.value);
@@ -17,7 +16,7 @@ export default function TransferPainel({master}) {
 
     async function sendTransfer(ev) {
         ev.preventDefault();
-        setTranferType('loading');
+        setTransferType('loading');
         const toSend = {
             user: master.user._id,
             master: master._id,
@@ -28,12 +27,12 @@ export default function TransferPainel({master}) {
         try {
             const master = await axios.post('/api/transfer/deposit-withdraw/', toSend);
 
-            setTranferType('success');
+            setTransferType('success');
             setActivityData({...activityData, master: master.data});
-            setTimeout(() => setTranferType(false), 3000);
+            setTimeout(() => setTransferType(false), 3000);
         } catch(err) {
-            setTranferType('error');
-            setTimeout(() => setTranferType(false), 3000);
+            setTransferType('error');
+            setTimeout(() => setTransferType(false), 3000);
             console.error(err);
         }
     }
@@ -46,7 +45,7 @@ export default function TransferPainel({master}) {
                 <button type="submit" className="transfer-btn button transparent">
                     <FaCheckCircle className="circle-button reverse" btn-color="success" />
                 </button>
-                <button type="reset" className="transfer-btn button transparent" onClick={() => setTranferType(false)}>
+                <button type="reset" className="transfer-btn button transparent" onClick={() => setTransferType(false)}>
                     <FaTimesCircle className="circle-button reverse" btn-color="error" />
                 </button>
             </form>
@@ -64,9 +63,9 @@ export default function TransferPainel({master}) {
             <h4 className="callback">Ocorreu um erro ao realizar o depósito!</h4>
         </div>}
 
-        {!transferType && <div className="deposit-withdraw">
-            <button type="button" className="button full-width outlined transparent small" onClick={() => setTranferType('deposit')}>Depósito</button>
-            <button type="button" className="button full-width outlined transparent small" onClick={() => setTranferType('withdraw')}>Saque</button>
-        </div>}
+        {/* {!transferType && <div className="deposit-withdraw">
+            <button type="button" className="button full-width outlined transparent small" onClick={() => setTransferType('deposit')}>Depósito</button>
+            <button type="button" className="button full-width outlined transparent small" onClick={() => setTransferType('withdraw')}>Saque</button>
+        </div>} */}
     </div>);
 }

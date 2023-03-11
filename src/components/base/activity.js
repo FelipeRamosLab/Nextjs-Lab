@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import ServerError from "../contents/serverError";
-import Spinner from '../loaders/spinner';
 import ActivityDataContext from '../../context/activityData';
+import BackdropLoading from '../common/backdropLoading';
 
 export default function Activity({ PageLayout, PageContent, activityUrl, queryParams }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
+    const [loading, setLoading] = useState((!activityData || activityData.status === "loading"))
 
     function loadData(){
         const params = {...queryParams, ...window.queryParams};
@@ -15,6 +16,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
                 delete prev.status;
                 return {...prev, ...res.data} 
             });
+            setLoading(false);
         }).catch(err => setActivityData({status: 'error', errorObj: err.response.data}));
     }
 
@@ -44,19 +46,11 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
         );
     }
 
-    if (!activityData || activityData.status === "loading") {
-        return (
-            <PageLayout>
-                <div className="loading-page">
-                    <Spinner />
-                </div>
-            </PageLayout>
-        );
-    }
-
     return (
         <PageLayout>
-            <PageContent loadData={loadData} queryParams={queryParams} />
+            {!loading && <PageContent loadData={loadData} queryParams={queryParams} />}
+
+            <BackdropLoading open={loading} />
         </PageLayout>
     );
 }

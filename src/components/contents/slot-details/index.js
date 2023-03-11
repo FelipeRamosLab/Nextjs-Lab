@@ -6,10 +6,16 @@ import EditSlotForm from '../../forms/editing/slot';
 import DeleteConfirmation from '../../modals/confirmation';
 import ActivityDataContext from '../../../context/activityData';
 import SlotClosedPositions from './closedPositions';
+import SlotLimits from '../../common/limits';
+import SectionHeader from '../../headers/sectionHeader';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import IconButtonConfig from '../../../models/IconButtonConfig';
 
 export default function SlotDetails() {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const {slot} = activityData || {};
+    const {slot, bot} = activityData || {};
     const [editModal, setEditModal] = useState(false);
     const deleteConfirmationState = useState(false);
     const [_, setDeleteConfirmation] = deleteConfirmationState;
@@ -61,28 +67,20 @@ export default function SlotDetails() {
     return (
         <div className="container">
             <section className="content-fullwidth">
-                <div className="section-header">
-                    <h1 className="title">{slot.name}</h1>
-
-                    <button type="button" className="circle-button" onClick={() => setEditModal(true)}><FaPen /></button>
-                    <button type="button" className="circle-button" btn-color="error" onClick={() => setDeleteConfirmation(true)}><FaTrash /></button>
-
-                    <FormFillModal
-                        title="Editar Slot"
-                        defaultData={activityData.slot}
-                        Content={EditSlotForm}
-                        openState={editModal}
-                        onClose={() => setEditModal(false)}
-                        saveAction={updateSlot}
-                    />
-
-                    <DeleteConfirmation
-                        title="Deseja excluir o slot?"
-                        message={`Tem certeza que você deseja excluir o slot [${slot.cod}][${slot.name}] permanentemente? Você perderá todo o histórico de operações feito nele.`}
-                        openState={deleteConfirmationState}
-                        onConfirm={deleteSlot}
-                    />
-                </div>
+                <SectionHeader title={slot?.name} iconButtons={[
+                    new IconButtonConfig({
+                        Icon: AttachMoneyIcon,
+                        action: () => {}
+                    }),
+                    new IconButtonConfig({
+                        Icon: EditIcon,
+                        action: () => setEditModal(true)
+                    }),
+                    new IconButtonConfig({
+                        Icon: DeleteIcon,
+                        action: () => setDeleteConfirmation(true)
+                    })
+                ]}/>
             </section>
 
             <section className="content-sidebar">
@@ -92,8 +90,8 @@ export default function SlotDetails() {
                             <div className="avatar">
                                 <h4>AV</h4>
                             </div>
-                            <h3 className="title">{slot.bot.name}</h3>
-                            <p>{slot.bot.description}</p>
+                            <h3 className="title">{bot?.name || '---'}</h3>
+                            <p>{bot?.description || '---'}</p>
                         </div>
 
                         <div className="stats-cards smaller">
@@ -121,7 +119,7 @@ export default function SlotDetails() {
                 </div>
 
                 <div className="sidebar">
-                    
+                    <SlotLimits entity={slot} />
                 </div>
             </section>
 
@@ -134,6 +132,22 @@ export default function SlotDetails() {
                     <SlotClosedPositions />
                 </div>
             </section>
+
+            <FormFillModal
+                title="Editar Slot"
+                defaultData={activityData.slot}
+                Content={EditSlotForm}
+                openState={editModal}
+                onClose={() => setEditModal(false)}
+                saveAction={updateSlot}
+            />
+
+            <DeleteConfirmation
+                title="Deseja excluir o slot?"
+                message={`Tem certeza que você deseja excluir o slot [${slot.cod}][${slot.name}] permanentemente? Você perderá todo o histórico de operações feito nele.`}
+                openState={deleteConfirmationState}
+                onConfirm={deleteSlot}
+            />
         </div>
     );
 }
