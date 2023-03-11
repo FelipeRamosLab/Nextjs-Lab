@@ -27,18 +27,22 @@ export default function PaginationTable({
     if (!columns) columns = [];
 
     useEffect(() => {
-        loadData && loadData(
-            page,
-            setIsLoading
-        ).then(response => {
-            setData(response);
-        }).catch(err => {
-            if (errorCallback) errorCallback(err);
-            else throw err;
-        }).finally(_ => {
-            setIsLoading(false)
-        });
-    }, []);
+        if (loadData) {
+            loadData(
+                page,
+                setIsLoading
+            ).then(response => {
+                setData(response);
+            }).catch(err => {
+                if (errorCallback) errorCallback(err);
+                else throw err;
+            }).finally(_ => {
+                setIsLoading(false);
+            });
+        } else {
+            setIsLoading(false);
+        }
+    }, [page, loadData, errorCallback]);
 
     const handleChangePage = async (event, newPage) => {
         setIsLoading(true);

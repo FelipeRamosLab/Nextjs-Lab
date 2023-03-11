@@ -19,11 +19,13 @@
         margin-bottom: 1rem;
     }
 
-    &.columns-2 .item {
+    &.columns-2 > .item {
         flex: 49% 0;
+        max-width: 49%;
 
         @media screen and (max-width: 601px) {
             flex: 100% 0;
+            max-width: 100%;
         }
     }
 

@@ -160,3 +160,27 @@
     backdrop-filter: blur(10px);
     background-color: transparent;
 }
+
+.section-header {
+    margin-bottom: 10px;
+
+    .title {
+        margin: 0;
+    }
+
+    .MuiIconButton-root {
+        background-color: $primary;
+        color: $soft-text;
+        transition: all 200ms;
+
+        &:hover {
+            background-color: lighten($color: $primary, $amount: 10);
+        }
+    }
+}
+
+.bots-widgets {
+    .widget {
+        max-width: 100%;
+    }
+}

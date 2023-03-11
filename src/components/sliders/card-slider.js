@@ -12,6 +12,8 @@ export default function CardSlider({data}) {
             dots={true}
             infinite={true}
             arrows={false}
+            autoplay={true}
+            autoplaySpeed={5000}
         >
             {data && data.map(bot=>{
                 const botURL = createURL('/bot-details', { bot: bot._id});

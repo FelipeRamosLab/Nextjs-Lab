@@ -10,7 +10,6 @@ export default function SpeedDialButton({actions,  className}) {
   const handleClose = () => setOpen(false);
 
   return (<>
-        <Backdrop open={open} className="speed-dial-backdrop" />
         <SpeedDial
             className={className} 
             ariaLabel="SpeedDial tooltip example"
