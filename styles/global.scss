@@ -15,7 +15,7 @@ body {
 }
 
 header {
-    background-color: $primary;
+    background-color: darken($color: $secondary, $amount: 4);
     margin-bottom: 2rem;
     padding: 0.5rem 0;
     position: sticky;

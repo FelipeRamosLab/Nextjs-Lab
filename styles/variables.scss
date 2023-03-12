@@ -10,22 +10,16 @@ $primary-bright: #394b52;
 $secondary-dark: #233236;
 $soft-text: #e3e4e3;
 $bright-text: white;
-$soft-tertiary: #DDF3C6;
 $grey-mid: #96a3a9;
 $charcoal: #303E48;
-$deep-space: #4e6665;
-$copper-red: #cd7764;
-$aquamarine: #83d7ac;
-$maximum-yellow: #F5F749;
-$charleston-green: #262a2a;
-$pewter-blue: #94b5bd;
 // Basic colors
 $black: #111;
 $white: #FFF;
+
 // State colors
-$success: #51eb92;
+$success: #0ecb81;
 $success-dark: #42614f;
-$error: #db4949;
+$error: #ee4a4a;
 $error-light: #ffbfb9;
 $error-dark: #893831;
 $warn: #ebc856;
@@ -33,15 +27,18 @@ $cta: #00fca8;
 $warn-dark: #b8a051;
 $backdrop: #0000004f;
 $backdrop-gradient: linear-gradient(45deg, rgba(34, 41, 48, 0), rgba(56, 121, 102, 0.075), rgba(65, 104, 87, 0.11));
+
 // Profit/Loss
 $profit: $success;
 $loss: $error;
+
 // Gradients
-$grad-card: radial-gradient(78.32% 141.13% at 17.05% 15.91%,#202b2e 0%, #283b3f 100%);
+$grad-card: radial-gradient(78.32% 141.13% at 17.05% 15.91%,#232e31 0%, #2b3a3d 100%);
 $grad-card-dark: radial-gradient(46.22% 368.13% at 49.05% 228.91%,#2a3c41 0,#222d30 100%);
 $grad-card-grey: linear-gradient(133.47deg, hsl(202, 23%, 25%) 7.07%, #304345 96.06%);
 $grad-card-result: linear-gradient(133.47deg, #8BC6E8 7.07%, #C5F9C4 96.06%);
 $grad-card-result-alt: linear-gradient(133.47deg, #8BE8D7 7.07%, #F4F9C4 96.06%);
+
 // Breakpoints
 $xxl: 2560px;
 $xl: 1440px;
@@ -50,3 +47,129 @@ $md: 768px;
 $sm: 425px;
 $xs: 375px;
 $xxs: 320px;
+
+// Primary Darken Pallete
+$primary-darken-5: darken($color: $primary, $amount: 5);
+$primary-darken-10: darken($color: $primary, $amount: 10);
+$primary-darken-15: darken($color: $primary, $amount: 15);
+$primary-darken-20: darken($color: $primary, $amount: 20);
+$primary-darken-25: darken($color: $primary, $amount: 25);
+$primary-darken-30: darken($color: $primary, $amount: 30);
+$primary-darken-35: darken($color: $primary, $amount: 35);
+$primary-darken-40: darken($color: $primary, $amount: 40);
+$primary-darken-45: darken($color: $primary, $amount: 45);
+$primary-darken-50: darken($color: $primary, $amount: 50);
+$primary-darken-55: darken($color: $primary, $amount: 55);
+$primary-darken-60: darken($color: $primary, $amount: 60);
+$primary-darken-65: darken($color: $primary, $amount: 65);
+$primary-darken-70: darken($color: $primary, $amount: 70);
+$primary-darken-75: darken($color: $primary, $amount: 75);
+$primary-darken-80: darken($color: $primary, $amount: 80);
+$primary-darken-85: darken($color: $primary, $amount: 85);
+$primary-darken-90: darken($color: $primary, $amount: 90);
+$primary-darken-95: darken($color: $primary, $amount: 95);
+
+// Primary Lighten Pallete
+$primary-lighten-5: lighten($color: $primary, $amount: 5);
+$primary-lighten-10: lighten($color: $primary, $amount: 10);
+$primary-lighten-15: lighten($color: $primary, $amount: 15);
+$primary-lighten-20: lighten($color: $primary, $amount: 20);
+$primary-lighten-25: lighten($color: $primary, $amount: 25);
+$primary-lighten-30: lighten($color: $primary, $amount: 30);
+$primary-lighten-35: lighten($color: $primary, $amount: 35);
+$primary-lighten-40: lighten($color: $primary, $amount: 40);
+$primary-lighten-45: lighten($color: $primary, $amount: 45);
+$primary-lighten-50: lighten($color: $primary, $amount: 50);
+$primary-lighten-55: lighten($color: $primary, $amount: 55);
+$primary-lighten-60: lighten($color: $primary, $amount: 60);
+$primary-lighten-65: lighten($color: $primary, $amount: 65);
+$primary-lighten-70: lighten($color: $primary, $amount: 70);
+$primary-lighten-75: lighten($color: $primary, $amount: 75);
+$primary-lighten-80: lighten($color: $primary, $amount: 80);
+$primary-lighten-85: lighten($color: $primary, $amount: 85);
+$primary-lighten-90: lighten($color: $primary, $amount: 90);
+$primary-lighten-95: lighten($color: $primary, $amount: 95);
+
+// Secondary Darken Pallete
+$secondary-darken-5: darken($color: $secondary, $amount: 5);
+$secondary-darken-10: darken($color: $secondary, $amount: 10);
+$secondary-darken-15: darken($color: $secondary, $amount: 15);
+$secondary-darken-20: darken($color: $secondary, $amount: 20);
+$secondary-darken-25: darken($color: $secondary, $amount: 25);
+$secondary-darken-30: darken($color: $secondary, $amount: 30);
+$secondary-darken-35: darken($color: $secondary, $amount: 35);
+$secondary-darken-40: darken($color: $secondary, $amount: 40);
+$secondary-darken-45: darken($color: $secondary, $amount: 45);
+$secondary-darken-50: darken($color: $secondary, $amount: 50);
+$secondary-darken-55: darken($color: $secondary, $amount: 55);
+$secondary-darken-60: darken($color: $secondary, $amount: 60);
+$secondary-darken-65: darken($color: $secondary, $amount: 65);
+$secondary-darken-70: darken($color: $secondary, $amount: 70);
+$secondary-darken-75: darken($color: $secondary, $amount: 75);
+$secondary-darken-80: darken($color: $secondary, $amount: 80);
+$secondary-darken-85: darken($color: $secondary, $amount: 85);
+$secondary-darken-90: darken($color: $secondary, $amount: 90);
+$secondary-darken-95: darken($color: $secondary, $amount: 95);
+
+// Secondary Lighten Pallete
+$secondary-lighten-5: lighten($color: $secondary, $amount: 5);
+$secondary-lighten-10: lighten($color: $secondary, $amount: 10);
+$secondary-lighten-15: lighten($color: $secondary, $amount: 15);
+$secondary-lighten-20: lighten($color: $secondary, $amount: 20);
+$secondary-lighten-25: lighten($color: $secondary, $amount: 25);
+$secondary-lighten-30: lighten($color: $secondary, $amount: 30);
+$secondary-lighten-35: lighten($color: $secondary, $amount: 35);
+$secondary-lighten-40: lighten($color: $secondary, $amount: 40);
+$secondary-lighten-45: lighten($color: $secondary, $amount: 45);
+$secondary-lighten-50: lighten($color: $secondary, $amount: 50);
+$secondary-lighten-55: lighten($color: $secondary, $amount: 55);
+$secondary-lighten-60: lighten($color: $secondary, $amount: 60);
+$secondary-lighten-65: lighten($color: $secondary, $amount: 65);
+$secondary-lighten-70: lighten($color: $secondary, $amount: 70);
+$secondary-lighten-75: lighten($color: $secondary, $amount: 75);
+$secondary-lighten-80: lighten($color: $secondary, $amount: 80);
+$secondary-lighten-85: lighten($color: $secondary, $amount: 85);
+$secondary-lighten-90: lighten($color: $secondary, $amount: 90);
+$secondary-lighten-95: lighten($color: $secondary, $amount: 95);
+
+// Tertiary Darken Pallete
+$tertiary-darken-5: darken($color: $tertiary, $amount: 5);
+$tertiary-darken-10: darken($color: $tertiary, $amount: 10);
+$tertiary-darken-15: darken($color: $tertiary, $amount: 15);
+$tertiary-darken-20: darken($color: $tertiary, $amount: 20);
+$tertiary-darken-25: darken($color: $tertiary, $amount: 25);
+$tertiary-darken-30: darken($color: $tertiary, $amount: 30);
+$tertiary-darken-35: darken($color: $tertiary, $amount: 35);
+$tertiary-darken-40: darken($color: $tertiary, $amount: 40);
+$tertiary-darken-45: darken($color: $tertiary, $amount: 45);
+$tertiary-darken-50: darken($color: $tertiary, $amount: 50);
+$tertiary-darken-55: darken($color: $tertiary, $amount: 55);
+$tertiary-darken-60: darken($color: $tertiary, $amount: 60);
+$tertiary-darken-65: darken($color: $tertiary, $amount: 65);
+$tertiary-darken-70: darken($color: $tertiary, $amount: 70);
+$tertiary-darken-75: darken($color: $tertiary, $amount: 75);
+$tertiary-darken-80: darken($color: $tertiary, $amount: 80);
+$tertiary-darken-85: darken($color: $tertiary, $amount: 85);
+$tertiary-darken-90: darken($color: $tertiary, $amount: 90);
+$tertiary-darken-95: darken($color: $tertiary, $amount: 95);
+
+// Tertiary Lighten Pallete
+$tertiary-lighten-5: lighten($color: $tertiary, $amount: 5);
+$tertiary-lighten-10: lighten($color: $tertiary, $amount: 10);
+$tertiary-lighten-15: lighten($color: $tertiary, $amount: 15);
+$tertiary-lighten-20: lighten($color: $tertiary, $amount: 20);
+$tertiary-lighten-25: lighten($color: $tertiary, $amount: 25);
+$tertiary-lighten-30: lighten($color: $tertiary, $amount: 30);
+$tertiary-lighten-35: lighten($color: $tertiary, $amount: 35);
+$tertiary-lighten-40: lighten($color: $tertiary, $amount: 40);
+$tertiary-lighten-45: lighten($color: $tertiary, $amount: 45);
+$tertiary-lighten-50: lighten($color: $tertiary, $amount: 50);
+$tertiary-lighten-55: lighten($color: $tertiary, $amount: 55);
+$tertiary-lighten-60: lighten($color: $tertiary, $amount: 60);
+$tertiary-lighten-65: lighten($color: $tertiary, $amount: 65);
+$tertiary-lighten-70: lighten($color: $tertiary, $amount: 70);
+$tertiary-lighten-75: lighten($color: $tertiary, $amount: 75);
+$tertiary-lighten-80: lighten($color: $tertiary, $amount: 80);
+$tertiary-lighten-85: lighten($color: $tertiary, $amount: 85);
+$tertiary-lighten-90: lighten($color: $tertiary, $amount: 90);
+$tertiary-lighten-95: lighten($color: $tertiary, $amount: 95);

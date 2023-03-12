@@ -108,10 +108,10 @@ export default function MasterAccount({ loadData }) {
                 ]}/>
 
                 <div className="stats-cards">
-                    <div className="card h-scroll-display">
+                    <Paper className="card h-scroll-display" elevation={20}>
                         <span className="value money">{toMoney(master, ['pnl'])}</span>
                         <label>PNL Acumulado</label>
-                    </div>
+                    </Paper>
                     <div className="card h-scroll-display">
                         <span className="value money">{toMoney(master, ['futuresWallet', 'totalUnrealizedProfit'])}</span>
                         <label>Não Realizado</label>

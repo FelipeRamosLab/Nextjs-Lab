@@ -69,7 +69,7 @@ export default function PaginationTable({
     };
 
     return (
-        <Paper sx={{ maxWidth: '100%', overflow: 'hidden' }}>
+        <Paper sx={{ maxWidth: '100%', overflow: 'hidden' }} className="pagination-table" elevation={23}>
             {isLoading && <div className="spinner-wrap">
                 <CircularProgress />
             </div>}

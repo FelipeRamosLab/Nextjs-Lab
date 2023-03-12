@@ -103,7 +103,7 @@
     }
 
     .rule {
-        background: $pewter-blue;
+        background: $grey-mid;
         display: flex;
         flex-direction: column;
         margin-bottom: 1rem;
@@ -145,12 +145,12 @@
         }
 
         &.color-block {
-            background: $charleston-green !important;
+            background: $secondary !important;
             color: $soft-text;
         }
 
         &.color-rule {
-            background: $aquamarine !important;
+            background: $tertiary !important;
         }
 
         &.color-config {
@@ -178,7 +178,7 @@
         
         svg {
             transform: translate(-3px);
-            font-size: 3.2rem;
+            font-size: 2.4rem;
         }
     }
 
@@ -249,5 +249,23 @@
         label {
             font-size: 0.9rem;
         }
+    }
+}
+
+.pagination-table.MuiPaper-root {
+    background: $grad-card-dark;
+
+    .MuiTableCell-root,
+    .MuiTableCell-head,
+    .MuiTableCell-body,
+    .MuiToolbar-root,
+    .MuiButtonBase-root,
+    svg {
+        color: $bright-text;
+        border-color: darken($color: $primary, $amount: 5);
+    }
+
+    .MuiTableRow-hover:hover {
+        background-color: lighten($color: $primary-grey, $amount: 10);
     }
 }
