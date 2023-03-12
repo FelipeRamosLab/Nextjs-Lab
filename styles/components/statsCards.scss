@@ -1,12 +1,14 @@
 .stats-cards {
     display: flex;
     overflow-x: scroll;
+    overflow-y: visible;
     gap: 1.5rem;
     padding-bottom: 0.7rem;
     margin-top: 1rem;
+    box-shadow: 0 0 37px #181a1c;
 
     @media screen and (min-width: $sm) {
-        overflow-x: visible;
+        overflow-x: auto;
         padding-bottom: 0;
     }
     

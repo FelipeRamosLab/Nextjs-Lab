@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState, useEffect } from 'react';
 import { steps } from '../createMaster';
 
-export default function EditMasterForm({formState, isLoadingState, pageData, isEditMode}) {
+export default function EditMasterForm({formState, isLoadingState, isEditMode}) {
     const [expanded, setExpanded] = useState('panel0');
     const [isLoading, setIsLoading] = isLoadingState;
 
@@ -33,7 +33,6 @@ export default function EditMasterForm({formState, isLoadingState, pageData, isE
                 <AccordionDetails>
                     <step.Content
                         formState={formState}
-                        
                         isEditMode={isEditMode}
                     />
                 </AccordionDetails>
