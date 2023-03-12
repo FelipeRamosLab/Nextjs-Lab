@@ -125,6 +125,9 @@ export default function MasterAccount({ loadData }) {
                         <label>Lucro Realizado</label>
                     </div>
                 </div>
+
+                {/* Small update time text */}
+                <small className="tiny-letters">Última atualização: {master?.modifiedAt ? new Date(master?.modifiedAt).toLocaleString() : '---'}</small>
             </section>
 
             <section className="content-sidebar">

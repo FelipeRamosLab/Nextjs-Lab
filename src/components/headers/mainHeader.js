@@ -14,13 +14,13 @@ export default function MainHeader(){
         <header>
             <div className="container header-wrap">
                 <Link href="/" passHref>
-                    <div className="header-column logo-wrap" onClick={() => console.log('dfsfd')}>
-                            <Image
-                                src="/images/logo.svg"
-                                alt="logo"
-                                width="100%"
-                                height="100%"
-                            />
+                    <div className="header-column logo-wrap">
+                        <Image
+                            src="/images/logo.svg"
+                            alt="logo"
+                            width="100%"
+                            height="100%"
+                        />
                     </div>
                 </Link>
                 <div className="header-column menu-wrap">
