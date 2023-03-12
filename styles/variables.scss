@@ -38,7 +38,8 @@ $profit: $success;
 $loss: $error;
 // Gradients
 $grad-card: radial-gradient(78.32% 141.13% at 17.05% 15.91%,#202b2e 0%, #283b3f 100%);
-$grad-card-grey: linear-gradient(133.47deg, #366078 7.07%, #304345 96.06%);
+$grad-card-dark: radial-gradient(59.32% 368.13% at 62.05% 228.91%, hsl(193deg 21% 21%) 0%, hsl(190deg 23% 12%) 100%);
+$grad-card-grey: linear-gradient(133.47deg, hsl(202, 23%, 25%) 7.07%, #304345 96.06%);
 $grad-card-result: linear-gradient(133.47deg, #8BC6E8 7.07%, #C5F9C4 96.06%);
 $grad-card-result-alt: linear-gradient(133.47deg, #8BE8D7 7.07%, #F4F9C4 96.06%);
 // Breakpoints
