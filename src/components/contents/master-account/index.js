@@ -108,20 +108,20 @@ export default function MasterAccount({ loadData }) {
                 ]}/>
 
                 <div className="stats-cards">
-                    <div className="card card-grad">
-                        <span className="value">{toMoney(master, ['pnl'])}</span>
+                    <div className="card h-scroll-display">
+                        <span className="value money">{toMoney(master, ['pnl'])}</span>
                         <label>PNL Acumulado</label>
                     </div>
-                    <div className="card card-grad">
-                        <span className="value">{toMoney(master, ['futuresWallet', 'totalUnrealizedProfit'])}</span>
+                    <div className="card h-scroll-display">
+                        <span className="value money">{toMoney(master, ['futuresWallet', 'totalUnrealizedProfit'])}</span>
                         <label>Não Realizado</label>
                     </div>
-                    <div className="card card-grad">
-                        <span className="value">{toMoney(master, ['futuresWallet', 'totalMarginBalance'])}</span>
+                    <div className="card h-scroll-display">
+                        <span className="value money">{toMoney(master, ['futuresWallet', 'totalMarginBalance'])}</span>
                         <label>Margem Total</label>
                     </div>
-                    <div className="card card-grad">
-                        <span className="value">{toMoney(master, ['futuresWallet', 'totalRealizedPnl'])}</span>
+                    <div className="card h-scroll-display">
+                        <span className="value money">{toMoney(master, ['futuresWallet', 'totalRealizedPnl'])}</span>
                         <label>Lucro Realizado</label>
                     </div>
                 </div>
