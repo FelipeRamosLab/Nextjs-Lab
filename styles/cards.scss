@@ -2,10 +2,13 @@
     background: $grad-card;
     box-sizing: border-box;
     border-radius: 4px;
-    box-shadow: 0 0 37px $primary-dark;
     overflow: hidden;
     user-select: none;
     gap: 1rem;
+
+    label {
+        color: $soft-text;
+    }
 
     .card-body {
         flex: 1;

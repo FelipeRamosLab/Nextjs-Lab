@@ -112,22 +112,22 @@ export default function MasterAccount({ loadData }) {
                         <span className="value money">{toMoney(master, ['pnl'])}</span>
                         <label>PNL Acumulado</label>
                     </Paper>
-                    <div className="card h-scroll-display">
+                    <Paper  className="card h-scroll-display" elevation={20}>
                         <span className="value money">{toMoney(master, ['futuresWallet', 'totalUnrealizedProfit'])}</span>
                         <label>Não Realizado</label>
-                    </div>
-                    <div className="card h-scroll-display">
+                    </Paper>
+                    <Paper className="card h-scroll-display" elevation={20}>
                         <span className="value money">{toMoney(master, ['futuresWallet', 'totalMarginBalance'])}</span>
                         <label>Margem Total</label>
-                    </div>
-                    <div className="card h-scroll-display">
+                    </Paper>
+                    <Paper className="card h-scroll-display" elevation={20}>
                         <span className="value money">{toMoney(master, ['futuresWallet', 'totalRealizedPnl'])}</span>
                         <label>Lucro Realizado</label>
-                    </div>
+                    </Paper>
                 </div>
 
                 {/* Small update time text */}
-                <small className="tiny-letters">Última atualização: {master?.modifiedAt ? new Date(master?.modifiedAt).toLocaleString() : '---'}</small>
+                <small>Última atualização: {master?.modifiedAt ? new Date(master?.modifiedAt).toLocaleString() : '---'}</small>
             </section>
 
             <section className="content-sidebar">
@@ -135,30 +135,30 @@ export default function MasterAccount({ loadData }) {
                     <TransferPainel master={master} transferType={transferType} setTransferType={setTransferType} />
 
                     <section className="master-results results stats-cards">
-                        <div className="card">
+                        <Paper className="card" elevation={23}>
                             <p className="value pnl" state={master?.results?.dayPnl !== 0 ? master?.results?.dayPnl > 0 ? 'profit' : 'loss' : ''}>
                                 {toMoney(master?.results?.dayPnl)}
                             </p>
                             <label>PNL dia</label>
-                        </div>
-                        <div className="card pnl">
+                        </Paper>
+                        <Paper className="card" elevation={23}>
                             <p className="value pnl" state={master?.results?.monthPnl !== 0 ? master?.results?.monthPnl > 0 ? 'profit' : 'loss' : ''}>
                                 {toMoney(master?.results?.monthPnl)}
                             </p>
                             <label>PNL mês</label>
-                        </div>
-                        <div className="card">
+                        </Paper>
+                        <Paper className="card" elevation={23}>
                             <p className="value roe" state={master?.results?.dayRoe !== 0 ? master?.results?.dayRoe > 0 ? 'profit' : 'loss' : ''}>
                                 {toPercent(master?.results?.dayRoe, null, 2)}
                             </p>
                             <label>ROE dia</label>
-                        </div>
-                        <div className="card">
+                        </Paper>
+                        <Paper className="card" elevation={23}>
                             <p className="value roe" state={master?.results?.monthRoe !== 0 ? master?.results?.monthRoe > 0 ? 'profit' : 'loss' : ''}>
                                 {toPercent(master?.results?.monthRoe, null, 2)}
                             </p>
                             <label>ROE mês</label>
-                        </div>
+                        </Paper>
                     </section>
 
                     <div className="section-header">
