@@ -25,7 +25,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
       
         setInterval(()=>{
             loadData();
-        }, 60000);
+        }, 120000);
     }, []);
 
     useEffect(() => {
