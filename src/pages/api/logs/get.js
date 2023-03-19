@@ -1,7 +1,7 @@
 import ajax from '../../../services/ajax';
 import config from '../../../../config.json'
 
-const root = process.env.NEXT_PUBLIC_host;
+const root = process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER;
 
 export default async function LogsGet(req, res) {
     try {

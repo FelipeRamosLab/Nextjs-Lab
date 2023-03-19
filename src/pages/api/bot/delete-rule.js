@@ -1,6 +1,6 @@
 import ajax from '../../../services/ajax';
 
-const root = process.env.NEXT_PUBLIC_host;
+const root = process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER;
 
 export default async function DeleteRule(req, res) {
     try {

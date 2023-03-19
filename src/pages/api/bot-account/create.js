@@ -1,13 +1,13 @@
 import ajax from '../../../services/ajax';
 
-const root = process.env.NEXT_PUBLIC_host;
+const root = process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER;
 
 export default async function CreateBotAccount(req, res) {
     try {
         const slotResponse = await ajax(root + '/bot-account/create', req.body).put();
         
         if (slotResponse.success) {
-            const master = await ajax(process.env.NEXT_PUBLIC_host + '/master-account/get', { 
+            const master = await ajax(process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER + '/master-account/get', { 
                 masterUID: slotResponse.slot.master, 
                 userUID: slotResponse.slot.user
             }).post();

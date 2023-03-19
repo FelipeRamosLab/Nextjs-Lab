@@ -3,7 +3,7 @@ import config from '../../../../config.json';
 
 export default async function HomeActivity(req, res) {
     try {
-        const trades = await ajax(process.env.NEXT_PUBLIC_host + '/collection/get/queryCollection', {
+        const trades = await ajax(process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER + '/collection/get/queryCollection', {
             collectionName: 'positions',
             filter: { botSlot: req.body.slotUID, status: req.body.status },
             options: {

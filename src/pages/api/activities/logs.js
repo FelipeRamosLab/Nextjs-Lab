@@ -3,7 +3,7 @@ import configs from '../../../../config.json'
 
 export default async function Logs(req, res) {
     try {
-        const logsRead = await ajax(process.env.NEXT_PUBLIC_host + '/collection/get/queryCollection', {
+        const logsRead = await ajax(process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER + '/collection/get/queryCollection', {
             collectionName: 'logs',
             filter: { read: true },
             options: {
@@ -15,7 +15,7 @@ export default async function Logs(req, res) {
                 }
             }
         }).get();
-        const logsUnread = await ajax(process.env.NEXT_PUBLIC_host + '/collection/get/queryCollection', {
+        const logsUnread = await ajax(process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER + '/collection/get/queryCollection', {
             collectionName: 'logs',
             filter: { read: false },
             options: {
