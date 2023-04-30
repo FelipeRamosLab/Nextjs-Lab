@@ -1,6 +1,6 @@
 {
     "root": "LOCAL",
-    "PROD": "https://34.159.149.49",
+    "PROD": "https://35.242.214.130",
     "DEV": "http://king-prawn-app-4ow24.ondigitalocean.app",
     "LOCAL": "http://localhost",
     "userTest": "627acf881e10121be3e718e0",
