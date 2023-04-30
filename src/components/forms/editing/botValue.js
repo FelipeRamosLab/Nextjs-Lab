@@ -213,11 +213,11 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
                     name="boolean"
                     value={form.primitiveValue || ''}
                     onChange={(ev) => setForm(prev => {
-                        return {...prev, primitiveValue: ev.target.value === 'true' ? true : false}
+                        return {...prev, primitiveValue: ev.target.value}
                     })}
                 >
-                    <FormControlLabel value={true} control={<Radio />} label="Verdadeiro" />
-                    <FormControlLabel value={false} control={<Radio />} label="Falso" />
+                    <FormControlLabel value={'true'} control={<Radio />} label="Verdadeiro" />
+                    <FormControlLabel value={'false'} control={<Radio />} label="Falso" />
                 </RadioGroup>}
 
                 {(form.primitiveType === 'string' || form.primitiveType === 'number') && <Box
