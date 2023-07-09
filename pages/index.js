@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
 
 let timer;
 const MAX_SPEED = 1000;
@@ -12,8 +13,18 @@ const styles = {
   }
 };
 
+const socket = io('http://localhost:5555');
+
+socket.on('testFE:connection', received => {
+  debugger;
+})
+
 export default function Home() {
   const [speed, setSpeed] = useState(MAX_SPEED);
+
+  useEffect(() => {
+    socket.emit('test:connection');
+  }, []);
 
   const handlePower = async (state) => {
     try {
