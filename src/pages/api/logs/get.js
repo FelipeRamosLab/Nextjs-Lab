@@ -5,7 +5,7 @@ const root = process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER;
 
 export default async function LogsGet(req, res) {
     try {
-        const logs = await ajax(root + '/collection/get/queryCollection', {
+        const logs = await ajax(root + '/collection/get/query', {
             collectionName: 'logs',
             filter: {read: req.body.read},
             options: {

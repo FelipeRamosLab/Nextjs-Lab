@@ -22,7 +22,7 @@ export default function HomeContent(){
     const [ createBot, setCreateBot ] = createBotState;
 
     return (<div className="container">
-        <MasterAcctountsGrid masterAccounts={masterAccounts} />
+        <MasterAcctountsGrid masterAccounts={masterAccounts || []} />
         <BotsWidgets myBots={myBots} />
 
         <FormFillModal

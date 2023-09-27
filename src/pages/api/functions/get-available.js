@@ -3,7 +3,7 @@ const root = process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER;
 export default async function GetPageData(req, res) {
     try {
         const availableFunctionsData = { collectionName: 'functions', options: { populate: {levels: 3} } };
-        const availableFunctions = await ajax(process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER + '/collection/get/queryCollection', availableFunctionsData).get();
+        const availableFunctions = await ajax(process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER + '/collection/get/query', availableFunctionsData).get();
 
         res.status(200).send({
             success: true,

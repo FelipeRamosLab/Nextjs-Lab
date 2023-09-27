@@ -10,7 +10,7 @@ export default async function BotDetails(req, res) {
             collectionName: 'users',
             filter: process.env.NEXT_PUBLIC_testUserUID, options: { populate: {levels: 3}
         }}).get();
-        const availableFunctions = await ajax(process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER + '/collection/get/queryCollection', {
+        const availableFunctions = await ajax(process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER + '/collection/get/query', {
             collectionName: 'functions',
             options: { populate: { levels: 3 } }
         }).get();
