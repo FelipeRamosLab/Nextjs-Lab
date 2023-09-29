@@ -3,18 +3,22 @@ import ajax from '../../../services/ajax';
 const root = process.env.NEXT_PUBLIC_HOST_CLIENT_SERVER;
 
 export default async function SlotDetailsActivity(req, res) {
+    const { slotUID, master } = Object(req.body);
+
     try {
-        const slot = await ajax(root + '/bot-account/details', {
-            slotUID: req.body?.slotUID, masterUID: req.body?.master, userUID: req.body?.user 
+        const slotRes = await ajax(root + '/bot-account/details', {
+            slotUID: slotUID,
+            masterUID: master,
+            userUID: process.env.NEXT_PUBLIC_testUserUID
         }).get();
 
-        if (!slot.success) {
-            return res.status(500).send(slot);
+        if (!slotRes.success) {
+            return res.status(500).send(slotRes);
         }
         
         const bot = await ajax(root + '/bot/details', {
-            userUID: req.body?.user,
-            botUID: slot?.slotDetails?.bot
+            userUID: process.env.NEXT_PUBLIC_testUserUID,
+            botUID: slotRes.slot.bot
         }).get();
 
         if (!bot) {
@@ -28,7 +32,7 @@ export default async function SlotDetailsActivity(req, res) {
         }
 
         return res.status(200).send({
-            slot: slot?.slotDetails,
+            slot: slotRes?.slot,
             bot: bot
         });
     } catch (err) {
