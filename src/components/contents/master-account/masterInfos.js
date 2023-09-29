@@ -12,7 +12,7 @@ export default function MasterInfos({master}) {
                 data={[
                     [ 'ID da conta:', validateProp(master, ['cod']) || '--'],
                     [ 'Criado em:', createdAt.toLocaleDateString() + ' - ' + createdAt.toLocaleTimeString() ],
-                    [ 'Exchange:', validateProp(master, ['exchange']).toUpperCase() ],
+                    [ 'Exchange:', master?.exgange ],
                     [ 'Alocação disponível:', toPercent(master, ['availableAllocation']) ],
                     [ 'Total na carteira:', toMoney(master, ['futuresWallet', 'totalWalletBalance']) || '--' ],
                     [ 'Posição de venda:', shortPosition ],

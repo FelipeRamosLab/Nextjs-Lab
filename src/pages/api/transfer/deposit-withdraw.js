@@ -7,16 +7,12 @@ export default async function DepositWithdrawTransfer(req, res) {
         const transfered = await ajax(root + '/transfer/deposit-withdraw', req.body).put();
 
         if (transfered.success) {
-            const master = await ajax(root + '/master-account/get', {
-                masterUID: transfered.transfer.master,
-                userUID: transfered.transfer.user
+            const masterRes = await ajax(root + '/master-account/get', {
+                masterUID: transfered.master,
+                userUID: transfered.user
             }).post();
 
-            if (master.success) {
-                res.status(200).send(master.masterAccount);
-            } else {
-                res.status(500).send(master);
-            }
+            res.status(200).send(JSON.parse(masterRes));
         } else {
             res.status(500).send(transfered);
         }
