@@ -23,12 +23,12 @@ export default function SlotTile({slot}) {
             const runned = await ajax('/api/bot-account/run', {
                 botAccountUID: slot._id,
                 masterUID: slot.master,
-                userUID: slot.user._id
+                userUID: slot.user
             }).post();
 
             if (runned.success) {
                 setActivityData(prev => {
-                    return { ...prev, masterSlots: runned.masterSlots }
+                    return { ...prev, masterSlots: runned.master.botAccounts }
                 });
             } else alert('Ocorreu um erro ao iniciar o slot!');
         } catch(err) {
@@ -62,7 +62,7 @@ export default function SlotTile({slot}) {
             if (!stopping.success) alert('Ocorreu um erro ao parar o slot!');
 
             setActivityData(prev => {
-                return { ...prev, masterSlots: stopping.masterSlots }
+                return { ...prev, masterSlots: stopping.data.botAccounts }
             });
         } catch(err) {
             alert('Ocorreu um erro ao parar o slot!');
@@ -94,10 +94,13 @@ export default function SlotTile({slot}) {
             />
 
             <div className="tile-header">
-                <h4 className="title">
-                    <a href={slotURL}>{slot.name}</a> 
-                    <span className="badge" type={slot.status}>{slot.status}</span>
-                </h4>
+                <div className="text-wrap">
+                    <h4 className="title">
+                        <a href={slotURL}>{slot.name}</a> 
+                        <span className="badge" type={slot.status}>{slot.status}</span>
+                    </h4>
+                    <h5 className="sub-title">{validateProp(slot, ['bot', 'name']) || '---'}</h5>
+                </div>
                 {slot.status !== 'stopped' && <FaStopCircle className="circle-button reverse" btn-color="error" onClick={() => setStopSelect(true)} />}
                 {slot.status !== 'running' && <FaPlayCircle className="circle-button reverse" btn-color="success" onClick={() => runSlot(slot._id)} />}
             </div>
@@ -105,7 +108,6 @@ export default function SlotTile({slot}) {
             <div className="tile-content">
                 <div className="content-info">
                     <p><b>COD:</b> {validateProp(slot, ['cod']) || '---'}</p>
-                    <p><b>Bot:</b> {validateProp(slot, ['bot', 'name']) || '---'}</p>
                     <p><b>Moeda:</b> {slot.assets}</p>
                     <p><b>Intervalo:</b> {slot.interval}</p>
                     <p><b>Lucro Realizado:</b> {toMoney(slot, ['totalRealizedPnl'])}</p>

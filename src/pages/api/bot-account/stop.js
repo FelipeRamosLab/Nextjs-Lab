@@ -9,7 +9,7 @@ export default async function StopBotAccount(req, res) {
         if (slot.success) {
             const master = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/master-account/get', { 
                 masterUID: req.body.masterUID, 
-                userUID: req.body.userUID._id
+                userUID: req.body.userUID
             }).post();
     
             return res.status(200).send(master);

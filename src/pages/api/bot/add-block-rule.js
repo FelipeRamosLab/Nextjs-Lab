@@ -36,7 +36,7 @@ export default async function AddBlockRule(req, res) {
                 botUID: req.body.botUID
             }).get();
     
-            if (blockAppended.success) {
+            if (blockAppended.updated.success) {
                 res.status(200).send({
                     bot: bot,
                     created: created.createdDoc

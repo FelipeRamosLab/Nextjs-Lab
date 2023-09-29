@@ -132,6 +132,7 @@ a.card.item {
             min-width: 100%;
         }
     }
+
     .modal {
         max-height: 60vh;
     }
@@ -152,6 +153,10 @@ a.card.item {
         a {
             color: $bright-text;
         }
+    }
+
+    .sub-title {
+        font-weight: normal;
     }
 
     .tile-header {
