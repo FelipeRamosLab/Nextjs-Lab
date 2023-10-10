@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import CreateSlotForm from '../../forms/createSlot';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';

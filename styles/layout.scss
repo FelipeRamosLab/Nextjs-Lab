@@ -189,3 +189,38 @@
         margin-bottom: 2rem;
     }
 }
+
+.signpage-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 15vh;
+    
+    .form-card {
+        width: 50%;
+        box-shadow: 0 0 150px #000000AA;
+
+        .wrap-btn-flex {
+            margin-top: 2rem;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .Mui-focused {
+            color: $soft-text;
+        }
+    }
+
+    .flex-data {
+        .row {
+            gap: 2rem;
+            margin-top: 0.5rem;
+
+            .column {
+                padding: 0;
+            }
+        }
+    }
+}

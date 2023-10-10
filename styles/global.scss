@@ -13,6 +13,7 @@ html {
 body {
     background-color: $secondary;
     color: $soft-text;
+    min-height: 100vh;
 }
 
 header {

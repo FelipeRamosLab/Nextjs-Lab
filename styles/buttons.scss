@@ -169,12 +169,15 @@
 }
 
 .MuiButtonBase-root {
-    &.cta {
-        background-color: $tertiary;
-
-        &:hover {
-            background-color: lighten($color: $tertiary, $amount: 3);
+    &.MuiButton-containedPrimary{
+        &.cta {
+            background-color: $tertiary;
+    
+            &:hover {
+                background-color: lighten($color: $tertiary, $amount: 3);
+            }
         }
-    }
 
+        background-color: $primary;
+    }
 }

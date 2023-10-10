@@ -35,3 +35,22 @@
         gap: 1rem;
     }
 }
+
+.MuiInput-input {
+    font-size: 1.1rem;
+    border-radius: 0;
+}
+
+.MuiInputBase-colorPrimary {
+    &::before {
+        border-color: $grey-mid;
+    }
+    
+    &::after {
+        border-color: $tertiary;
+    }
+
+    input {
+        color: $soft-text;
+    }
+}
