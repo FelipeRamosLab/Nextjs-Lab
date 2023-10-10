@@ -196,7 +196,12 @@
     padding-top: 15vh;
     
     .form-card {
-        width: 50%;
+        width: 100%;
+
+        @media screen and (min-width: $md) {
+            width: 50%;
+        }
+
         box-shadow: 0 0 150px #000000AA;
 
         .wrap-btn-flex {

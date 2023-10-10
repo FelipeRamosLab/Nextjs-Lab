@@ -1,11 +1,11 @@
-import SignUp from '../components/contents/sign-up';
+import HomePage from '../components/contents/home';
 import PageLayout from '../components/base/pageLayout';
 import PageComponent from '../components/base/activity';
 
 export default function Index() {
   return <PageComponent
     PageLayout={PageLayout}
-    PageContent={SignUp}
-    activityUrl="sign-up"
+    PageContent={HomePage}
+    activityUrl="home"
   />
 }

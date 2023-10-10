@@ -8,11 +8,20 @@ export default function SignUp() {
     const [formData, setFormData] = useState({});
     const [sending, setSending] = useState(false);
 
-    function createUser(ev) {
+    async function createUser(ev) {
         ev.preventDefault();
-
         setSending(true);
-        console.log(formData);
+        
+        try {
+            const response = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/auth/register', formData).post();
+            
+            setSending(false);
+            sessionStorage.setItem('userUID', response.id);
+            open('/dashboard', '_self');
+        } catch (error) {
+            setSending(false);
+            console.error(error?.response?.data || error);   
+        }
     }
 
     return <form className="sign-form flex-data" onSubmit={(ev) => createUser(ev)}>
@@ -86,8 +95,8 @@ export default function SignUp() {
                     <TextField
                         label="Confirm Password"
                         variant="standard"
-                        value={formData.confirmpassword || ''}
-                        onInput={(ev) => setFormData(prev => ({ ...prev, confirmpassword: ev.target.value }))}
+                        value={formData.confirmPassword || ''}
+                        onInput={(ev) => setFormData(prev => ({ ...prev, confirmPassword: ev.target.value }))}
                         type="password"
                     />
                 </FormControl>

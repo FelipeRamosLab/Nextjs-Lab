@@ -170,14 +170,20 @@
 
 .MuiButtonBase-root {
     &.MuiButton-containedPrimary{
+        background-color: $primary;
+
         &.cta {
             background-color: $tertiary;
-    
+
             &:hover {
                 background-color: lighten($color: $tertiary, $amount: 3);
             }
         }
 
-        background-color: $primary;
+        .MuiCircularProgress-root {
+            svg {
+                color: $primary;
+            }
+        }
     }
 }
