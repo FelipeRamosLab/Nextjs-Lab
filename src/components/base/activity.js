@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../axios-call';
 import React, { useEffect, useContext, useState } from "react";
 import ServerError from "../contents/serverError";
 import ActivityDataContext from '../../context/activityData';
@@ -6,26 +6,39 @@ import BackdropLoading from '../common/backdropLoading';
 
 export default function Activity({ PageLayout, PageContent, activityUrl, queryParams }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const [loading, setLoading] = useState((!activityData || activityData.status === "loading"))
+    const [loading, setLoading] = useState((!activityData || activityData.status === "loading"));
 
-    function loadData(){
+    async function loadData(){
         const params = {...queryParams, ...window.queryParams};
+        const sessionID = await cookieStore.get('sessionID');
 
-        axios.post('/api/activities/' + activityUrl, params || {}).then(res=>{
-            setActivityData(prev => {
-                delete prev.status;
-                return {...prev, ...res.data} 
-            });
-            setLoading(false);
-        }).catch(err => setActivityData({status: 'error', errorObj: err.response.data}));
+        try {
+            const res = await axios.post('http://localhost:80/pages/' + activityUrl, {}, { headers: {
+                token: sessionID ? sessionID.value : ''
+            }});
+
+            setActivityData(res.data);
+        } catch (err) {
+            setActivityData({status: 'error', errorObj: err.response.data});
+
+            if (err.errorObj.code === 401) {
+                console.log(err)
+            }
+        } finally {
+            return setLoading(false);
+        }
     }
 
     useEffect(()=>{
-        loadData();
-      
-        setInterval(()=>{
+        if (activityUrl) {
             loadData();
-        }, 120000);
+        } else {
+            setActivityData(prev => {
+                delete prev.status;
+                return prev;
+            });
+            setLoading(false);
+        }
     }, []);
 
     useEffect(() => {
@@ -47,8 +60,8 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
     }
 
     return (
-        <PageLayout>
-            {!loading && <PageContent loadData={loadData} queryParams={queryParams} />}
+        <PageLayout pageData={activityData}>
+            {!loading && <PageContent loadData={loadData} pageData={activityData} queryParams={queryParams} />}
 
             <BackdropLoading open={loading} />
         </PageLayout>

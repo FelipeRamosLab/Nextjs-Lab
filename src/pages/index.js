@@ -11,7 +11,6 @@ export default function Index({ queryParams }) {
       return <PageComponent
         PageLayout={PageLayout}
         PageContent={SignUp}
-        activityUrl="sign-up"
       />
     }
 
@@ -20,7 +19,6 @@ export default function Index({ queryParams }) {
       return <PageComponent
         PageLayout={PageLayout}
         PageContent={Login}
-        activityUrl="login"
       />
     }
   }

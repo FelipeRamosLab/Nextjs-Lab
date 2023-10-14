@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import FormFillModal from '../../modals/formFill';
 import CreateMasterForm from '../../forms/createMaster';
 import ActivityDataContext from '../../../context/activityData';
@@ -10,12 +10,11 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import BotsWidgets from './botsWidgets';
 import MasterAcctountsGrid from './masterAccountsGrid';
 
-export default function HomeContent(){
+export default function HomeContent({ pageData }){
     const {activityData} = useContext(ActivityDataContext);
-    const {pageData} = useContext(PageDataContext);
-    const {user} = pageData || {};
-    const {myBots} = activityData || {};
-    const {masterAccounts} = user || {};
+    const {user} = Object(pageData);
+    const {myBots} = Object(activityData);
+    const {masterAccounts} = Object(user);
     const createMasterState = useState(false);
     const [ createMaster, setCreateMaster ] = createMasterState;
     const createBotState = useState(false);

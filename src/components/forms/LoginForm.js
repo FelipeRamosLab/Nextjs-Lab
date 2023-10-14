@@ -4,11 +4,13 @@ import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import UploadIcon from '@mui/icons-material/Upload';
 
+const cookieAge = 3600000;
+
 export default function LoginForm() {
     const [formData, setFormData] = useState({});
     const [sending, setSending] = useState(false);
 
-    async function createUser(ev) {
+    async function loginUser(ev) {
         ev.preventDefault();
         setSending(true);
         
@@ -16,7 +18,8 @@ export default function LoginForm() {
             const response = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/auth/login', formData).post();
             
             setSending(false);
-            sessionStorage.setItem('userUID', response.id);
+            cookieStore.set({ name: 'userUID', value: response._id, expires: Date.now() + cookieAge });
+            cookieStore.set({ name: 'sessionID', value: response.sessionID, expires: Date.now() + cookieAge });
             open('/dashboard', '_self');
         } catch (error) {
             setSending(false);
@@ -24,7 +27,7 @@ export default function LoginForm() {
         }
     }
 
-    return <form className="sign-form flex-data" onSubmit={(ev) => createUser(ev)}>
+    return <form className="sign-form flex-data" onSubmit={(ev) => loginUser(ev)}>
         <div className="row">
             <FormControl margin="dense" className="column">
                 <TextField

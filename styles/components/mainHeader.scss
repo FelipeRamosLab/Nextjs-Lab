@@ -3,6 +3,13 @@
     padding-top: 4px;
     padding-bottom: 0px;
 
+    .brand-name {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0.7rem;
+    }
+
     .logo-wrap {
         width: 45px;
         cursor: pointer;
