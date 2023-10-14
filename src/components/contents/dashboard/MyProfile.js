@@ -1,0 +1,110 @@
+import { useState } from 'react';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import MasterAcctountsGrid from './masterAccountsGrid';
+
+export default function MyProfile({ pageData, pageID }) {
+    const { myProfile } = Object(pageData);
+    const [ tokenForm, setTokenForm ] = useState(null);
+
+    function saveToken(ev) {
+        ev.preventDefault();
+
+        console.log(tokenForm);
+    }
+
+    return <div className="container" page-id={pageID}>
+        <div className="content-fullwidth">
+            <h1 className="page-title">Meu Perfil</h1>
+        </div>
+
+        <section className="content-sidebar">
+            <div className="content">
+                <div className="card form-card">
+                    <div className="card-header">
+                        <h2 className="title">{myProfile?.firstName} {myProfile?.lastName}</h2>
+                    </div>
+                    <div className="card-body flex-data">
+                        <div className="row">
+                            <div className="column">
+                                <label>E-mail:</label>
+                                <span>{myProfile?.email}</span>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="column">
+                                <label>Phone:</label>
+                                <span>{myProfile?.phone}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <IconButton aria-label="delete" size="large" className="float-btn">
+                        <EditIcon fontSize="inherit" />
+                    </IconButton>
+                </div>
+
+                <div className="card form-card">
+                    <MasterAcctountsGrid masterAccounts={myProfile?.masterAccounts || []} />
+                </div>
+            </div>
+
+            <div className="sidebar">
+                <form className="binance-token card form-card" onSubmit={(ev) => saveToken(ev)}>
+                    <h3>Binance Token</h3>
+
+                    <div className="token-wrap empty">
+                        <span className="token">TOKEN_HERE</span>
+                    </div>
+
+                    {tokenForm && <div className="flex-data">
+                        <div className="row">
+                            <FormControl margin="dense" className="column">
+                                <TextField
+                                    label="Insira o API KEY gerado"
+                                    variant="standard"
+                                    value={tokenForm.APIKey || ''}
+                                    onInput={(ev) => setTokenForm(prev => ({ ...prev, APIKey: ev.target.value }))}
+                                    type="password"
+                                />
+                            </FormControl>
+                        </div>
+
+                        <div className="row">
+                            <FormControl margin="dense" className="column">
+                                <TextField
+                                    label="Insira o SECRET KEY gerado"
+                                    variant="standard"
+                                    value={tokenForm.secretKey || ''}
+                                    onInput={(ev) => setTokenForm(prev => ({ ...prev, secretKey: ev.target.value }))}
+                                    type="password"
+                                />
+                            </FormControl>
+                        </div>
+                    </div>}
+
+                    <div className="buttons-wrap">
+                        {!tokenForm && <Button
+                            variant="contained"
+                            className="cta"
+                            onClick={() => setTokenForm({})}
+                        >
+                            Add Binance Token
+                        </Button>}
+
+                        {tokenForm && <Button
+                            variant="contained"
+                            className="cta"
+                            type="submit"
+                        >
+                            Save Token
+                        </Button>}
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+}

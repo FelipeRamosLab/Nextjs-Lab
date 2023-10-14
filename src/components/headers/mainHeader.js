@@ -23,7 +23,7 @@ export default function MainHeader({ pageData }){
                     </div>
                 </Link>
 
-                <h3 className="brand-name">{user && user.fullName}</h3>
+                <h3 className="brand-name">BotStore</h3>
 
                 <div className="header-column menu-wrap">
                     <Link href="/logs" passHref>
@@ -33,9 +33,12 @@ export default function MainHeader({ pageData }){
                             </Badge>
                         </IconButton>
                     </Link>
-                    <IconButton className="icon-button">
-                        <AccountCircleIcon />
-                    </IconButton>
+
+                    <Link href="/dashboard/my-profile" passHref>
+                        <IconButton className="icon-button">
+                            <AccountCircleIcon />
+                        </IconButton>
+                    </Link>
                 </div>
             </div>
         </header>

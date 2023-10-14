@@ -136,6 +136,21 @@
     color: $soft-text;
 }
 
+.float-btn {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    color: $white;
+
+    &.MuiIconButton-root {
+        background-color: $tertiary;
+
+        &:hover {
+            background-color: lighten($color: $tertiary, $amount: 3);
+        }
+    }
+}
+
 .close-btn {
     position: sticky;
     height: 1.5rem;

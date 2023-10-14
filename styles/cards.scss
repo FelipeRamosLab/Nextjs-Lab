@@ -14,6 +14,11 @@
         flex: 1;
     }
 
+    &.spacing-md {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
     &.card-grad {
         background: $grad-card-result;            
         color: $primary;
@@ -236,4 +241,9 @@ a.card.item {
 
 .form-card {
     padding: 2rem;
+    position: relative;
+
+    .title {
+        margin-bottom: 1.5rem;
+    }
 }

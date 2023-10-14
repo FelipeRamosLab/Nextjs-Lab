@@ -4,7 +4,7 @@ import ServerError from "../contents/serverError";
 import ActivityDataContext from '../../context/activityData';
 import BackdropLoading from '../common/backdropLoading';
 
-export default function Activity({ PageLayout, PageContent, activityUrl, queryParams }) {
+export default function Activity({ PageLayout, PageContent, activityUrl, queryParams, pageID }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [loading, setLoading] = useState((!activityData || activityData.status === "loading"));
 
@@ -61,7 +61,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
 
     return (
         <PageLayout pageData={activityData}>
-            {!loading && <PageContent loadData={loadData} pageData={activityData} queryParams={queryParams} />}
+            {!loading && <PageContent loadData={loadData} pageData={activityData} queryParams={queryParams} pageID={pageID} />}
 
             <BackdropLoading open={loading} />
         </PageLayout>

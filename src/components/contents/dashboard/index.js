@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from 'react';
 import FormFillModal from '../../modals/formFill';
 import CreateMasterForm from '../../forms/createMaster';
 import ActivityDataContext from '../../../context/activityData';
-import PageDataContext from '../../../context/pageData';
 import CreateBotForm from '../../forms/createBot';
 import SpeedDialButton from '../../buttons/speedDial';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
@@ -10,7 +9,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import BotsWidgets from './botsWidgets';
 import MasterAcctountsGrid from './masterAccountsGrid';
 
-export default function HomeContent({ pageData }){
+export default function Dashboard({ pageData }){
     const {activityData} = useContext(ActivityDataContext);
     const {user} = Object(pageData);
     const {myBots} = Object(activityData);
