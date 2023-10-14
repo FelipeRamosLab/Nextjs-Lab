@@ -6,6 +6,7 @@ export default function SignUp() {
             <h2 className="title">Sign-up new account</h2>
             
             <SignUpForm />
+            <p>Ainda não tem uma conta? <a href="?formType=login">Fazer login</a></p>
         </div>
     </div>;
 }

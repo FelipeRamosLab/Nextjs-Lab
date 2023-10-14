@@ -18,8 +18,8 @@ export default function LoginForm() {
             const response = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/auth/login', formData).post();
             
             setSending(false);
-            cookieStore.set({ name: 'userUID', value: response._id, expires: Date.now() + cookieAge });
-            cookieStore.set({ name: 'sessionID', value: response.sessionID, expires: Date.now() + cookieAge });
+            cookieStore.set({ name: 'token', value: response.token, expires: Date.now() + cookieAge });
+
             open('/dashboard', '_self');
         } catch (error) {
             setSending(false);

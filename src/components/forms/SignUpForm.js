@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 
+const cookieAge = 3600000;
+
 export default function SignUp() {
     const [formData, setFormData] = useState({});
     const [sending, setSending] = useState(false);
@@ -16,7 +18,8 @@ export default function SignUp() {
             const response = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/auth/register', formData).post();
             
             setSending(false);
-            sessionStorage.setItem('userUID', response.id);
+            cookieStore.set({ name: 'token', value: response.token, expires: Date.now() + cookieAge });
+
             open('/dashboard', '_self');
         } catch (error) {
             setSending(false);

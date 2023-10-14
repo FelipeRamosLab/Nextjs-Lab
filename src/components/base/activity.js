@@ -10,11 +10,11 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
 
     async function loadData(){
         const params = {...queryParams, ...window.queryParams};
-        const sessionID = await cookieStore.get('sessionID');
+        const token = await cookieStore.get('token');
 
         try {
             const res = await axios.post('http://localhost:80/pages/' + activityUrl, {}, { headers: {
-                token: sessionID ? sessionID.value : ''
+                token: token ? token.value : ''
             }});
 
             setActivityData(res.data);
