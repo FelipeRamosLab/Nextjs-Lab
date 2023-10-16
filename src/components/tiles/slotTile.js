@@ -6,12 +6,13 @@ import { FaPlayCircle, FaStopCircle } from "react-icons/fa";
 import OpenTradeInfo from '../contents/master-account/openTradeInfos';
 import { Backdrop, CircularProgress } from '@mui/material';
 import ActivityDataContext from '../../context/activityData';
+import AJAX from '../../utils/ajax';
 
 export default function SlotTile({slot}) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [stopSelect, setStopSelect] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const slotURL = createURL('/slot-details', {slotUID: slot._id, user: slot.user._id, master: slot.master});
+    const slotURL = createURL('/slot-details', { slotuid: slot._id });
     let state = '';
 
     if(slot.pnl > 0) state = 'profit';
@@ -20,15 +21,14 @@ export default function SlotTile({slot}) {
     async function runSlot() {
         setIsLoading(true);
         try {
-            const runned = await ajax('/bot-account/run', {
-                botAccountUID: slot._id,
-                masterUID: slot.master,
-                userUID: slot.user
-            }).post();
+            const runned = await new AJAX('/slots/run').post({
+                slotUID: slot._id,
+                masterUID: slot.master
+            });
 
             if (runned.success) {
                 setActivityData(prev => {
-                    return { ...prev, masterSlots: runned.master.botAccounts }
+                    return { ...prev, masterSlots: runned.data.master.botAccounts }
                 });
             } else alert('Ocorreu um erro ao iniciar o slot!');
         } catch(err) {
@@ -52,17 +52,16 @@ export default function SlotTile({slot}) {
         }
 
         try {
-            const stopping = await ajax('/bot-account/stop', {
+            const stopping = await new AJAX('/slots/stop').post({
                 type,
                 slotUID: slot._id,
-                masterUID: slot.master,
-                userUID: slot.user
-            }).post();
+                masterUID: slot.master
+            });
 
             if (!stopping.success) alert('Ocorreu um erro ao parar o slot!');
 
             setActivityData(prev => {
-                return { ...prev, masterSlots: stopping.data.botAccounts }
+                return { ...prev, masterSlots: stopping.slot.botAccounts }
             });
         } catch(err) {
             alert('Ocorreu um erro ao parar o slot!');

@@ -16,7 +16,7 @@ export default function CardSlider({data}) {
             autoplaySpeed={5000}
         >
             {data && data.map(bot=>{
-                const botURL = createURL('/bot-details', { bot: bot._id});
+                const botURL = createURL('/bot-details', { bot: bot?._id});
                 return <a key={bot._id} href={botURL} className="bot-tile carousel-item">
                     <div><BotTile  bot={bot} /></div>
                 </a>

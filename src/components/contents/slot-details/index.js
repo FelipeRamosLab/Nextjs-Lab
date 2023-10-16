@@ -12,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import IconButtonConfig from '../../../models/IconButtonConfig';
+import AJAX from '../../../utils/ajax';
 
 export default function SlotDetails() {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
@@ -30,10 +31,10 @@ export default function SlotDetails() {
                 }
             });
 
-            const response = await ajax('/bot-account/edit', {
+            const response = await new AJAX('/slots/edit').post({
                 slotUID: slot._id,
                 data: result
-            }).post();
+            });
 
             setActivityData(prev => {
                 return {...prev, slot: response.slot}
@@ -46,9 +47,9 @@ export default function SlotDetails() {
 
     async function deleteSlot() {
         try {
-            const deleted = await ajax('/bot-account/delete', {
+            const deleted = await new AJAX('/slots/delete').delete({
                 slotUID: slot._id
-            }).post();
+            });
 
             if (deleted.success) {
                 setDeleteConfirmation(false);
@@ -86,7 +87,7 @@ export default function SlotDetails() {
             <section className="content-sidebar">
                 <div className="content">
                     <div className="section-wrap">
-                        <Link href={createURL('/bot-details', { bot: bot._id})} passHref>
+                        <Link href={createURL('/bot-details', { bot: bot?._id})} passHref>
                             <div className="card bot-card">
                                 <div className="avatar">
                                     <h4>AV</h4>
@@ -152,7 +153,7 @@ export default function SlotDetails() {
 
             <DeleteConfirmation
                 title="Deseja excluir o slot?"
-                message={`Tem certeza que você deseja excluir o slot [${slot.cod}][${slot.name}] permanentemente? Você perderá todo o histórico de operações feito nele.`}
+                message={`Tem certeza que você deseja excluir o slot [${slot?.cod}][${slot?.name}] permanentemente? Você perderá todo o histórico de operações feito nele.`}
                 openState={deleteConfirmationState}
                 onConfirm={deleteSlot}
             />

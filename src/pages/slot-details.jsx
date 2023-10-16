@@ -6,7 +6,7 @@ export default function SlotDetailsPage({queryParams}) {
   return <PageComponent
     PageLayout={PageLayout}
     PageContent={SlotDetails}
-    activityUrl="slot-details"
+    activityUrl="dashboard/slot-details"
     queryParams={queryParams}
   />
 }

@@ -77,7 +77,7 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
                 form.name = form.assets[0].split('USDT')[0];
             }
 
-            const saved = await new AJAX('/bot-account/create').put(form);
+            const saved = await new AJAX('/slots/create').put(form);
 
             onClose();
             setActivityData(prev => {

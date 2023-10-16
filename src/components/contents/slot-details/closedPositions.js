@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import ActivityDataContext from '../../../context/activityData';
 import PaginationTable from '../../displays/paginationTable';
+import AJAX from '../../../utils/ajax';
 
 const columns = [
     { id: 'cod', label: 'COD', minWidth: 50 },
@@ -79,21 +80,21 @@ export default function SlotClosedPositions() {
     const {activityData} = useContext(ActivityDataContext);
 
     async function loadPositions(page) {
-        try {
-            const response = await ajax('/bot-account/get-trades', {
-                slotUID: activityData?.slot?._id,
-                status: 'closed',
-                page: page + 1
-            }).post();
+      try {
+        const response = await new AJAX('/positions/get-trades').post({
+          slotUID: activityData?.slot?._id,
+          status: 'closed',
+          page: page + 1
+        });
 
-            return response.trades;
-        } catch(err) {
-            throw err;
-        }
+        return response.trades;
+      } catch(err) {
+        throw err;
+      }
     }
 
     return <PaginationTable
-        loadData={loadPositions}
-        columns={columns}
+      loadData={loadPositions}
+      columns={columns}
     />;
 }
