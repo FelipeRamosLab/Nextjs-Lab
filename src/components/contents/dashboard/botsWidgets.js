@@ -9,10 +9,10 @@ import CardSlider from '../../sliders/card-slider';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import StoreIcon from '@mui/icons-material/Store';
 
-export default function BotsWidgets({myBots}) {
+export default function BotsWidgets({pageData}) {
+    const {myBots} = Object(pageData);
     const [myBotsView, setMyBotsView] = useState('carousel');
     const [botStoreView, setBotStore] = useState('table');
-    const {pageData} = useContext(PageDataContext);
     
     useEffect(() => {
         const localMyBotsView = window.localStorage.getItem(localStorageWidgetViewName('myBots'));

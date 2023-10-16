@@ -1,6 +1,6 @@
 export default function MiniMasterAccountTile({master}) {
     if (master) {
-        const masterAccountURL = createURL('/master-account', { user: master.user, master: master._id});
+        const masterAccountURL = createURL('/master-account', { masteruid: master._id});
         let state = '';
 
         if(master.pnl > 0) state = 'profit';

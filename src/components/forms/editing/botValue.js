@@ -76,7 +76,7 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
         });
 
         try {
-            const {data} = await axios.post('/api/bot/update-value', {
+            const {data} = await axios.post('/bot/update-value', {
                 _id: value._id,
                 botUID: activityData.bot._id,
                 toUpdate: result

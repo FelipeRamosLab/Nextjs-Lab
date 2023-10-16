@@ -30,7 +30,7 @@ export default function SlotDetails() {
                 }
             });
 
-            const response = await ajax('/api/bot-account/edit', {
+            const response = await ajax('/bot-account/edit', {
                 slotUID: slot._id,
                 data: result
             }).post();
@@ -46,7 +46,7 @@ export default function SlotDetails() {
 
     async function deleteSlot() {
         try {
-            const deleted = await ajax('/api/bot-account/delete', {
+            const deleted = await ajax('/bot-account/delete', {
                 slotUID: slot._id
             }).post();
 

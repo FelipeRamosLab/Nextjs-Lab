@@ -1,6 +1,6 @@
-import axios from '../../../axios-call';
-import React, { useEffect, useContext, useState } from "react";
-import ServerError from "../contents/serverError";
+import AJAX from '../../utils/ajax';
+import React, { useEffect, useContext, useState } from 'react';
+import ServerError from '../contents/serverError';
 import ActivityDataContext from '../../context/activityData';
 import BackdropLoading from '../common/backdropLoading';
 
@@ -10,14 +10,10 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
 
     async function loadData(){
         const params = {...queryParams, ...window.queryParams};
-        const token = await cookieStore.get('token');
 
         try {
-            const res = await axios.post('http://localhost:80/pages/' + activityUrl, {}, { headers: {
-                token: token ? token.value : ''
-            }});
-
-            setActivityData(res.data);
+            const res = await new AJAX('/pages/' + activityUrl).post(params);
+            setActivityData(res);
         } catch (err) {
             setActivityData({status: 'error', errorObj: err.response.data});
 

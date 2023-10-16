@@ -1,4 +1,5 @@
 import {createContext, useEffect, useState} from 'react';
+import AJAX from '../utils/ajax';
 
 const PageDataContext = createContext({});
 
@@ -6,7 +7,7 @@ export function PageDataProvider({children}) {
     const [pageData, setPageData] = useState({});
 
     useEffect(() => {
-        ajax('/api/get-pagedata').post().then(response => {
+        new AJAX('/pages/base-data').get().then(response => {
             setPageData({
                 logsCount: response.logsCount,
                 user: response.user

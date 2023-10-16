@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import AJAX from '../../utils/ajax';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -49,13 +50,13 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
             setForm(prev => {
                 return {
                     ...prev,
-                    user: activityData && activityData.user._id,
-                    master: activityData && activityData.master._id,
+                    user: activityData?.user?._id,
+                    master: activityData?.master?._id,
                     limits: {} 
                 }
             });
         }
-    }, [setForm, form.limits, activityData, activityData.user._id, activityData.master._id]);
+    }, [setForm, form.limits, activityData, activityData?.user?._id, activityData?.master?._id]);
 
     useEffect(() => {
         loadFormDependencies().then(res => {
@@ -76,8 +77,7 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
                 form.name = form.assets[0].split('USDT')[0];
             }
 
-            const saved = await ajax('/api/bot-account/create', form).post();
-
+            const saved = await new AJAX('/bot-account/create').put(form);
 
             onClose();
             setActivityData(prev => {
@@ -141,8 +141,8 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
 
 export async function loadFormDependencies() {
     try {
-        const assets = await ajax('/api/exchange/get-assets').post();
-        const myBots = await ajax('/api/bot/my-bots').post();
+        const assets = await new AJAX('/exchange/get-assets').get();
+        const myBots = await new AJAX('/bot/my-bots').get();
 
         if (assets.success) {
             return {
@@ -153,6 +153,7 @@ export async function loadFormDependencies() {
             throw assets;
         }
     } catch(err) {
+        debugger
         throw err;
     }
 }

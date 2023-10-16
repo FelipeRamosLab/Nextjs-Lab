@@ -30,7 +30,7 @@ export default function ThreadBlockEdit({blockData}) {
         try {
             setDeleteLoading(true);
             const UID = blockData._id;
-            const {data} = await axios.post('/api/bot/delete-block', { UID, botUID: activityData.bot._id });
+            const {data} = await axios.post('/bot/delete-block', { UID, botUID: activityData.bot._id });
 
             if (data && data.success) {
                 setActivityData(prev => {
@@ -70,7 +70,7 @@ export default function ThreadBlockEdit({blockData}) {
         setAddBlockRuleLoading(type);
 
         try {
-            const added = await axios.post('/api/bot/add-block-rule', {
+            const added = await axios.post('/bot/add-block-rule', {
                 type: type,
                 parentBlockUID: blockData._id,
                 botUID: activityData.bot._id
@@ -92,7 +92,7 @@ export default function ThreadBlockEdit({blockData}) {
         setBackDrop(true);
 
         try {
-            const updated = await axios.post('/api/bot/update-block', {
+            const updated = await axios.post('/bot/update-block', {
                 _id: blockData._id,
                 toUpdate: value,
                 botUID: activityData.bot._id

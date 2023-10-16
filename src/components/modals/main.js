@@ -3,7 +3,7 @@ export default function MainModal({open, Content, modalCtrl}){
         return (<div className="modal-backdrop">
             <div className="modal">
                 <button type="button" className="close-btn" onClick={()=>modalCtrl(false)}>X</button>
-                <Content   modalCtrl={modalCtrl}/>
+                <Content modalCtrl={modalCtrl}/>
             </div>
         </div>);
     } else {

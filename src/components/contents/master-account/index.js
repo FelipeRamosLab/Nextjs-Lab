@@ -16,6 +16,7 @@ import ActivityDataContext from '../../../context/activityData';
 import SectionHeader from '../../headers/sectionHeader';
 import IconButtonConfig from '../../../models/IconButtonConfig';
 import Paper from '@mui/material/Paper';
+import AJAX from '../../../utils/ajax';
 
 export default function MasterAccount({ loadData }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
@@ -37,7 +38,10 @@ export default function MasterAccount({ loadData }) {
             });
 
             result._id = master._id;
-            const response = await ajax('/api/master-account/edit', form).post();
+            const response = await new AJAX('/master-account/edit').post({
+                masterUID: master._id,
+                data: result
+            });
 
             setActivityData(prev => {
                 return {...prev, master: response.master}
@@ -50,10 +54,9 @@ export default function MasterAccount({ loadData }) {
 
     async function deleteMaster() {
         try {
-            const deleted = await ajax('/api/master-account/delete', {
-                userUID: master.user._id,
+            const deleted = await new AJAX('/master-account/delete').delete({
                 masterUID: master._id
-            }).post();
+            });
 
             if (deleted.success) {
                 setDeleteConfirmation(false);

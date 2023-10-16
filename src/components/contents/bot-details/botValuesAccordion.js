@@ -85,7 +85,7 @@ export default function BotValuesAccordion({ ruleChildren }) {
         setLoadingAddValue(true);
 
         try {
-            const added = await ajax('/api/bot/add-value', {
+            const added = await ajax('/bot/add-value', {
                 botUID: activityData.bot._id,
                 slug
             }).post();

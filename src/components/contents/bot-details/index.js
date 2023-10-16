@@ -52,7 +52,7 @@ export default function BotDetails({ queryParams }) {
 
     async function updateBot() {
         try {
-            const response = await ajax('/api/bot/update', form).post();
+            const response = await ajax('/bot/update', form).post();
 
             setEditModal(false);
             setActivityData(prev => {
@@ -65,7 +65,7 @@ export default function BotDetails({ queryParams }) {
 
     async function deleteBot() {
         try {
-            const deleted = await ajax('/api/bot/delete', {
+            const deleted = await ajax('/bot/delete', {
                 botUID: _id
             }).post();
 

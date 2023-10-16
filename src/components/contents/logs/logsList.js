@@ -22,7 +22,7 @@ export default function LogsList({logs, read}) {
         else setSeemoreUnreadLoading(true);
 
         try {
-            const response = await ajax('/api/logs/get', {
+            const response = await ajax('/logs/get', {
                 read,
                 page: currentPage + 1
             }).post();

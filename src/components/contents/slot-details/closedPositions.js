@@ -80,7 +80,7 @@ export default function SlotClosedPositions() {
 
     async function loadPositions(page) {
         try {
-            const response = await ajax('/api/bot-account/get-trades', {
+            const response = await ajax('/bot-account/get-trades', {
                 slotUID: activityData?.slot?._id,
                 status: 'closed',
                 page: page + 1

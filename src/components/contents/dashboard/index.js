@@ -10,10 +10,8 @@ import BotsWidgets from './botsWidgets';
 import MasterAcctountsGrid from './masterAccountsGrid';
 
 export default function Dashboard({ pageData }){
-    const {activityData} = useContext(ActivityDataContext);
-    const {user} = Object(pageData);
-    const {myBots} = Object(activityData);
-    const {masterAccounts} = Object(user);
+    const { myProfile, myBots } = Object(pageData);
+    const {masterAccounts, bots} = Object(myProfile);
     const createMasterState = useState(false);
     const [ createMaster, setCreateMaster ] = createMasterState;
     const createBotState = useState(false);
@@ -21,18 +19,20 @@ export default function Dashboard({ pageData }){
 
     return (<div className="container">
         <MasterAcctountsGrid masterAccounts={masterAccounts || []} />
-        <BotsWidgets myBots={myBots} />
+        <BotsWidgets myBots={myBots | []} pageData={pageData} />
 
         <FormFillModal
             openState={createMaster}
             title="Criar conta"
             Content={CreateMasterForm}
+            pageData={pageData}
             onClose={() => setCreateMaster(false)}
         />
         <FormFillModal
             openState={createBot}
             title="Criar robô"
             Content={CreateBotForm}
+            pageData={pageData}
             onClose={() => setCreateBot(false)}
         />
         <SpeedDialButton

@@ -39,7 +39,7 @@ export default function ThreadRuleEdit({ruleData}) {
         try {
             setDeleteLoading(true);
             const UID = ruleData._id;
-            const {data} = await axios.post('/api/bot/delete-rule', { UID, botUID: activityData.bot._id });
+            const {data} = await axios.post('/bot/delete-rule', { UID, botUID: activityData.bot._id });
 
             if (data && data.success) {
                 setActivityData(prev => {
@@ -80,7 +80,7 @@ export default function ThreadRuleEdit({ruleData}) {
         setBackDrop(true);
 
         try {
-            const added = await axios.post('/api/bot/add-value', {
+            const added = await axios.post('/bot/add-value', {
                 threadRuleUID: ruleData._id,
                 botUID: activityData.bot._id
             });

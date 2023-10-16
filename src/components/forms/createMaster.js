@@ -6,8 +6,7 @@ import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ActivityDataContext from '../../context/activityData';
-import PageDataContext from '../../context/pageData';
+import AJAX from '../../utils/ajax';
 
 import MasterInfosStep from './steps/createMaster/masterInfos';
 import { lossConfig, gainConfig } from './steps/limitsConfig';
@@ -22,9 +21,7 @@ export const steps = [
     gainConfig
 ];
 
-export default function CreateMasterForm({isLoadingState, formState, onClose}) {
-    const {activityData} = useContext(ActivityDataContext);
-    const {pageData} = useContext(PageDataContext);
+export default function CreateMasterForm({isLoadingState, formState, onClose, pageData}) {
     const [activeStep, setActiveStep] = useState(0);
     const [form, setForm] = formState;
     const [isLoading, setIsLoading] = isLoadingState;
@@ -52,7 +49,7 @@ export default function CreateMasterForm({isLoadingState, formState, onClose}) {
         setIsLoading(true);
 
         try {
-            await ajax('/api/master-account/create', form).post();
+            await new AJAX('/master-account/create').put(form);
 
             onClose();
             window.location.reload();
@@ -81,7 +78,7 @@ export default function CreateMasterForm({isLoadingState, formState, onClose}) {
 
                             {step.Content && <step.Content
                                 formState={formState}
-                                master={activityData && activityData.master}
+                                master={pageData && pageData.master}
                             />}
                             
                             <Box sx={{ mb: 2 }}>

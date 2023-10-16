@@ -18,9 +18,7 @@ export const steps = [
     }
 ];
 
-export default function CreateBotForm({isLoadingState, formState, onClose}) {
-    const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const {pageData} = useContext(PageDataContext);
+export default function CreateBotForm({isLoadingState, formState, onClose, pageData}) {
     const [activeStep, setActiveStep] = useState(0);
     const [form, setForm] = formState;
     const [isLoading, setIsLoading] = isLoadingState;
@@ -30,7 +28,7 @@ export default function CreateBotForm({isLoadingState, formState, onClose}) {
 
     useEffect(() => {
         setForm(prev => {
-            return {...prev, author: pageData.user._id}
+            return {...prev, author: pageData?.user?._id}
         });
 
         setIsLoading(false);
@@ -40,8 +38,8 @@ export default function CreateBotForm({isLoadingState, formState, onClose}) {
         setIsLoading(true);
 
         try {
-            const saved = await ajax('/api/bot/create', form).post();
-            window.open(createURL('/bot-details', {bot: saved.bot._id}), '_self');
+            const saved = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/bot/create', form).put();
+            window.open(createURL('/bot-details', {bot: saved?.bot?._id}), '_self');
         } catch(err) {
             throw err;
         } finally {

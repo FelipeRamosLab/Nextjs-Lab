@@ -31,7 +31,7 @@ export default function BotEventsAccordion() {
         setAddEventName(eventName);
 
         try {
-            const added = await axios.post('/api/bot/add-event', {
+            const added = await axios.post('/bot/add-event', {
                 botUID: activityData.bot._id,
                 eventName
             });

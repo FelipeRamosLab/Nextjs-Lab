@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import axios from 'axios';
+import AJAX from '../../utils/ajax';
 import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import ActivityDataContext from '../../context/activityData';
 
@@ -18,14 +18,13 @@ export default function TransferPainel({master, transferType, setTransferType}) 
         ev.preventDefault();
         setTransferType('loading');
         const toSend = {
-            user: master.user._id,
             master: master._id,
             type: transferType,
             value: transferValue
         }
         
         try {
-            const master = await axios.post('/api/transfer/deposit-withdraw/', toSend);
+            const master = await new AJAX('/transfer/deposit-withdraw/').put(toSend);
 
             setTransferType('success');
             setActivityData({...activityData, master: master.data});
@@ -62,10 +61,5 @@ export default function TransferPainel({master, transferType, setTransferType}) 
         {transferType === 'error' && <div className="deposit-withdraw">
             <h4 className="callback">Ocorreu um erro ao realizar o depósito!</h4>
         </div>}
-
-        {/* {!transferType && <div className="deposit-withdraw">
-            <button type="button" className="button full-width outlined transparent small" onClick={() => setTransferType('deposit')}>Depósito</button>
-            <button type="button" className="button full-width outlined transparent small" onClick={() => setTransferType('withdraw')}>Saque</button>
-        </div>} */}
     </div>);
 }

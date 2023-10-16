@@ -6,7 +6,7 @@ export default function MasterAccountPage({queryParams}) {
   return <PageComponent
     PageLayout={PageLayout}
     PageContent={MasterAccount}
-    activityUrl="master-account"
+    activityUrl="dashboard/master-account"
     queryParams={queryParams}
   />
 }

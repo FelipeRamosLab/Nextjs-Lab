@@ -20,7 +20,7 @@ export default function SlotTile({slot}) {
     async function runSlot() {
         setIsLoading(true);
         try {
-            const runned = await ajax('/api/bot-account/run', {
+            const runned = await ajax('/bot-account/run', {
                 botAccountUID: slot._id,
                 masterUID: slot.master,
                 userUID: slot.user
@@ -52,7 +52,7 @@ export default function SlotTile({slot}) {
         }
 
         try {
-            const stopping = await ajax('/api/bot-account/stop', {
+            const stopping = await ajax('/bot-account/stop', {
                 type,
                 slotUID: slot._id,
                 masterUID: slot.master,
