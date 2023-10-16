@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import SaveIcon from '@mui/icons-material/Save';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Button from '@mui/material/Button';
-import axios from 'axios';
+import AJAX from '../../../utils/ajax';
 import Checkbox from '@mui/material/Checkbox';
 import ActivityDataContext from '../../../context/activityData';
 
@@ -76,8 +76,8 @@ export default function BotValueEdit({value, toggleEdit, currentIndex}) {
         });
 
         try {
-            const {data} = await axios.post('/bot/update-value', {
-                _id: value._id,
+            const { data } = await new AJAX('/bot/update-value').post({
+                valueUID: value._id,
                 botUID: activityData.bot._id,
                 toUpdate: result
             });

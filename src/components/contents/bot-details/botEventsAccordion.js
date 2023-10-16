@@ -16,7 +16,7 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import axios from 'axios';
+import AJAX from '../../../utils/ajax';
 import ActivityDataContext from '../../../context/activityData';
 
 export default function BotEventsAccordion() {
@@ -31,7 +31,7 @@ export default function BotEventsAccordion() {
         setAddEventName(eventName);
 
         try {
-            const added = await axios.post('/bot/add-event', {
+            const added = await new AJAX('/bot/add-event').put({
                 botUID: activityData.bot._id,
                 eventName
             });

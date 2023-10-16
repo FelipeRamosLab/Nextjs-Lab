@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Backdrop, CircularProgress } from '@mui/material';
-import axios from 'axios';
+import AJAX from '../../../utils/ajax';
 import ActivityDataContext from '../../../context/activityData';
 
 export default function ThreadRuleEdit({ruleData}) {
@@ -38,10 +38,13 @@ export default function ThreadRuleEdit({ruleData}) {
 
         try {
             setDeleteLoading(true);
-            const UID = ruleData._id;
-            const {data} = await axios.post('/bot/delete-rule', { UID, botUID: activityData.bot._id });
+            const ruleUID = ruleData._id;
+            const { data, success } = await new AJAX('/bot/delete-rule').delete({
+                ruleUID,
+                botUID: activityData?.bot?._id
+            });
 
-            if (data && data.success) {
+            if (success) {
                 setActivityData(prev => {
                     return {...prev, bot: data.bot}
                 });
@@ -80,14 +83,14 @@ export default function ThreadRuleEdit({ruleData}) {
         setBackDrop(true);
 
         try {
-            const added = await axios.post('/bot/add-value', {
+            const added = await new AJAX('/bot/add-value').put({
                 threadRuleUID: ruleData._id,
                 botUID: activityData.bot._id
             });
 
-            if (added.data.bot) {
+            if (added.success) {
                 setActivityData(prev => {
-                    return {...prev, bot: added.data.bot};
+                    return {...prev, bot: added.bot};
                 });
             }
             setBackDrop(false);

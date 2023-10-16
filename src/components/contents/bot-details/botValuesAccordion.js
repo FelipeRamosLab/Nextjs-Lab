@@ -19,6 +19,7 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import AJAX from '../../../utils/ajax';
 
 export default function BotValuesAccordion({ ruleChildren }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
@@ -85,10 +86,10 @@ export default function BotValuesAccordion({ ruleChildren }) {
         setLoadingAddValue(true);
 
         try {
-            const added = await ajax('/bot/add-value', {
+            const added = await new AJAX('/bot/add-value').put({
                 botUID: activityData.bot._id,
                 slug
-            }).post();
+            });
             
             setActivityData(prev => {
                 return {...prev, bot: added.bot}

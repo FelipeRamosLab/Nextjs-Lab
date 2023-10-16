@@ -16,7 +16,7 @@ import IconButtonConfig from '../../../models/IconButtonConfig';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteConfirmation from '../../modals/confirmation';
-
+import AJAX from '../../../utils/ajax';
 
 export default function BotDetails({ queryParams }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
@@ -52,7 +52,10 @@ export default function BotDetails({ queryParams }) {
 
     async function updateBot() {
         try {
-            const response = await ajax('/bot/update', form).post();
+            const response = await new AJAX('/bot/update').post({
+                botUID: _id,
+                toUpdate: form
+            });
 
             setEditModal(false);
             setActivityData(prev => {
@@ -65,9 +68,9 @@ export default function BotDetails({ queryParams }) {
 
     async function deleteBot() {
         try {
-            const deleted = await ajax('/bot/delete', {
+            const deleted = await new AJAX('/bot/delete').post({
                 botUID: _id
-            }).post();
+            });
 
             if (deleted.success) {
                 window.open('/', '_self');

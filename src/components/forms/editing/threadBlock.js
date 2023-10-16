@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Backdrop, CircularProgress } from '@mui/material';
-import axios from 'axios';
+import AJAX from '../../../utils/ajax';
 import { useState, useContext } from "react";
 import ActivityDataContext from '../../../context/activityData';
 
@@ -29,10 +29,10 @@ export default function ThreadBlockEdit({blockData}) {
     async function deleteBlock() {
         try {
             setDeleteLoading(true);
-            const UID = blockData._id;
-            const {data} = await axios.post('/bot/delete-block', { UID, botUID: activityData.bot._id });
+            const blockUID = blockData._id;
+            const {success, data} = await new AJAX('/bot/delete-block').delete({ blockUID, botUID: activityData.bot._id });
 
-            if (data && data.success) {
+            if (success) {
                 setActivityData(prev => {
                     return {...prev, bot: data.bot}
                 });
@@ -70,15 +70,15 @@ export default function ThreadBlockEdit({blockData}) {
         setAddBlockRuleLoading(type);
 
         try {
-            const added = await axios.post('/bot/add-block-rule', {
+            const added = await new AJAX('/bot/add-block-rule').put({
                 type: type,
                 parentBlockUID: blockData._id,
                 botUID: activityData.bot._id
             });
     
-            if (added.data.bot) {
+            if (added.bot) {
                 setActivityData(prev => {
-                    return {...prev, bot: added.data.bot};
+                    return {...prev, bot: added.bot};
                 });
             }
             setAddBlockRuleLoading(false);
@@ -92,14 +92,14 @@ export default function ThreadBlockEdit({blockData}) {
         setBackDrop(true);
 
         try {
-            const updated = await axios.post('/bot/update-block', {
-                _id: blockData._id,
+            const updated = await new AJAX('/bot/update-block').post({
+                blockUID: blockData._id,
                 toUpdate: value,
                 botUID: activityData.bot._id
             });
             
             setActivityData(prev => {
-                return {...prev, bot: updated.data.bot};
+                return {...prev, bot: updated.bot};
             });
             setBackDrop(false);
         } catch(err) {

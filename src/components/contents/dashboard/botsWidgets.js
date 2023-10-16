@@ -49,7 +49,7 @@ export default function BotsWidgets({pageData}) {
     }
 
     function handleBotClick(e, _id) {
-        window.open(createURL('/bot-details', { bot: _id }), '_self');
+        window.open(createURL('/bot-details', { botuid: _id }), '_self');
     }
 
     return (
