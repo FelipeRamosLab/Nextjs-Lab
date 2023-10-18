@@ -5,15 +5,22 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import MasterAcctountsGrid from './masterAccountsGrid';
+import AJAX from '../../../utils/ajax';
 
 export default function MyProfile({ pageData, pageID }) {
     const { myProfile } = Object(pageData);
     const [ tokenForm, setTokenForm ] = useState(null);
 
-    function saveToken(ev) {
+    async function saveToken(ev) {
         ev.preventDefault();
 
-        console.log(tokenForm);
+        try {
+            const sent = await new AJAX('/user/binance-keys/save-keys').put(tokenForm);
+            
+            debugger
+        } catch (err) {
+            throw err;   
+        }
     }
 
     return <div className="container" page-id={pageID}>
@@ -83,8 +90,8 @@ export default function MyProfile({ pageData, pageID }) {
                                 <TextField
                                     label="Insira o API KEY gerado"
                                     variant="standard"
-                                    value={tokenForm.APIKey || ''}
-                                    onInput={(ev) => setTokenForm(prev => ({ ...prev, APIKey: ev.target.value }))}
+                                    value={tokenForm.binanceAPIKey || ''}
+                                    onInput={(ev) => setTokenForm(prev => ({ ...prev, binanceAPIKey: ev.target.value }))}
                                     type="password"
                                 />
                             </FormControl>
@@ -95,8 +102,8 @@ export default function MyProfile({ pageData, pageID }) {
                                 <TextField
                                     label="Insira o SECRET KEY gerado"
                                     variant="standard"
-                                    value={tokenForm.secretKey || ''}
-                                    onInput={(ev) => setTokenForm(prev => ({ ...prev, secretKey: ev.target.value }))}
+                                    value={tokenForm.binanceSecretKey || ''}
+                                    onInput={(ev) => setTokenForm(prev => ({ ...prev, binanceSecretKey: ev.target.value }))}
                                     type="password"
                                 />
                             </FormControl>

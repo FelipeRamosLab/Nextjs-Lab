@@ -22,6 +22,7 @@ export default function EditBotForm({formState}) {
         <FormControl variant="standard" sx={{marginBottom: '10px'}}>
             <TextField
                 variant="standard"
+                label="Descrição"
                 value={form?.description || ''}
                 minRows={10}
                 multiline

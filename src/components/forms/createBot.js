@@ -6,8 +6,7 @@ import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ActivityDataContext from '../../context/activityData';
-import PageDataContext from '../../context/pageData';
+import AJAX from '../../utils/ajax'
 import BotBasicInfoStep from './steps/createBot/basicInfo';
 
 export const steps = [
@@ -38,8 +37,8 @@ export default function CreateBotForm({isLoadingState, formState, onClose, pageD
         setIsLoading(true);
 
         try {
-            const saved = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/bot/create', form).put();
-            window.open(createURL('/bot-details', {bot: saved?.bot?._id}), '_self');
+            const saved = await new AJAX('/bot/create').put(form);
+            window.open(createURL('/bot-details', {botuid: saved?.bot?._id}), '_self');
         } catch(err) {
             throw err;
         } finally {
