@@ -30,9 +30,7 @@ export default function MyProfile({ pageData, pageID }) {
 
         <section className="content-sidebar">
             <div className="content">
-                <div className="card form-card">
-                    <MasterAcctountsGrid masterAccounts={myProfile?.masterAccounts || []} />
-                </div>
+                <MasterAcctountsGrid masterAccounts={myProfile?.masterAccounts || []} />
             </div>
 
             <div className="sidebar">
@@ -78,11 +76,16 @@ export default function MyProfile({ pageData, pageID }) {
                     </IconButton>
                 </div>
                 <form className="binance-token card form-card" onSubmit={(ev) => saveToken(ev)}>
-                    <h3>Binance Token</h3>
+                    <h3>Binance Tokens</h3>
 
-                    <div className="token-wrap empty">
-                        <span className="token">TOKEN_HERE</span>
+                    {!tokenForm && <><div className="token-wrap empty">
+                        <label>API Key</label>
+                        <span className="token">{myProfile?.binanceAPIKey}</span>
                     </div>
+                    <div className="token-wrap empty">
+                        <label>Secret Key</label>
+                        <span className="token">{myProfile?.binanceSecretKey}</span>
+                    </div></>}
 
                     {tokenForm && <div className="flex-data">
                         <div className="row">

@@ -267,3 +267,20 @@
         background-color: lighten($color: $primary-grey, $amount: 10);
     }
 }
+
+.token-wrap {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        margin-bottom: 0.5rem;
+    }
+
+    .token {
+        display: block;
+        padding: 1rem;
+        background-color: $primary-grey;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+}
