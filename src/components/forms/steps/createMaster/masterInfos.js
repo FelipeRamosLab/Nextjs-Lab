@@ -20,7 +20,7 @@ export default function MasterInfosStep({formState, isEditMode}) {
                     });
                 }}
             >
-                <FormControlLabel value="master-live" control={<Radio />} label="Live" disabled />
+                <FormControlLabel value="master-live" control={<Radio />} label="Live" />
                 <FormControlLabel value="master-demo" control={<Radio />} label="Demo" />
             </RadioGroup>
         </FormControl>}
