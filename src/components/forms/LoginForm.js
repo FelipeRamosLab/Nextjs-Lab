@@ -13,14 +13,14 @@ export default function LoginForm() {
     async function loginUser(ev) {
         ev.preventDefault();
         setSending(true);
-        
+
         try {
             const response = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/auth/login', formData).post();
-            
+
             setSending(false);
             cookieStore.set({ name: 'token', value: response.token, expires: Date.now() + cookieAge });
 
-            open('/dashboard', '_self');
+            window.location.href = '/dashboard';
         } catch (error) {
             setSending(false);
             console.error(error?.response?.data || error);   
