@@ -247,3 +247,31 @@ a.card.item {
         margin-bottom: 1.5rem;
     }
 }
+
+.confirmation-sent,
+.email-confirmation {
+    .content {
+        width: 100%;
+        max-width: 600px;
+        background-color: $primary-dark;
+        margin: 0 auto;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        margin-top: 10vh;
+
+        .title {
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .text {
+            text-align: center;
+        }
+    }
+}
+
+.email-confirmation {
+    .title {
+        margin-bottom: 0;
+    }
+}

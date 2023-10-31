@@ -20,7 +20,7 @@ export default function SignUp() {
             setSending(false);
             cookieStore.set({ name: 'token', value: response.token, expires: Date.now() + cookieAge });
 
-            window.location.href = '/dashboard';
+            window.location.href = '/dashboard/confirmation-sent';
         } catch (error) {
             setSending(false);
             console.error(error?.response?.data || error);   

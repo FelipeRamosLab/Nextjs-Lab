@@ -18,7 +18,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
             setActivityData({status: 'error', errorObj: err.response.data});
 
             if (err.errorObj.code === 401) {
-                console.log(err)
+                console.log(err);
             }
         } finally {
             return setLoading(false);
