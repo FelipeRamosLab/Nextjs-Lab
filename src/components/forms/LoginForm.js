@@ -50,6 +50,8 @@ export default function LoginForm() {
                     onInput={(ev) => setFormData(prev => ({ ...prev, password: ev.target.value }))}
                     type="password"
                 />
+
+                <a href="/dashboard/reset-password/send-email">Esqueci minha senha</a>
             </FormControl>
         </div>
 

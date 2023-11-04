@@ -275,3 +275,15 @@ a.card.item {
         margin-bottom: 0;
     }
 }
+
+.password-reset {
+    .form-card {
+        max-width: 600px;
+        margin: 0 auto;
+        margin-top: 10vh;
+
+        .title {
+            text-align: center;
+        }
+    }
+}

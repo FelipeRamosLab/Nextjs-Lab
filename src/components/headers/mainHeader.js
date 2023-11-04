@@ -1,8 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image'
-import Badge from '@mui/material/Badge';
-import LogoDevIcon from '@mui/icons-material/LogoDev';
-import IconButton from '@mui/material/IconButton';
 import AccountMenu from '../menus/AccountMenu';
 
 export default function MainHeader({ pageData }){

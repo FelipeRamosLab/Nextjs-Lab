@@ -17,10 +17,6 @@ export default class AJAX {
 
             return response.data;
         } catch (err) {
-            if(err?.response?.data?.name === 'USER_NOT_AUTHORIZED' && window.location.pathname !== '/') {
-                open('/', '_self');
-            }
-
             throw err?.response?.data
         }
     }
@@ -35,10 +31,6 @@ export default class AJAX {
 
             return response.data;
         } catch (err) {
-            if(err?.response?.data?.name === 'USER_NOT_AUTHORIZED' && window.location.pathname === '/') {
-                open('/', '_self');
-            }
-
             throw err?.response?.data
         }
     }
@@ -53,10 +45,6 @@ export default class AJAX {
 
             return response.data;
         } catch (err) {
-            if(err?.response?.data?.name === 'USER_NOT_AUTHORIZED' && window.location.pathname === '/') {
-                open('/', '_self');
-            }
-
             throw err?.response?.data
         }
     }
@@ -72,10 +60,6 @@ export default class AJAX {
 
             return response.data;
         } catch (err) {
-            if(err?.response?.data?.name === 'USER_NOT_AUTHORIZED' && window.location.pathname === '/') {
-                open('/', '_self');
-            }
-
             throw err?.response?.data
         }
     }
