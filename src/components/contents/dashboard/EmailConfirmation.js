@@ -9,12 +9,12 @@ export default function EmailConfirmation({ queryParams }) {
 
         requestInstance.post({ confirmationtoken }).then(verified => {
             if (verified.success) {
-                window.location.href = '/dashboard';
+                window.location.href = '/';
             }
         }).catch(err => {
             console.error(err);
         });
-    }, []);
+    }, [confirmationtoken]);
 
     return (
         <div className="email-confirmation container">

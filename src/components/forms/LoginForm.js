@@ -3,6 +3,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import UploadIcon from '@mui/icons-material/Upload';
+import Link from 'next/link';
 
 const cookieAge = 3600000;
 
@@ -19,6 +20,7 @@ export default function LoginForm() {
 
             setSending(false);
             cookieStore.set({ name: 'token', value: response.token, expires: Date.now() + cookieAge });
+            cookieStore.set({ name: 'userEmail', value: formData.email, expires: Date.now() + cookieAge });
 
             window.location.href = '/dashboard';
         } catch (error) {
@@ -51,7 +53,7 @@ export default function LoginForm() {
                     type="password"
                 />
 
-                <a href="/dashboard/reset-password/send-email">Esqueci minha senha</a>
+                <Link href="/dashboard/reset-password/send-email">Esqueci minha senha</Link>
             </FormControl>
         </div>
 

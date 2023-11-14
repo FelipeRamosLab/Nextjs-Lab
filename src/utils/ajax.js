@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default class AJAX {
     constructor(url, customHost) {
-        this.host = customHost || 'http://localhost:80';
+        this.host = customHost || process.env.NEXT_PUBLIC_HOST_RUNNER;
         this.url = this.host + url;
     }
 

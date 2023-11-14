@@ -37,6 +37,14 @@ hr {
     margin: 0.3rem 0 1rem 0;
 }
 
+a {
+    color: $white;
+
+    &:visited {
+        color: $tertiary;
+    }
+}
+
 small {
     color: $grey-mid;
 }

@@ -1,6 +1,6 @@
-export default function ServerError({err}){
+export default function ServerError({ code, name, message }){
     return (<div className="error-page">
-        <h1>500 - Ocorreu um erro no servidor</h1>
-        <p>{err.message}</p>
+        <h1>{code} - {name}</h1>
+        <p>{message}</p>
     </div>);
 }

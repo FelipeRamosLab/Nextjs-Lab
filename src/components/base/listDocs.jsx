@@ -8,7 +8,7 @@ export default function ListDocs(params = ListDocsModel.prototype) {
 
     useEffect(()=>{
         Model.loadData();
-    }, []);
+    }, [Model]);
 
     return <div>
         {(!data || !data.length) && <h2>Carregando...</h2>}

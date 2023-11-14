@@ -6,7 +6,7 @@ import BackdropLoading from '../common/backdropLoading';
 
 export default function Activity({ PageLayout, PageContent, activityUrl, queryParams, pageID }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const [loading, setLoading] = useState((!activityData || activityData.status === "loading"));
+    const [loading, setLoading] = useState((!activityData || activityData.status === 'loading'));
 
     async function loadData(){
         const params = {...queryParams, ...window.queryParams};
@@ -15,11 +15,16 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
             const res = await new AJAX('/pages/' + activityUrl).post(params);
             setActivityData(res);
         } catch (err) {
-            setActivityData({status: 'error', errorObj: err.response.data});
+            if (err.name === 'USER_EMAIL_NOT_CONFIRMED' || err.code === 401) {
+                const userEmail = await window.cookieStore.get('userEmail');
+                const url = new URL(window.location.origin + '/dashboard/confirmation-sent');
 
-            if (err.errorObj.code === 401) {
-                console.log(err);
+                url.searchParams.set('userEmail', userEmail.value);
+                window.location.href = url.toString();
+                return setActivityData({ status: 'error', code: 401, ...err });
             }
+
+            setActivityData({ status: 'error', code: 500, name: 'Server Error', message: 'The server got an error!' });
         } finally {
             return setLoading(false);
         }
@@ -50,14 +55,23 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
     if (activityData.status === 'error') {
         return (
             <PageLayout>
-                <ServerError err={activityData} />
+                <ServerError
+                    code={activityData.code}
+                    name={activityData.name}
+                    message={activityData.message}
+                />
             </PageLayout>
         );
     }
 
     return (
         <PageLayout pageData={activityData}>
-            {!loading && <PageContent loadData={loadData} pageData={activityData} queryParams={queryParams} pageID={pageID} />}
+            {!loading && <PageContent
+                loadData={loadData}
+                pageData={activityData}
+                queryParams={queryParams}
+                pageID={pageID}
+            />}
 
             <BackdropLoading open={loading} />
         </PageLayout>

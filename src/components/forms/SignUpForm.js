@@ -16,11 +16,13 @@ export default function SignUp() {
         
         try {
             const response = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/auth/register', formData).post();
+            const url = new URL(window.location.origin + '/dashboard/confirmation-sent');
             
             setSending(false);
             cookieStore.set({ name: 'token', value: response.token, expires: Date.now() + cookieAge });
 
-            window.location.href = '/dashboard/confirmation-sent';
+            url.searchParams.set('userEmail', formData.email);
+            window.location.href = url.toString();
         } catch (error) {
             setSending(false);
             console.error(error?.response?.data || error);   

@@ -67,7 +67,7 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
         }).catch(err => {
             throw err;
         });
-    }, []);
+    }, [setIsLoading]);
     
     async function saveNewSlot() {
         setIsLoading(true);
