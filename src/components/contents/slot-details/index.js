@@ -12,6 +12,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import IconButtonConfig from '../../../models/IconButtonConfig';
+import Fab from '@mui/material/Fab';
+import Calculate from '@mui/icons-material/Calculate';
 import AJAX from '../../../utils/ajax';
 
 export default function SlotDetails() {
@@ -61,6 +63,18 @@ export default function SlotDetails() {
             }
         } catch(err) {
             setDeleteConfirmation(false);
+            throw err;
+        }
+    }
+
+    async function openPosition() {
+        try {
+            const opened = await new AJAX('/positions/open-position').put({
+                slotUID: slot._id,
+                masterUID: slot.master._id,
+                side: 'buy'
+            });
+        } catch (err) {
             throw err;
         }
     }
@@ -141,6 +155,10 @@ export default function SlotDetails() {
                     <SlotClosedPositions />
                 </div>
             </section>
+
+            <Fab color="primary" className="bottom-right" onClick={() => openPosition()}>
+                <Calculate />
+            </Fab>
 
             <FormFillModal
                 title="Editar Slot"

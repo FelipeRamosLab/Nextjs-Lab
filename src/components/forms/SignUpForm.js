@@ -13,7 +13,7 @@ export default function SignUp() {
     async function createUser(ev) {
         ev.preventDefault();
         setSending(true);
-        
+
         try {
             const response = await ajax(process.env.NEXT_PUBLIC_HOST_RUNNER + '/auth/register', formData).post();
             const url = new URL(window.location.origin + '/dashboard/confirmation-sent');
