@@ -52,16 +52,34 @@ export default function SlotAssetConfigStep({formState, assets}) {
         </FormControl>
 
         <FormControl margin="dense">
-            <Typography gutterBottom>Alavancagem máxima: <b style={{ fontSize: 20}}>{form.limits.leverege}</b></Typography>
+            <Typography gutterBottom>Alavancagem máxima: <b style={{ fontSize: 16}}>{form.limits.leverege}</b></Typography>
             <Slider
                 size="medium"
                 defaultValue={maxLeverage}
                 valueLabelDisplay="auto"
                 max={maxLeverage}
-                min={0}
+                min={1}
                 value={form.limits.leverege}
                 onChange={(ev) => setForm(prev => {
                     return { ...prev, limits: { ...prev.limits, leverege: ev.target.value } }
+                })}
+            />
+        </FormControl>
+
+        <FormControl margin="dense">
+            <Typography gutterBottom>
+                Pausa mínima entre operações: 
+                <b style={{ fontSize: 16 }}>{form.limits.tradesMinInterval}</b> min{form.limits.tradesMinInterval > 1 ? 's': ''}
+            </Typography>
+            <Slider
+                size="medium"
+                defaultValue={1}
+                valueLabelDisplay="auto"
+                max={60}
+                min={1}
+                value={form.limits.tradesMinInterval}
+                onChange={(ev) => setForm(prev => {
+                    return { ...prev, limits: { ...prev.limits, tradesMinInterval: ev.target.value } }
                 })}
             />
         </FormControl>
