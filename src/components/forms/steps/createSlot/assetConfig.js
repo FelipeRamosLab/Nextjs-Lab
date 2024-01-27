@@ -4,11 +4,19 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
 
 export default function SlotAssetConfigStep({formState, assets}) {
     const [form, setForm] = formState;
     const assetsList = assets.map(item => item.symbol);
     const currentSymbol = form.assets && form.assets.length ? form.assets[0] : null;
+    const asset = form.assets && assets.find(item => item.symbol === form.assets[0]);
+    const maxLeverage = asset && asset.maxLeverage;
+
+    if (form.limits.leverege > maxLeverage || !form.limits.leverege) {
+        form.limits.leverege = maxLeverage;
+    }
 
     return (<div className="step-fields">
         <Autocomplete
@@ -41,6 +49,21 @@ export default function SlotAssetConfigStep({formState, assets}) {
                 <MenuItem value="4h">4 horas</MenuItem>
                 <MenuItem value="1d">1 dia</MenuItem>
             </Select>
+        </FormControl>
+
+        <FormControl margin="dense">
+            <Typography gutterBottom>Alavancagem máxima: <b style={{ fontSize: 20}}>{form.limits.leverege}</b></Typography>
+            <Slider
+                size="medium"
+                defaultValue={maxLeverage}
+                valueLabelDisplay="auto"
+                max={maxLeverage}
+                min={0}
+                value={form.limits.leverege}
+                onChange={(ev) => setForm(prev => {
+                    return { ...prev, limits: { ...prev.limits, leverege: ev.target.value } }
+                })}
+            />
         </FormControl>
     </div>);
 }
