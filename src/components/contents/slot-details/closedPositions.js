@@ -8,6 +8,7 @@ const columns = [
     { id: 'positionType', label: 'Operação', minWidth: 50, format: (value) => value === 'long' ? 'Compra' : 'Venda' },
     { id: 'openTime', label: 'Aberta em', minWidth: 100, format: (value) => new Date(value).toLocaleString() },
     { id: 'closeTime', label: 'Fechada em', minWidth: 100, format: (value) => new Date(value).toLocaleString() },
+    { id: 'symbol', label: 'Moeda', format: (value) => value },
     {
       id: 'pnl',
       label: 'PNL',

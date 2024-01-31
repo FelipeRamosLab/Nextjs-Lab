@@ -9,7 +9,7 @@ export function PageDataProvider({children}) {
     useEffect(() => {
         new AJAX('/pages/base-data').get().then(response => {
             setPageData({
-                logsCount: response.logsCount,
+                notificationsCount: response.notificationsCount,
                 user: response.user
             });
         }).catch(err => {

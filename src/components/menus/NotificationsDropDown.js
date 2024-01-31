@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
+import Notifications from '@mui/icons-material/Notifications';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Logout from '@mui/icons-material/Logout';
-import LogoDevIcon from '@mui/icons-material/LogoDev';
+import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import AJAX from '../../utils/ajax';
 
-export default function AccountMenu({ pageData }) {
+export default function NotificationsDropDown({ pageData }) {
     const [ anchorEl, setAnchorEl ] = useState(null);
+    const { user, notificationsCount } = Object(pageData);
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -24,45 +24,28 @@ export default function AccountMenu({ pageData }) {
         setAnchorEl(null);
     };
 
-    const goToLink = (link) => {
-        window.location.href = link;
-    };
-
-    const signOut = async () => {
-        try {
-            const response = await new AJAX('/auth/signout').post();
-    
-            if (response.success) {
-                await cookieStore.delete('token');
-                window.location.href = '/';
-            } else {
-                alert(response.message);
-            }
-        } catch (err) {
-            alert(err.message);
-        }
-    };
-
     return (
         <React.Fragment>
-            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-                <Tooltip title="Minha Conta">
+            <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }} className="std-round-btns">
+                <Tooltip title="Notificações">
                     <IconButton
                         onClick={handleClick}
                         size="small"
                         sx={{ ml: 2 }}
-                        aria-controls={open ? 'account-menu' : undefined}
+                        aria-controls={open ? 'notifications-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32 }}>FR</Avatar>
+                        <Badge badgeContent={notificationsCount} color="error">
+                            <Notifications />
+                        </Badge>
                     </IconButton>
                 </Tooltip>
             </Box>
 
             <Menu
                 anchorEl={anchorEl}
-                id="account-menu"
+                id="notifications-menu"
                 open={open}
                 onClose={handleClose}
                 onClick={handleClose}
@@ -95,30 +78,20 @@ export default function AccountMenu({ pageData }) {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem onClick={() => goToLink('/dashboard/my-profile')}>
-                    <ListItemIcon>
-                        <Avatar />
-                    </ListItemIcon>
-                    Meu Perfil
-                </MenuItem>
+                {user && Array.isArray(user.notifications) && user.notifications.map((note, i) => {
+                    return (<MenuItem key={i}>
+                        <ListItemIcon>
+                            <Avatar />
+                        </ListItemIcon>
+                        
+                        <div>
+                            <h4>{note.subject}</h4>
+                            <p>{note.message}</p>
+                        </div>
+                    </MenuItem>);
+                })}
                 
-                <Divider />
-
-                <MenuItem onClick={() => goToLink('/logs')}>
-                    <ListItemIcon>
-                        <Badge badgeContent={pageData?.logsCount || 0} color="error">
-                            <LogoDevIcon sx={{ ml: -0.2 }} />
-                        </Badge>
-                    </ListItemIcon>
-                    DEV Logs
-                </MenuItem>
                 
-                <MenuItem onClick={signOut}>
-                    <ListItemIcon>
-                        <Logout fontSize="small" />
-                    </ListItemIcon>
-                    Sair
-                </MenuItem>
             </Menu>
         </React.Fragment>
     );

@@ -198,6 +198,19 @@
     }
 }
 
+.section-header,
+.std-round-btns {
+    .MuiIconButton-root {
+        color: $soft-text;
+        transition: all 200ms;
+        margin-left: 10px;
+
+        &:hover {
+            background-color: lighten($color: $primary, $amount: 10);
+        }
+    }
+}
+
 .bots-widgets {
     .widget {
         max-width: 100%;
