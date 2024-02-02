@@ -12,8 +12,11 @@ function MyApp({ Component, pageProps }) {
     <PageDataProvider>
       <ActivityDataProvider>
         <Component {...pageProps} />
+
+        <footer></footer>
       </ActivityDataProvider>
-    </PageDataProvider>)
+    </PageDataProvider>
+  );
 }
 
 export default MyApp
