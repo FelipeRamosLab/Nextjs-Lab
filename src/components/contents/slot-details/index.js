@@ -15,6 +15,7 @@ import IconButtonConfig from '../../../models/IconButtonConfig';
 import Fab from '@mui/material/Fab';
 import Calculate from '@mui/icons-material/Calculate';
 import AJAX from '../../../utils/ajax';
+import CandlestickChart from '../../displays/CandlestickChart';
 
 export default function SlotDetails() {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
@@ -138,6 +139,18 @@ export default function SlotDetails() {
                                 { label: 'ROE Mês', value: toPercent(slot?.results?.monthRoe)}
                             ]} />
                         </div>
+                    </div>
+
+                    <div className="section-wrap">
+                        <div className="section-header">
+                            <h2>Monitor</h2>
+                        </div>
+
+                        {slot?.assets && <CandlestickChart
+                            symbol={slot?.assets?.length ? slot.assets[0] : ''}
+                            interval={slot?.interval}
+                            positions={activityData?.slot?.trades}
+                        />}
                     </div>
                 </div>
 

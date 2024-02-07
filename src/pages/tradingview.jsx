@@ -2,12 +2,13 @@
 
 import { createChart } from 'lightweight-charts';
 import { useRef, useEffect } from 'react';
+import BinanceSync from 'binance-sync';
 
 export default function TradingView() {
     const firstContainer = useRef();
 
     useEffect(() => {
-        const firstChart = createChart(firstContainer.current, {
+        const chart = createChart(firstContainer.current, {
             layout: {
                 textColor: '#AAA',
                 background: {
@@ -24,34 +25,32 @@ export default function TradingView() {
                 }
             }
         });
+        const binance = new BinanceSync();
+        
+        binance.futuresChart('BTCUSDT', '15m', { limit: 1500 }).then(res => {
+            const candlestickSeries = chart.addCandlestickSeries();
+            const stopSerie = chart.addLineSeries({color: 'red'});
+            const takeSerie = chart.addLineSeries({color: 'green'});
+            const ordered = res.sort((a, b) => (a.openTime.getTime() - b.openTime.getTime()));
+            const data = ordered.map(item => {
+                item.time = item.openTime.getTime();
+                item.stopLoss = 42500;
+                item.takeProfit = 43200;
+                return item;
+            });
 
-        const mmaSerie = firstChart.addLineSeries();
-        const candlestickSeries = firstChart.addCandlestickSeries();
+            const stop = data.map(item => ({time: item.time, value: item.stopLoss}));
+            const take = data.map(item => ({time: item.time, value: item.takeProfit}));
 
-        mmaSerie.setData([
-            { time: '2018-12-24', value: 100 },
-            { time: '2018-12-25', value: 101 },
-            { time: '2018-12-26', value: 102 },
-            { time: '2018-12-27', value: 103 },
-            { time: '2018-12-28', value: 104 },
-            { time: '2018-12-29', value: 103 },
-            { time: '2018-12-31', value: 106 },
-        ]);
-
-        candlestickSeries.setData([
-            { time: '2018-12-24', open: 109.87, high: 114.69, low: 85.66, close: 111.26 },
-            { time: '2018-12-25', open: 109.87, high: 114.69, low: 85.66, close: 111.26 },
-            { time: '2018-12-26', open: 109.87, high: 114.69, low: 85.66, close: 111.26 },
-            { time: '2018-12-27', open: 109.87, high: 114.69, low: 85.66, close: 111.26 },
-            { time: '2018-12-28', open: 109.87, high: 114.69, low: 85.66, close: 111.26 },
-            { time: '2018-12-29', open: 109.87, high: 114.69, low: 85.66, close: 111.26 },
-            { time: '2018-12-31', open: 109.87, high: 114.69, low: 85.66, close: 111.26 },
-        ]);
-
-        console.log(firstChart)
+            candlestickSeries.setData(data);
+            // stopSerie.setData(stop);
+            // takeSerie.setData(take);
+        }).catch(err => {
+            console.error(err);
+        });
     }, []);
 
     return (<>
-        <div ref={firstContainer} id="first-container" style={{ width: '100%', height: '100vh', boxSizing: 'border-box'}}></div>
+        <div ref={firstContainer} id="first-container"></div>
     </>);
 }

@@ -1,0 +1,47 @@
+.chart-container {
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+    z-index: 0;
+    box-shadow: 0 0 50px $black;
+    height: 50vh;
+    width: 100%;
+    position: relative;
+
+    &.expanded {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        border-radius: 0;
+    }
+
+    .expand-btn.MuiSpeedDial-root {
+        position: absolute;
+        right: auto;
+        bottom: auto;
+        top: 0rem;
+        left: 0.8rem;
+
+        button {
+            background: $white;
+            color: $black;
+        }
+    }
+}
+
+
+.slot-display {
+    .chart-container {
+        height: 200px;
+        margin: 20px 0 0 0;
+
+        &.expanded {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+    }
+}

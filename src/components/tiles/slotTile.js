@@ -7,16 +7,22 @@ import OpenTradeInfo from '../contents/master-account/openTradeInfos';
 import { Backdrop, CircularProgress } from '@mui/material';
 import ActivityDataContext from '../../context/activityData';
 import AJAX from '../../utils/ajax';
+import CandlestickChart from '../displays/CandlestickChart';
 
 export default function SlotTile({slot}) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [stopSelect, setStopSelect] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [chartState, setChartState] = useState(false);
     const slotURL = createURL('/slot-details', { slotuid: slot._id });
     let state = '';
 
     if(slot.pnl > 0) state = 'profit';
     if(slot.pnl < 0) state = 'loss';
+
+    function handleChartButton() {
+        setChartState(prev => !prev);
+    }
 
     async function runSlot() {
         setIsLoading(true);
@@ -115,6 +121,19 @@ export default function SlotTile({slot}) {
                 <div className="results">
                     <span className="pnl" state={state}>{toMoney(slot, ['pnl'])}</span>
                 </div>
+            </div>
+
+            {chartState && <CandlestickChart
+                symbol={slot?.assets?.length ? slot.assets[0] : ''}
+                interval={slot?.interval}
+                positions={slot?.trades}
+                close={(handler) => {
+                    handler();
+                }}
+            />}
+
+            <div className="button-wrap">
+                <button className="button full-width top-border transparent small" onClick={handleChartButton}>{!chartState ? 'Ver gráfico' : 'Fechar gráfico'}</button>
             </div>
 
             {slot.trades.map(trade => <OpenTradeInfo key={trade._id} trade={trade} /> )}
