@@ -169,7 +169,7 @@ export default function MasterAccount({ loadData }) {
                     </div>
 
                     <div className="slots-list standard-grid grid">
-                        {masterSlots?.map((slot, i) => <SlotTile key={slot?._id} index={i} slot={slot}/> )}
+                        {masterSlots?.map((slot, i) => <SlotTile key={slot?.cod} index={i} slot={slot}/> )}
                         <button
                             type="button"
                             className="button full-width top-border transparent small"

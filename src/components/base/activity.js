@@ -40,7 +40,7 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
             });
             setLoading(false);
         }
-    }, []);
+    }, [activityUrl, setActivityData]);
 
     useEffect(() => {
         if (window) {

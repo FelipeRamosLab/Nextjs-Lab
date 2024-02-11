@@ -31,7 +31,7 @@ export default function GridSlider({data, itemsPerPage}) {
         }, []);
 
         setSliderPages(sliderPagesTemp);
-    }, []);
+    }, [data, itemsPerPage]);
 
     return (
         <Slider

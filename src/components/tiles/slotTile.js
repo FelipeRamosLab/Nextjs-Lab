@@ -76,7 +76,7 @@ export default function SlotTile({slot}) {
         }
     }
 
-    return (
+    return (<>
         <div className="slot-display item card">
             <MainModal
                 open={stopSelect}
@@ -136,7 +136,7 @@ export default function SlotTile({slot}) {
                 <button className="button full-width top-border transparent small" onClick={handleChartButton}>{!chartState ? 'Ver gráfico' : 'Fechar gráfico'}</button>
             </div>
 
-            {slot.trades.map(trade => <OpenTradeInfo key={trade._id} trade={trade} /> )}
+            {slot.trades.map(trade => <OpenTradeInfo key={trade.cod} trade={trade} /> )}
 
             <Backdrop
                 sx={{ color: '#fff', zIndex: 999999 }}
@@ -145,5 +145,5 @@ export default function SlotTile({slot}) {
                 <CircularProgress color="inherit" />
             </Backdrop>
         </div>
-    );
+    </>);
 }

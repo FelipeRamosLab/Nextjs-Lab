@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import ListDocsModel from '../../models/ListDocs';
 
 export default function ListDocs(params = ListDocsModel.prototype) {

@@ -24,7 +24,7 @@ export default function EditSlotForm({formState, isLoadingState, pageData}) {
             setIsLoading(false);
             throw err;
         });
-    }, []);
+    }, [setIsLoading]);
 
     return <form>
         {!isLoading && steps.map((step, index) => (

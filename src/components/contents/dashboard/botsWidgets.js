@@ -20,7 +20,7 @@ export default function BotsWidgets({pageData}) {
 
         localMyBotsView && setMyBotsView(localMyBotsView)
         localBotStoreView && setBotStore(localBotStoreView)
-    }, [pageData, localStorageWidgetViewName]);
+    }, [pageData]);
 
     function localStorageWidgetViewName(viewName) {
         return `${pageData?.user?._id}_widgetView_${viewName}`
