@@ -60,8 +60,7 @@ export default function SlotTile({slot}) {
         try {
             const stopping = await new AJAX('/slots/stop').post({
                 type,
-                slotUID: slot._id,
-                masterUID: slot.master
+                slotUID: slot._id
             });
 
             if (!stopping.success) alert('Ocorreu um erro ao parar o slot!');
@@ -136,7 +135,7 @@ export default function SlotTile({slot}) {
                 <button className="button full-width top-border transparent small" onClick={handleChartButton}>{!chartState ? 'Ver gráfico' : 'Fechar gráfico'}</button>
             </div>
 
-            {slot.trades.map(trade => <OpenTradeInfo key={trade.cod} trade={trade} /> )}
+            {slot.trades.map(trade => trade ? <OpenTradeInfo key={trade.cod} trade={trade} /> : '')}
 
             <Backdrop
                 sx={{ color: '#fff', zIndex: 999999 }}

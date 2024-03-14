@@ -92,6 +92,10 @@ export default function CandlestickChart({ symbol, interval, positions, index })
                     }
                 }
             }
+        }).then(res => {
+            debugger
+        }).catch(err => {
+            debugger
         });
     }, [interval, positions, symbol]);
 
