@@ -24,6 +24,11 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
                 return setActivityData({ status: 'error', code: 401, ...err });
             }
 
+            if (err.name === 'USER_NOT_AUTHORIZED') {
+                setActivityData({ status: 'error', ...err, code: 401 });
+                return window.location.href = '/';
+            }
+
             setActivityData({ status: 'error', code: 500, name: 'Server Error', message: 'The server got an error!' });
         } finally {
             return setLoading(false);
