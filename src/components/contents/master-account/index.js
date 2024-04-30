@@ -10,8 +10,9 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import FormFillModal from '../../modals/formFill';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import ArchiveIcon from '@mui/icons-material/Archive';
 import EditMasterForm from '../../forms/editing/master';
-import DeleteConfirmation from '../../modals/confirmation';
+import Confirmation from '../../modals/confirmation';
 import ActivityDataContext from '../../../context/activityData';
 import SectionHeader from '../../headers/sectionHeader';
 import IconButtonConfig from '../../../models/IconButtonConfig';
@@ -19,11 +20,16 @@ import Paper from '@mui/material/Paper';
 import AJAX from '../../../utils/ajax';
 
 export default function MasterAccount({ loadData }) {
+    const DeleteConfirmation = Confirmation;
+    const ArchiveConfirmation = Confirmation;
+
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [addNewSlotModal, setAddNewSlotModal] = useState(false);
     const [editMasterModal, setEditMasterModal] = useState(false);
     const [transferType, setTransferType] = useState(false);
     const deleteConfirmationState = useState(false);
+    const archiveConfirmationState = useState(false);
+    const [__, setArchiveConfirmationState] = archiveConfirmationState;
     const [_, setDeleteConfirmation] = deleteConfirmationState;
     const { master, masterSlots } = activityData || {};
 
@@ -48,6 +54,21 @@ export default function MasterAccount({ loadData }) {
             });
             setEditMasterModal(false);
         } catch(err) {
+            throw err;
+        }
+    }
+
+    async function archiveMaster() {
+        try {
+            const response = await new AJAX('/master-account/switch-state').post({
+                masterUID: master._id,
+                newState: 'archived'
+            });
+
+            if (response.success) {
+                window.location.reload();
+            }
+        } catch (err) {
             throw err;
         }
     }
@@ -103,6 +124,10 @@ export default function MasterAccount({ loadData }) {
                     new IconButtonConfig({
                         Icon: EditIcon,
                         action: () => setEditMasterModal(true)
+                    }),
+                    new IconButtonConfig({
+                        Icon: ArchiveIcon,
+                        action: () => setArchiveConfirmationState(true)
                     }),
                     new IconButtonConfig({
                         Icon: DeleteIcon,
@@ -191,6 +216,13 @@ export default function MasterAccount({ loadData }) {
                 onClose={() => setEditMasterModal(false)}
                 Content={EditMasterForm}
                 saveAction={editMaster}
+            />
+
+            <ArchiveConfirmation
+                title="Deseja arquivar a conta?"
+                message={`Tem certeza que você deseja arquivar a conta [${master?.cod}][${master?.name}]? Você poderá reativar ela no futuro!`}
+                openState={archiveConfirmationState}
+                onConfirm={archiveMaster}
             />
 
             <DeleteConfirmation

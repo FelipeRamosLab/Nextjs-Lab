@@ -42,12 +42,19 @@ export default function SlotAssetConfigStep({formState, assets}) {
                 })}
             >
                 <MenuItem value="1m">1 minuto</MenuItem>
+                <MenuItem value="3m">3 minutos</MenuItem>
                 <MenuItem value="5m">5 minutos</MenuItem>
                 <MenuItem value="15m">15 minutos</MenuItem>
                 <MenuItem value="30m">30 minutos</MenuItem>
                 <MenuItem value="1h">1 hora</MenuItem>
+                <MenuItem value="2h">2 horas</MenuItem>
                 <MenuItem value="4h">4 horas</MenuItem>
+                <MenuItem value="6h">6 horas</MenuItem>
+                <MenuItem value="8h">8 horas</MenuItem>
+                <MenuItem value="12h">12 horas</MenuItem>
                 <MenuItem value="1d">1 dia</MenuItem>
+                <MenuItem value="3d">3 dias</MenuItem>
+                <MenuItem value="1w">1 semana</MenuItem>
             </Select>
         </FormControl>
 

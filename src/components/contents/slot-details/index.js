@@ -3,7 +3,7 @@ import GridSlider from '../../sliders/grid-slider';
 import Link from 'next/link';
 import FormFillModal from '../../modals/formFill';
 import EditSlotForm from '../../forms/editing/slot';
-import DeleteConfirmation from '../../modals/confirmation';
+import Confirmation from '../../modals/confirmation';
 import ActivityDataContext from '../../../context/activityData';
 import SlotClosedPositions from './closedPositions';
 import SlotLimits from '../../common/limits';
@@ -12,16 +12,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import IconButtonConfig from '../../../models/IconButtonConfig';
+import ArchiveIcon from '@mui/icons-material/Archive';
 import Fab from '@mui/material/Fab';
 import Calculate from '@mui/icons-material/Calculate';
 import AJAX from '../../../utils/ajax';
 import CandlestickChart from '../../displays/CandlestickChart';
 
 export default function SlotDetails() {
+    const DeleteConfirmation = Confirmation;
+    const ArchiveConfirmation = Confirmation;
+
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const {slot, bot} = activityData || {};
     const [editModal, setEditModal] = useState(false);
     const deleteConfirmationState = useState(false);
+    const archiveConfirmationState = useState(false);
+    const [__, setArchiveConfirmationState] = archiveConfirmationState;
     const [_, setDeleteConfirmation] = deleteConfirmationState;
 
     async function updateSlot(form) {
@@ -67,6 +73,23 @@ export default function SlotDetails() {
             throw err;
         }
     }
+    
+    async function archiveSlot() {
+        if (!slot) return;
+
+        try {
+            const response = await new AJAX('/slots/switch-state').post({
+                slotUID: slot._id,
+                newState: 'archived'
+            });
+
+            if (response.success) {
+                window.location.reload();
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
 
     async function openPosition() {
         try {
@@ -93,6 +116,10 @@ export default function SlotDetails() {
                         action: () => setEditModal(true)
                     }),
                     new IconButtonConfig({
+                        Icon: ArchiveIcon,
+                        action: () => setArchiveConfirmationState(true)
+                    }),
+                    new IconButtonConfig({
                         Icon: DeleteIcon,
                         action: () => setDeleteConfirmation(true)
                     })
@@ -102,7 +129,7 @@ export default function SlotDetails() {
             <section className="content-sidebar">
                 <div className="content">
                     <div className="section-wrap">
-                        <Link href={createURL('/bot-details', { bot: bot?._id})} passHref>
+                        <Link href={createURL('/bot-details', { botuid: bot?._id})} passHref>
                             <div className="card bot-card">
                                 <div className="avatar">
                                     <h4>AV</h4>
@@ -146,7 +173,7 @@ export default function SlotDetails() {
                             <h2>Monitor</h2>
                         </div>
 
-                        {slot?.assets && <CandlestickChart
+                        {false && slot?.assets && <CandlestickChart
                             symbol={slot?.assets?.length ? slot.assets[0] : ''}
                             interval={slot?.interval}
                             positions={activityData?.slot?.trades}
@@ -180,6 +207,13 @@ export default function SlotDetails() {
                 openState={editModal}
                 onClose={() => setEditModal(false)}
                 saveAction={updateSlot}
+            />
+
+            <ArchiveConfirmation
+                title="Deseja arquivar a conta?"
+                message={`Tem certeza que você deseja arquivar a conta [${slot?.cod}][${slot?.name}]? Você poderá reativar ela no futuro!`}
+                openState={archiveConfirmationState}
+                onConfirm={archiveSlot}
             />
 
             <DeleteConfirmation

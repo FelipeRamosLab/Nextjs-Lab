@@ -12,7 +12,7 @@ export default function MainHeader({ pageData }){
     return (
         <header>
             <div className="container header-wrap">
-                <Link href="/" passHref>
+                <Link href="/dashboard" passHref>
                     <div className="header-column logo-wrap">
                         <Image
                             src="/images/logo.svg"
