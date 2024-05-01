@@ -5,3 +5,19 @@
         bottom: 1.5rem;
     }
 }
+
+// Toggle Button
+.MuiToggleButtonGroup-root {
+    min-width: 100%;
+    background: $secondary;
+
+    .MuiToggleButton-root {
+        flex: 1;
+        color: $soft-text;
+
+        &.Mui-selected {
+            background-color: $tertiary;
+            color: $primary-grey;
+        }
+    }
+}

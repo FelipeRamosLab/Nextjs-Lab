@@ -142,18 +142,17 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
 export async function loadFormDependencies() {
     try {
         const assets = await new AJAX('/exchange/get-assets').get();
-        const myBots = await new AJAX('/bot/my-bots').get();
+        const bots = await new AJAX('/bot/my-bots').get();
 
-        if (assets.success) {
+        if (assets.success && bots.success) {
             return {
                 assets: assets.data,
-                bots: myBots || []
+                bots: bots.botsList || []
             };
         } else {
             throw assets;
         }
     } catch(err) {
-        debugger
         throw err;
     }
 }

@@ -10,7 +10,7 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import StoreIcon from '@mui/icons-material/Store';
 
 export default function BotsWidgets({pageData}) {
-    const {myBots} = Object(pageData);
+    const {myBots, storeBots} = Object(pageData);
     const [myBotsView, setMyBotsView] = useState('carousel');
     const [botStoreView, setBotStore] = useState('table');
     
@@ -75,7 +75,8 @@ export default function BotsWidgets({pageData}) {
                     defaultData={myBots}
                     columns={[
                         { id: 'name', label: 'BOT NAME'},
-                        { id: 'description', label: 'DESCRIPTION'}
+                        { id: 'description', label: 'DESCRIPTION'},
+                        { id: 'status', label: 'STATUS'}
                     ]}
                     rowsPerPage={5}
                     rowsPerPageOptions={[5, 10, 50, 100]}
@@ -99,9 +100,9 @@ export default function BotsWidgets({pageData}) {
                     })
                 ]}/>
 
-                {botStoreView === 'carousel' && <CardSlider data={myBots} />}
+                {botStoreView === 'carousel' && <CardSlider data={storeBots} />}
                 {botStoreView === 'table' && <PaginationTable
-                    defaultData={myBots}
+                    defaultData={storeBots}
                     columns={[
                         { id: 'name', label: 'BOT NAME'},
                         { id: 'description', label: 'DESCRIPTION'}

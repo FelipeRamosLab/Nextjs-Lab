@@ -1,4 +1,3 @@
-import { FaTrash, FaPen } from 'react-icons/fa';
 import BotValuesAccordion from './botValuesAccordion';
 import BotEventsAccordion from './botEventsAccordion';
 import Button from '@mui/material/Button';
@@ -11,18 +10,21 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState, useContext } from 'react';
 import EditBotForm from '../../forms/editing/bot';
 import ActivityDataContext from '../../../context/activityData';
-import SelctionHeader from '../../headers/sectionHeader'
+import SeletionHeader from '../../headers/sectionHeader';
 import IconButtonConfig from '../../../models/IconButtonConfig';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteConfirmation from '../../modals/confirmation';
 import AJAX from '../../../utils/ajax';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
 
 export default function BotDetails({ queryParams }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const { bot: { cod, name, description, _id}} = activityData || {};
+    const { bot: { cod, name, description, _id, status}} = activityData || {};
     const [editModal, setEditModal] = useState(false);
     const deleteConfirmationState = useState(false);
+    const [statusValue, setStatusValue] = useState(status);
     const [_, setDeleteConfirmation] = deleteConfirmationState;
     const formState = useState(activityData.bot);
     const [form] = formState;
@@ -80,10 +82,29 @@ export default function BotDetails({ queryParams }) {
         }
     }
 
+    async function handleStatusChange(_, newStatus) {
+        try {
+            const changed = await new AJAX('/bot/status-transition').post({
+                botUID: _id,
+                newStatus
+            });
+
+            if (changed.error) {
+                throw changed;
+            }
+
+            if (changed.success) {
+                setStatusValue(newStatus);
+            }
+        } catch (err) {
+            alert(err?.message || err);
+        }
+    }
+
     return (<>
         <div className="container">
             <section className="content-fullwidth">
-                <SelctionHeader
+                <SeletionHeader
                     title={`[${cod}] ${name}`}
                     iconButtons={[
                         new IconButtonConfig({
@@ -116,6 +137,21 @@ export default function BotDetails({ queryParams }) {
                 </div>
 
                 <div className="sidebar">
+                    <div className="botstatus-wrap card spacing-md">
+                        <h3 className="title text-center">Status</h3>
+                        <p className="text-center">Seu robo está atualmente {statusValue === 'public' ? 'disponível para a utilização de terceiros na store.' : 'somente pode ser visualizado por você'}</p>
+
+                        <ToggleButtonGroup
+                            className="status-toggle"
+                            value={statusValue}
+                            exclusive
+                            onChange={handleStatusChange}
+                        >
+                            <ToggleButton value="draft">Rascunho</ToggleButton>
+                            <ToggleButton value="public">Público</ToggleButton>
+                            <ToggleButton value="private">Privado</ToggleButton>
+                        </ToggleButtonGroup>
+                    </div>
                 </div>
             </section>
 
