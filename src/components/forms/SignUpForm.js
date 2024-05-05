@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 
-const cookieAge = 3600000;
+const cookieAge = 86400000;
 
 export default function SignUp() {
     const [formData, setFormData] = useState({});

@@ -1,4 +1,8 @@
 import axios from 'axios';
+const https = require('https');
+const agent = new https.Agent({
+    rejectUnauthorized: false
+  });
 
 export default class AJAX {
     constructor(url, customHost) {
@@ -7,13 +11,20 @@ export default class AJAX {
     }
 
     async get(params, options) {
+        const { isServer } = Object(options);
+        let response;
+
         try {
-            const token = await cookieStore.get('token');
-            const response = await axios.get(this.url, {
-                ...Object(options),
-                headers: { token: token?.value || '' },
-                data: params
-            });
+            if (!isServer) {
+                const token = await cookieStore.get('token');
+                response = await axios.get(this.url, {
+                    ...Object(options),
+                    headers: { token: token?.value || '' },
+                    data: params
+                });
+            } else {
+                response = await axios.get(this.url, { httpsAgent: agent });
+            }
 
             return response.data;
         } catch (err) {

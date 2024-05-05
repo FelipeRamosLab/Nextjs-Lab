@@ -104,7 +104,7 @@ export default function AccountMenu({ pageData }) {
                 
                 <Divider />
 
-                <MenuItem onClick={() => goToLink('/logs')}>
+                <MenuItem onClick={() => goToLink('/console-logs')}>
                     <ListItemIcon>
                         <Badge badgeContent={pageData?.logsCount || 0} color="error">
                             <LogoDevIcon sx={{ ml: -0.2 }} />

@@ -5,7 +5,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import UploadIcon from '@mui/icons-material/Upload';
 import Link from 'next/link';
 
-const cookieAge = 3600000;
+const cookieAge = 86400000;
 
 export default function LoginForm() {
     const [formData, setFormData] = useState({});
