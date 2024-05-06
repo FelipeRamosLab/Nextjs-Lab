@@ -84,6 +84,7 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
                 return {...prev, masterSlots: saved?.master?.botAccounts}
             });
         } catch(err) {
+            alert(err?.message || 'Unknow error!');
             throw err;
         } finally {
             setIsLoading(false);

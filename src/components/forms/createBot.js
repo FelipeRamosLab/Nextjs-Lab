@@ -40,6 +40,7 @@ export default function CreateBotForm({isLoadingState, formState, onClose, pageD
             const saved = await new AJAX('/bot/create').put(form);
             window.open(createURL('/bot-details', {botuid: saved?.bot?._id}), '_self');
         } catch(err) {
+            alert(err?.message || 'Unknown error!')
             throw err;
         } finally {
             setIsLoading(false);

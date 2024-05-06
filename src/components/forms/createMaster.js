@@ -54,6 +54,7 @@ export default function CreateMasterForm({isLoadingState, formState, onClose, pa
             onClose();
             window.location.reload();
         } catch(err) {
+            alert(err?.message || 'Unknow error!');
             setIsLoading(false);
             throw err;
         }
