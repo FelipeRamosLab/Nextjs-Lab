@@ -33,6 +33,7 @@ export default function SlotTile({slot}) {
             });
 
             if (runned.success) {
+                window.location.reload();
                 setActivityData(prev => {
                     return { ...prev, masterSlots: runned.data.master.botAccounts }
                 });
@@ -65,6 +66,7 @@ export default function SlotTile({slot}) {
 
             if (!stopping.success) alert('Ocorreu um erro ao parar o slot!');
 
+            window.location.reload();
             setActivityData(prev => {
                 return { ...prev, masterSlots: stopping.slot.botAccounts }
             });
