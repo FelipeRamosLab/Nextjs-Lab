@@ -76,18 +76,18 @@ export default function SlotAssetConfigStep({formState, assets}) {
         <FormControl margin="dense">
             <Typography gutterBottom>
                 Pausa mínima entre operações: 
-                <b style={{ fontSize: 16 }}>{form.limits.tradesMinInterval || 0.2}</b> h{form.limits.tradesMinInterval > 1 ? 's': ''}
+                <b style={{ fontSize: 16 }}>{form.limits.tradesMinInterval / 60}</b> h{form.limits.tradesMinInterval > 1 ? 's': ''}
             </Typography>
             <Slider
                 size="medium"
                 defaultValue={0.2}
                 valueLabelDisplay="auto"
-                max={24}
-                min={0.01}
+                max={12}
+                min={0.02}
                 step={0.01}
-                value={form.limits.tradesMinInterval}
+                value={form.limits.tradesMinInterval / 60}
                 onChange={(ev) => setForm(prev => {
-                    return { ...prev, limits: { ...prev.limits, tradesMinInterval: ev.target.value } }
+                    return { ...prev, limits: { ...prev.limits, tradesMinInterval: ev.target.value * 60 } }
                 })}
             />
         </FormControl>
