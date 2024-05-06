@@ -38,8 +38,8 @@ export default function SlotBasicInfoStep({formState, master}) {
                 size="medium"
                 defaultValue={master && master.availableAllocation || 0}
                 valueLabelDisplay="auto"
-                max={master && master.availableAllocation || 0}
-                min={0}
+                max={100}
+                min={1}
                 value={form.walletAllocation || master && master.availableAllocation}
                 onChange={(ev) => setForm(prev => {
                     return { ...prev, walletAllocation: ev.target.value }
