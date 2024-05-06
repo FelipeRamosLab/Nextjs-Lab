@@ -24,6 +24,7 @@ export default function LoginForm() {
 
             window.location.href = '/dashboard';
         } catch (error) {
+            alert(error?.message || 'Unknown error!');
             setSending(false);
             console.error(error?.response?.data || error);   
         }

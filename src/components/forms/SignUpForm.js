@@ -24,6 +24,7 @@ export default function SignUp() {
             url.searchParams.set('userEmail', formData.email);
             window.location.href = url.toString();
         } catch (error) {
+            alert(error?.message || 'Unknown error!');
             setSending(false);
             console.error(error?.response?.data || error);   
         }
