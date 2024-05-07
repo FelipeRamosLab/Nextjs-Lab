@@ -35,7 +35,7 @@ export default function CreateMasterForm({isLoadingState, formState, onClose, pa
                 return {
                     ...prev,
                     user: pageData && pageData.user._id,
-                    type: 'master-demo',
+                    type: 'master-live',
                     limits: {} 
                 }
             });
