@@ -17,9 +17,13 @@ export default function MyProfile({ pageData, pageID }) {
         try {
             const sent = await new AJAX('/user/binance-keys/save-keys').put(tokenForm);
             
-            debugger
+            if (sent.success) {
+                window.location.reload();
+            } else {
+                throw sent;
+            }
         } catch (err) {
-            throw err;   
+            alert(err);   
         }
     }
 
