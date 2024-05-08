@@ -14,13 +14,14 @@ export default function ConsoleLog({ logsContent }) {
 }
 
 export async function getServerSideProps(context){
+  const { query } = Object(context);
   const ajax = new AJAX('/api/read-logs');
-  const logs = await ajax.get({}, { isServer: true });
+  const logs = await ajax.get({ type: query?.type }, { isServer: true });
 
   try {  
     return {
       props: {
-        queryParams: context.query,
+        queryParams: query,
         logsContent: logs.content
       }
     };

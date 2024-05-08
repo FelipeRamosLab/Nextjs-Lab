@@ -23,7 +23,7 @@ export default class AJAX {
                     data: params
                 });
             } else {
-                response = await axios.get(this.url, { httpsAgent: agent });
+                response = await axios.get(this.url, { httpsAgent: agent, data: params });
             }
 
             return response.data;
