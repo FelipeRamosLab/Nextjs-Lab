@@ -35,5 +35,18 @@ export default function MasterInfosStep({formState, isEditMode}) {
                 })}
             />
         </FormControl>
+
+        <FormControl margin="dense">
+            <TextField
+                label="Descrição"
+                variant="standard"
+                multiline
+                minRows={3}
+                value={form.description || ''}
+                onInput={(ev) => setForm(prev => {
+                    return { ...prev, description: ev.target.value }
+                })}
+            />
+        </FormControl>
     </div>);
 }

@@ -175,6 +175,7 @@
     .title-description {
         display: inline-flex;
         gap: 0.7rem;
+        flex-direction: column;
         
         svg {
             transform: translate(-3px);
