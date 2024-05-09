@@ -1,0 +1,15 @@
+
+> nextjs-lab@0.1.0 dev
+> next dev -p 443 --experimental-https
+
+ ⚠ Self-signed certificates are currently an experimental feature, use at your own risk.
+   Attempting to generate self signed certificate. This may prompt for your password
+   CA Root certificate created in /root/.local/share/mkcert
+   Certificates created in /home/felipe/Nextjs-Lab/certificates
+  ▲ Next.js 13.5.6
+  - Local:        https://localhost:443
+  - Environments: .env.development, .env
+
+ ✓ Ready in 4.6s
+ ○ Compiling /master-account ...
+ ✓ Compiled /master-account in 10.8s (1207 modules)
