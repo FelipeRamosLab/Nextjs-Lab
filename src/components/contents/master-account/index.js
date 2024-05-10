@@ -119,6 +119,7 @@ export default function MasterAccount({ loadData }) {
                 <SectionHeader title={master?.name} description={master?.description} iconButtons={[
                     new IconButtonConfig({
                         Icon: AttachMoneyIcon,
+                        display: Boolean(master?.type === 'master-demo'),
                         action: () => setTransferType('deposit')
                     }),
                     new IconButtonConfig({
