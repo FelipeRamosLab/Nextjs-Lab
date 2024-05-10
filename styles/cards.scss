@@ -32,6 +32,35 @@
         cursor: pointer;
     }
 
+    &.sidebar-card {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
+        padding: 1rem 2rem 2rem 2rem;
+
+        >.title {
+            min-width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .MuiAvatar-root {
+            margin: 0 auto;
+            width: 6rem;
+            height: 6rem;
+        }
+
+        .author-data {
+            transform: translateY(-3px);
+            flex: 1;
+            padding-left: 1.2rem;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
     &.bot-value {
         background: $primary-grey;
         padding: 0.5rem;
@@ -102,7 +131,13 @@
     }
 
     .title {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+    }
+
+    .subtitle {
+        display: inline-block;
+        width: 100%;
+        font-size: 0.9rem;
     }
 
     .pnl,

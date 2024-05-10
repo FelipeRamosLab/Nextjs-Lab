@@ -26,6 +26,7 @@ export default function SlotTile({slot}) {
 
     async function runSlot() {
         setIsLoading(true);
+
         try {
             const runned = await new AJAX('/slots/run').post({
                 slotUID: slot._id,
@@ -37,11 +38,12 @@ export default function SlotTile({slot}) {
                 setActivityData(prev => {
                     return { ...prev, masterSlots: runned.data.master.botAccounts }
                 });
-            } else alert('Ocorreu um erro ao iniciar o slot!');
+            } else {
+                throw new Error();
+            }
         } catch(err) {
-            alert('Ocorreu um erro ao iniciar o slot!');
-        } finally {
             setIsLoading(false);
+            alert('Ocorreu um erro ao iniciar o slot!');
         }
     }
 
@@ -71,9 +73,8 @@ export default function SlotTile({slot}) {
                 return { ...prev, masterSlots: stopping.slot.botAccounts }
             });
         } catch(err) {
-            alert('Ocorreu um erro ao parar o slot!');
-        } finally {
             setIsLoading(false);
+            alert('Ocorreu um erro ao parar o slot!');
         }
     }
 

@@ -1,5 +1,6 @@
 import BotValuesAccordion from './botValuesAccordion';
 import BotEventsAccordion from './botEventsAccordion';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -21,13 +22,15 @@ import ToggleButton from '@mui/material/ToggleButton';
 
 export default function BotDetails({ queryParams }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const { bot: { cod, name, description, _id, status}} = activityData || {};
+    const { bot: { cod, name, description, _id, status, author }} = Object(activityData);
     const [editModal, setEditModal] = useState(false);
     const deleteConfirmationState = useState(false);
     const [statusValue, setStatusValue] = useState(status);
     const [_, setDeleteConfirmation] = deleteConfirmationState;
     const formState = useState(activityData.bot);
     const [form] = formState;
+    
+    const authorFullName = `${author.firstName} ${author.lastName}`;
 
     function BootstrapDialogTitle(props) {
         const { children, onClose, ...other } = props;
@@ -151,6 +154,19 @@ export default function BotDetails({ queryParams }) {
                             <ToggleButton value="public">Público</ToggleButton>
                             <ToggleButton value="private">Privado</ToggleButton>
                         </ToggleButtonGroup>
+                    </div>
+
+                    <div className="sidebar-card card spacing-md">
+                        <h3 className="title">Desenvolvimento</h3>
+                        <Avatar
+                            alt={authorFullName}
+                        />
+
+                        <div className="author-data">
+                            <h3 className="title">{authorFullName}</h3>
+                            <a className="subtitle" href={'mailto:' + author.email}>{author.email}</a>
+                            <a className="subtitle" href={'tel:' + author.phone}>{author.phone}</a>
+                        </div>
                     </div>
                 </div>
             </section>
