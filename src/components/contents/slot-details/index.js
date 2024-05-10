@@ -17,6 +17,8 @@ import Fab from '@mui/material/Fab';
 import Calculate from '@mui/icons-material/Calculate';
 import AJAX from '../../../utils/ajax';
 import CandlestickChart from '../../displays/CandlestickChart';
+import StopIcon from '@mui/icons-material/Stop';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 export default function SlotDetails() {
     const DeleteConfirmation = Confirmation;
@@ -103,10 +105,54 @@ export default function SlotDetails() {
         }
     }
 
+    async function runSlot() {
+        try {
+            const runned = await new AJAX('/slots/run').post({
+                slotUID: slot._id,
+                masterUID: slot.master
+            });
+
+            if (runned.success) {
+                window.location.reload();
+            } else {
+                throw new Error();
+            }
+        } catch(err) {
+            alert('Ocorreu um erro ao iniciar o slot!');
+        }
+    }
+
+    async function stopSlot(type) {
+        try {
+            const stopping = await new AJAX('/slots/stop').post({
+                type,
+                slotUID: slot._id
+            });
+
+            if (!stopping.success) alert('Ocorreu um erro ao parar o slot!');
+
+            window.location.reload();
+        } catch(err) {
+            alert('Ocorreu um erro ao parar o slot!');
+        }
+    }
+
     return (
         <div className="container">
             <section className="content-fullwidth">
                 <SectionHeader title={slot?.name} iconButtons={[
+                    new IconButtonConfig({
+                        Icon: StopIcon,
+                        color: 'error',
+                        action: () => stopSlot('forced'),
+                        display: (slot?.status === 'running')
+                    }),
+                    new IconButtonConfig({
+                        Icon: PlayArrowIcon,
+                        color: 'success',
+                        action: runSlot,
+                        display: (slot?.status === 'stopped')
+                    }),
                     new IconButtonConfig({
                         Icon: AttachMoneyIcon,
                         action: () => {}

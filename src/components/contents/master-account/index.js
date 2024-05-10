@@ -7,6 +7,8 @@ import MasterResults from '../../common/limits';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import StopIcon from '@mui/icons-material/Stop';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FormFillModal from '../../modals/formFill';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
@@ -90,6 +92,35 @@ export default function MasterAccount({ loadData }) {
         }
     }
 
+    async function runAllSlots() {
+        try {
+            const ajax = new AJAX('/master-account/run-slots');
+            const response = await ajax.post({ masterUID: master._id });
+
+            if (response.success) {
+                window.location.reload();
+            } else {
+                throw response;
+            }
+        } catch (err) {
+            alert(err?.message || err);
+        }
+    }
+
+    async function stopAllSlots() {
+        try {
+            const ajax = new AJAX('/master-account/stop-slots');
+            const response = await ajax.post({ masterUID: master._id });
+
+            if (response.success) {
+                window.location.reload();
+            } else {
+                throw response;
+            }
+        } catch (err) {
+            alert(err?.message || err);
+        }
+    }
 
     function seeMore() {
         if (!window.queryParams) window.queryParams = {};
@@ -190,9 +221,21 @@ export default function MasterAccount({ loadData }) {
                         </Paper>
                     </section>
 
-                    <div className="section-header">
-                        <h2>Slots</h2>
-                    </div>
+                    <SectionHeader
+                        title="Slots"
+                        iconButtons={[
+                            new IconButtonConfig({
+                                Icon: StopIcon,
+                                color: 'error',
+                                action: stopAllSlots
+                            }),
+                            new IconButtonConfig({
+                                Icon: PlayArrowIcon,
+                                color: 'success',
+                                action: runAllSlots
+                            })
+                        ]}
+                    />
 
                     <div className="slots-list standard-grid grid">
                         {masterSlots?.map((slot, i) => <SlotTile key={slot?.cod} index={i} slot={slot}/> )}
