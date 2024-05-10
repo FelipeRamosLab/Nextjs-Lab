@@ -19,14 +19,15 @@ export default function Activity({ PageLayout, PageContent, activityUrl, queryPa
                 const userEmail = await window.cookieStore.get('userEmail');
                 const url = new URL(window.location.origin + '/dashboard/confirmation-sent');
 
-                url.searchParams.set('userEmail', userEmail.value);
                 window.location.href = url.toString();
+                url.searchParams.set('userEmail', userEmail.value);
                 return setActivityData({ status: 'error', code: 401, ...err });
             }
 
             if (err.name === 'USER_NOT_AUTHORIZED') {
-                setActivityData({ status: 'error', ...err, code: 401 });
-                return window.location.href = '/';
+                window.cookieStore.delete('userEmail');
+                window.location.href = '/';
+                return setActivityData({ status: 'error', ...err, code: 401 });
             }
 
             setActivityData({ status: 'error', code: 500, name: 'Server Error', message: 'The server got an error!' });

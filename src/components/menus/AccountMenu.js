@@ -34,6 +34,7 @@ export default function AccountMenu({ pageData }) {
     
             if (response.success) {
                 await cookieStore.delete('token');
+                await cookieStore.delete('userEmail');
                 window.location.href = '/';
             } else {
                 alert(response.message);
