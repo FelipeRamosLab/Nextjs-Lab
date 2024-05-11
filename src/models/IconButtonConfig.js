@@ -5,7 +5,9 @@ export default class IconButtonConfig {
             Icon,
             action,
             display,
-            color
+            color,
+            disabled,
+            title
         } = Object(setup);
 
         if (display === undefined) this.display = true;
@@ -14,5 +16,7 @@ export default class IconButtonConfig {
         this.action = action;
         this.display = display === undefined || display ? true : false;
         this.color = color;
+        this.disabled = disabled;
+        this.title = title;
     }
 }

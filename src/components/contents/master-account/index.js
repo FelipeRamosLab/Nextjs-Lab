@@ -227,11 +227,14 @@ export default function MasterAccount({ loadData }) {
                             new IconButtonConfig({
                                 Icon: StopIcon,
                                 color: 'error',
-                                action: stopAllSlots
+                                action: stopAllSlots,
+                                title: 'Stop All Slots'
                             }),
                             new IconButtonConfig({
                                 Icon: PlayArrowIcon,
                                 color: 'success',
+                                disabled: true,
+                                title: 'Run All Slots',
                                 action: runAllSlots
                             })
                         ]}

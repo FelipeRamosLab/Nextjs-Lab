@@ -16,6 +16,8 @@ export default function SectionHeader({title, Icon, description, iconButtons}) {
                         key={item?.id + index}
                         onClick={item?.action}
                         btn-color={item?.color}
+                        disabled={item?.disabled}
+                        title={item?.title}
                         {...item?.props}
                     >
                         <item.Icon/>
