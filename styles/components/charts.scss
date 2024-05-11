@@ -4,9 +4,10 @@
     border-radius: 10px;
     z-index: 0;
     box-shadow: 0 0 50px $black;
-    height: 50vh;
+    height: auto;
     width: 100%;
     position: relative;
+    flex: 1;
 
     &.expanded {
         position: fixed;

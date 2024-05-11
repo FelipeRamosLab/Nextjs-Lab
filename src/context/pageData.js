@@ -7,14 +7,18 @@ export function PageDataProvider({children}) {
     const [pageData, setPageData] = useState({});
 
     useEffect(() => {
-        new AJAX('/pages/base-data').get().then(response => {
-            setPageData({
-                notificationsCount: response.notificationsCount,
-                user: response.user
+        cookieStore.get('userEmail').then(cookie => {
+            if (!cookie) return;
+
+            new AJAX('/pages/base-data').get().then(response => {
+                setPageData({
+                    notificationsCount: response.notificationsCount,
+                    user: response.user
+                });
+            }).catch(err => {
+                return err;
             });
-        }).catch(err => {
-            throw err;
-        });
+        })
     }, []);
 
     return <PageDataContext.Provider

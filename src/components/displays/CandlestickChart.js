@@ -6,18 +6,20 @@ import { createChart } from 'lightweight-charts';
 import SpeedDial from '@mui/material/SpeedDial';
 import ExpandIcon from "@mui/icons-material/Expand";
 
-const binance = new BinanceSync();
-
-export default function CandlestickChart({ symbol, interval, positions, index }) {
+export default function CandlestickChart({ symbol, interval, limit }) {
     const chartContainer = useRef();
     const chart = useRef();
     const candleSeries = useRef();
-    const openPositionSerie = useRef();
-    const stopSerie = useRef();
-    const takeSerie = useRef();
     const [ isExpanded, setIsExpand ] = useState(false);
+    let parsedLimit = !isNaN(limit) ? Number(limit) : 500;
+
+    if (parsedLimit > 1000) {
+        parsedLimit = 1000;
+    }
 
     useEffect(() => {
+        const binance = new BinanceSync();
+
         if (chart.current) {
             return () => {
                 chart.current.remove();
@@ -26,6 +28,43 @@ export default function CandlestickChart({ symbol, interval, positions, index })
         }
 
         chart.current = createChart(chartContainer.current, {
+            autoSize: true,
+            timeScale: {
+                fixLeftEdge: true,
+                tickMarkFormatter: (time, tickMarkType, locale) => {
+                    switch (interval) {
+                        case '1m':
+                        case '3m':
+                        case '5m':
+                        case '15m':
+                        case '30m':
+                        case '1h':
+                        case '2h':
+                        case '4h':
+                        case '6h':
+                        case '8h':
+                        case '12h': {
+                            const timeString = new Date(time).toLocaleTimeString();
+                            const [hour, minute] = timeString.split(':');
+                            return `${hour}:${minute}`;
+                        }
+                        case '1d':
+                        case '1w': {
+                            const timeString = new Date(time).toDateString();
+                            const [week, month, day] = timeString.split(' ');
+                            return `${day} ${month}`;
+                        }
+                        default: {
+                            return new Date(time).toDateString().split(' ')[1]
+                        }
+                    }
+                }
+            },
+            localization: {
+                timeFormatter: (time) => {
+                    return new Date(time).toLocaleString()
+                }
+            },
             layout: {
                 textColor: '#AAA',
                 background: { type: 'solid', color: '#222222' }
@@ -37,67 +76,27 @@ export default function CandlestickChart({ symbol, interval, positions, index })
         });
 
         binance.streams.candlestickChart(symbol, interval, {
-            limit: 1500,
+            limit: parsedLimit,
+            accumulateCandles: true,
             callbacks: {
                 open: () => {
                     candleSeries.current = chart.current.addCandlestickSeries();
-                    stopSerie.current = chart.current.addLineSeries({ color: 'red', lineWidth: 1, lineType: 'dashed' });
-                    takeSerie.current = chart.current.addLineSeries({ color: 'green', lineWidth: 1, lineType: 'dashed' });
-                    openPositionSerie.current = chart.current.addLineSeries({ color: 'yellow', lineWidth: 1, lineType: 'dashed' });
 
                     console.log(`A chart stream was started for ${symbol} (${interval}).`)
                 },
                 close: () => console.log(`A chart stream was closed for ${symbol} (${interval}).`),
                 error: (err) => console.error(err),
                 data: (chartUpdate) => {
-                    const ordered = chartUpdate.candles.sort((a, b) => (a.openTime - b.openTime));
-                    const openPosition = positions.find(item => item.status === 'opened');
-                    // const stopLine = [];
-                    const data = ordered.map((item, i) => {
-                        item.time = item.openTime;
-        
-                        if (openPosition) {
-                            item.stopLoss = openPosition.stopPrice;
-                            item.takeProfit = openPosition.gainPrice;
-                            item.openPrice = openPosition.openPrice;
-                        } else {
-                            // stopLine.push({time: item.time, value: lastTopBottom.call({
-                            //     history: chartUpdate.candles,
-                            //     currentCandle: chartUpdate.currentStream,
-                            //     args: { type: 'top' }
-                            // }, i)});
-                        }
-        
-                        return item;
-                    });
-        
-                    candleSeries.current.setData(data);
-                    
-                    if (openPosition) {
-                        const take = data.map(item => ({ time: item.time, value: item.takeProfit }));
-                        const openPosition = data.map(item => ({ time: item.time, value: item.openPrice }));
-                        const stopLine = data.map(item => ({ time: item.time, value: item.stopLoss }));
-
-                        if (stopLine[0]?.value) {
-                            stopSerie.current.setData(stopLine);
-                        }
-                        
-                        if (take[0]?.value) {
-                            takeSerie.current.setData(take);
-                        }
-
-                        if (openPosition[0]?.value) {
-                            openPositionSerie.current.setData(openPosition);
-                        }
-                    }
+                    const ordered = chartUpdate.candles?.sort((a, b) => (a.openTime - b.openTime));
+                    candleSeries.current.setData(ordered);
                 }
             }
         }).then(res => {
-            debugger
+            console.log(res)
         }).catch(err => {
             debugger
         });
-    }, [interval, positions, symbol]);
+    }, [interval, symbol]);
 
     useEffect(() => {
         if (isExpanded) {
