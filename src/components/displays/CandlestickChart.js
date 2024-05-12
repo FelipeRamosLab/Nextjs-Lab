@@ -31,7 +31,7 @@ export default function CandlestickChart({ symbol, interval, limit }) {
             autoSize: true,
             timeScale: {
                 fixLeftEdge: true,
-                tickMarkFormatter: (time, tickMarkType, locale) => {
+                tickMarkFormatter: (time) => {
                     switch (interval) {
                         case '1m':
                         case '3m':
@@ -49,13 +49,11 @@ export default function CandlestickChart({ symbol, interval, limit }) {
                             return `${hour}:${minute}`;
                         }
                         case '1d':
-                        case '1w': {
+                        case '1w':
+                        default: {
                             const timeString = new Date(time).toDateString();
                             const [week, month, day] = timeString.split(' ');
                             return `${day} ${month}`;
-                        }
-                        default: {
-                            return new Date(time).toDateString().split(' ')[1]
                         }
                     }
                 }
