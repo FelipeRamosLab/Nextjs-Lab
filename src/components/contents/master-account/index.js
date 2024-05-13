@@ -20,6 +20,7 @@ import SectionHeader from '../../headers/sectionHeader';
 import IconButtonConfig from '../../../models/IconButtonConfig';
 import Paper from '@mui/material/Paper';
 import AJAX from '../../../utils/ajax';
+import ActivitiesHistory from '../../displays/ActivitiesHistory';
 
 export default function MasterAccount({ loadData }) {
     const DeleteConfirmation = Confirmation;
@@ -253,6 +254,8 @@ export default function MasterAccount({ loadData }) {
                 <div className="sidebar">
                     <MasterInfos master={master} />
                     <MasterResults entity={master} />
+
+                    <ActivitiesHistory customTitle="Histórico de Atividades" masterUID={master._id} />
                 </div>
             </section>
 

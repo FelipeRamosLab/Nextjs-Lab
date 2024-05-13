@@ -20,7 +20,7 @@ export default class AJAX {
                 response = await axios.get(this.url, {
                     ...Object(options),
                     headers: { token: token?.value || '' },
-                    data: params
+                    params
                 });
             } else {
                 response = await axios.get(this.url, { httpsAgent: agent, data: params });

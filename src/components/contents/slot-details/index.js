@@ -19,6 +19,7 @@ import AJAX from '../../../utils/ajax';
 import CandlestickChart from '../../displays/CandlestickChart';
 import StopIcon from '@mui/icons-material/Stop';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import ActivitiesHistory from '../../displays/ActivitiesHistory';
 
 export default function SlotDetails() {
     const DeleteConfirmation = Confirmation;
@@ -229,6 +230,8 @@ export default function SlotDetails() {
 
                 <div className="sidebar">
                     <SlotLimits entity={slot} />
+
+                    <ActivitiesHistory customTitle="Histórico de Atividades" slotUID={slot._id} />
                 </div>
             </section>
 
