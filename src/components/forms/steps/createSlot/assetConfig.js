@@ -59,7 +59,22 @@ export default function SlotAssetConfigStep({formState, assets}) {
         </FormControl>
 
         <FormControl margin="dense">
-            <Typography gutterBottom>Alavancagem máxima: <b style={{ fontSize: 16}}>{form.limits.leverege}</b></Typography>
+            <Typography gutterBottom>Margem em relação ao stoploss: <b style={{ fontSize: 16}}>{form.limits.marginRatioCommit}</b></Typography>
+            <Slider
+                size="medium"
+                defaultValue={form.limits.marginRatioCommit}
+                valueLabelDisplay="auto"
+                max={85}
+                min={1}
+                value={form.limits.marginRatioCommit}
+                onChange={(ev) => setForm(prev => {
+                    return { ...prev, limits: { ...prev.limits, marginRatioCommit: ev.target.value } }
+                })}
+            />
+        </FormControl>
+
+        <FormControl margin="dense">
+            <Typography gutterBottom>Alavancagem máxima: <b style={{ fontSize: 16 }}>{form.limits.leverege}</b></Typography>
             <Slider
                 size="medium"
                 defaultValue={maxLeverage}

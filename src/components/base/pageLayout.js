@@ -4,7 +4,9 @@ import MainHeader from "../headers/mainHeader";
 export default function PageLayout({ children, pageData }) {
     useEffect(() => {
         cookieStore.get('userEmail').then(cookie => {
-            if (!cookie && window.location.pathname !== '/') {
+            const whiteList = ['/', '/dashboard/confirmation-sent', '/dashboard/email-confirmation']
+            const isAllowed = whiteList.find(item => item === window.location.pathname);
+            if (!cookie && !isAllowed) {
                 cookieStore.delete('token');
                 cookieStore.delete('userEmail');
                 window.location.href = '/';

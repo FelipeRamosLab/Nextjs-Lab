@@ -51,7 +51,7 @@ export default function ActivitiesHistory({ customTitle, masterUID, slotUID, pos
     return (<div className="activities-history card">
         <h3 className="title text-center">{customTitle || 'Activities History'}</h3>
 
-        {activities.map(activity => (<div className="activity" title={new Date(activity.createdAt).toLocaleString()}>
+        {activities.map(activity => (<div key={activity.index} className="activity" title={new Date(activity.createdAt).toLocaleString()}>
             <p className="subject">{activity.subject}</p>
             <p className="summary">{activity.summary}</p>
         </div>))}
