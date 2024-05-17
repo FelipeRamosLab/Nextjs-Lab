@@ -2,6 +2,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    &::-webkit-scrollbar {
+        width: 14px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: $secondary-dark;
+        border-radius: 0 5px 5px 0;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: $primary;
+        border-radius: 10px;
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+        background: $secondary-lighten-20; 
+    }
 }
 
 html {

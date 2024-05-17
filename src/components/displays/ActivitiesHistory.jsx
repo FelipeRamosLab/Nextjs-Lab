@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import AJAX from '../../utils/ajax';
+import Skeleton from '@mui/material/Skeleton';
 
-export default function ActivitiesHistory({ customTitle, masterUID, slotUID, positionUID, botUID, limit = 5 }) {
+export default function ActivitiesHistory({ customTitle, masterUID, slotUID, positionUID, botUID, limit = 5, disableTitle }) {
     const [ activities, setActivities ] = useState([]);
     const [ seeMoreState, setSeeMoreState ] = useState(true);
     const page = useRef();
@@ -49,7 +50,11 @@ export default function ActivitiesHistory({ customTitle, masterUID, slotUID, pos
     }, []);
 
     return (<div className="activities-history card">
-        <h3 className="title text-center">{customTitle || 'Activities History'}</h3>
+        {!disableTitle && <h3 className="title text-center">{customTitle || 'Activities History'}</h3>}
+
+        {!activities.length ? <>
+            <Skeleton variant="rectangular" height={60} />
+        </> : ''}
 
         {activities.map(activity => (<div key={activity.index} className="activity" title={new Date(activity.createdAt).toLocaleString()}>
             <p className="subject">{activity.subject}</p>

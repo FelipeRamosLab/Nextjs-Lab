@@ -169,22 +169,22 @@ export default function MasterAccount({ loadData }) {
                 ]}/>
 
                 <div className="stats-cards">
-                    <Paper className="card h-scroll-display" elevation={20}>
+                    <div className="card h-scroll-display" elevation={20}>
                         <span className="value money">{toMoney(master, ['pnl'])}</span>
                         <label>PNL Acumulado</label>
-                    </Paper>
-                    <Paper  className="card h-scroll-display" elevation={20}>
+                    </div>
+                    <div  className="card h-scroll-display" elevation={20}>
                         <span className="value money">{toMoney(master, ['futuresWallet', 'totalUnrealizedProfit'])}</span>
                         <label>Não Realizado</label>
-                    </Paper>
-                    <Paper className="card h-scroll-display" elevation={20}>
+                    </div>
+                    <div className="card h-scroll-display" elevation={20}>
                         <span className="value money">{toMoney(master, ['futuresWallet', 'totalMarginBalance'])}</span>
                         <label>Margem Total</label>
-                    </Paper>
-                    <Paper className="card h-scroll-display" elevation={20}>
+                    </div>
+                    <div className="card h-scroll-display" elevation={20}>
                         <span className="value money">{toMoney(master, ['futuresWallet', 'totalRealizedPnl'])}</span>
                         <label>Lucro Realizado</label>
-                    </Paper>
+                    </div>
                 </div>
 
                 {/* Small update time text */}
@@ -196,30 +196,30 @@ export default function MasterAccount({ loadData }) {
                     <TransferPainel master={master} transferType={transferType} setTransferType={setTransferType} />
 
                     <section className="master-results results stats-cards">
-                        <Paper className="card" elevation={23}>
+                        <div className="card" elevation={23}>
                             <p className="value pnl" state={master?.results?.dayPnl !== 0 ? master?.results?.dayPnl > 0 ? 'profit' : 'loss' : ''}>
                                 {toMoney(master?.results?.dayPnl)}
                             </p>
                             <label>PNL dia</label>
-                        </Paper>
-                        <Paper className="card" elevation={23}>
+                        </div>
+                        <div className="card" elevation={23}>
                             <p className="value pnl" state={master?.results?.monthPnl !== 0 ? master?.results?.monthPnl > 0 ? 'profit' : 'loss' : ''}>
                                 {toMoney(master?.results?.monthPnl)}
                             </p>
                             <label>PNL mês</label>
-                        </Paper>
-                        <Paper className="card" elevation={23}>
-                            <p className="value roe" state={master?.results?.dayRoe !== 0 ? master?.results?.dayRoe > 0 ? 'profit' : 'loss' : ''}>
-                                {toPercent(master?.results?.dayRoe, null, 2)}
+                        </div>
+                        <div className="card" elevation={23}>
+                            <p className="value roi" state={master?.results?.dayRoi !== 0 ? master?.results?.dayRoi > 0 ? 'profit' : 'loss' : ''}>
+                                {toPercent(master?.results?.dayRoi, null, 2)}
                             </p>
-                            <label>ROE dia</label>
-                        </Paper>
-                        <Paper className="card" elevation={23}>
-                            <p className="value roe" state={master?.results?.monthRoe !== 0 ? master?.results?.monthRoe > 0 ? 'profit' : 'loss' : ''}>
-                                {toPercent(master?.results?.monthRoe, null, 2)}
+                            <label>ROI dia</label>
+                        </div>
+                        <div className="card" elevation={23}>
+                            <p className="value roi" state={master?.results?.monthRoi !== 0 ? master?.results?.monthRoi > 0 ? 'profit' : 'loss' : ''}>
+                                {toPercent(master?.results?.monthRoi, null, 2)}
                             </p>
-                            <label>ROE mês</label>
-                        </Paper>
+                            <label>ROI mês</label>
+                        </div>
                     </section>
 
                     <SectionHeader
@@ -255,7 +255,7 @@ export default function MasterAccount({ loadData }) {
                     <MasterInfos master={master} />
                     <MasterResults entity={master} />
 
-                    <ActivitiesHistory customTitle="Histórico de Atividades" masterUID={master._id} />
+                    <ActivitiesHistory customTitle="Histórico de Atividades" masterUID={master?._id} />
                 </div>
             </section>
 

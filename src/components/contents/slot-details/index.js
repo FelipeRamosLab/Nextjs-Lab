@@ -176,19 +176,6 @@ export default function SlotDetails() {
             <section className="content-sidebar">
                 <div className="content">
                     <div className="section-wrap">
-                        <Link href={createURL('/bot-details', { botuid: bot?._id})} passHref>
-                            <div className="card bot-card">
-                                <div className="avatar">
-                                    <h4>AV</h4>
-                                </div>
-
-                                <div className="card-body">
-                                    <h3 className="title">{bot?.name || '---'}</h3>
-                                    <p>{bot?.description || '---'}</p>
-                                </div>
-                            </div>
-                        </Link>
-
                         <div className="stats-cards smaller">
                             <div className="card card-grad">
                                 <span className="value">{toMoney(slot?.pnl)}</span>
@@ -208,19 +195,15 @@ export default function SlotDetails() {
                         <div className="slot-infos">
                             <GridSlider data={[
                                 { label: 'PNL Dia', value: toMoney(slot?.results?.dayPnl)},
-                                { label: 'ROE Dia', value: toPercent(slot?.results?.dayRoe)},
+                                { label: 'ROI Dia', value: toPercent(slot?.results?.dayRoi)},
                                 { label: 'PNL Mês', value: toMoney(slot?.results?.monthPnl)},
-                                { label: 'ROE Mês', value: toPercent(slot?.results?.monthRoe)}
+                                { label: 'ROI Mês', value: toPercent(slot?.results?.monthRoi)}
                             ]} />
                         </div>
                     </div>
 
                     <div className="section-wrap">
-                        <div className="section-header">
-                            <h2>Monitor</h2>
-                        </div>
-
-                        {false && slot?.assets && <CandlestickChart
+                        {slot?.assets && <CandlestickChart
                             symbol={slot?.assets?.length ? slot.assets[0] : ''}
                             interval={slot?.interval}
                             positions={activityData?.slot?.trades}
@@ -229,8 +212,20 @@ export default function SlotDetails() {
                 </div>
 
                 <div className="sidebar">
-                    <SlotLimits entity={slot} />
+                    <a style={{ textDecoration: 'none' }} href={createURL('/bot-details', { botuid: bot?._id})} passHref>
+                        <div className="card bot-card" style={{ marginBottom: 15 }}>
+                            <div className="avatar">
+                                <h4>AV</h4>
+                            </div>
 
+                            <div className="card-body">
+                                <h3 className="title">{bot?.name || '---'}</h3>
+                                <p>{bot?.description || '---'}</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <SlotLimits entity={slot} />
                     <ActivitiesHistory customTitle="Histórico de Atividades" slotUID={slot._id} />
                 </div>
             </section>

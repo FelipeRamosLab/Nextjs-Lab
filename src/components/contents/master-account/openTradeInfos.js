@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import MainModal from '../../modals/main';
-import OpenTradeDetailsModal from './openTradeDetailsModal';
+import PositionDetails from '../../modals/PositionDetails';
 
 export default function OpenTradeInfo({trade}) {
-    const [ modal, setModal ] = useState(false);
+    const [ positionModal, setPositionModal ] = useState(null);
     const createdAt = new Date(trade.createdAt);
     const side = validateProp(trade, ['positionType']) && trade.positionType === 'long' ? 'Long' : 'Short';
 
-    return (
-        <div className="tile-footer" onClick={() => setModal(!modal)}>
+    return (<>
+        <div className="tile-footer" onClick={() => setPositionModal(trade)}>
             <div className="footer-col align-left position-side" btn-color={side === 'Long' ? 'success' : 'error'}></div>
             <div className="footer-col align-left">
                 <label>COD</label>
@@ -26,8 +25,8 @@ export default function OpenTradeInfo({trade}) {
                 <label>PNL</label>
                 <p className="value">{toMoney(trade, ['pnl'])}</p>
             </div>
-
-            <MainModal open={modal} modalCtrl={setModal} Content={()=> <OpenTradeDetailsModal trade={trade} />} />
         </div>
-    );
+
+        <PositionDetails positionModal={positionModal} setPositionModal={setPositionModal} />
+    </>);
 }

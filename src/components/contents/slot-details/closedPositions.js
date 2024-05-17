@@ -1,7 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import ActivityDataContext from '../../../context/activityData';
 import PaginationTable from '../../displays/paginationTable';
 import AJAX from '../../../utils/ajax';
+import PositionDetails from '../../modals/PositionDetails';
 
 const columns = [
     { id: 'cod', label: 'COD', minWidth: 50 },
@@ -16,8 +17,8 @@ const columns = [
       format: (value) => toMoney(value)
     },
     {
-      id: 'roe',
-      label: 'ROE',
+      id: 'roi',
+      label: 'ROI',
       align: 'center',
       format: (value) => toPercent(value)
     },
@@ -79,6 +80,7 @@ const columns = [
 
 export default function SlotClosedPositions() {
     const {activityData} = useContext(ActivityDataContext);
+    const [ positionModal, setPositionModal ] = useState(null);
 
     async function loadPositions(page) {
       try {
@@ -94,8 +96,15 @@ export default function SlotClosedPositions() {
       }
     }
 
-    return <PaginationTable
-      loadData={loadPositions}
-      columns={columns}
-    />;
+    return <>
+      <PositionDetails positionModal={positionModal} setPositionModal={setPositionModal} />
+
+      <PaginationTable
+        loadData={loadPositions}
+        columns={columns}
+        handleRowClick={(ev, position) => {
+          setPositionModal(position);
+        }}
+      />
+    </>;
 }

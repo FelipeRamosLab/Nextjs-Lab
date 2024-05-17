@@ -6,7 +6,7 @@ export default function OpenTradeDetailsModal({trade}) {
         'Aberto em': openTime.toLocaleString(),
         'Preço atual': toMoney(trade, ['currentPrice'], {numberDecimals: 5}),
         'PNL': toMoney(trade, ['pnl']),
-        'ROE': toPercent(trade, ['roe']),
+        'ROI': toPercent(trade, ['roi']),
         'Stop loss': toMoney(trade, ['stopPrice'], {numberDecimals: 5}),
         'Take profit': toMoney(trade, ['gainPrice'], {numberDecimals: 5}),
         'Quantidade': validateProp(trade, ['quantity']) ? trade.quantity.toFixed(4) : '--',

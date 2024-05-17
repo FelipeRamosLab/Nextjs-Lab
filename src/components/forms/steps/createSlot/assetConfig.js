@@ -95,12 +95,12 @@ export default function SlotAssetConfigStep({formState, assets}) {
             </Typography>
             <Slider
                 size="medium"
-                defaultValue={0.2}
+                defaultValue={0.1}
                 valueLabelDisplay="auto"
                 max={12}
                 min={0.02}
                 step={0.01}
-                value={form.limits.tradesMinInterval / 60}
+                value={(form.limits.tradesMinInterval || 0) / 60}
                 onChange={(ev) => setForm(prev => {
                     return { ...prev, limits: { ...prev.limits, tradesMinInterval: ev.target.value * 60 } }
                 })}

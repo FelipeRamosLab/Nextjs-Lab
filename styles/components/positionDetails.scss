@@ -1,0 +1,140 @@
+.position-details {
+    .sidebar {
+        .results-wrap {
+            .value-wrap {
+                padding: 0.7rem;
+                min-width: 32.666%;
+                max-width: 32.666%;
+
+                label {
+                    font-size: 0.9rem;
+                }
+
+                span {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+
+    .details-data {
+        display: flex;
+        width: 100%;
+        margin-top: 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .data-row {
+            display: flex;
+            flex: 1;
+            border-bottom: 1px dotted $soft-text;
+            gap: 0.5rem;
+            align-items: center;
+
+            .data-column {
+                flex: 1;
+            }
+
+            .value {
+                text-align: right;
+                font-weight: 500;
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    .status-wrap {
+        width: 100%;
+        margin-bottom: 1rem;
+
+        .status-display {
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            font-weight: bold;
+
+            &[status=opened] {
+                background-color: $success;
+                color: $secondary;
+            }
+        }
+    }
+
+    .results-wrap {
+        display: inline-flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 1%;
+
+        .value-wrap {
+            display: flex;
+            border-radius: 0.5rem;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            padding: 1.5rem;
+            min-width: 24.25%;
+            max-width: 24.25%;
+            background-color: $secondary-dark;
+            margin-bottom: 1%;
+
+            label {
+                font-size: 1.1rem;
+                font-weight: 400;
+            }
+
+            span {
+                font-size: 2.5rem;
+                font-weight: 700;
+            }
+        }
+    }
+    
+    .datails-wrap {
+        display: flex;
+        gap: 2rem;
+        padding: 0.1rem;
+
+        >div {
+            flex: 1;
+        }
+    }
+
+    *[bg-result],
+    *[status] {
+        background: $secondary;
+    }
+
+    *[side-badge] {
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        margin-right: 0.5rem;
+    }
+
+    *[bg-result=gain],
+    *[side-badge=long] {
+        background: $success;
+        color: $secondary;
+    }
+
+    *[bg-result=loss],
+    *[side-badge=short] {
+        background: $error;
+    }
+
+    *[txt-result=gain],
+    *[side=long] {
+        color: $success;
+    }
+
+    *[txt-result=loss],
+    *[side=short] {
+        color: $error;
+    }
+}
