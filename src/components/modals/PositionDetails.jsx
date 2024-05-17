@@ -206,7 +206,7 @@ export default function PositionDetails({ positionModal, setPositionModal }) {
                                  const modifiedAt = new Date(order.modifiedAt);
                                  return (<Accordion key={order.orderId}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                       <div class="pnl-indicator" pnl-state={(order?.side === 'BUY' && 'profit') || (order?.side === 'SELL' && 'loss')}></div>
+                                       <div className="pnl-indicator" pnl-state={(order?.side === 'BUY' && 'profit') || (order?.side === 'SELL' && 'loss')}></div>
                                        <span><b>{modifiedAt.toLocaleDateString()} {modifiedAt.toLocaleTimeString()}</b> {order?.origType?.replace(/_/g, ' ')}</span>
                                        <span className="badge" type={order?.status}>{order?.status}</span>
                                     </AccordionSummary>
