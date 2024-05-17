@@ -8,6 +8,29 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ActivitiesHistory from '../displays/ActivitiesHistory';
 import { useEffect, useRef, useState } from 'react';
 
+
+function formatMoney(minFrac, maxFrac) {
+   return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      // These options are needed to round to whole numbers if that's what you want.
+      minimumFractionDigits: minFrac,
+      maximumFractionDigits: maxFrac,
+   });
+}
+
+function formatFree(value) {
+   return formatMoney().format(value);
+}
+
+function formatTwo(value) {
+   return formatMoney(2, 2).format(value);
+}
+
+function formatThree(value) {
+   return formatMoney(3, 3).format(value);
+}
+
 function DataRow({label, value}) {
    return <div className="data-row">
       <div className="data-column label">
@@ -19,31 +42,26 @@ function DataRow({label, value}) {
    </div>;
 }
 
+function OrderData({ order }) {
+   return (<div className="details-data">
+      <DataRow label="COD" value={order?.cod} />
+      <DataRow label="Order Client ID" value={order?.clientOrderId} />
+      <DataRow label="Order ID" value={order?.orderId} />
+      <DataRow label="Status" value={order?.status} />
+      <DataRow label="Side" value={order?.side} />
+      <DataRow label="Average Price" value={order?.avgPrice} />
+      <DataRow label="Close Position" value={order?.closePosition ? 'TRUE' : 'FALSE'} />
+      <DataRow label="Acummulated Quantity" value={order?.cumQty || '---'} />
+      <DataRow label="Executed Quantity" value={order?.executedQty || '---'} />
+      <DataRow label="Original Quantity" value={order?.origQty} />
+      <DataRow label="Original Type" value={order?.origType?.replace(/_/g, ' ')} />
+      <DataRow label="Price Protect" value={order?.priceProtect ? 'TRUE' : 'FALSE'} />
+      <DataRow label="Realized Profit" value={formatThree(order?.realizedProfit)} />
+   </div>);
+}
+
 export default function PositionDetails({ positionModal, setPositionModal }) {
    const [isHeaderSolid, setIsHeaderSolid] = useState(0);
-
-   function formatMoney(minFrac, maxFrac) {
-      return new Intl.NumberFormat('en-US', {
-         style: 'currency',
-         currency: 'USD',
-         // These options are needed to round to whole numbers if that's what you want.
-         minimumFractionDigits: minFrac,
-         maximumFractionDigits: maxFrac,
-      });
-   }
-
-   function formatFree(value) {
-      return formatMoney().format(value);
-   }
-
-   function formatTwo(value) {
-      return formatMoney(2, 2).format(value);
-   }
-
-   function formatThree(value) {
-      return formatMoney(3, 3).format(value);
-   }
-
    const {
       id,
       status,
@@ -182,19 +200,27 @@ export default function PositionDetails({ positionModal, setPositionModal }) {
                            <div className="modal-header">
                               <h3>Orders</h3>
                            </div>
+
+                           {orders?.length ? <div className="order-wrap">
+                              {orders?.map(order => {
+                                 const modifiedAt = new Date(order.modifiedAt);
+                                 return (<Accordion key={order.orderId}>
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                       <div class="pnl-indicator" pnl-state={(order?.side === 'BUY' && 'profit') || (order?.side === 'SELL' && 'loss')}></div>
+                                       <span><b>{modifiedAt.toLocaleDateString()} {modifiedAt.toLocaleTimeString()}</b> {order?.origType?.replace(/_/g, ' ')}</span>
+                                       <span className="badge" type={order?.status}>{order?.status}</span>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                       <OrderData order={order} />
+                                    </AccordionDetails>
+                                 </Accordion>);
+                              })}
+                           </div> : ''}
                         </div>
                      </div>
                   </div>
 
                   <div className="sidebar">
-                     <div className="status-wrap">
-                        <span className="status-display" status={status}>{statusDisplay || status}</span>
-                     </div>
-
-                     {closePrice ? <div className="status-wrap">
-                        <span className="status-display" bg-result={result}>{resultDisplay}</span>
-                     </div> : ''}
-
                      <div className="results-wrap">
                         <div className="value-wrap">
                            <label>Type</label>
@@ -210,30 +236,20 @@ export default function PositionDetails({ positionModal, setPositionModal }) {
                         </div>
                      </div>
 
+                     <div className="status-wrap">
+                        <span className="status-display" status={status}>{statusDisplay || status}</span>
+                     </div>
+
+                     {closePrice ? <div className="status-wrap">
+                        <span className="status-display" bg-result={result}>{resultDisplay}</span>
+                     </div> : ''}
+
                      <div className="modal-header">
                         <h3>Actitivies History</h3>
                      </div>
                      <ActivitiesHistory customTitle="Position History" disableTitle={true} positionUID={id} />
                   </div>
                </section>
-
-               {orders?.length ? <section className="order-wrap">
-                  <div className="modal-header">
-                     <h3>All Position Orders</h3>
-                  </div>
-
-                  {orders?.map(order => {
-                     const modifiedAt = new Date(order.modifiedAt);
-                     return (<Accordion key={order.orderId}>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                           [{modifiedAt.toLocaleDateString()} {modifiedAt.toLocaleTimeString()}] [{order.origType}] {order.side} - {order.status}
-                        </AccordionSummary>
-                        <AccordionDetails>
-                           fdsffsdfd
-                        </AccordionDetails>
-                     </Accordion>);
-                  })}
-               </section> : ''}
             </div>
          </div>
       </Modal>

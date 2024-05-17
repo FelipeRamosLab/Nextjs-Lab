@@ -21,6 +21,22 @@
         background-color: $error;
         color: $primary;
     }
+
+    &[type="CANCELED"],
+    &[type="EXPIRED"] {
+        background-color: $error-dark;
+        color: $soft-text;
+    }
+
+    &[type="FILLED"] {
+        background-color: $success-dark;
+        color: $soft-text;
+    }
+
+    &[type="NEW"] {
+        background-color: $warn;
+        color: $primary;
+    }
 }
 
 .pnl,

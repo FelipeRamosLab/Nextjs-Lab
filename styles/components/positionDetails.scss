@@ -45,7 +45,7 @@
 
     .status-wrap {
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 1%;
 
         .status-display {
             display: inline-block;
@@ -118,13 +118,15 @@
     }
 
     *[bg-result=gain],
-    *[side-badge=long] {
+    *[side-badge=long],
+    *[side-badge=BUY] {
         background: $success;
         color: $secondary;
     }
 
     *[bg-result=loss],
-    *[side-badge=short] {
+    *[side-badge=short],
+    *[side-badge=SELL] {
         background: $error;
     }
 

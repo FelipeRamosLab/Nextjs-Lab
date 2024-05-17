@@ -58,28 +58,35 @@
     flex: 23% 0;
 }
 
+.pnl-indicator {
+    position: absolute;
+    left: 0; 
+    top: 0;
+    bottom: 0;
+    width: 7px;
+    background-color: lighten($color: $charcoal, $amount: 15);
+
+    &[pnl-state=profit] {
+        background-color: $profit;
+    }
+
+    &[pnl-state=loss] {
+        background-color: $loss;
+    }
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.3rem;
+    border-radius: 3px;
+    background-color: $tertiary;
+}
+
 .standard-grid {
     &.master-accounts {
         .item {
             position: relative;
             padding-left: 20px;
-            
-            .pnl-indicator {
-                position: absolute;
-                left: 0; 
-                top: 0;
-                bottom: 0;
-                width: 7px;
-                background-color: lighten($color: $charcoal, $amount: 15);
-
-                &[pnl-state=profit] {
-                    background-color: $profit;
-                }
-
-                &[pnl-state=loss] {
-                    background-color: $loss;
-                }
-            }
         }
     }
 

@@ -1,8 +1,8 @@
-.accordion-wrap {
-    .MuiAccordion-root {
-        overflow: hidden;
-    }
+.MuiAccordion-root {
+    overflow: hidden;
+}
 
+.accordion-wrap {
     &.logs-list {
         .MuiCollapse-root,
         .summary-content {
