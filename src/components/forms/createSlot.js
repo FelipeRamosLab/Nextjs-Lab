@@ -119,6 +119,7 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
                                 <div>
                                     <Button
                                         variant="contained"
+                                        className="cta"
                                         onClick={index === steps.length - 1 ? saveNewSlot : handleNext}
                                         sx={{ mt: 1, mr: 1 }}
                                     >

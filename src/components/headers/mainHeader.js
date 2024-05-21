@@ -13,11 +13,9 @@ export default function MainHeader({ pageData }){
             <div className="container header-wrap">
                 <a href="/dashboard">
                     <div className="header-column logo-wrap">
-                        <Image
+                        <img
                             src="/images/logo.svg"
                             alt="logo"
-                            width="50"
-                            height="50"
                         />
                     </div>
                 </a>

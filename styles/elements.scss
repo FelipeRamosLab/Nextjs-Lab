@@ -181,6 +181,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     background: $backdrop;
 }
@@ -319,4 +320,9 @@
         border-radius: 5px;
         font-weight: bold;
     }
+}
+
+.MuiSkeleton-root {
+    background-color: rgb(255 255 255 / 11%);
+    border-radius: 5px;
 }

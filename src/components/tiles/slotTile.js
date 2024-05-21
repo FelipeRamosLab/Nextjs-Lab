@@ -33,17 +33,14 @@ export default function SlotTile({slot}) {
                 masterUID: slot.master
             });
 
-            if (runned.success) {
-                window.location.reload();
-                setActivityData(prev => {
-                    return { ...prev, masterSlots: runned.data.master.botAccounts }
-                });
-            } else {
-                throw new Error();
+            if (!runned.success) {
+                throw runned?.message ? new Error(runned?.message) : runned;
             }
+
         } catch(err) {
-            setIsLoading(false);
             alert('Ocorreu um erro ao iniciar o slot!');
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -67,14 +64,10 @@ export default function SlotTile({slot}) {
             });
 
             if (!stopping.success) alert('Ocorreu um erro ao parar o slot!');
-
-            window.location.reload();
-            setActivityData(prev => {
-                return { ...prev, masterSlots: stopping.slot.botAccounts }
-            });
         } catch(err) {
-            setIsLoading(false);
             alert('Ocorreu um erro ao parar o slot!');
+        } finally {
+            setIsLoading(false);
         }
     }
 

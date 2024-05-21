@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CreateSlotForm from '../../forms/createSlot';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
@@ -16,9 +16,9 @@ import ArchiveIcon from '@mui/icons-material/Archive';
 import EditMasterForm from '../../forms/editing/master';
 import Confirmation from '../../modals/confirmation';
 import ActivityDataContext from '../../../context/activityData';
+import SubscribeChangesContext from '../../../context/subscribeChanges';
 import SectionHeader from '../../headers/sectionHeader';
 import IconButtonConfig from '../../../models/IconButtonConfig';
-import Paper from '@mui/material/Paper';
 import AJAX from '../../../utils/ajax';
 import ActivitiesHistory from '../../displays/ActivitiesHistory';
 
@@ -27,6 +27,7 @@ export default function MasterAccount({ loadData }) {
     const ArchiveConfirmation = Confirmation;
 
     const {activityData, setActivityData} = useContext(ActivityDataContext);
+    const socketInstance = useContext(SubscribeChangesContext);
     const [addNewSlotModal, setAddNewSlotModal] = useState(false);
     const [editMasterModal, setEditMasterModal] = useState(false);
     const [transferType, setTransferType] = useState(false);
@@ -34,7 +35,61 @@ export default function MasterAccount({ loadData }) {
     const archiveConfirmationState = useState(false);
     const [__, setArchiveConfirmationState] = archiveConfirmationState;
     const [_, setDeleteConfirmation] = deleteConfirmationState;
-    const { master, masterSlots } = activityData || {};
+    const [ master, setMaster ] = useState();
+    const [ masterSlots, setMasterSlots ] = useState([]);
+    const socket = socketInstance();
+
+    useEffect(() => {
+        connectMasterSlots();
+    }, []);
+
+    useEffect(() => {
+        if (!master) {
+            connectMaster();
+        }
+    }, [activityData]);
+
+    function connectMasterSlots() {
+        if (!activityData?.master?._id) {
+            return;
+        }
+
+        socket.current.emit('subscribe', {
+            type: 'query',
+            collection: 'bot_accounts',
+            filter: { master: activityData?.master?._id },
+            options: { loadMethod: 'cacheMasterSlots' }
+        }, (res) => {
+            if (res?.error) {
+                throw res;
+            }
+
+            socket.current.on(res?.id, (snapshot) => {
+                setMasterSlots(snapshot);
+            });
+        });
+    }
+
+    function connectMaster() {
+        if (!activityData?.master?._id) {
+            return;
+        }
+
+        socket.current.emit('subscribe', {
+            type: 'doc',
+            collection: 'master_accounts',
+            docUID: activityData?.master?._id,
+            options: { loadMethod: 'cacheMaster' }
+        }, (res) => {
+            if (res?.error) {
+                throw res;
+            }
+
+            socket.current.on(res?.id, (snapshot) => {
+                setMaster(snapshot);
+            });
+        });
+    }
 
     async function editMaster(form) {
         const result = {};
