@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image'
 import AccountMenu from '../menus/AccountMenu';
 import NotificationsDropDown from '../menus/NotificationsDropDown';
@@ -12,7 +11,7 @@ export default function MainHeader({ pageData }){
     return (
         <header>
             <div className="container header-wrap">
-                <Link href="/dashboard" passHref>
+                <a href="/dashboard">
                     <div className="header-column logo-wrap">
                         <Image
                             src="/images/logo.svg"
@@ -21,7 +20,7 @@ export default function MainHeader({ pageData }){
                             height="50"
                         />
                     </div>
-                </Link>
+                </a>
 
                 <h3 className="brand-name">BotStore</h3>
 

@@ -1,37 +1,75 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import AJAX from '../../utils/ajax';
 import Skeleton from '@mui/material/Skeleton';
+import SubscribeChangesContext from '../../context/subscribeChanges';
+import io from 'socket.io-client'
 
 export default function ActivitiesHistory({ customTitle, masterUID, slotUID, positionUID, botUID, limit = 5, disableTitle }) {
+    const socketInstance = useContext(SubscribeChangesContext);
     const [ activities, setActivities ] = useState([]);
     const [ seeMoreState, setSeeMoreState ] = useState(true);
     const page = useRef();
     
     const loadActivities = async () => {
-        const ajax = new AJAX('/activities');
-        const loaded = await ajax.get({
-            page: page.current,
-            limit,
-            masterUID,
-            slotUID,
-            positionUID,
-            botUID
+        const socket = socketInstance();
+        if(!socket.current) {
+            return;
+        }
+
+        socket.current.emit('subscribe', {
+            type: 'query',
+            collection: 'activities',
+            filter: {
+                master: masterUID,
+                slot: slotUID,
+                position: positionUID,
+                bot: botUID
+            },
+            options: {
+                page: page.current,
+                sort: {createdAt: -1},
+                limit
+            }
+        }, ({ error, id }) => {
+            if (error) {
+                throw error;
+            }
+
+            socket.current.on(id, (snap) => {
+                setActivities(prev => {
+                    if (page.current > 1) {
+                        return [...prev, ...snap];
+                    } else {
+                        return snap;
+                    }
+                });
+            });
         });
 
-        if (loaded.success) {
-            setActivities(prev => {
-                if (page.current > 1) {
-                    return [...prev, ...loaded.activities];
-                } else {
-                    return loaded.activities;
-                }
-            });
-        }
+        // const ajax = new AJAX('/activities');
+        // const loaded = await ajax.get({
+            // page: page.current,
+            // limit,
+            // masterUID,
+            // slotUID,
+            // positionUID,
+            // botUID
+        // });
 
-        if (loaded.activities.length < 5) {
-            setSeeMoreState(false)
-        }
-        return loaded;
+        // if (loaded.success) {
+            // setActivities(prev => {
+            //     if (page.current > 1) {
+            //         return [...prev, ...loaded.activities];
+            //     } else {
+            //         return loaded.activities;
+            //     }
+            // });
+        // }
+
+        // if (loaded.activities.length < 5) {
+        //     setSeeMoreState(false)
+        // }
+        // return loaded;
     }
 
     const seeMore = async () => {
