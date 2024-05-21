@@ -6,12 +6,16 @@ import GetInForm from '../components/GetInForm';
 export default function Home() {
   const [ roomsList, setRoomsList ] = useState([]);
   const [ onlineUsers, setOnlineUsers ] = useState([]);
+  const [ chatHistory, setChatHistory ] = useState([]);
   const [ userLogged, setUserLogged ] = useState();
   const socket = useRef();
+  const subscribe = useRef();
 
   function connect(user) {
-    socket.current = io(`http://localhost:8888/?userName=${user.userName}`);
+    const baseURL = new URL('http://localhost:8888');
+    baseURL.searchParams.set('userName', user.userName);
 
+    socket.current = io(baseURL.toString());
     socket.current.on('connect', () => {
       console.log('User connected:', user.userName);
       setUserLogged({...user, UID: socket.id });
@@ -20,13 +24,33 @@ export default function Home() {
         setOnlineUsers(usersList);
       });
 
-      socket.current.on('rooms:update', list => {
-        setRoomsList(list);
-      });
-
       socket.current.on('chat:read', (loaded) => {
         setOnlineUsers(loaded.onlineUsers);
-        setRoomsList(loaded.rooms);
+      });
+    });
+
+    const subscribeURL = new URL('http://localhost:8888/subscribe-changes');
+
+    subscribe.current = io(subscribeURL.toString());
+    subscribe.current.on('connect', () => {
+      subscribe.current.emit('subscribe', {
+        type: 'query',
+        collection: 'groups',
+        filter: {}
+      }, (subs) => {
+        subscribe.current.on(subs.id, (snapshot) => {
+          setRoomsList(snapshot);
+        });
+      });
+
+      subscribe.current.emit('subscribe', {
+        type: 'query',
+        collection: 'chat_messages',
+        filter: {}
+      }, (subs) => {
+        subscribe.current.on(subs.id, (snapshot) => {
+          setChatHistory(snapshot);
+        });
       });
     });
   }
@@ -39,6 +63,7 @@ export default function Home() {
       {userLogged && <ChatWindow
         onlineUsers={onlineUsers}
         roomsList={roomsList}
+        chatHistory={chatHistory}
         user={userLogged}
         socket={socket}
       />}

@@ -44,18 +44,17 @@ function CreateRoomDialog({ handleCreate, open, handleClose }) {
     )
 }
 
-export default function ChatWindow({ user, socket, onlineUsers = [], roomsList = [] }) {
+export default function ChatWindow({ user, socket, onlineUsers = [], roomsList = [], chatHistory = [] }) {
     const [message, setMessage] = useState('');
     const [currentRoom, setCurrentRoom] = useState('');
-    const [chatHistory, setChatHistory] = useState([]);
     const [openCreateRoom, setOpenCreateRoom] = useState(false);
 
     class Message {
         constructor(userName, message, room) {
             this.room = room;
+            room && (this.group = room);
             this.user = userName;
             this.message = message;
-            this.date = Date.now();
 
             setMessage('');
         }
@@ -64,11 +63,9 @@ export default function ChatWindow({ user, socket, onlineUsers = [], roomsList =
     function sendMessage(ev) {
         ev.preventDefault();
 
-        if (currentRoom) {
-            socket.current.emit('rooms:send', currentRoom, new Message(user?.userName, message, currentRoom));
-        } else {
-            socket.current.emit('message', new Message(user?.userName, message));
-        }
+        socket.current.emit('message', new Message(user?.userName, message, currentRoom), (err) => {
+            alert(err.message);
+        });
     }
 
     function createRoom(roomID) {
@@ -76,25 +73,28 @@ export default function ChatWindow({ user, socket, onlineUsers = [], roomsList =
         setOpenCreateRoom(false);
     }
 
-    function joinRoom(roomID) {
-        if (currentRoom) {
+    function joinRoom(room) {
+        if (currentRoom && currentRoom === room?._id) {
+            socket.current.emit('chat:load');
             return setCurrentRoom('');
         }
 
-        socket.current.emit('rooms:join', roomID, ({ error }) => {
+        socket.current.emit('rooms:join', room, ({ error }) => {
             if (error) {
                 throw 'We got an error trying t join the room.';
             }
 
-            setCurrentRoom(roomID);
+            socket.current.emit('chat:load', { group: room._id });
+            setCurrentRoom(room._id);
         });
     }
 
     useEffect(() => {
-        socket.current.emit('chat:load');
-        socket.current.on('message', (data) => {
-            setChatHistory(prev => ([...prev, data]));
-        });
+        if (currentRoom) {
+            socket.current.emit('chat:load', { group: currentRoom });
+        } else {
+            socket.current.emit('chat:load');
+        }
     }, []);
 
     return (
@@ -102,7 +102,7 @@ export default function ChatWindow({ user, socket, onlineUsers = [], roomsList =
             <div className="content">
                 <div className="chat-history column">
                     {chatHistory.map((chat, i) => <ChatMessage
-                        key={String(chat.date) + i}
+                        key={chat._id}
                         currentUser={user?.userName}
                         chatMessage={chat}
                     />)}
@@ -118,13 +118,15 @@ export default function ChatWindow({ user, socket, onlineUsers = [], roomsList =
                     <section className="sidebar-section">
                         <h3 className="sidebar-title">Rooms</h3>
 
-                        {roomsList.map(room => (
-                            <div
-                                key={room.id}
-                                className={`chat-tile ${currentRoom === room.id ? 'selected' : ''}`}
-                                onClick={() => joinRoom(room.id)}
-                            >{room.id}</div>
-                        ))}
+                        {roomsList.map(room => {
+                            return (
+                                <div
+                                    key={room._id}
+                                    className={`chat-tile ${currentRoom === room._id ? 'selected' : ''}`}
+                                    onClick={() => joinRoom(room)}
+                                >{room.name}</div>
+                            )
+                        })}
                     </section>
 
                     <Button variant="contained" onClick={() => setOpenCreateRoom(true)}>Create Room</Button>
