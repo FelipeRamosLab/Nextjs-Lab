@@ -45,31 +45,6 @@ export default function ActivitiesHistory({ customTitle, masterUID, slotUID, pos
                 });
             });
         });
-
-        // const ajax = new AJAX('/activities');
-        // const loaded = await ajax.get({
-            // page: page.current,
-            // limit,
-            // masterUID,
-            // slotUID,
-            // positionUID,
-            // botUID
-        // });
-
-        // if (loaded.success) {
-            // setActivities(prev => {
-            //     if (page.current > 1) {
-            //         return [...prev, ...loaded.activities];
-            //     } else {
-            //         return loaded.activities;
-            //     }
-            // });
-        // }
-
-        // if (loaded.activities.length < 5) {
-        //     setSeeMoreState(false)
-        // }
-        // return loaded;
     }
 
     const seeMore = async () => {
