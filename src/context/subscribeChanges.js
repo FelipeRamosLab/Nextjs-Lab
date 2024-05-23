@@ -8,7 +8,7 @@ export function SubscribeChangesProvider({ children }) {
 
     useEffect(() => {
         if (!socket.current) {
-            socket.current = io('http://localhost:8888/subscribe-changes');
+            socket.current = io('https://192.168.15.3:5000/subscribe-changes');
         }
     }, []);
 
