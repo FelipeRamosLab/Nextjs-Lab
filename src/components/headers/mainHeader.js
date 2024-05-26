@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import AccountMenu from '../menus/AccountMenu';
 import NotificationsDropDown from '../menus/NotificationsDropDown';
@@ -14,13 +13,7 @@ export default function MainHeader({ pageData }){
             <div className="container header-wrap">
                 <Link href="/dashboard">
                     <div className="header-column logo-wrap">
-                        <Image
-                            src="/images/logo.svg"
-                            alt="logo"
-                            width={50}
-                            height={50}
-                            fetchpriority="heeey"
-                        />
+                        <img src="/images/logo.svg" alt="logo" />
                     </div>
                 </Link>
 

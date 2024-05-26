@@ -22,7 +22,8 @@ import IconButtonConfig from '../../../models/IconButtonConfig';
 import AJAX from '../../../utils/ajax';
 import ActivitiesHistory from '../../displays/ActivitiesHistory';
 
-export default function MasterAccount({ loadData }) {
+export default function MasterAccount({ loadData, queryParams }) {
+    const { masteruid } = Object(queryParams);
     const DeleteConfirmation = Confirmation;
     const ArchiveConfirmation = Confirmation;
 
@@ -50,35 +51,36 @@ export default function MasterAccount({ loadData }) {
     }, [activityData]);
 
     function connectMasterSlots() {
-        if (!activityData?.master?._id) {
+        if (!masteruid) {
             return;
         }
 
         socket.current.emit('subscribe', {
             type: 'query',
             collection: 'bot_accounts',
-            filter: { master: activityData?.master?._id },
-            options: { loadMethod: 'cacheMasterSlots' }
+            filter: { master: masteruid },
+            // options: { loadMethod: 'cacheMasterSlots' }
         }, (res) => {
             if (res?.error) {
                 throw res;
             }
 
             socket.current.on(res?.id, (snapshot) => {
+                console.log(new Date().toLocaleString(), 'Slots data:', snapshot);
                 setMasterSlots(snapshot);
             });
         });
     }
 
     function connectMaster() {
-        if (!activityData?.master?._id) {
+        if (!masteruid) {
             return;
         }
 
         socket.current.emit('subscribe', {
             type: 'doc',
             collection: 'master_accounts',
-            docUID: activityData?.master?._id,
+            docUID: masteruid,
             options: { loadMethod: 'cacheMaster' }
         }, (res) => {
             if (res?.error) {
@@ -86,6 +88,7 @@ export default function MasterAccount({ loadData }) {
             }
 
             socket.current.on(res?.id, (snapshot) => {
+                console.log(new Date().toLocaleString(), 'Master data:', snapshot);
                 setMaster(snapshot);
             });
         });

@@ -8,6 +8,7 @@
     bottom: 0;
     right: 0;
     background-color: #ecf1f340;
+    -webkit-backdrop-filter: blur(9.5px);
     backdrop-filter: blur(9.5px);
     z-index: 10000000;
 }
@@ -67,6 +68,7 @@
     box-shadow: 0 3px 0 rgb(196 237 255 / 43%);
     overflow-y: auto;
     position: relative;
+    outline: none;
 
     .MuiSvgIcon-root {
         color: $soft-text;

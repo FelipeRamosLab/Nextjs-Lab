@@ -102,7 +102,7 @@ export default function SlotTile({slot}) {
                     <h5 className="sub-title">{validateProp(slot, ['bot', 'name']) || '---'}</h5>
                 </div>
                 {slot.status !== 'stopped' && <FaStopCircle className="circle-button reverse" btn-color="error" onClick={() => setStopSelect(true)} />}
-                {slot.status !== 'running' && <FaPlayCircle className="circle-button reverse" btn-color="success" onClick={() => runSlot(slot._id)} />}
+                {slot.status !== 'running' && slot.status !== 'requirements-clutch' && <FaPlayCircle className="circle-button reverse" btn-color="success" onClick={() => runSlot(slot._id)} />}
             </div>
 
             <div className="tile-content">
@@ -131,7 +131,13 @@ export default function SlotTile({slot}) {
                 <button className="button full-width top-border transparent small" onClick={handleChartButton}>{!chartState ? 'Ver gráfico' : 'Fechar gráfico'}</button>
             </div>
 
-            {slot.trades.map(trade => trade ? <OpenTradeInfo key={trade.cod} trade={trade} /> : '')}
+            {(slot?.trades?.map && slot?.trades?.length) ? slot?.trades?.map(trade => {
+                if (trade) {
+                    return <OpenTradeInfo key={trade.cod} trade={trade} />;
+                } else {
+                    return <input key={trade.cod} type="hidden" />;
+                }
+            }) : ''}
 
             <Backdrop
                 sx={{ color: '#fff', zIndex: 999999 }}
