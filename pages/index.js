@@ -12,7 +12,7 @@ export default function Home() {
   const subscribe = useRef();
 
   function connect(user) {
-    const baseURL = new URL('http://localhost:8888');
+    const baseURL = new URL('https://localhost:8888');
     baseURL.searchParams.set('userName', user.userName);
 
     socket.current = io(baseURL.toString());
@@ -29,7 +29,7 @@ export default function Home() {
       });
     });
 
-    const subscribeURL = new URL('http://localhost:8888/subscribe-changes');
+    const subscribeURL = new URL('https://localhost:8888/subscribe-changes');
 
     subscribe.current = io(subscribeURL.toString());
     subscribe.current.on('connect', () => {
