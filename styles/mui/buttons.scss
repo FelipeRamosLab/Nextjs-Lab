@@ -25,3 +25,10 @@
 .MuiSlider-root {
     color: $tertiary-lighten-30;
 }
+
+.MuiSpeedDialIcon-root,
+.MuiFab-root {
+    .MuiSvgIcon-root {
+        color: $primary;
+    }
+}

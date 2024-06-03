@@ -34,7 +34,7 @@ export const steps = [
     gainConfig
 ];
 
-export default function CreateSlotForm({isLoadingState, formState, onClose}) {
+export default function CreateSlotForm({isLoadingState, formState, onClose, master}) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
     const [activeStep, setActiveStep] = useState(0);
     const [assets, setAssets] = useState([]);
@@ -50,13 +50,13 @@ export default function CreateSlotForm({isLoadingState, formState, onClose}) {
             setForm(prev => {
                 return {
                     ...prev,
-                    user: activityData?.user?._id,
-                    master: activityData?.master?._id,
+                    user: master?.user?._id,
+                    master: master?._id,
                     limits: {} 
                 }
             });
         }
-    }, [setForm, form.limits, activityData, activityData?.user?._id, activityData?.master?._id]);
+    }, [setForm, form.limits, activityData, activityData?.user?._id, master?._id]);
 
     useEffect(() => {
         loadFormDependencies().then(res => {

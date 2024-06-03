@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import CreateSlotForm from '../../forms/createSlot';
 import SlotTile from '../../tiles/slotTile';
 import TransferPainel from '../../common/transferPainel';
@@ -39,6 +39,8 @@ export default function MasterAccount({ loadData, queryParams }) {
     const [ master, setMaster ] = useState();
     const [ masterSlots, setMasterSlots ] = useState([]);
     const socket = socketInstance();
+    const masterInitialized = useRef();
+    const slotsInitialized = useRef();
 
     useEffect(() => {
         connectMasterSlots();
@@ -48,18 +50,19 @@ export default function MasterAccount({ loadData, queryParams }) {
         if (!master) {
             connectMaster();
         }
-    }, [activityData]);
+    }, []);
 
     function connectMasterSlots() {
-        if (!masteruid) {
+        if (!masteruid || slotsInitialized.current) {
             return;
         }
 
+        slotsInitialized.current = true;
         socket.current.emit('subscribe', {
             type: 'query',
             collection: 'bot_accounts',
             filter: { master: masteruid },
-            // options: { loadMethod: 'cacheMasterSlots' }
+            options: { loadMethod: 'cacheMasterSlots' }
         }, (res) => {
             if (res?.error) {
                 throw res;
@@ -73,10 +76,11 @@ export default function MasterAccount({ loadData, queryParams }) {
     }
 
     function connectMaster() {
-        if (!masteruid) {
+        if (!masteruid || masterInitialized.current) {
             return;
         }
 
+        masterInitialized.current = true;
         socket.current.emit('subscribe', {
             type: 'doc',
             collection: 'master_accounts',
@@ -87,6 +91,7 @@ export default function MasterAccount({ loadData, queryParams }) {
                 throw res;
             }
 
+            slotsInitialized.current = true;
             socket.current.on(res?.id, (snapshot) => {
                 console.log(new Date().toLocaleString(), 'Master data:', snapshot);
                 setMaster(snapshot);
@@ -201,6 +206,7 @@ export default function MasterAccount({ loadData, queryParams }) {
             <FormFillModal
                 title="Criar novo slot"
                 openState={addNewSlotModal}
+                master={Object(master)}
                 onClose={() => setAddNewSlotModal(false)}
                 Content={CreateSlotForm}
             />
@@ -300,7 +306,7 @@ export default function MasterAccount({ loadData, queryParams }) {
                     />
 
                     <div className="slots-list standard-grid grid">
-                        {masterSlots?.map((slot, i) => <SlotTile key={slot?.cod} index={i} slot={slot}/> )}
+                        {master?.botAccounts?.map((slot, i) => <SlotTile key={slot?.cod} index={i} slot={slot}/> )}
                         <button
                             type="button"
                             className="button full-width top-border transparent small"

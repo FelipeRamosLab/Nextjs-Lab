@@ -1,0 +1,12 @@
+.MuiInputBase-root,
+.MuiSvgIcon-root {
+    color: $soft-text;
+}
+
+.MuiFormLabel-root {
+    color: $soft-text;
+
+    &.Mui-focused {
+        color: $tertiary;
+    }
+}

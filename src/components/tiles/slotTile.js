@@ -133,7 +133,7 @@ export default function SlotTile({slot}) {
 
             {(slot?.trades?.map && slot?.trades?.length) ? slot?.trades?.map(trade => {
                 if (trade) {
-                    return <OpenTradeInfo key={trade.cod} trade={trade} />;
+                    return <OpenTradeInfo key={Math.random()} trade={trade} />;
                 } else {
                     return <input key={trade.cod} type="hidden" />;
                 }
