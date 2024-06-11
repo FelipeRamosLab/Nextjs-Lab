@@ -6,6 +6,7 @@ import { useContext } from 'react';
 
 export default function MainHeader({ pageData }){
     const { user } = Object(pageData);
+    const { firstName, lastName } = Object(user);
     const pageDataBase = useContext(pageDataContext);
 
     return (
@@ -20,6 +21,7 @@ export default function MainHeader({ pageData }){
                 <h3 className="brand-name">BotStore</h3>
 
                 <div className="header-column menu-wrap">
+                    {user && <span>Seja bem vindo, <b>{firstName} {lastName}</b></span>}
                     <NotificationsDropDown pageData={pageDataBase?.pageData} />
                     {user ? <AccountMenu pageData={pageData} /> : <></>}
                 </div>

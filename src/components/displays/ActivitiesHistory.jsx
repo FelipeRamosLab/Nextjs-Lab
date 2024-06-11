@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef, useContext } from 'react';
-import AJAX from '../../utils/ajax';
 import Skeleton from '@mui/material/Skeleton';
 import SubscribeChangesContext from '../../context/subscribeChanges';
-import io from 'socket.io-client'
 
 export default function ActivitiesHistory({ customTitle, masterUID, slotUID, positionUID, botUID, limit = 5, disableTitle }) {
     const socketInstance = useContext(SubscribeChangesContext);
@@ -12,9 +10,17 @@ export default function ActivitiesHistory({ customTitle, masterUID, slotUID, pos
     
     const loadActivities = async () => {
         const socket = socketInstance();
+        const filter = {};
         if(!socket.current) {
             return;
         }
+
+        console.log(customTitle, masterUID, slotUID, positionUID, botUID, limit = 5, disableTitle)
+
+        if (masterUID) filter.master = masterUID;
+        if (slotUID) filter.slot = slotUID;
+        if (positionUID) filter.position = positionUID;
+        if (botUID) filter.bot = botUID;
 
         socket.current.emit('subscribe', {
             type: 'query',
@@ -59,8 +65,10 @@ export default function ActivitiesHistory({ customTitle, masterUID, slotUID, pos
             page.current = 1;
         }
 
-        loadActivities();
-    }, []);
+        if (masterUID || slotUID || positionUID || botUID) {
+            loadActivities();
+        }
+    }, [masterUID, slotUID, positionUID, botUID]);
 
     return (<div className="activities-history card">
         {!disableTitle && <h3 className="title text-center">{customTitle || 'Activities History'}</h3>}

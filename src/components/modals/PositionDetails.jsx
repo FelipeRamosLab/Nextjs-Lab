@@ -31,6 +31,10 @@ function formatThree(value) {
    return formatMoney(3, 3).format(value);
 }
 
+function formatFour(value) {
+   return formatMoney(4, 4).format(value);
+}
+
 function DataRow({label, value}) {
    return <div className="data-row">
       <div className="data-column label">
@@ -163,11 +167,11 @@ export default function PositionDetails({ positionModal, setPositionModal }) {
                         </div>
                         <div className="value-wrap">
                            <label>Stop Loss</label>
-                           <span>{formatFree(stopPrice)}</span>
+                           <span>{formatFour(stopPrice)}</span>
                         </div>
                         <div className="value-wrap">
                            <label>Take Profit</label>
-                           <span>{gainPrice ? formatFree(gainPrice) : '---'}</span>
+                           <span>{gainPrice ? formatFour(gainPrice) : '---'}</span>
                         </div>
                         <div className="value-wrap">
                            <label>Intial Margin</label>

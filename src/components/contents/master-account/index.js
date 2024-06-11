@@ -43,37 +43,10 @@ export default function MasterAccount({ loadData, queryParams }) {
     const slotsInitialized = useRef();
 
     useEffect(() => {
-        connectMasterSlots();
-    }, []);
-
-    useEffect(() => {
         if (!master) {
             connectMaster();
         }
     }, []);
-
-    function connectMasterSlots() {
-        if (!masteruid || slotsInitialized.current) {
-            return;
-        }
-
-        slotsInitialized.current = true;
-        socket.current.emit('subscribe', {
-            type: 'query',
-            collection: 'bot_accounts',
-            filter: { master: masteruid },
-            options: { loadMethod: 'cacheMasterSlots' }
-        }, (res) => {
-            if (res?.error) {
-                throw res;
-            }
-
-            socket.current.on(res?.id, (snapshot) => {
-                console.log(new Date().toLocaleString(), 'Slots data:', snapshot);
-                setMasterSlots(snapshot);
-            });
-        });
-    }
 
     function connectMaster() {
         if (!masteruid || masterInitialized.current) {
