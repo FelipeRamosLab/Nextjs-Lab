@@ -41,6 +41,7 @@
     background-color: $tertiary;
     cursor: pointer;
     transition: all 200ms;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -193,6 +194,7 @@
 
         &.cta {
             background-color: $tertiary;
+            color: $secondary-dark;
 
             &:hover {
                 background-color: lighten($color: $tertiary, $amount: 3);

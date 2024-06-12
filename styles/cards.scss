@@ -3,6 +3,7 @@
     box-sizing: border-box;
     border-radius: 4px;
     overflow: hidden;
+    -webkit-user-select: none;
     user-select: none;
     gap: 1rem;
 

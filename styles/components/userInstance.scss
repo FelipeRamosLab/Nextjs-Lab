@@ -1,0 +1,37 @@
+.user-instance {
+    margin: 1.5rem 0 1rem 0;
+    padding: 1rem;
+
+    .painel {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.8rem;
+        
+        .status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 3rem;
+            margin: 0;
+
+            svg {
+                color: $secondary-dark;
+            }
+        }
+
+        .ctrl-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .instance-tile {
+            transform: translateX(0.5rem);
+        }
+    }
+
+    .details {
+        margin-top: 1rem;
+    }
+}

@@ -21,6 +21,7 @@ import SectionHeader from '../../headers/sectionHeader';
 import IconButtonConfig from '../../../models/IconButtonConfig';
 import AJAX from '../../../utils/ajax';
 import ActivitiesHistory from '../../displays/ActivitiesHistory';
+import UserInstance from '../../tiles/UserInstance';
 
 export default function MasterAccount({ loadData, queryParams }) {
     const { masteruid } = Object(queryParams);
@@ -37,7 +38,6 @@ export default function MasterAccount({ loadData, queryParams }) {
     const [__, setArchiveConfirmationState] = archiveConfirmationState;
     const [_, setDeleteConfirmation] = deleteConfirmationState;
     const [ master, setMaster ] = useState();
-    const [ masterSlots, setMasterSlots ] = useState([]);
     const socket = socketInstance();
     const masterInitialized = useRef();
     const slotsInitialized = useRef();
@@ -57,8 +57,7 @@ export default function MasterAccount({ loadData, queryParams }) {
         socket.current.emit('subscribe', {
             type: 'doc',
             collection: 'master_accounts',
-            docUID: masteruid,
-            options: { loadMethod: 'cacheMaster' }
+            docUID: masteruid
         }, (res) => {
             if (res?.error) {
                 throw res;
@@ -258,6 +257,8 @@ export default function MasterAccount({ loadData, queryParams }) {
                             <label>ROI mês</label>
                         </div>
                     </section>
+
+                    <UserInstance instanceUID={activityData?.user?.userInstance} />
 
                     <SectionHeader
                         title="Slots"
