@@ -10,3 +10,7 @@
         color: $tertiary;
     }
 }
+
+.MuiAutocomplete-popper .MuiPaper-root {
+    background-color: $primary-darken-5;
+}

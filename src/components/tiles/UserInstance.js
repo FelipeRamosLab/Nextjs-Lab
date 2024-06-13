@@ -10,6 +10,10 @@ const STATUS_MESSAGES = {
         title: 'User instance starting...',
         description: 'You can not start any slot until the user instance is fiully loaded.'
     },
+    'starting-userstream': {
+        title: 'Opening User Stream',
+        description: 'The user data stream is opening to synchronize the Binance data.'
+    },
     online: {
         title: 'User instance is online',
         description: 'The user instance is ONLINE and ready to use.'

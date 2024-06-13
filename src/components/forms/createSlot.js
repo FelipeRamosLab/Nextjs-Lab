@@ -83,7 +83,6 @@ export default function CreateSlotForm({isLoadingState, formState, onClose, mast
             setActivityData(prev => {
                 return {...prev, masterSlots: saved?.master?.botAccounts}
             });
-            window.location.reload();
         } catch(err) {
             setIsLoading(false);
             alert(err?.message || 'Unknow error!');
