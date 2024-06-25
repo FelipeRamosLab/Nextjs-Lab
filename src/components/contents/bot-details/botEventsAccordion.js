@@ -19,9 +19,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AJAX from '../../../utils/ajax';
 import ActivityDataContext from '../../../context/activityData';
 
-export default function BotEventsAccordion() {
+export default function BotEventsAccordion({ bot }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const botEval = activityData.bot && activityData.bot.eval;
+    const botEval = bot?.eval;
     const [loadingAddEvent, setLoadingAddEvent] = useState(false);
     const [addEventDialog, setAddEventDialog] = useState(false);
     const [addEventName, setAddEventName] = useState('');
@@ -32,7 +32,7 @@ export default function BotEventsAccordion() {
 
         try {
             const added = await new AJAX('/bot/add-event').put({
-                botUID: activityData.bot._id,
+                botUID: bot?._id,
                 eventName
             });
             

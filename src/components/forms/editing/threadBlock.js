@@ -19,7 +19,7 @@ export default function ThreadBlockEdit({blockData}) {
     const [addBlockRuleLoading, setAddBlockRuleLoading] = useState(false);
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
-    const threadChildren = [...blockData.blocks, ...blockData.rules];
+    const threadChildren = blockData.children;
     const chidrenSorted = threadChildren.sort((a, b) => {
         if (a.createdAt && b.createdAt) {
             return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();

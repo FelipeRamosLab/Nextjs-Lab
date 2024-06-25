@@ -21,9 +21,9 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import AJAX from '../../../utils/ajax';
 
-export default function BotValuesAccordion({ ruleChildren }) {
+export default function BotValuesAccordion({ ruleChildren, bot }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const values = activityData?.bot?.values;
+    const values = bot?.values;
     const [editToggles, setEditToggles] = useState({});
     const botValues = ruleChildren ? ruleChildren : values;
     const [addValueDialog, setAddValueDialog] = useState(false);

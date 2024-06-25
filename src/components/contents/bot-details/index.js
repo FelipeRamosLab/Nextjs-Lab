@@ -130,13 +130,13 @@ export default function BotDetails({ queryParams }) {
                         <h3>Limites da operação</h3>
                     </div>
                     <hr/>
-                    <BotValuesAccordion queryParams={queryParams} />
+                    {activityData?.bot && <BotValuesAccordion queryParams={queryParams} bot={activityData.bot} />}
 
                     <div className="section-header">
                         <h3>Avaliações do Bot</h3>
                     </div>
                     <hr/>
-                    <BotEventsAccordion queryParams={queryParams} />
+                    {activityData?.bot && <BotEventsAccordion queryParams={queryParams} bot={activityData.bot} />}
                 </div>
 
                 <div className="sidebar">
