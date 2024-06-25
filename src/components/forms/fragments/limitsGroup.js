@@ -23,7 +23,7 @@ export default function LimitsGroupFormFragment({formState, fieldName, label, de
             {label && <h4>{label}</h4>}
             {description && <p>{description}</p>}
 
-            <div className="fields-group">
+            {form?.limits && <div className="fields-group">
                 <FormControl margin="dense">
                     <TextField
                         type="number"
@@ -33,7 +33,7 @@ export default function LimitsGroupFormFragment({formState, fieldName, label, de
                             endAdornment: <InputAdornment position="start">%</InputAdornment>
                         }}
                         variant="standard"
-                        value={form.limits[fieldName] ? form.limits[fieldName].percent || '' : ''}
+                        value={form?.limits[fieldName] ? form?.limits[fieldName]?.percent || '' : ''}
                         onInput={(ev) => handleLimitField('percent', ev.target.value)}
                     />
                 </FormControl>
@@ -51,7 +51,7 @@ export default function LimitsGroupFormFragment({formState, fieldName, label, de
                         onInput={(ev) => handleLimitField('money', ev.target.value)}
                     />
                 </FormControl>
-            </div>
+            </div>}
         </div>
     );
 }

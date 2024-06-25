@@ -76,7 +76,7 @@ export default function MasterAccount({ loadData, queryParams }) {
 
         try {
             Object.entries(form).map(([key, item]) => {
-                if (JSON.stringify(item) !== JSON.stringify(activityData.master[key])) {
+                if (JSON.stringify(item) !== JSON.stringify(master[key])) {
                     result[key] = form[key];
                 }
             });
@@ -299,7 +299,7 @@ export default function MasterAccount({ loadData, queryParams }) {
 
             <FormFillModal
                 title="Editar conta"
-                defaultData={activityData?.master}
+                defaultData={master}
                 openState={editMasterModal}
                 onClose={() => setEditMasterModal(false)}
                 Content={EditMasterForm}

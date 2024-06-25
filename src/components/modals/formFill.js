@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
@@ -11,11 +11,15 @@ import Box from '@mui/material/Box';
 
 export default function FormFillModal({title, Content, saveAction, onClose, openState, defaultData, dialogProps, pageData, master}) {
     const spinnerWrap = useRef();
-    const formState = useState(defaultData || {});
+    const formState = useState();
     const isLoadingState = useState(true);
-    const [form] = formState;
+    const [form, setForm] = formState;
     const [isLoading, setIsLoading] = isLoadingState;
     const contentHeight = spinnerWrap && spinnerWrap.current && spinnerWrap.current.offsetHeight;
+
+    if (!form && defaultData) {
+        setForm(defaultData);
+    }
 
     return (
         <Dialog
