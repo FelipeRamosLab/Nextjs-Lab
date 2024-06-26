@@ -1,5 +1,6 @@
 import { createContext, useRef, useEffect } from 'react';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
+import configs from '../../config.json';
 
 const SubscribeChangesContext = createContext();
 
@@ -8,7 +9,7 @@ export function SubscribeChangesProvider({ children }) {
 
     useEffect(() => {
         if (!socket.current) {
-            socket.current = io('https://localhost:5000/subscribe-changes');
+            socket.current = io(configs.socketHost + '/subscribe-changes');
         }
     }, []);
 

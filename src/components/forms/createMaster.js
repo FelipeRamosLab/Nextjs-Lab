@@ -30,17 +30,17 @@ export default function CreateMasterForm({isLoadingState, formState, onClose, pa
     const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     useEffect(() => {
-        if (!form.limits) {
+        if (!form?.limits) {
             setForm(prev => {
                 return {
                     ...prev,
-                    user: pageData && pageData.user._id,
+                    user: pageData?.user?._id,
                     type: 'master-live',
                     limits: {} 
                 }
             });
         }
-    }, [setForm, form.limits, pageData, pageData.user._id]);
+    }, [setForm, form?.limits, pageData, pageData?.user?._id]);
 
 
     useEffect(() => setIsLoading(false), [setIsLoading]);
