@@ -81,7 +81,7 @@ export default function SlotAssetConfigStep({formState, assets}) {
                 valueLabelDisplay="auto"
                 max={maxLeverage}
                 min={1}
-                value={form.limits.leverege}
+                value={form?.limits?.leverege || maxLeverage}
                 onChange={(ev) => setForm(prev => {
                     return { ...prev, limits: { ...prev.limits, leverege: ev.target.value } }
                 })}
@@ -95,12 +95,12 @@ export default function SlotAssetConfigStep({formState, assets}) {
             </Typography>
             <Slider
                 size="medium"
-                defaultValue={0.1}
+                defaultValue={0.02}
                 valueLabelDisplay="auto"
                 max={12}
                 min={0.02}
                 step={0.01}
-                value={(form.limits.tradesMinInterval || 0) / 60}
+                value={(form.limits.tradesMinInterval || 0.02) / 60}
                 onChange={(ev) => setForm(prev => {
                     return { ...prev, limits: { ...prev.limits, tradesMinInterval: ev.target.value * 60 } }
                 })}

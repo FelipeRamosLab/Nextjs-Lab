@@ -46,7 +46,7 @@ export default function CreateSlotForm({isLoadingState, formState, onClose, mast
     const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     useEffect(() => {
-        if (!form.limits) {
+        if (!form?.limits) {
             setForm(prev => {
                 return {
                     ...prev,
@@ -56,7 +56,7 @@ export default function CreateSlotForm({isLoadingState, formState, onClose, mast
                 }
             });
         }
-    }, [setForm, form.limits, activityData, activityData?.user?._id, master?._id]);
+    }, [setForm, form?.limits, activityData, activityData?.user?._id, master?._id]);
 
     useEffect(() => {
         loadFormDependencies().then(res => {

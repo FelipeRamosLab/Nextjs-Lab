@@ -36,11 +36,11 @@ export default function SlotBasicInfoStep({formState, master}) {
             <Typography gutterBottom>Alocação da Carteira</Typography>
             <Slider
                 size="medium"
-                defaultValue={master && master.availableAllocation || 0}
+                defaultValue={master?.availableAllocation || 1}
                 valueLabelDisplay="auto"
                 max={100}
                 min={1}
-                value={form.walletAllocation || master && master.availableAllocation}
+                value={form?.walletAllocation || master?.availableAllocation || 1}
                 onChange={(ev) => setForm(prev => {
                     return { ...prev, walletAllocation: ev.target.value }
                 })}
