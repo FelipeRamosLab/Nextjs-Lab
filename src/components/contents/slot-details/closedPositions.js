@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import ActivityDataContext from '../../../context/activityData';
 import PaginationTable from '../../displays/paginationTable';
 import AJAX from '../../../utils/ajax';
