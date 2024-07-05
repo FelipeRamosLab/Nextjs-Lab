@@ -70,6 +70,24 @@
         width: 100%;
         gap: 1%;
 
+        @media screen and (min-width: $md) {
+            justify-content: space-between;
+
+            .value-wrap {
+                padding: 0.6rem;
+                min-width: 49.3%;
+                max-width: 49.3%;
+
+                label {
+                    font-size: 0.8rem;
+                }
+
+                span {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+
         .value-wrap {
             display: flex;
             border-radius: 0.5rem;
@@ -99,6 +117,10 @@
         display: flex;
         gap: 2rem;
         padding: 0.1rem;
+
+        @media screen and (min-width: $md) {
+            flex-direction: column;
+        }
 
         >div {
             flex: 1;

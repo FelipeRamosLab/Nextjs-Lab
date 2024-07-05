@@ -91,6 +91,7 @@
     }
 
     .item {
+        -webkit-user-select: none;
         user-select: none;
         cursor: pointer;
         flex: 1;
@@ -114,6 +115,7 @@
 
         @media screen and (min-width: $md) {
             max-width: 66.66%;
+            margin-bottom: 1rem;
         }
     }
 
