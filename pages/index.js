@@ -1,72 +1,57 @@
-import { useEffect, useRef, useState } from 'react';
-import io from 'socket.io-client';
-import ChatWindow from '../components/ChatWindow';
+import { useState } from 'react';
+import Main from '../components/Main';
 import GetInForm from '../components/GetInForm';
+import ajax from '../utils/ajax';
+import TopHeader from '../components/TopHeader';
+
+const cookieAge = 3600000;
 
 export default function Home() {
-  const [ roomsList, setRoomsList ] = useState([]);
-  const [ onlineUsers, setOnlineUsers ] = useState([]);
-  const [ chatHistory, setChatHistory ] = useState([]);
   const [ userLogged, setUserLogged ] = useState();
-  const socket = useRef();
-  const subscribe = useRef();
 
-  function connect(user) {
-    const baseURL = new URL('https://localhost:8888');
-    baseURL.searchParams.set('userName', user.userName);
+  async function register(userData) {
+    try {
+      const response = await ajax('https://localhost:8000/auth/register', userData).post();
 
-    socket.current = io(baseURL.toString());
-    socket.current.on('connect', () => {
-      console.log('User connected:', user.userName);
-      setUserLogged({...user, UID: socket.id });
+      cookieStore.set({ name: 'token', value: response.token, expires: Date.now() + cookieAge });
+      window.location.reload();
+    } catch (error) {
+      alert(error?.message || 'Unknown error!');
+      console.error(error?.response?.data || error);
+    }
+  }
 
-      socket.current.on('online-users', usersList => {
-        setOnlineUsers(usersList);
-      });
+  async function login(userData) {
+    try {
+      const response = await ajax('https://localhost:8000/auth/login', userData).post();
 
-      socket.current.on('chat:read', (loaded) => {
-        setOnlineUsers(loaded.onlineUsers);
-      });
-    });
+      cookieStore.set({ name: 'token', value: response.token, expires: Date.now() + cookieAge });
+      setUserLogged(response);
+    } catch (err) {
+      alert(err?.message || 'Unknown error!');
+      console.error(err?.response?.data || err);
+    }
+  }
 
-    const subscribeURL = new URL('https://localhost:8888/subscribe-changes');
+  async function sendChangePasswordEmail(user) {
+    try {
+      const response = await ajax('https://localhost:8000/auth/reset-password/send-email', { email: user?.email }).post();
 
-    subscribe.current = io(subscribeURL.toString());
-    subscribe.current.on('connect', () => {
-      subscribe.current.emit('subscribe', {
-        type: 'query',
-        collection: 'groups',
-        filter: {}
-      }, (subs) => {
-        subscribe.current.on(subs.id, (snapshot) => {
-          setRoomsList(snapshot);
-        });
-      });
-
-      subscribe.current.emit('subscribe', {
-        type: 'query',
-        collection: 'chat_messages',
-        filter: {}
-      }, (subs) => {
-        subscribe.current.on(subs.id, (snapshot) => {
-          setChatHistory(snapshot);
-        });
-      });
-    });
+      return response;
+    } catch (err) {
+      alert(err?.message || 'Unknown error!');
+      console.error(err?.response?.data || err);
+    }
   }
 
   return <>
+    <TopHeader />
+
     <div className="container">
       <h1>Socket.io Chat</h1>
 
-      {!userLogged && <GetInForm connect={connect} />}
-      {userLogged && <ChatWindow
-        onlineUsers={onlineUsers}
-        roomsList={roomsList}
-        chatHistory={chatHistory}
-        user={userLogged}
-        socket={socket}
-      />}
+      {!userLogged && <GetInForm login={login} register={register} sendChangePasswordEmail={sendChangePasswordEmail} />}
+      {userLogged && <Main user={userLogged} />}
     </div>
   </>
 }
