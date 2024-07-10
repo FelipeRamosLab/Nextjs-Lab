@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
 import LogoDevIcon from '@mui/icons-material/LogoDev';
+import BugReportIcon from '@mui/icons-material/BugReport';
 import Badge from '@mui/material/Badge';
 import AJAX from '../../utils/ajax';
 
@@ -111,7 +112,16 @@ export default function AccountMenu({ pageData }) {
                             <LogoDevIcon sx={{ ml: -0.2 }} />
                         </Badge>
                     </ListItemIcon>
-                    DEV Logs
+                    CONSOLE
+                </MenuItem>
+
+                <MenuItem onClick={() => goToLink('/console-logs?type=errors')}>
+                    <ListItemIcon>
+                        <Badge badgeContent={pageData?.logsCount || 0} color="error">
+                            <BugReportIcon sx={{ ml: -0.2 }} />
+                        </Badge>
+                    </ListItemIcon>
+                    ERROR
                 </MenuItem>
                 
                 <MenuItem onClick={signOut}>
