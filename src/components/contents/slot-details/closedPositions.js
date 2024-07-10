@@ -11,16 +11,28 @@ const columns = [
     { id: 'closeTime', label: 'Fechada em', minWidth: 100, format: (value) => new Date(value).toLocaleString() },
     { id: 'symbol', label: 'Moeda', format: (value) => value },
     {
+      id: 'realizedProfit',
+      label: 'Realized Profit',
+      align: 'center',
+      format: (value) => toMoney(value, null, { numberDecimals: 3 })
+    },
+    {
       id: 'pnl',
       label: 'PNL',
       align: 'center',
-      format: (value) => toMoney(value)
+      format: (value) => toMoney(value, null, { numberDecimals: 3 })
     },
     {
       id: 'roi',
       label: 'ROI',
       align: 'center',
       format: (value) => toPercent(value)
+    },
+    {
+      id: 'tradeFee',
+      label: 'Corrretagem',
+      align: 'right',
+      format: (value) => toMoney(value, null, { numberDecimals: 3 })
     },
     {
       id: 'openPrice',
@@ -67,12 +79,6 @@ const columns = [
     {
       id: 'initialGrossBalance',
       label: 'Bruto inicial',
-      align: 'right',
-      format: (value) => toMoney(value)
-    },
-    {
-      id: 'tradeFee',
-      label: 'Corrretagem',
       align: 'right',
       format: (value) => toMoney(value)
     }
