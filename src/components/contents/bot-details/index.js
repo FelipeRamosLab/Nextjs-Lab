@@ -22,7 +22,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 
 export default function BotDetails({ queryParams }) {
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const { bot: { cod, name, description, _id, status, author }} = Object(activityData);
+    const { bot: { cod, name, description, _id, status, author }} = activityData;
     const [editModal, setEditModal] = useState(false);
     const deleteConfirmationState = useState(false);
     const [statusValue, setStatusValue] = useState(status);
@@ -30,7 +30,7 @@ export default function BotDetails({ queryParams }) {
     const formState = useState(activityData.bot);
     const [form] = formState;
     
-    const authorFullName = `${author.firstName} ${author.lastName}`;
+    const authorFullName = `${author?.firstName} ${author?.lastName}`;
 
     function BootstrapDialogTitle(props) {
         const { children, onClose, ...other } = props;
@@ -164,8 +164,8 @@ export default function BotDetails({ queryParams }) {
 
                         <div className="author-data">
                             <h3 className="title">{authorFullName}</h3>
-                            <a className="subtitle" href={'mailto:' + author.email}>{author.email}</a>
-                            <a className="subtitle" href={'tel:' + author.phone}>{author.phone}</a>
+                            <a className="subtitle" href={'mailto:' + author?.email}>{author?.email}</a>
+                            <a className="subtitle" href={'tel:' + author?.phone}>{author?.phone}</a>
                         </div>
                     </div>
                 </div>
