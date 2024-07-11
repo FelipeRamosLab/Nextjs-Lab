@@ -168,10 +168,6 @@ a.card.item {
 
     @media screen and (min-width: $l) {
         min-width: 49%;
-
-        &:nth-child(1) {
-            min-width: 100%;
-        }
     }
 
     .modal {
