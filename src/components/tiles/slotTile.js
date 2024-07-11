@@ -121,7 +121,7 @@ export default function SlotTile({slot}) {
             {chartState && <CandlestickChart
                 symbol={slot?.assets?.length ? slot.assets[0] : ''}
                 interval={slot?.interval}
-                positions={slot?.trades}
+                position={slot?.trades?.length ? slot?.trades[0] : null}
                 close={(handler) => {
                     handler();
                 }}

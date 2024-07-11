@@ -6,10 +6,12 @@ import { createChart } from 'lightweight-charts';
 import SpeedDial from '@mui/material/SpeedDial';
 import ExpandIcon from "@mui/icons-material/Expand";
 
-export default function CandlestickChart({ symbol, interval, limit }) {
+export default function CandlestickChart({ symbol, interval, limit, position }) {
     const chartContainer = useRef();
     const chart = useRef();
     const candleSeries = useRef();
+    const stoplossLine = useRef();
+    const takeprofitLine = useRef();
     const [ isExpanded, setIsExpand ] = useState(false);
     let parsedLimit = !isNaN(limit) ? Number(limit) : 500;
 
@@ -72,6 +74,18 @@ export default function CandlestickChart({ symbol, interval, limit }) {
                 vertLines: { color: '#666' }
             }
         });
+        
+        if (position) {
+            stoplossLine.current = chart.current.addLineSeries({
+                color: '#ee4a4a'
+            });
+        }
+
+        if (position && position.gainPrice) {
+            takeprofitLine.current = chart.current.addLineSeries({
+                color: '#0ecb81'
+            });
+        }
 
         binance.streams.candlestickChart(symbol, interval, {
             limit: parsedLimit,
@@ -86,6 +100,20 @@ export default function CandlestickChart({ symbol, interval, limit }) {
                 error: (err) => console.error(err),
                 data: (chartUpdate) => {
                     const ordered = chartUpdate.candles?.sort((a, b) => (a.openTime - b.openTime));
+
+                    if (position) {
+                        const stoplossLineData = [];
+                        ordered.map(candle => stoplossLineData.push({ value: position.stopPrice, time: candle.openTime}));
+                        stoplossLine.current.setData(stoplossLineData);
+                        
+                        if (position.gainPrice) {
+                            const takeprofitLineData = [];
+
+                            ordered.map(candle => takeprofitLineData.push({ value: position.gainPrice, time: candle.openTime}));
+                            takeprofitLine.current.setData(takeprofitLineData);
+                        }
+                    }
+
                     candleSeries.current.setData(ordered);
                 }
             }
@@ -120,84 +148,3 @@ export default function CandlestickChart({ symbol, interval, limit }) {
         />
     </div>);
 }
-
-const CATEGORY_PATH = ['indicators'];
-
-function lastTopBottom(last = 0, lastWinner) {
-    let { type, actualLength = 7, verifyLength = 7, increase = 0, decrease = 0 } = Object(this.args);
-
-    const current = last + actualLength;
-    const lastCandles = this.history.slice(last, current + 1);
-    const verifyCandles = this.history.slice(current, current + verifyLength);
-    const actual = getHighestLowest(type, lastCandles);
-    const verify = getHighestLowest(type, verifyCandles);
-
-    if (!lastCandles.length || !verify || !actual) {
-        return lastWinner;
-    }
-
-    try {
-        switch (type) {
-            case 'top': {
-                if ((verify.high > actual.high)) {
-                    return lastTopBottom.call(this, current, actual.high);
-                }
-
-                return actual.high;
-            }
-            case 'bottom': {
-                if ((verify.low < actual.low)) {
-                    return lastTopBottom.call(this, current, actual.low);
-                }
-
-                return actual.low;
-            }
-            default: {
-                debugger;
-            }
-        }
-    } catch(err) {
-        throw new Error.Log(err);
-    }
-}
-
-lastTopBottom.configs = {
-    title: 'Last Top/Bottom',
-    categories: CATEGORY_PATH,
-    options: {
-        type: { type: 'string', required: true },
-        actualLength: { type: 'number', default: 7 },
-        verifyLength: { type: 'number', default: 7 },
-        increase: { type: 'number', default: 0 },
-        decrease: { type: 'number', default: 0 }
-    },
-    returns: ['number']
-};
-
-function getHighestLowest(type, candles) {
-    let sort;
-
-    if (type === 'top') {
-        sort = candles.sort((a, b) => (b.high - a.high));
-    }
-
-    if (type === 'bottom') {
-        sort = candles.sort((a, b) => (a.low - b.low));
-    }
-
-    return sort.length ? sort[0] : null;
-}
-
-// function increase(baseValue, value) {
-//     return strategyHelper.increaseDecrease({
-//         result: baseValue,
-//         increase: value
-//     });
-// }
-
-// function decrease(baseValue, value) {
-//     return strategyHelper.increaseDecrease({
-//         result: baseValue,
-//         decrease: value
-//     });
-// }
