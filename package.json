@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 80",
+    "dev-ssl": "next dev -p 443 --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -13,9 +14,9 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.18",
     "axios": "^1.7.2",
-    "next": "^12.1.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "sass": "^1.77.2",
     "socket.io-client": "^4.7.5"
   },
