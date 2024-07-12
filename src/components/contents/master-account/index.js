@@ -277,7 +277,7 @@ export default function MasterAccount({ loadData, queryParams }) {
                     />
 
                     <div className="slots-list standard-grid grid">
-                        {master?.botAccounts?.map((slot, i) => <SlotTile key={slot?.cod} index={i} slot={slot}/> )}
+                        {master?.slots?.map((slot, i) => <SlotTile key={slot?.cod} index={i} slot={slot}/> )}
                         <button
                             type="button"
                             className="button full-width top-border transparent small"

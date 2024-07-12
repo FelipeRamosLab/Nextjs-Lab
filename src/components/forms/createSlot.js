@@ -81,7 +81,7 @@ export default function CreateSlotForm({isLoadingState, formState, onClose, mast
 
             onClose();
             setActivityData(prev => {
-                return {...prev, masterSlots: saved?.master?.botAccounts}
+                return {...prev, masterSlots: saved?.master?.slots}
             });
         } catch(err) {
             setIsLoading(false);
