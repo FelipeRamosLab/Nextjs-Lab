@@ -16,7 +16,7 @@ import ArchiveIcon from '@mui/icons-material/Archive';
 import EditMasterForm from '../../forms/editing/master';
 import Confirmation from '../../modals/confirmation';
 import ActivityDataContext from '../../../context/activityData';
-import SubscribeChangesContext from '../../../context/subscribeChanges';
+import APIContext from '../../../context/4handsAPI';
 import SectionHeader from '../../headers/sectionHeader';
 import IconButtonConfig from '../../../models/IconButtonConfig';
 import AJAX from '../../../utils/ajax';
@@ -28,8 +28,8 @@ export default function MasterAccount({ loadData, queryParams }) {
     const DeleteConfirmation = Confirmation;
     const ArchiveConfirmation = Confirmation;
 
+    const API = (useContext(APIContext))();
     const {activityData, setActivityData} = useContext(ActivityDataContext);
-    const socketInstance = useContext(SubscribeChangesContext);
     const [addNewSlotModal, setAddNewSlotModal] = useState(false);
     const [editMasterModal, setEditMasterModal] = useState(false);
     const [transferType, setTransferType] = useState(false);
@@ -38,7 +38,6 @@ export default function MasterAccount({ loadData, queryParams }) {
     const [__, setArchiveConfirmationState] = archiveConfirmationState;
     const [_, setDeleteConfirmation] = deleteConfirmationState;
     const [ master, setMaster ] = useState();
-    const socket = socketInstance();
     const masterInitialized = useRef();
     const slotsInitialized = useRef();
 
@@ -54,20 +53,18 @@ export default function MasterAccount({ loadData, queryParams }) {
         }
 
         masterInitialized.current = true;
-        socket.current.emit('subscribe', {
-            type: 'doc',
-            collection: 'master_accounts',
-            docUID: masteruid
-        }, (res) => {
-            if (res?.error) {
-                throw res;
-            }
+        const masterQuery = API.dbQuery('master_accounts', masteruid);
 
-            slotsInitialized.current = true;
-            socket.current.on(res?.id, (snapshot) => {
-                console.log(new Date().toLocaleString(), 'Master data:', snapshot);
-                setMaster(snapshot);
-            });
+        masterQuery.subscribeDoc({
+            onData(masterDoc) {
+                console.log(new Date().toLocaleString(), 'Master data:', masterDoc);
+
+                slotsInitialized.current = true;
+                setMaster(masterDoc);
+            },
+            onError(err) {
+                throw err;
+            }
         });
     }
 

@@ -6,19 +6,19 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import { PageDataProvider } from '../context/pageData';
 import { ActivityDataProvider } from '../context/activityData';
-import { SubscribeChangesProvider } from '../context/subscribeChanges';
+import { APIProvider } from '../context/4handsAPI';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <PageDataProvider>
-      <ActivityDataProvider>
-        <SubscribeChangesProvider>
-          <Component {...pageProps} />
+    <APIProvider>
+      <PageDataProvider>
+        <ActivityDataProvider>
+            <Component {...pageProps} />
 
-          <footer></footer>
-        </SubscribeChangesProvider>
-      </ActivityDataProvider>
-    </PageDataProvider>
+            <footer></footer>
+        </ActivityDataProvider>
+      </PageDataProvider>
+    </APIProvider>
   );
 }
 

@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import InstanceCtrl from '../menus/InstanceCtrl';
 import Button from '@mui/material/Button';
-import SubscribeChangesContext from '../../context/subscribeChanges';
+import APIContext from '../../context/4handsAPI';
 import AJAX from '../../utils/ajax';
 
 const STATUS_MESSAGES = {
@@ -29,9 +29,8 @@ const STATUS_MESSAGES = {
 };
 
 export default function UserInstance({ instanceUID }) {
-    const socketInstance = useContext(SubscribeChangesContext);
+    const API = (useContext(APIContext))();
     const [ instance, setInstance ] = useState();
-    const socket = socketInstance();
     const isDisabled = instance?.status !== 'online' && instance?.status !== 'offline';
 
     function connectInstance() {
@@ -39,19 +38,14 @@ export default function UserInstance({ instanceUID }) {
             return;
         }
 
-        socket.current.emit('subscribe', {
-            type: 'doc',
-            collection: 'user_instances',
-            docUID: instanceUID
-        }, (res) => {
-            if (res?.error) {
-                throw res;
+        API.dbQuery('user_instances', instanceUID).subscribeDoc({
+            onData: (doc) => {
+                console.log(new Date().toLocaleString(), 'Instance data:', doc);
+                setInstance(doc);
+            },
+            onError: (err) => {
+                throw err;
             }
-
-            socket.current.on(res?.id, (snapshot) => {
-                console.log(new Date().toLocaleString(), 'Instance data:', snapshot);
-                setInstance(snapshot);
-            });
         });
     }
 

@@ -1,8 +1,7 @@
 {
     "root": "LOCAL",
-    "PROD": "https://35.242.214.130",
-    "DEV": "http://king-prawn-app-4ow24.ondigitalocean.app",
     "LOCAL": "http://localhost",
+    "apiHost": "https://localhost",
     "socketHost": "https://localhost:5000",
 
     "pages": {

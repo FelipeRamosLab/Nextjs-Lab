@@ -1,55 +1,43 @@
 import { useEffect, useState, useRef, useContext } from 'react';
 import Skeleton from '@mui/material/Skeleton';
-import SubscribeChangesContext from '../../context/subscribeChanges';
+import APIContext from '../../context/4handsAPI';
 
 export default function ActivitiesHistory({ customTitle, masterUID, slotUID, positionUID, botUID, limit = 5, disableTitle }) {
-    const socketInstance = useContext(SubscribeChangesContext);
+    const API = (useContext(APIContext))();
     const [ activities, setActivities ] = useState([]);
     const [ seeMoreState, setSeeMoreState ] = useState(true);
     const page = useRef();
     
     const loadActivities = async () => {
-        const socket = socketInstance();
         const filter = {};
-        if(!socket.current) {
+        if(!API) {
             return;
         }
-
-        console.log(customTitle, masterUID, slotUID, positionUID, botUID, limit = 5, disableTitle)
 
         if (masterUID) filter.master = masterUID;
         if (slotUID) filter.slot = slotUID;
         if (positionUID) filter.position = positionUID;
         if (botUID) filter.bot = botUID;
 
-        socket.current.emit('subscribe', {
-            type: 'query',
-            collection: 'activities',
-            filter: {
-                master: masterUID,
-                slot: slotUID,
-                position: positionUID,
-                bot: botUID
-            },
-            options: {
-                page: page.current,
-                sort: {createdAt: -1},
-                limit
-            }
-        }, ({ error, id }) => {
-            if (error) {
-                throw error;
-            }
+        const activities = API.dbQuery('activities', filter);
+        
+        activities.limit(limit);
+        activities.sort('createdAt', -1);
+        activities.paginate(page.current);
 
-            socket.current.on(id, (snap) => {
+        activities.subscribeQuery({
+            onData(docs) {
                 setActivities(prev => {
                     if (page.current > 1) {
-                        return [...prev, ...snap];
+                        return [...prev, ...docs];
                     } else {
-                        return snap;
+                        return docs;
                     }
                 });
-            });
+            },
+            onError(err) {
+                throw err;
+            }
         });
     }
 
