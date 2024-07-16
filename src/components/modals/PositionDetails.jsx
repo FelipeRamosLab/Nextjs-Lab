@@ -71,7 +71,7 @@ export default function PositionDetails({ positionModal, setPositionModal }) {
       status,
       positionType,
       type,
-      usedLeverege,
+      usedLeverage,
       cod,
       interval,
       symbol,
@@ -91,7 +91,7 @@ export default function PositionDetails({ positionModal, setPositionModal }) {
       quantity,
       slotStartAvailableBalance,
       tradeFee,
-      usedLeveregeAmount
+      usedLeverageAmount
    } = Object(positionModal);
    let statusDisplay = '';
    let resultDisplay = '---';
@@ -197,7 +197,7 @@ export default function PositionDetails({ positionModal, setPositionModal }) {
                               <DataRow label="Commission" value={formatThree(tradeFee)} />
                               <DataRow label="Slot Interval" value={interval} />
                               <DataRow label="Slot's Intial Available Balance" value={formatTwo(slotStartAvailableBalance)} />
-                              <DataRow label="Used Leverage Amount" value={formatThree(usedLeveregeAmount)} />
+                              <DataRow label="Used Leverage Amount" value={formatThree(usedLeverageAmount)} />
                            </div>
                         </div>
                         <div>
@@ -232,7 +232,7 @@ export default function PositionDetails({ positionModal, setPositionModal }) {
                         </div>
                         <div className="value-wrap">
                            <label>Leverage</label>
-                           <span>{usedLeverege}x</span>
+                           <span>{usedLeverage}x</span>
                         </div>
                         <div className="value-wrap">
                            <label>Quantity</label>

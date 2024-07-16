@@ -14,8 +14,8 @@ export default function SlotAssetConfigStep({formState, assets}) {
     const asset = form.assets && assets.find(item => item.symbol === form.assets[0]);
     const maxLeverage = asset && asset.maxLeverage;
 
-    if (form.limits.leverege > maxLeverage || !form.limits.leverege) {
-        form.limits.leverege = maxLeverage;
+    if (form.limits.leverage > maxLeverage || !form.limits.leverage) {
+        form.limits.leverage = maxLeverage;
     }
 
     return (<div className="step-fields">
@@ -74,16 +74,16 @@ export default function SlotAssetConfigStep({formState, assets}) {
         </FormControl>
 
         <FormControl margin="dense">
-            <Typography gutterBottom>Alavancagem máxima: <b style={{ fontSize: 16 }}>{form.limits.leverege}</b></Typography>
+            <Typography gutterBottom>Alavancagem máxima: <b style={{ fontSize: 16 }}>{form.limits.leverage}</b></Typography>
             <Slider
                 size="medium"
                 defaultValue={maxLeverage}
                 valueLabelDisplay="auto"
                 max={maxLeverage}
                 min={1}
-                value={form?.limits?.leverege || maxLeverage}
+                value={form?.limits?.leverage || maxLeverage}
                 onChange={(ev) => setForm(prev => {
-                    return { ...prev, limits: { ...prev.limits, leverege: ev.target.value } }
+                    return { ...prev, limits: { ...prev.limits, leverage: ev.target.value } }
                 })}
             />
         </FormControl>

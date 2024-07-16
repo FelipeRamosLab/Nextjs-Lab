@@ -11,7 +11,7 @@ export default function Limits({entity}) {
 
             <TableFlex
                 data={[
-                    [ 'Avalancagem:', concatUnit(limits?.leverege, null, 'x' ) || '--', !seeMore],
+                    [ 'Avalancagem:', concatUnit(limits?.leverage, null, 'x' ) || '--', !seeMore],
                     [ 'Prejuízo (trade):', `${toMoney(limits?.tradeLoss?.money)} / ${toPercent(limits?.tradeLoss?.percent, null, 2)}`],
                     [ 'Lucro (trade):', `${toMoney(limits?.tradeGain?.money)} / ${toPercent(limits?.tradeGain?.percent, null, 2)}`],
                     [ 'Prejuízo (diário):', `${toMoney(limits?.dailyLoss?.money)} / ${toPercent(limits?.dailyLoss?.percent, null, 2)}`],

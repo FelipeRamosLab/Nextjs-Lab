@@ -10,7 +10,7 @@ export default function OpenTradeDetailsModal({trade}) {
         'Stop loss': toMoney(trade, ['stopPrice'], {numberDecimals: 5}),
         'Take profit': toMoney(trade, ['gainPrice'], {numberDecimals: 5}),
         'Quantidade': validateProp(trade, ['quantity']) ? trade.quantity.toFixed(4) : '--',
-        'Alavancagem': validateProp(trade, ['usedLeverege']),
+        'Alavancagem': validateProp(trade, ['usedLeverage']),
         'Tamanho atual': toMoney(trade, ['grossBalance']),
         'Tamanho inicial': toMoney(trade, ['initialGrossBalance']),
         'Margem inicial': toMoney(trade, ['initialMargin']),
@@ -18,7 +18,7 @@ export default function OpenTradeDetailsModal({trade}) {
         'Tipo de posição': validateProp(trade, ['positionType']),
         'Margem atual': toMoney(trade, ['tradeBalance']),
         'Corretagem': toMoney(trade, ['tradeFee']),
-        'Valor alavancado': toMoney(trade, ['usedLeveregeAmount'])
+        'Valor alavancado': toMoney(trade, ['usedLeverageAmount'])
     };
     
     return (<div className="opentrade-details container">

@@ -65,7 +65,7 @@ const columns = [
       format: (value) => value.toFixed(5)
     },
     {
-      id: 'usedLeverege',
+      id: 'usedLeverage',
       label: 'Alavancagem',
       align: 'right',
       format: (value) => value.toFixed(0)
