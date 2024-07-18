@@ -1,0 +1,24 @@
+.user-feedback {
+   background-color: $primary-grey;
+   border-radius: 5px;
+   margin-bottom: 0.5rem;
+   padding: 0.5rem;
+
+   .title {
+      font-size: 01rem;
+   }
+
+   p {
+      color: $black;
+      font-weight: 500;
+      font-size: 0.8rem;
+   }
+
+   &[type=warn] {
+      background-color: $warn-light;
+   }
+
+   &[type=error] {
+      background-color: $error-light;
+   }
+}

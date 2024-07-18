@@ -71,6 +71,17 @@ export default function SlotTile({slot}) {
         }
     }
 
+    async function deleteFeedback(feedbackKey) {
+        try {
+            await new AJAX('/slots/feedback').delete({
+                feedbackKey,
+                slotUID: slot._id
+            });
+        } catch(err) {
+            alert('Ocorreu um erro ao deletar o feedback!');
+        }
+    }
+
     return (<>
         <div className="slot-display item card">
             <MainModal
@@ -103,6 +114,15 @@ export default function SlotTile({slot}) {
                 </div>
                 {slot.status !== 'stopped' && <FaStopCircle className="circle-button reverse" btn-color="error" onClick={() => setStopSelect(true)} />}
                 {slot.status !== 'running' && slot.status !== 'requirements-clutch' && <FaPlayCircle className="circle-button reverse" btn-color="success" onClick={() => runSlot(slot._id)} />}
+            </div>
+
+            <div>
+                {slot.slotFeedback?.map((item, i) => {
+                    return <div className="user-feedback" type={item.type} key={Date.now() + i} onClick={() => deleteFeedback(item.name)}>
+                        <p className="title">{item.name}</p>
+                        <p>{item.message}</p>
+                    </div>
+                })}
             </div>
 
             <div className="tile-content">
