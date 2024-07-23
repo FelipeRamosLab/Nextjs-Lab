@@ -12,7 +12,7 @@ import ActivityDataContext from '../../context/activityData';
 import SlotBasicInfoStep from './steps/createSlot/basicInfos';
 import SlotAssetConfigStep from './steps/createSlot/assetConfig';
 import SlotBotSelectStep from './steps/createSlot/botSelect';
-import {lossConfig, gainConfig} from './steps/limitsConfig';
+import { slotLossConfig, slotGainConfig } from './steps/limitsConfig';
 
 export const steps = [
     {
@@ -30,8 +30,8 @@ export const steps = [
         description: 'Escolha qual robô irá operar o seu slot.',
         Content: SlotBotSelectStep
     },
-    lossConfig,
-    gainConfig
+    slotLossConfig,
+    slotGainConfig
 ];
 
 export default function CreateSlotForm({isLoadingState, formState, onClose, master}) {

@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import AJAX from '../../utils/ajax';
 
 import MasterInfosStep from './steps/createMaster/masterInfos';
-import { lossConfig, gainConfig } from './steps/limitsConfig';
+import { masterLossConfig, masterGainConfig } from './steps/limitsConfig';
 
 export const steps = [
     {
@@ -17,8 +17,8 @@ export const steps = [
         description: 'Insira abaixo os dados básicos do sua conta.',
         Content: MasterInfosStep
     },
-    lossConfig,
-    gainConfig
+    masterLossConfig,
+    masterGainConfig
 ];
 
 export default function CreateMasterForm({isLoadingState, formState, onClose, pageData}) {

@@ -36,7 +36,7 @@ export default function LimitsConfigStep({formState, configFields}) {
     </div>);
 }
 
-export const lossConfig = {
+export const masterLossConfig = {
     label: 'Limites de perda',
     description: 'Configure abaixo os limites de perda para trade, diário e mensal.',
     Content: ({formState}) => <LimitsConfigStep
@@ -61,7 +61,7 @@ export const lossConfig = {
     />
 };
 
-export const gainConfig = {
+export const masterGainConfig = {
     label: 'Metas de lucro',
     description: 'Configure abaixo metas de lucro para o slot pausar quando forem atingidas.',
     Content: ({formState}) => <LimitsConfigStep
@@ -81,6 +81,36 @@ export const gainConfig = {
                 title: 'Mensal',
                 description: 'Caso o PNL do mês seja maior que esse valor, o slot é pausado e só volta a operar no próximo mês',
                 fieldName: 'monthlyGain'
+            }
+        ]}
+    />
+};
+
+export const slotLossConfig = {
+    label: 'Limites de perda',
+    description: 'Configure abaixo os limites de perda para trade, diário e mensal.',
+    Content: ({formState}) => <LimitsConfigStep
+        formState={formState}
+        configFields={[
+            {
+                title: 'Trade',
+                description: 'Será baseado nesse valor que os stops dos trades serão calculados',
+                fieldName: 'tradeLoss'
+            }
+        ]}
+    />
+};
+
+export const slotGainConfig = {
+    label: 'Metas de lucro',
+    description: 'Configure abaixo metas de lucro para o slot pausar quando forem atingidas.',
+    Content: ({formState}) => <LimitsConfigStep
+        formState={formState}
+        configFields={[
+            {
+                title: 'Trade',
+                description: 'Será baseado nesse valor que os takeprofits dos trades serão calculados',
+                fieldName: 'tradeGain'
             }
         ]}
     />

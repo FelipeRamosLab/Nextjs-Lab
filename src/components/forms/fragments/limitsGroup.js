@@ -12,7 +12,7 @@ export default function LimitsGroupFormFragment({formState, fieldName, label, de
                 ...prev.limits,
                 [fieldName]: {
                     ...prev.limits[fieldName],
-                    [limitType]: Number(value)
+                    [limitType]: value
                 }
             }
         }});
@@ -51,6 +51,17 @@ export default function LimitsGroupFormFragment({formState, fieldName, label, de
                         onInput={(ev) => handleLimitField('money', ev.target.value)}
                     />
                 </FormControl>
+
+                {['dailyLoss', 'monthlyLoss', 'dailyGain', 'monthlyGain'].some(item => fieldName === item)  && <FormControl margin="dense">
+                    <TextField
+                        type="text"
+                        inputMode="text"
+                        label="Resume Day Time"
+                        variant="standard"
+                        value={form.limits[fieldName] ? form.limits[fieldName].customResumeDayTime || '' : ''}
+                        onInput={(ev) => handleLimitField('customResumeDayTime', ev.target.value)}
+                    />
+                </FormControl>}
             </div>}
         </div>
     );
