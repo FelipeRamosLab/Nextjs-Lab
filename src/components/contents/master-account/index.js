@@ -22,6 +22,7 @@ import IconButtonConfig from '../../../models/IconButtonConfig';
 import AJAX from '../../../utils/ajax';
 import ActivitiesHistory from '../../displays/ActivitiesHistory';
 import UserInstance from '../../tiles/UserInstance';
+import Schedules from '../../inputs/Schedules';
 
 export default function MasterAccount({ loadData, queryParams }) {
     const { masteruid } = Object(queryParams);
@@ -287,6 +288,8 @@ export default function MasterAccount({ loadData, queryParams }) {
                 </div>
 
                 <div className="sidebar">
+                    <Schedules type="runtime" masterUID={master?._id} schedules={master?.schedules} />
+
                     <MasterInfos master={master} />
                     <MasterResults entity={master} />
 

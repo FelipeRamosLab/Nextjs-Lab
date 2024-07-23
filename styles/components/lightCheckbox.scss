@@ -1,0 +1,11 @@
+.light-checkbox {
+   background-color: $primary-grey;
+   border-radius: 4px;
+   color: $white;
+   min-width: auto;
+
+   &.selected {
+      background-color: $tertiary;
+      color: $secondary-dark;
+   }
+}

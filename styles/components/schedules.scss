@@ -1,0 +1,77 @@
+.schedules {
+   margin-bottom: 1rem;
+   padding: 1rem;
+
+   .schedules-wrap {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem 0;
+      gap: 0.5rem;
+      
+      .schedule {
+         position: relative;
+         background-color: $primary-grey;
+         list-style: none;
+         padding: 1rem;
+         border-radius: 5px;
+
+         .delete-button {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0;
+            height: 100%;
+            color: $soft-text;
+            font-size: 1.1rem;
+         }
+
+         .time {
+            font-size: 1.3rem;
+            font-weight: 500;
+         }
+
+
+      }
+   }
+
+   .inputs-wrap {
+      display: flex;
+      margin: 0.5rem 0 0.4rem 0;
+
+      input:first-child {
+         border-radius: 5px 0 0 0;
+      }
+
+      input:last-child {
+         border-radius: 0 5px 0 0;
+      }
+   }
+
+   .weekdays {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      flex-wrap: wrap;
+
+      .light-checkbox {
+         flex: 1;
+         
+         &.display {
+            display: inline-block;
+            text-align: center;
+            padding: 0.2rem 0.5rem;
+
+            &.selected {
+               background-color: $tertiary-darken-15;
+               color: $soft-text;
+            }
+         }
+
+         &.display:not(.selected) {
+            text-decoration: line-through;
+            background-color: $secondary-dark;
+         }
+      }
+   }
+}
