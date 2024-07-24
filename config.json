@@ -4,6 +4,7 @@
     "apiHost": "https://localhost",
     "socketHost": "https://localhost:5000",
 
+    "daysOfWeek": [ "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN" ],
     "pages": {
         "logs": {
             "itemsPerPage": 10

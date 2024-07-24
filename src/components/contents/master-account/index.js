@@ -22,7 +22,7 @@ import IconButtonConfig from '../../../models/IconButtonConfig';
 import AJAX from '../../../utils/ajax';
 import ActivitiesHistory from '../../displays/ActivitiesHistory';
 import UserInstance from '../../tiles/UserInstance';
-import Schedules from '../../inputs/Schedules';
+import Schedules from '../../inputs/Schedules/index';
 
 export default function MasterAccount({ loadData, queryParams }) {
     const { masteruid } = Object(queryParams);
