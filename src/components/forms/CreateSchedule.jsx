@@ -16,10 +16,10 @@ export default function CreateSchedule({ masterUID, setList, setView, type }) {
       formData.weekdays.forEach((value, key) => value && data.weekdays.push(key));
 
       try {
-         const created = await API.dbQuery('schedules').saveDoc(data);
+         const response = await API.ajax.authPut('/master-account/create-schedule', data);
+         const created = response.data;
          if (created.success) {
-            const loaded = await API.dbQuery('schedules', { master: masterUID }).getQuery();
-            setList(loaded);
+            setList(created.schedules);
             setView('display');
          } else {
             alert(created);

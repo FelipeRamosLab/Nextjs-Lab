@@ -9,10 +9,10 @@ export default function ScheduleEditView({ masterUID, list, setList, setView }) 
 
    async function deleteSchedule(UID) {
       try {
-         const deleted = await API.dbQuery('schedules', UID).deleteDoc();
+         const response = await API.ajax.authDelete('/master-account/delete-schedule', { masterUID, scheduleUID: UID });
+         const deleted = response.data;
          if (deleted.success) {
-            const loaded = await API.dbQuery('schedules', { master: masterUID }).getQuery();
-            setList(loaded);
+            setList(deleted.schedules);
             setView('display');
          } else {
             alert(deleted);
