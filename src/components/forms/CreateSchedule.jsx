@@ -19,7 +19,7 @@ export default function CreateSchedule({ masterUID, setList, setView, type }) {
          const response = await API.ajax.authPut('/master-account/create-schedule', data);
          const created = response.data;
          if (created.success) {
-            setList(created.schedules);
+            // setList(created.schedules);
             setView('display');
          } else {
             alert(created);
