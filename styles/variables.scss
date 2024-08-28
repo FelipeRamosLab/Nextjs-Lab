@@ -26,7 +26,7 @@ $warn: #ebc856;
 $warn-light: lighten($color: $warn, $amount: 25);
 $cta: #00fca8;
 $warn-dark: #b8a051;
-$backdrop: #0000004f;
+$backdrop: rgb(44 73 81 / 50%);
 $backdrop-gradient: linear-gradient(45deg, rgba(34, 41, 48, 0), rgba(56, 121, 102, 0.075), rgba(65, 104, 87, 0.11));
 
 // Profit/Loss

@@ -12,7 +12,7 @@ export default function Schedules({ masterUID, schedules = [], type }) {
    }, [schedules]);
 
    return <div className="schedules card">
-      <h3 className="text-center">Master's Schedules</h3>
+      <h3 className="text-center">Master&apos;s Schedules</h3>
 
       {view === 'display' && <ScheduleDisplayView
          list={list}
