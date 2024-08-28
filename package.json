@@ -16,7 +16,7 @@
     "@mui/icons-material": "^5.11.9",
     "@mui/lab": "^5.0.0-alpha.120",
     "@mui/material": "^5.11.10",
-    "4hands-api": "^0.7.0",
+    "4hands-api": "^0.7.3",
     "apexcharts": "^3.33.2",
     "axios": "^0.24.0",
     "binance-sync": "^0.2.4",
