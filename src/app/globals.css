@@ -40,3 +40,7 @@ a {
     color-scheme: dark;
   }
 }
+
+main {
+  width: 100%;
+}

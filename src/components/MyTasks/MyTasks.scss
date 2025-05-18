@@ -1,0 +1,26 @@
+#my-tasks {
+   width: 100%;
+   background-color: #2b2d2e;
+   border-radius: 0.4rem;
+   margin-top: 1rem;
+   margin-bottom: 1rem;
+
+   thead {
+      td {
+         font-weight: bold;
+         font-size: small;
+      }
+   }
+
+   td {
+      padding: 0.5rem 0.4rem;
+      font-weight: 200;
+   }
+
+   .delete-btn {
+      padding: 0.3rem 0.75rem;
+      background-color: rgb(207, 73, 49);
+      border: none;
+      border-radius: 0.2rem;
+   }
+}
